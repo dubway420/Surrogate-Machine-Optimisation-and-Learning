@@ -11,30 +11,92 @@ import itertools
 
 import pickle
 
-# path = '/home/huw/PycharmProjects/Results/position_identification'
-# base = "intact_core_rb"
-#
-# cases = tls.directories_in_path(path)
+
+def cases_list(path_string):
+    """ For a given directory, returns a list of instance cases, including the original path """
+
+    cases = tls.directories_in_path(path_string)
+
+    case_list = []
+
+    for base in cases:
+        case_list.append(path_string + base + '/' + base)
+
+    return case_list
 
 
-# case = path + cases[0] + '/' + cases[0]
-# instance1 = ci(case)
-#
+def features_and_labels(path_string, time=50, result="1"):
+    """ Gets the features and labels from the folder of results"""
 
-# X = []
-# Y = []
+    cases = cases_list(path_string)
+
+    X, Y = [], []
+
+    for case in cases:
+        instance1 = ci(case)
+
+        X.append(instance1.linear_crack_array_1d())
+        Y.append(instance1.get_result_at_time(time, result_columns=str(result)))
+
+    return X, Y
+
+
+# case_intact = '/home/huw/PycharmProjects/Results/position_identification/intact_core_rb'
 #
-# for base in cases:
-# case = path + '/' + base
-# #
-# instance1 = ci(case)
+# instance1 = ci(case_intact)
+#
 # x_coord_fuel, y_coord_fuel, z_coord_fuel = instance1.get_fuel_channel_xyz_positions()
 # x_coord_inter, y_coord_inter, z_coord_inter = instance1.get_interstitial_channel_xyz_positions()
-#
-# print(len(x_coord_inter))
+
+path_cases = '/media/huw/Seagate Expansion Drive/parmec_results/'
+
+cases = cases_list(path_cases)
+
+instance1 = ci(cases[case_number])
 
 
-# print('\n===\n')
+
+with open('objs.pkl', 'rb') as f:
+    X, Y_50_1, Y_50_2, x_coord_fuel, y_coord_fuel, z_coord_fuel, x_coord_inter, y_coord_inter, z_coord_inter = pickle.load(
+        f)
+
+j = 0
+
+i = 0
+x_coord_inter_channel, y_coord_inter_channel = [], []
+for x, y in zip(x_coord_inter, y_coord_inter):
+    i += 1
+    if i % 13 == 0:
+        x_coord_inter_channel.append(x)
+        y_coord_inter_channel.append(y)
+
+counts_local, counts_adjacent, counts_outer = [], [], []
+
+for i in range(1, instance1.last_channel(channel_type='inter') + 1):
+    local, adjacent, outer = instance1.get_cracks_per_layer(str(i), array_type='pos', channel_type='inter',
+                                                            inclusive=True)
+
+    counts_local.append(local)
+    counts_adjacent.append(adjacent)
+    counts_outer.append(outer)
+
+# X, Y_50_1 = features_and_labels(path_cases)
+# X, Y_50_2 = features_and_labels(path_cases, result="2")
+
+# with open('objs.pkl', 'wb') as f:
+#     pickle.dump([X, Y_50_1, Y_50_2, x_coord_fuel, y_coord_fuel, z_coord_fuel, x_coord_inter, y_coord_inter,
+#                  z_coord_inter], f)
+
+# plt.scatter(x_coord_inter_channel, y_coord_inter_channel, c='black', marker='o',
+#             label="Interstitial Channels")
+
+plt.scatter(x_coord_inter_channel, y_coord_inter_channel, c=counts_local, marker='o', label="Local")
+plt.legend(loc='lower center', bbox_to_anchor=(0.5, -0.15), shadow=True, ncol=2)
+plt.show()
+
+plt.scatter(x_coord_inter_channel, y_coord_inter_channel, c=Y_50_1[case_number], marker='o', label="Result")
+plt.legend(loc='lower center', bbox_to_anchor=(0.5, -0.15), shadow=True, ncol=2)
+plt.show()
 # print(x_coord_inter)
 # fig = plt.figure()
 # ax = Axes3D(fig)
@@ -45,11 +107,7 @@ import pickle
 # plt.legend(loc='lower center', bbox_to_anchor=(0.5, -0.005), shadow=True, ncol=2)
 # plt.show()
 
-# plt.scatter(x_coord_fuel, y_coord_fuel, c='b', marker='o', label="Fuel Channels")
-# plt.scatter(x_coord_inter, y_coord_inter, c='r', marker='o', label="Interstitial Channels")
-#
-# plt.legend(loc='lower center', bbox_to_anchor=(0.5, -0.15), shadow=True, ncol=2)
-# plt.show()
+
 #
 # plt.scatter(x_coord_fuel, z_coord_fuel, c='b', marker='o', label="Fuel Channels")
 # plt.scatter(x_coord_inter, z_coord_inter, c='r', marker='o', label="Interstitial Channels")
@@ -69,11 +127,10 @@ import pickle
 #     X, Y, x_coord, y_coord = pickle.load(f)
 
 # Y = np.array(Y) * 1000
-regressors = [LinearRegression(), DecisionTreeRegressor(), Ridge()]
+# regressors = [LinearRegression(), DecisionTreeRegressor(), Ridge()]
 #
 # cross_val_results = []
-mean_squared_errors = []
-
+# mean_squared_errors = []
 
 # with open('objs.pkl', 'wb') as f:
 #     pickle.dump([X, Y, x_coord, y_coord, cross_val_results], f)

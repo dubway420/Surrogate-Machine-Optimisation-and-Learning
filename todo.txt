@@ -1,0 +1,5 @@
+input vs output graph
+prediction vs actual graph
+through time gif
+CNN
+take magnitude of x and y displacement

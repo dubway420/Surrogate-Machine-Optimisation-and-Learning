@@ -36,6 +36,10 @@ class CoreInstance:
     """ Instance representing the entire core, including crack positions in 3D array and post earthquake
     array of displacements"""
 
+    # ==========================================================
+    # -------------------------SET UP---------------------------
+    # ==========================================================
+
     def __init__(self, case, core_levels=7, core_rows=18, core_columns=18,
                  fuel_channels=284, interstitial_channels=321, padding=2):
         """Assign ID. Initialise or extract data arrays """
@@ -91,7 +95,12 @@ class CoreInstance:
             self.crack_array = self.base_crack_array()
         else:
             self.set_id(tls.get_id_from_filename(case))
-            # self.set_crack_array()
+
+            try:
+                self.set_crack_array()
+            except FileNotFoundError:
+                self.crack_array = self.base_crack_array()
+
         # =============
         # Results stuff
 
@@ -135,6 +144,10 @@ class CoreInstance:
 
         # print("Writing cracked core pattern to array")
         self.crack_array = array
+
+    # ==========================================================
+    # ---------------------FEATURE EXTRACTION-------------------
+    # ==========================================================
 
     def get_crack_array(self, array_type="orientations", levels='all'):
         """ Returns the crack array. Can be of type 'orientations' or 'positions' """
@@ -219,9 +232,9 @@ class CoreInstance:
             column_start = column_origin - array_size
             column_end = column_origin + array_size + 1
         else:
-            row_start = row_origin - array_size - 1
+            row_start = max(row_origin - array_size - 1, 0)
             row_end = row_origin + array_size
-            column_start = column_origin - array_size - 1
+            column_start = max(column_origin - array_size - 1, 0)
             column_end = column_origin + array_size
 
         channel_crack_array = core_array[min_level:max_level, row_start: row_end,
@@ -263,7 +276,7 @@ class CoreInstance:
             return np.array(cracks_count)[:, 0]
 
     def get_cracks_per_layer(self, channel='core', size=2, array_type='orientations', levels='all',
-                             channel_type='fuel'):
+                             channel_type='fuel', inclusive=False):
 
         cracks_per_layer = []
 
@@ -275,7 +288,10 @@ class CoreInstance:
             if i == 0:
                 cracks_per_layer.append(cracks_total)
             else:
-                cracks_per_layer.append(np.subtract(cracks_total, cracks_per_layer[i - 1]))
+                if not inclusive:
+                    cracks_per_layer.append(np.subtract(cracks_total, cracks_per_layer[i - 1]))
+                else:
+                    cracks_per_layer.append(cracks_total)
 
         return np.array(cracks_per_layer)
 
@@ -302,6 +318,10 @@ class CoreInstance:
                 i += 1
 
         return output_array
+
+    # ==========================================================
+    # ----------------------PROCESSING--------------------------
+    # ==========================================================
 
     def get_result_at_time(self, time_index=0, ext='.csv', result_columns='all', result_type="max"):
         """ Results results array for a particular time frame"""
