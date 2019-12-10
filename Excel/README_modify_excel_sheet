@@ -1,0 +1,14 @@
+# Description of the file: /home/graphite/DEEPL/parmec_agr_ml_surrogate/Excel/cracked_core_generator_MODIFIED_v1_1_2.xlsm
+# This excel sheet does not work in linux, open it with microsft office
+
+1. It generates the input information for parmec in batch mode.
+2. the main sheet is cracking, the user just need to change cracking percentage in the red window. Also you have to give it a list of seed, 
+   2.1 In the sheet seeds, you  need to load a file to make the random distribution on the input a file with lines:
+       11893489, 7398, 349862,.....,932793 
+       397847, 2047, 460,.....,90298
+       random.org to generate as many numbers that you want
+   2.2 generate cracked cores in batch mode
+   2.3 It generates the input, the output file will appear in the same directory where the program is saved
+
+
+3.
