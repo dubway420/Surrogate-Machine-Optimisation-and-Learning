@@ -1,0 +1,68 @@
+#!/bin/bash
+py_ext=".py"
+
+# Make sure this points to the parmec8 executable 
+parmec_exe=./parmec/parmec8
+
+# Make sure this points to the keyfile2parmec script
+keyfile2py=./parmec/python/keyfile2parmec.py
+
+# Make sure this points to the directory containing the keyfiles
+files_path="./ML_inst_gen/batch7/"
+
+# File type of crack array
+xl_ext=".xlsx"
+
+for file in $files_path*.key; do 
+	
+	# REMOVE PATH JUST LEAVING NAME AND EXTENSION
+	file_nopath=$(basename $file)
+
+	# REMOVE EXTENSION
+	file_noext="$(echo $file_nopath | cut -d"." -f1)"
+
+	# PRINT TO THE SCREEN TO TELL THE USER WHAT IS HAPPENING
+	echo " "
+	echo " "
+	echo "========================================================="
+	echo "		     STARTING CASE $file_noext"
+	echo "========================================================="
+	echo " "
+
+	# Creates results directory for output files
+	mkdir $files_path$file_noext
+
+	# Moves crack array xl sheet into results directory
+	mv $files_path$file_noext$xl_ext $files_path$file_noext
+	
+	echo "Generating python file from keyfile..."
+
+	# Generate python file from keyfile in the same location 
+	python $keyfile2py $file $files_path$file_noext$py_ext
+	
+	echo "Python file generated."
+	echo "Running parmec analysis..."
+	
+	#Run the parmec8 executable file with the keyfile and python file as arguments
+	$parmec_exe $file $files_path$file_noext$py_ext
+
+	echo "Parmec analysis complete."
+
+	echo "Starting data extraction."
+
+	pvpython extraction.py $files_path $file_noext
+
+
+	echo " "
+	echo "========================================================="
+	echo "               COMPLETED CASE $file_noext"
+	echo "========================================================="
+	echo " "
+	echo " "
+	echo " "
+
+done
+
+# Clean-up
+rm $files_path*.xmf
+rm $files_path*.h5
