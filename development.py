@@ -41,44 +41,51 @@ def features_and_labels(path_string, time=50, result="1"):
     return X, Y
 
 
-# case_intact = '/home/huw/PycharmProjects/Results/position_identification/intact_core_rb'
+# case_number = 50
 #
-# instance1 = ci(case_intact)
+# path_cases = 'D:/parmec_results/'
 #
-# x_coord_fuel, y_coord_fuel, z_coord_fuel = instance1.get_fuel_channel_xyz_positions()
-# x_coord_inter, y_coord_inter, z_coord_inter = instance1.get_interstitial_channel_xyz_positions()
+# cases = cases_list(path_cases)
 
-path_cases = '/media/huw/Seagate Expansion Drive/parmec_results/'
+instance1 = ci("C:/Users/Huw/PycharmProjects/Results/intact_core")
 
-cases = cases_list(path_cases)
+x_coord_fuel, y_coord_fuel, z_coord_fuel = instance1.get_fuel_channel_xyz_positions()
+x_coord_inter, y_coord_inter, z_coord_inter = instance1.get_interstitial_channel_xyz_positions()
 
-instance1 = ci(cases[case_number])
+fig = plt.figure()
+ax = Axes3D(fig)
+
+ax.scatter(x_coord_fuel, y_coord_fuel, z_coord_fuel, c='b', marker='o', label="Fuel Bricks")
+ax.scatter(x_coord_inter, y_coord_inter, z_coord_inter, c='r', marker='o', label="Interstitial Bricks")
+
+plt.legend(loc='lower center', bbox_to_anchor=(0.5, -0.005), shadow=True, ncol=2)
 
 
+ax.view_init(30, angle)
+plt.show()
+# with open('objs.pkl', 'rb') as f:
+#     X, Y_50_1, Y_50_2, x_coord_fuel, y_coord_fuel, z_coord_fuel, x_coord_inter, y_coord_inter, z_coord_inter = pickle.load(
+#         f)
 
-with open('objs.pkl', 'rb') as f:
-    X, Y_50_1, Y_50_2, x_coord_fuel, y_coord_fuel, z_coord_fuel, x_coord_inter, y_coord_inter, z_coord_inter = pickle.load(
-        f)
-
-j = 0
-
-i = 0
-x_coord_inter_channel, y_coord_inter_channel = [], []
-for x, y in zip(x_coord_inter, y_coord_inter):
-    i += 1
-    if i % 13 == 0:
-        x_coord_inter_channel.append(x)
-        y_coord_inter_channel.append(y)
-
-counts_local, counts_adjacent, counts_outer = [], [], []
-
-for i in range(1, instance1.last_channel(channel_type='inter') + 1):
-    local, adjacent, outer = instance1.get_cracks_per_layer(str(i), array_type='pos', channel_type='inter',
-                                                            inclusive=True)
-
-    counts_local.append(local)
-    counts_adjacent.append(adjacent)
-    counts_outer.append(outer)
+# j = 0
+#
+# i = 0
+# x_coord_inter_channel, y_coord_inter_channel = [], []
+# for x, y in zip(x_coord_inter, y_coord_inter):
+#     i += 1
+#     if i % 13 == 0:
+#         x_coord_inter_channel.append(x)
+#         y_coord_inter_channel.append(y)
+#
+# counts_local, counts_adjacent, counts_outer = [], [], []
+#
+# for i in range(1, instance1.last_channel(channel_type='inter') + 1):
+#     local, adjacent, outer = instance1.get_cracks_per_layer(str(i), array_type='pos', channel_type='inter',
+#                                                             inclusive=True)
+#
+#     counts_local.append(local)
+#     counts_adjacent.append(adjacent)
+#     counts_outer.append(outer)
 
 # X, Y_50_1 = features_and_labels(path_cases)
 # X, Y_50_2 = features_and_labels(path_cases, result="2")
@@ -90,13 +97,13 @@ for i in range(1, instance1.last_channel(channel_type='inter') + 1):
 # plt.scatter(x_coord_inter_channel, y_coord_inter_channel, c='black', marker='o',
 #             label="Interstitial Channels")
 
-plt.scatter(x_coord_inter_channel, y_coord_inter_channel, c=counts_local, marker='o', label="Local")
-plt.legend(loc='lower center', bbox_to_anchor=(0.5, -0.15), shadow=True, ncol=2)
-plt.show()
-
-plt.scatter(x_coord_inter_channel, y_coord_inter_channel, c=Y_50_1[case_number], marker='o', label="Result")
-plt.legend(loc='lower center', bbox_to_anchor=(0.5, -0.15), shadow=True, ncol=2)
-plt.show()
+# plt.scatter(x_coord_inter_channel, y_coord_inter_channel, c=counts_local, marker='o', label="Local")
+# plt.legend(loc='lower center', bbox_to_anchor=(0.5, -0.15), shadow=True, ncol=2)
+# plt.show()
+#
+# plt.scatter(x_coord_inter_channel, y_coord_inter_channel, c=Y_50_1[case_number], marker='o', label="Result")
+# plt.legend(loc='lower center', bbox_to_anchor=(0.5, -0.15), shadow=True, ncol=2)
+# plt.show()
 # print(x_coord_inter)
 # fig = plt.figure()
 # ax = Axes3D(fig)
