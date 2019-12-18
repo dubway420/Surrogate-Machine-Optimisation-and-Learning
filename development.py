@@ -55,37 +55,25 @@ def result_time_history(case, result="1", time_steps=271):
     return time_history
 
 
-with open('data.pkl', 'rb') as f:
-    X, Y_50_1, Y_50_2, x_coord_inter_channel, y_coord_inter_channel = pickle.load(
-        f)
 
-case_number = 50
+case_intact = '/home/huw/PycharmProjects/Results/position_identification/intact_core_rb'
 
-path_cases = '/media/huw/Seagate Expansion Drive/parmec_results/'
+instance1 = ci(case_intact)
 
-cases = cases_list(path_cases)
+x_coord_fuel, y_coord_fuel, z_coord_fuel = instance1.get_fuel_channel_xyz_positions()
+x_coord_inter, y_coord_inter, z_coord_inter = instance1.get_interstitial_channel_xyz_positions()
 
-case = cases[case_number]
 
-case_name = case.split('/')[-1]
+fig = plt.figure()
+ax = Axes3D(fig)
 
-regressor = LinearRegression()
+ax.scatter(x_coord_fuel, y_coord_fuel, z_coord_fuel, c='b', marker='o', label="Fuel Bricks")
+ax.scatter(x_coord_inter, y_coord_inter, z_coord_inter, c='r', marker='o', label="Interstitial Bricks")
 
-X = np.where(np.array(X) > 1, 1, np.array(X))
+plt.legend(loc='lower center', bbox_to_anchor=(0.5, -0.005), shadow=True, ncol=2)
 
-cvr_1 = cross_val_predict(regressor, X, Y_50_1, cv=8)
-cvr_2 = cross_val_predict(regressor, X, Y_50_2, cv=8)
 
-axes = plt.gca()
-axes.set_xlim([min(Y_50_1[case_number])*0.9, max(Y_50_1[case_number])*1.1])
-axes.set_ylim([min(cvr_1[case_number])*0.9, max(cvr_1[case_number])*1.1])
-
-plt.title(case_name)
-plt.xlabel('Actual')
-plt.ylabel('Prediction')
-
-plt.scatter(Y_50_1[case_number], cvr_1[case_number], marker='o')
-plt.plot(Y_50_1[case_number], Y_50_1[case_number])
+ax.view_init(30, angle)
 plt.show()
 
 
@@ -136,23 +124,11 @@ plt.show()
 
 
 
-# case_intact = '/home/huw/PycharmProjects/Results/position_identification/intact_core_rb'
-#
-# instance1 = ci(case_intact)
-#
-# x_coord_fuel, y_coord_fuel, z_coord_fuel = instance1.get_fuel_channel_xyz_positions()
-# x_coord_inter, y_coord_inter, z_coord_inter = instance1.get_interstitial_channel_xyz_positions()
 
 
-# counts_local, counts_adjacent, counts_outer = [], [], []
-#
-# for i in range(1, instance1.last_channel(channel_type='inter') + 1):
-#     local, adjacent, outer = instance1.get_cracks_per_layer(str(i), array_type='pos', channel_type='inter',
-#                                                             inclusive=True)
-#
-#     counts_local.append(local)
-#     counts_adjacent.append(adjacent)
-#     counts_outer.append(outer)
+# with open('objs.pkl', 'rb') as f:
+#     X, Y_50_1, Y_50_2, x_coord_fuel, y_coord_fuel, z_coord_fuel, x_coord_inter, y_coord_inter, z_coord_inter = pickle.load(
+#         f)
 
 # j = 0
 #
@@ -163,7 +139,16 @@ plt.show()
 #     if i % 13 == 0:
 #         x_coord_inter_channel.append(x)
 #         y_coord_inter_channel.append(y)
-
+#
+# counts_local, counts_adjacent, counts_outer = [], [], []
+#
+# for i in range(1, instance1.last_channel(channel_type='inter') + 1):
+#     local, adjacent, outer = instance1.get_cracks_per_layer(str(i), array_type='pos', channel_type='inter',
+#                                                             inclusive=True)
+#
+#     counts_local.append(local)
+#     counts_adjacent.append(adjacent)
+#     counts_outer.append(outer)
 
 # X, Y_50_1 = features_and_labels(path_cases)
 # X, Y_50_2 = features_and_labels(path_cases, result="2")
