@@ -1,6 +1,7 @@
 from core_parse import CoreInstance as ci
 import tools as tls
 import matplotlib.pyplot as plt
+from mpl_toolkits.axes_grid1 import make_axes_locatable
 from sklearn.model_selection import train_test_split, cross_val_predict
 from sklearn.linear_model import LinearRegression, Ridge
 from sklearn.tree import DecisionTreeRegressor
@@ -9,8 +10,10 @@ from sklearn.metrics import mean_squared_error, r2_score
 import numpy as np
 import itertools
 import sys
-
+import pandas as pd
 import pickle
+from random import seed
+from random import randint
 
 
 def cases_list(path_string):
@@ -42,41 +45,138 @@ def features_and_labels(path_string, time=50, result="1"):
     return X, Y
 
 
-def result_time_history(case, result="1", time_steps=271):
-    """Gets a result time history for one case i.e. one result at each time"""
+# case_intact = '/home/huw/PycharmProjects/Results/position_identification/intact_core_rb'
+# instance = ci(case_intact)
+#
+# channel_coord_list_fuel = instance.get_brick_xyz_positions('xy', channel_type='fuel')
+#
+# case_root = '/media/huw/Seagate Expansion Drive/parmec_results/'
+#
+# total_cases = cases_list(case_root)
+#
+# seed(3)
+#
+# no_cases = 3
+#
+# cases = []
+# instances = []
 
-    instance = ci(case)
+# instances = []
+# for i in range(no_cases):
+#     case_no = randint(0, len(total_cases) - 1)
+#     case = total_cases[case_no].split('/')[-1]
+#     cases.append(case)
+#     path = case_root + case + "/" + case
+#     instances.append(ci(path))
 
-    time_history = []
+# channel_coord_list_inter = instances[0].get_brick_xyz_positions('xy', channel_type='inter')
+# channel_type = 'inter'
+#
+# earthquake_acceleration = (pd.read_csv('time_history.csv').values[:, 2])
+#
+# frames_of_interest = [48, 55, 65, 68]
+#
+# fig, axs = plt.subplots(nrows=len(frames_of_interest), ncols=no_cases, figsize=(15, 15))
+#
+# plots = []
+#
+# result_max = 0
+# result_min = 0
 
-    for time in range(1, time_steps + 1):
-        time_history.append(instance.get_result_at_time(time, result_columns=str(result)))
+#
+# # Iterate through the frames of interest
+# for frame_no, frame in enumerate(frames_of_interest):
+#
+#     accel = earthquake_acceleration[frame]
+#
+#     # Iterate through instances
+#     for instance_no, instance in enumerate(instances):
+#
+#         result = instance.get_result_at_time(time_index=frame, result_columns="2")
+#
+#         if np.amax(result) > result_max: result_max = np.amax(result)
+#         if np.amin(result) < result_min: result_min = np.amin(result)
+#
+#         plots.append(axs[frame_no, instance_no].scatter(channel_coord_list_inter[0], channel_coord_list_inter[1],
+#                                                         marker='o', c=result, cmap='nipy_spectral', label='inter',
+#                                                         s=100))
+#
+#         # axs[frame_no, instance_no].axis("off")
+#         axs[0, instance_no].title.set_text(cases[instance_no])
+#
+#         row_title = "Frame: " + str(frame) + " - Acc: " + str(round(accel, 2))
+#
+#         axs[frame_no, 0].set_ylabel(row_title, rotation=90, size='large')
+#
+#         axs[frame_no, instance_no].set_yticklabels([])
+#         axs[frame_no, instance_no].set_xticklabels([])
 
-    return time_history
+# ###############
+# for plot in plots:
+#     plot.set_clim(result_min, result_max)
+# ###############
+#
+#
+#
+# divider = make_axes_locatable(axs[frame_no, 1])
+# cax = divider.new_vertical(size="5%", pack_start=True)
+# fig.add_axes(cax)
+#
+# fig.colorbar(plots[-1], cax=cax, orientation='horizontal')
+# #
+#
+#
+#
+# plt.show()
+
+# plt.savefig("./Comparing_three_cases/displacement1_at_times.png")
+
+# time_history_result = instance1.result_time_history()
 
 
+# for i, time_result in enumerate(time_history_result):
+#     title = "Instance: " + case.split('/')[-1] + " - Displacement at time-step: " + str(i)
+#     conc_filenm = case.split('/')[-1] + "/" + instance1.get_id() + "-" + str(i)
+#     plt.title(title)
+#
+#     plt.scatter(channel_coord_list_inter[0], channel_coord_list_inter[1], marker='o', c=time_result,
+#                 cmap='plasma', label='inter')
+#     plt.clim(min_result, max_result)
+#     plt.colorbar()
+#     plt.savefig(conc_filenm)
+#     plt.clf()
+# plt.show()
 
-case_intact = '/home/huw/PycharmProjects/Results/position_identification/intact_core_rb'
+# plt.scatter(x_coord_inter_channel, y_coord_inter_channel, c=time_result, marker='o',
+#         label="Magnitude of Displacement in x-direction (b = 1)")
 
-instance1 = ci(case_intact)
+# title = "Instance: " + case_name + " - Result at timestep: " + str(i)
 
-x_coord_fuel, y_coord_fuel, z_coord_fuel = instance1.get_fuel_channel_xyz_positions()
-x_coord_inter, y_coord_inter, z_coord_inter = instance1.get_interstitial_channel_xyz_positions()
+# plt.title(title)
+# plt.xlabel('x (meters)')
+# plt.ylabel('y (meters)')
+# plt.legend(loc='lower center', bbox_to_anchor=(0.5, -0.35), shadow=True, ncol=2)
 
+# name = "./Figures1/" + case_name + "_i" + str(i) + '_r' + '1' + '.png'
+#
+# plt.savefig(name)
 
-fig = plt.figure()
-ax = Axes3D(fig)
-
-ax.scatter(x_coord_fuel, y_coord_fuel, z_coord_fuel, c='b', marker='o', label="Fuel Bricks")
-ax.scatter(x_coord_inter, y_coord_inter, z_coord_inter, c='r', marker='o', label="Interstitial Bricks")
-
-plt.legend(loc='lower center', bbox_to_anchor=(0.5, -0.005), shadow=True, ncol=2)
-
-
-ax.view_init(30, angle)
-plt.show()
-
-
+# x_coord_fuel, y_coord_fuel, z_coord_fuel = instance1.get_fuel_channel_xyz_positions()
+# x_coord_inter, y_coord_inter, z_coord_inter = instance1.get_interstitial_channel_xyz_positions()
+#
+# fig = plt.figure()
+# ax = Axes3D(fig)
+#
+# ax.scatter(x_coord_fuel, y_coord_fuel, z_coord_fuel, c='b', marker='o', label="Fuel Bricks")
+# ax.scatter(x_coord_inter, y_coord_inter, z_coord_inter, c='r', marker='o', label="Interstitial Bricks")
+#
+# plt.legend(loc='lower center', bbox_to_anchor=(0.5, -0.005), shadow=True, ncol=2)
+#
+# angle = 60
+#
+# ax.view_init(90, 45)
+# # plt.axis('off')
+# plt.show()
 
 #
 # instance1 = ci(case)
@@ -119,11 +219,7 @@ plt.show()
 #     name = "./Figures1/" + case_name + "_i" + str(i) + '_r' + '1' + '.png'
 #
 #     plt.savefig(name)
-    # plt.show()
-
-
-
-
+# plt.show()
 
 
 # with open('objs.pkl', 'rb') as f:
