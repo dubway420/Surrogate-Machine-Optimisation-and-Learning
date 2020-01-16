@@ -319,6 +319,24 @@ class CoreInstance:
 
         return output_array
 
+    def channel_specific_cracks(self):
+        """ Return the number of cracks local to each channel"""
+
+        channel_type = 'inter'
+
+        counts_local, counts_adjacent, counts_outer = [], [], []
+
+        # Iterate through channels
+        for i in range(1, self.last_channel(channel_type=channel_type) + 1):
+            local, adjacent, outer = self.get_cracks_per_layer(str(i), array_type='pos', channel_type=channel_type,
+                    inclusive=True)
+
+            counts_local.append(local)
+            counts_adjacent.append(adjacent)
+            counts_outer.append(outer)
+
+        return counts_local, counts_adjacent, counts_outer
+
     # ==========================================================
     # ----------------------PROCESSING--------------------------
     # ==========================================================
@@ -473,23 +491,37 @@ class CoreInstance:
 
         return time_array_sorted
 
-    def get_interstitial_channel_xyz_positions(self):
+    def result_time_history(self, result="1", time_steps=271):
+        """Gets a result time history for one case i.e. one result at each time"""
 
-        # Get x and y positions of channels at start of analysis
-        x = np.array(self.get_result_at_time(time_index=0, result_columns="35", result_type="all"))
-        y = np.array(self.get_result_at_time(time_index=0, result_columns="36", result_type="all"))
-        z = np.array(self.get_result_at_time(time_index=0, result_columns="37", result_type="all"))
+        time_history = []
 
-        return np.concatenate(x).flatten(), np.concatenate(y).flatten(), np.concatenate(z).flatten()
+        for time in range(1, time_steps + 1):
+            time_history.append(self.get_result_at_time(time, result_columns=str(result)))
 
-    def get_fuel_channel_xyz_positions(self):
+        return time_history
 
-        # Get x and y positions of channels at start of analysis
-        x = np.array(self.get_fuel_result_at_time(time_index=0, result_columns="35", result_type="all"))
-        y = np.array(self.get_fuel_result_at_time(time_index=0, result_columns="36", result_type="all"))
-        z = np.array(self.get_fuel_result_at_time(time_index=0, result_columns="37", result_type="all"))
+    def get_brick_xyz_positions(self, include='xyz', channels_only=1, channel_type='interstitial'):
 
-        return np.concatenate(x).flatten(), np.concatenate(y).flatten(), np.concatenate(z).flatten()
+        # Allows the user to request a value for each channel only or every brick
+        if channels_only == 1:
+            result_type = "max"
+        else:
+            result_type = "all"
+
+        # Fuel or interstitial
+        if tls.is_in(channel_type, 'inter'):
+            command = self.get_result_at_time
+        else:
+            command = self.get_fuel_result_at_time
+
+        return_array = []
+
+        for letter in include:
+            result_column = str(ord(letter) - 85)
+            return_array.append(np.array(command(time_index=0, result_columns=result_column, result_type=result_type)))
+
+        return return_array
 
     def channel_coordinates(self, number, channel_type="fuel"):
         """ For a given channel integer, returns a tuple containing the row and column coordinates of its location"""

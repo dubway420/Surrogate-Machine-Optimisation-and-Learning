@@ -218,3 +218,4 @@ def absolute_sum(array):
 
 def return_all(array):
     return array
+

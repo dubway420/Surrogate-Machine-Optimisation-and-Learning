@@ -188,3 +188,41 @@ for result in results_of_interest:
     # Saves the file
     filenm = "./Comparing_three_cases/results" + str(result) + ".png"
     plt.savefig(filenm)
+
+    ########################################################################################
+    ######################### result vs concentration ######################################
+    ########################################################################################
+
+    fig = plt.figure(figsize=(24, 12))
+
+    # Creates a plot grid. Number of rows is number of frames of interest, number of columns is cases of interest
+    grid_compare = AxesGrid(fig, 111,
+                            nrows_ncols=(len(frames_of_interest), len(cases)),
+                            axes_pad=0.12,
+                            cbar_pad=0.2
+                            )
+
+    frame_no = 0
+
+    # Iterates through all plots in the grid, assigning the results to the plot
+    for i, ax in enumerate(grid_compare):
+
+        # If the iterator is in the first row, assigns the title as the case
+        if i < len(cases):
+            column_title = cases[i]
+            ax.title.set_text(column_title)
+
+        # If the iterator is in the first column, assigns a row title which includes the frame number and earthquake
+        # acceleration
+        if (i % 3) == 0:
+            frame = frames_of_interest[frame_no]
+            row_title = "Frame: " + str(frame) + " - Acc: " + str(round(earthquake_acceleration[frame], 2))
+            ax.set_ylabel(row_title)
+            frame_no += 1
+
+        # Plots the results for the case/frame
+        im = ax.scatter(cracks_channel_specific[(i % 3)], results[i], marker='o')
+
+    # Saves the file
+    filenm = "./Comparing_three_cases/correlation" + str(result) + ".png"
+    plt.savefig(filenm)
