@@ -38,6 +38,19 @@ def directories_in_path(path):
     return cases
 
 
+def cases_list(path_string):
+    """ For a given directory, returns a list of instance cases, including the original path """
+
+    cases = directories_in_path(path_string)
+
+    case_list = []
+
+    for base in cases:
+        case_list.append(path_string + base + '/' + base)
+
+    return case_list
+
+
 def split_by_column_uniques(input_array, column_no):
     """ Recursively splits a 2D array by a list of columns"""
 
@@ -218,4 +231,3 @@ def absolute_sum(array):
 
 def return_all(array):
     return array
-
