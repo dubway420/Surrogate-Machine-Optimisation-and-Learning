@@ -1,8 +1,12 @@
 <component name="ProjectDictionaryState">
-  <dictionary name="huw">
+  <dictionary name="Huw">
     <words>
-      <w>keras</w>
-      <w>relu</w>
+      <w>conv</w>
+      <w>crossentropy</w>
+      <w>regressor</w>
+      <w>regressors</w>
+      <w>softmax</w>
+      <w>vals</w>
     </words>
   </dictionary>
 </component>

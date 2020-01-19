@@ -1,5 +1,5 @@
-input vs output graph
-prediction vs actual graph
-through time gif
+multivariate cnn
+
+
 CNN
 take magnitude of x and y displacement

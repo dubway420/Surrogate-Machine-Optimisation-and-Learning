@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.axes_grid1 import AxesGrid
 import numpy as np
 from core_parse import CoreInstance as CoreInstance
-from development import cases_list
+from tools import cases_list
 from random import seed
 from random import randint
 import pandas as pd
@@ -16,7 +16,7 @@ def turn_off_graph_decorations(axis):
 
 
 ##################################################
-################ USER INPUTS #####################
+# ############### USER INPUTS ####################
 ##################################################
 
 # This seed is used to generate numbers to select cases
@@ -72,7 +72,7 @@ for i in range(no_cases):
 channel_coord_list_inter = instances[0].get_brick_xyz_positions('xy', channel_type='inter')
 
 ##################################################
-########## CRACK CONCENTRATION PLOT ##############
+# ######### CRACK CONCENTRATION PLOT #############
 ##################################################
 
 # Creates the figure
@@ -114,7 +114,7 @@ filenm = "./Comparing_three_cases/concentration_of_cracks.png"
 plt.savefig(filenm)
 
 ##################################################
-################# RESULT PLOT ####################
+# ################ RESULT PLOT ###################
 ##################################################
 
 channel_type = 'inter'
@@ -190,7 +190,7 @@ for result in results_of_interest:
     plt.savefig(filenm)
 
     ########################################################################################
-    ######################### result vs concentration ######################################
+    # ######################## result vs concentration #####################################
     ########################################################################################
 
     fig = plt.figure(figsize=(24, 12))
