@@ -3,8 +3,10 @@
     <words>
       <w>conv</w>
       <w>crossentropy</w>
+      <w>perceptron</w>
       <w>regressor</w>
       <w>regressors</w>
+      <w>relu</w>
       <w>softmax</w>
       <w>vals</w>
     </words>
