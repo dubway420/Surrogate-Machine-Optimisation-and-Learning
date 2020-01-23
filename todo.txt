@@ -1,5 +1,6 @@
-input vs output graph
-prediction vs actual graph
-through time gif
-CNN
+How much variation is there between instances? side by side analysis
+Correlation between no. cracks/displacement
+Pick frame where correlation is highest?
+
 take magnitude of x and y displacement
+CNN
