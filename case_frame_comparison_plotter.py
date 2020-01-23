@@ -2,10 +2,12 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.axes_grid1 import AxesGrid
 import numpy as np
 from core_parse import CoreInstance as CoreInstance
-from development import cases_list
+from tools import cases_list
 from random import seed
 from random import randint
 import pandas as pd
+from scipy.stats import pearsonr
+import seaborn as sns
 
 
 def turn_off_graph_decorations(axis):
@@ -16,7 +18,7 @@ def turn_off_graph_decorations(axis):
 
 
 ##################################################
-################ USER INPUTS #####################
+# ############### USER INPUTS ####################
 ##################################################
 
 # This seed is used to generate numbers to select cases
@@ -29,11 +31,11 @@ frames_of_interest = [48, 55, 65, 68]
 results_of_interest = [1, 2]
 
 # Make sure this points to the folder which contains all of the cases
-case_root = '/media/huw/Seagate Expansion Drive/parmec_results/'
+case_root = 'D:/parmec_results/'
 ##################################################
 
 # This should point to an intact case
-case_intact = '/home/huw/PycharmProjects/Results/position_identification/intact_core_rb'
+case_intact = 'C:/Users/Huw/PycharmProjects/Results/intact_core'
 
 # Generates a core instance of the intact case
 instance = CoreInstance(case_intact)
@@ -55,6 +57,7 @@ cracks_channel_specific = []
 for i in range(no_cases):
     # for each case, generates a number between 0 and the count of cases
     case_no = randint(0, len(total_cases) - 1)
+    print(case_no)
 
     # Gets the base name of the case and appends it to a list
     case = total_cases[case_no].split('/')[-1]
@@ -72,7 +75,7 @@ for i in range(no_cases):
 channel_coord_list_inter = instances[0].get_brick_xyz_positions('xy', channel_type='inter')
 
 ##################################################
-########## CRACK CONCENTRATION PLOT ##############
+# ######### CRACK CONCENTRATION PLOT #############
 ##################################################
 
 # Creates the figure
@@ -114,7 +117,7 @@ filenm = "./Comparing_three_cases/concentration_of_cracks.png"
 plt.savefig(filenm)
 
 ##################################################
-################# RESULT PLOT ####################
+# ################ RESULT PLOT ###################
 ##################################################
 
 channel_type = 'inter'
@@ -190,7 +193,7 @@ for result in results_of_interest:
     plt.savefig(filenm)
 
     ########################################################################################
-    ######################### result vs concentration ######################################
+    # ######################## result vs concentration #####################################
     ########################################################################################
 
     fig = plt.figure(figsize=(24, 12))
@@ -204,6 +207,7 @@ for result in results_of_interest:
 
     frame_no = 0
 
+    pearson_coeffs = [[], [], []]
     # Iterates through all plots in the grid, assigning the results to the plot
     for i, ax in enumerate(grid_compare):
 
@@ -221,8 +225,14 @@ for result in results_of_interest:
             frame_no += 1
 
         # Plots the results for the case/frame
-        im = ax.scatter(cracks_channel_specific[(i % 3)], results[i], marker='o')
+
+        x = cracks_channel_specific[(i % 3)]
+        y = results[i]
+        pearson_coeffs[(i % 3)].append(pearsonr(x, y)[0])
+        im = ax.scatter(x, y, marker='o')
+        ax.plot(np.unique(x), np.poly1d(np.polyfit(x, y, 2))(np.unique(x)))
 
     # Saves the file
     filenm = "./Comparing_three_cases/correlation" + str(result) + ".png"
     plt.savefig(filenm)
+    print(np.mean(pearson_coeffs, axis=0))

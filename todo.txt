@@ -1,6 +1,12 @@
+<<<<<<< HEAD
 How much variation is there between instances? side by side analysis
 Correlation between no. cracks/displacement
 Pick frame where correlation is highest?
 
 take magnitude of x and y displacement
+=======
+multivariate cnn
+
+
+>>>>>>> 417c534212b6538f9c05428ec1e673ad53892659
 CNN

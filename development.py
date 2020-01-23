@@ -1,316 +1,358 @@
-from core_parse import CoreInstance as ci
-import tools as tls
+# from core_parse import CoreInstance as ci
+# import tools as tls
 import matplotlib.pyplot as plt
-from mpl_toolkits.axes_grid1 import make_axes_locatable
-from sklearn.model_selection import train_test_split, cross_val_predict
-from sklearn.linear_model import LinearRegression, Ridge
-from sklearn.tree import DecisionTreeRegressor
-from mpl_toolkits.mplot3d import Axes3D
-from sklearn.metrics import mean_squared_error, r2_score
-import numpy as np
-import itertools
-import sys
-import pandas as pd
+# from mpl_toolkits.axes_grid1 import make_axes_locatable
+# from sklearn.model_selection import train_test_split, cross_val_predict
+# from sklearn.linear_model import LinearRegression, Ridge
+# from sklearn.tree import DecisionTreeRegressor
+# from mpl_toolkits.mplot3d import Axes3D
+# from sklearn.metrics import mean_squared_error, r2_score
+# from keras.layers.convolutional import Conv1D, Conv2D
+# from keras.layers import Flatten
+# import numpy as np
 import pickle
-from random import seed
-from random import randint
-
-
-def cases_list(path_string):
-    """ For a given directory, returns a list of instance cases, including the original path """
-
-    cases = tls.directories_in_path(path_string)
-
-    case_list = []
-
-    for base in cases:
-        case_list.append(path_string + base + '/' + base)
-
-    return case_list
-
-
-def features_and_labels(path_string, time=50, result="1"):
-    """ Gets the features and labels from the folder of results"""
-
-    cases = cases_list(path_string)
-
-    X, Y = [], []
-
-    for case in cases:
-        instance = ci(case)
-
-        X.append(instance.linear_crack_array_1d())
-        Y.append(instance.get_result_at_time(time, result_columns=str(result)))
-
-    return X, Y
-
-
-# case_intact = '/home/huw/PycharmProjects/Results/position_identification/intact_core_rb'
-# instance = ci(case_intact)
-#
-# channel_coord_list_fuel = instance.get_brick_xyz_positions('xy', channel_type='fuel')
-#
-# case_root = '/media/huw/Seagate Expansion Drive/parmec_results/'
-#
-# total_cases = cases_list(case_root)
-#
-# seed(3)
-#
-# no_cases = 3
-#
-# cases = []
-# instances = []
-
-# instances = []
-# for i in range(no_cases):
-#     case_no = randint(0, len(total_cases) - 1)
-#     case = total_cases[case_no].split('/')[-1]
-#     cases.append(case)
-#     path = case_root + case + "/" + case
-#     instances.append(ci(path))
-
-# channel_coord_list_inter = instances[0].get_brick_xyz_positions('xy', channel_type='inter')
-# channel_type = 'inter'
-#
-# earthquake_acceleration = (pd.read_csv('time_history.csv').values[:, 2])
-#
-# frames_of_interest = [48, 55, 65, 68]
-#
-# fig, axs = plt.subplots(nrows=len(frames_of_interest), ncols=no_cases, figsize=(15, 15))
-#
-# plots = []
-#
-# result_max = 0
-# result_min = 0
+# from keras.models import Sequential
+# from keras.layers.core import Dense
+# from pyimagesearch import models
+# from keras.optimizers import Adam
 
 #
-# # Iterate through the frames of interest
-# for frame_no, frame in enumerate(frames_of_interest):
+# def features_and_labels_single_frame(path_string, time=50, result="1", x_type='positions'):
+#     """ Gets the features and labels from the folder of results"""
 #
-#     accel = earthquake_acceleration[frame]
+#     cases = tls.cases_list(path_string)
 #
-#     # Iterate through instances
-#     for instance_no, instance in enumerate(instances):
+#     X, Y = [], []
 #
-#         result = instance.get_result_at_time(time_index=frame, result_columns="2")
+#     for case in cases:
+#         instance = ci(case)
 #
-#         if np.amax(result) > result_max: result_max = np.amax(result)
-#         if np.amin(result) < result_min: result_min = np.amin(result)
+#         X.append(instance.linear_crack_array_1d(array_type=x_type))
+#         Y.append(instance.get_result_at_time(time, result_columns=str(result)))
 #
-#         plots.append(axs[frame_no, instance_no].scatter(channel_coord_list_inter[0], channel_coord_list_inter[1],
-#                                                         marker='o', c=result, cmap='nipy_spectral', label='inter',
-#                                                         s=100))
+#     return X, Y
 #
-#         # axs[frame_no, instance_no].axis("off")
-#         axs[0, instance_no].title.set_text(cases[instance_no])
 #
-#         row_title = "Frame: " + str(frame) + " - Acc: " + str(round(accel, 2))
+# def multi_layer_perceptron(input_dims, output_dims):
+#     # define our MLP network
+#     model = Sequential()
 #
-#         axs[frame_no, 0].set_ylabel(row_title, rotation=90, size='large')
+#     model.name = "Multi-layer Perceptron"
 #
-#         axs[frame_no, instance_no].set_yticklabels([])
-#         axs[frame_no, instance_no].set_xticklabels([])
+#     model.add(Dense(8, input_dim=input_dims, activation="relu"))
+#     model.add(Dense(4, activation="relu"))
+#     model.add(Dense(output_dims, activation="linear"))
+#
+#     # return our model
+#     return model
+#
+#
+# def wider_model(input_dims, output_dims):
+#     # create model
+#     model = Sequential()
+#
+#     model.name = "Wider Perceptron"
+#
+#     model.add(Dense(20, input_dim=input_dims, kernel_initializer='normal', activation='relu'))
+#     model.add(Dense(4, activation="relu"))
+#     model.add(Dense(output_dims, kernel_initializer='normal'))
+#
+#     return model
+#
+#
+# def cnn1D(input_dims, output_dims):
+#     # create model
+#     model = Sequential()  # add model layers
+#     model.add(Conv1D(64, kernel_size=3, activation='relu', input_shape=input_dims))
+#     model.add(Conv1D(32, kernel_size=3, activation='relu'))
+#     model.add(Flatten())
+#     model.add(Dense(output_dims, activation='softmax'))
+#
+#     # Compile model
+#     # model.compile(loss='mean_squared_error', optimizer='adam')
+#     return model
+#
+#
+# def cnn2D(input_dims, output_dims):
+#     # create model
+#     model = Sequential()  # add model layers
+#     model.add(Conv2D(64, kernel_size=3, activation='relu', input_shape=input_dims))
+#     model.add(Conv2D(32, kernel_size=3, activation='relu'))
+#     model.add(Flatten())
+#     model.add(Dense(output_dims, activation='softmax'))
+#
+#     # Name the neural network
+#     model.name = "CNN 1"
+#
+#     # model.compile(loss='mean_squared_error', optimizer='adam')
+#     return model
+#
 
-# ###############
-# for plot in plots:
-#     plot.set_clim(result_min, result_max)
-# ###############
-#
-#
-#
-# divider = make_axes_locatable(axs[frame_no, 1])
-# cax = divider.new_vertical(size="5%", pack_start=True)
-# fig.add_axes(cax)
-#
-# fig.colorbar(plots[-1], cax=cax, orientation='horizontal')
-# #
-#
-#
-#
-# plt.show()
+##########
+# CAN COMMENT ALL THIS OUT AFTER DOING IT ONCE
+##########
 
-# plt.savefig("./Comparing_three_cases/displacement1_at_times.png")
-
-# time_history_result = instance1.result_time_history()
-
-
-# for i, time_result in enumerate(time_history_result):
-#     title = "Instance: " + case.split('/')[-1] + " - Displacement at time-step: " + str(i)
-#     conc_filenm = case.split('/')[-1] + "/" + instance1.get_id() + "-" + str(i)
-#     plt.title(title)
+# case_intact = 'C:/Users/Huw/PycharmProjects/Results/intact_core'
+# instance_intact = ci(case_intact)
 #
-#     plt.scatter(channel_coord_list_inter[0], channel_coord_list_inter[1], marker='o', c=time_result,
-#                 cmap='plasma', label='inter')
-#     plt.clim(min_result, max_result)
-#     plt.colorbar()
-#     plt.savefig(conc_filenm)
-#     plt.clf()
-# plt.show()
-
-# plt.scatter(x_coord_inter_channel, y_coord_inter_channel, c=time_result, marker='o',
-#         label="Magnitude of Displacement in x-direction (b = 1)")
-
-# title = "Instance: " + case_name + " - Result at timestep: " + str(i)
-
-# plt.title(title)
-# plt.xlabel('x (meters)')
-# plt.ylabel('y (meters)')
-# plt.legend(loc='lower center', bbox_to_anchor=(0.5, -0.35), shadow=True, ncol=2)
-
-# name = "./Figures1/" + case_name + "_i" + str(i) + '_r' + '1' + '.png'
+# # spatial coordinates of the interstitial channels - two lists, each of length 321.
+# # first list contains x, second list contains y coordinates
+# channel_coord_list_inter = instance_intact.get_brick_xyz_positions('xy', channel_type='inter')
 #
-# plt.savefig(name)
-
-# x_coord_fuel, y_coord_fuel, z_coord_fuel = instance1.get_fuel_channel_xyz_positions()
-# x_coord_inter, y_coord_inter, z_coord_inter = instance1.get_interstitial_channel_xyz_positions()
+# # Location of results
+case_root = 'D:/parmec_results/'
 #
-# fig = plt.figure()
-# ax = Axes3D(fig)
+# X, Y = features_and_labels_single_frame(case_root, time=48)
 #
-# ax.scatter(x_coord_fuel, y_coord_fuel, z_coord_fuel, c='b', marker='o', label="Fuel Bricks")
-# ax.scatter(x_coord_inter, y_coord_inter, z_coord_inter, c='r', marker='o', label="Interstitial Bricks")
-#
-# plt.legend(loc='lower center', bbox_to_anchor=(0.5, -0.005), shadow=True, ncol=2)
-#
-# angle = 60
-#
-# ax.view_init(90, 45)
-# # plt.axis('off')
-# plt.show()
-
-#
-# instance1 = ci(case)
-#
-# counts_local, counts_adjacent, counts_outer = [], [], []
-#
-# for i in range(1, instance1.last_channel(channel_type='inter') + 1):
-#     local, adjacent, outer = instance1.get_cracks_per_layer(str(i), array_type='pos', channel_type='inter',
-#                                                             inclusive=True)
-#
-#     counts_local.append(local)
-#     counts_adjacent.append(adjacent)
-#     counts_outer.append(outer)
-#
-# Y_time = result_time_history(case)
-#
-# for i, time_result in enumerate(Y_time):
-#
-#     plt.subplot(211)
-#
-#     title = "Instance: " + case_name + " - Concentration of Cracks "
-#     plt.title(title)
-#
-#     plt.scatter(x_coord_inter_channel, y_coord_inter_channel, c=counts_local, marker='o', label="Local")
-#
-#     plt.axis('off')
-#
-#     plt.subplot(212)
-#
-#     plt.scatter(x_coord_inter_channel, y_coord_inter_channel, c=time_result, marker='o',
-#             label="Magnitude of Displacement in x-direction (b = 1)")
-#
-#     title = "Instance: " + case_name + " - Result at timestep: " + str(i)
-#
-#     plt.title(title)
-#     # plt.xlabel('x (meters)')
-#     # plt.ylabel('y (meters)')
-#     # plt.legend(loc='lower center', bbox_to_anchor=(0.5, -0.35), shadow=True, ncol=2)
-#
-#     name = "./Figures1/" + case_name + "_i" + str(i) + '_r' + '1' + '.png'
-#
-#     plt.savefig(name)
-# plt.show()
-
-
-# with open('objs.pkl', 'rb') as f:
-#     X, Y_50_1, Y_50_2, x_coord_fuel, y_coord_fuel, z_coord_fuel, x_coord_inter, y_coord_inter, z_coord_inter = pickle.load(
-#         f)
-
-# j = 0
-#
-# i = 0
-# x_coord_inter_channel, y_coord_inter_channel = [], []
-# for x, y in zip(x_coord_inter, y_coord_inter):
-#     i += 1
-#     if i % 13 == 0:
-#         x_coord_inter_channel.append(x)
-#         y_coord_inter_channel.append(y)
-#
-# counts_local, counts_adjacent, counts_outer = [], [], []
-#
-# for i in range(1, instance1.last_channel(channel_type='inter') + 1):
-#     local, adjacent, outer = instance1.get_cracks_per_layer(str(i), array_type='pos', channel_type='inter',
-#                                                             inclusive=True)
-#
-#     counts_local.append(local)
-#     counts_adjacent.append(adjacent)
-#     counts_outer.append(outer)
-
-# X, Y_50_1 = features_and_labels(path_cases)
-# X, Y_50_2 = features_and_labels(path_cases, result="2")
-
-# with open('data.pkl', 'wb') as f:
-#     pickle.dump([X, Y_50_1, Y_50_2, x_coord_inter_channel, y_coord_inter_channel], f)
-
-# plt.scatter(x_coord_inter_channel, y_coord_inter_channel, c='black', marker='o',
-#             label="Interstitial Channels")
-
-# plt.scatter(x_coord_inter_channel, y_coord_inter_channel, c=counts_local, marker='o', label="Local")
-# plt.legend(loc='lower center', bbox_to_anchor=(0.5, -0.15), shadow=True, ncol=2)
-# plt.show()
-#
-# plt.scatter(x_coord_inter_channel, y_coord_inter_channel, c=Y_50_1[case_number], marker='o', label="Result")
-# plt.legend(loc='lower center', bbox_to_anchor=(0.5, -0.15), shadow=True, ncol=2)
-# plt.show()
-# print(x_coord_inter)
-# fig = plt.figure()
-# ax = Axes3D(fig)
-# #
-# ax.scatter(x_coord_fuel, y_coord_fuel, z_coord_fuel, c='b', marker='o', label="Fuel Channels")
-# ax.scatter(x_coord_inter, y_coord_inter, z_coord_inter, c='r', marker='o', label="Interstitial Channels")
-# ax.view_init(elev=10., azim=30)
-# plt.legend(loc='lower center', bbox_to_anchor=(0.5, -0.005), shadow=True, ncol=2)
-# plt.show()
-
-
-#
-# plt.scatter(x_coord_fuel, z_coord_fuel, c='b', marker='o', label="Fuel Channels")
-# plt.scatter(x_coord_inter, z_coord_inter, c='r', marker='o', label="Interstitial Channels")
-#
-# plt.legend(loc='lower center', bbox_to_anchor=(0.5, -0.15), shadow=True, ncol=2)
-# plt.show()
-
-
-#     X.append(instance1.linear_crack_array_1d())
-#     Y.append(instance1.get_result_at_time(50, result_columns="1"))
-
 # with open('objs.pkl', 'wb') as f:
-#     pickle.dump([X, Y, x_coord, y_coord], f)
+#     pickle.dump([X, Y, channel_coord_list_inter], f)
 
-# # # Getting back the objects:
-# with open('objs.pkl', 'rb') as f:
-#     X, Y, x_coord, y_coord = pickle.load(f)
+# ##########
 
-# Y = np.array(Y) * 1000
-# regressors = [LinearRegression(), DecisionTreeRegressor(), Ridge()]
+# Load the dataset and channel coordinates
+with open('objs.pkl', 'rb') as f:
+    X, Y, channel_coord_list_inter, cross_val_results_traditional, mean_squared_errors = pickle.load(f)
+
+
+# # Convert to numpy arrays
+# X = np.array(X)
+# Y = np.array(Y)
+#
+# # X_1D = numpyX.reshape((numpyX.shape[0], numpyX.shape[1], 1))
+# # X_2D = numpyX.reshape((numpyX.shape[0], 284, 7, 1))
+#
+# X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2, random_state=42)
+#
+# # 1D data
+# # X_train_1D = X_train.reshape(X_train.shape[0], X_train.shape[1], 1)
+# # X_test_1D = X_test.reshape(X_test.shape[0], X_test.shape[1], 1)
+#
+# # 2D data
+# X_train_2D = X_train.reshape(X_train.shape[0], 284, 7, 1)
+# X_test_2D = X_test.reshape(X_test.shape[0], 284, 7, 1)
+#
+# regressors_traditional = [LinearRegression, DecisionTreeRegressor, Ridge]
+#
+# regressors_NN_1D = [
+#                     multi_layer_perceptron(X_train.shape[1], len(Y_train[0])),
+#                     wider_model(X_train.shape[1], len(Y_train[0]))
+#                     ]
+#
+# regressors_NN_2D = [
+#                     cnn2D((X_train_2D.shape[1], X_train_2D.shape[2], X_train_2D.shape[3]), len(Y_train[0])),
+#                     models.create_cnn(X_train_2D.shape[2], X_train_2D.shape[1], 1, regress=True)
+#                     ]
+#
+# opt = Adam(lr=1e-3, decay=1e-3 / 200)
+#
+# print("\n Starting 1D input models \n")
+#
+# model_names = []
+#
+# training_results = []
+# testing_results = []
+#
+# training_accuracies = []
+# testing_accuracies = []
+#
+# for regressor in regressors_traditional:
+#
+#     print("\n=============\n")
+#
+#     model_name = regressor.__name__
+#     print(model_name)
+#     print("\n")
+#
+#     model = regressor()
+#     model.fit(X_train, Y_train)
+#     training_result = model.predict(X_train)
+#     testing_result = model.predict(X_test)
+#
+#     training_results.append(training_result)
+#     testing_results.append(testing_result)
+#
+#     mse_training = round(mean_squared_error(training_result, Y_train), 2)
+#     mse_testing = round(mean_squared_error(testing_result, Y_test), 2)
+#
+#     training_accuracies.append(mse_training)
+#     testing_accuracies.append(mse_testing)
+#
+#     print("Training accuracy: ", mse_training)
+#     print("Testing accuracy: ", mse_testing)
+#
+#
+# for model in regressors_NN_1D:
+#     model.compile(loss="mean_absolute_percentage_error", optimizer=opt)
+#     model.fit(X_train, Y_train, epochs=500, validation_data=(X_test, Y_test), verbose=0)
+#
+#     print("\n=============\n")
+#
+#     model_name = model.name
+#     print(model_name)
+#     print("\n")
+#
+#     model_names.append(model_name)
+#
+#     training_result = model.predict(X_train)
+#     testing_result = model.predict(X_test)
+#
+#     training_results.append(training_result)
+#     testing_results.append(testing_result)
+#
+#     mse_training = round(mean_squared_error(training_result, Y_train), 2)
+#     mse_testing = round(mean_squared_error(testing_result, Y_test), 2)
+#
+#     training_accuracies.append(mse_training)
+#     testing_accuracies.append(mse_testing)
+#
+#     print("Training accuracy: ", mse_training)
+#     print("Testing accuracy: ", mse_testing)
+#
+#     print("\n=============\n")
+#
+# print("\n Starting 2D input models \n")
+#
+# for model in regressors_NN_2D:
+#     model.compile(loss="mean_absolute_percentage_error", optimizer=opt)
+#     model.fit(X_train_2D, Y_train, epochs=500, validation_data=(X_test_2D, Y_test), verbose=0)
+#
+#     print("\n=============\n")
+#
+#     model_name = model.name
+#     print(model_name)
+#     print("\n")
+#
+#     model_names.append(model_name)
+#
+#     training_result = model.predict(X_train_2D)
+#     testing_result = model.predict(X_test_2D)
+#
+#     training_results.append(training_result)
+#     testing_results.append(testing_result)
+#
+#     mse_training = round(mean_squared_error(training_result, Y_train), 2)
+#     mse_testing = round(mean_squared_error(testing_result, Y_test), 2)
+#
+#     training_accuracies.append(mse_training)
+#     testing_accuracies.append(mse_testing)
+#
+#     print("Training accuracy: ", mse_training)
+#     print("Testing accuracy: ", mse_testing)
+#
+#     print("\n=============\n")
+#
+# names = ['LR', 'DT', 'R', 'MLP', 'WP', 'CNN 1', 'CNN 2']
+#
+# x = np.arange(len(names))  # the label locations
+# width = 0.35  # the width of the bars
+#
+# fig, ax = plt.subplots()
+# rects1 = ax.bar(x - width/2, training_accuracies, width, label='Training')
+# rects2 = ax.bar(x + width/2, testing_accuracies, width, label='Testing')
+#
+# # Add some text for labels, title and custom x-axis tick labels, etc.
+# ax.set_ylabel('Mean Squared Error')
+# # ax.set_title('Scores by group and gender')
+# ax.set_xticks(x)
+# ax.set_xticklabels(names)
+# ax.legend()
+#
+# fig.tight_layout()
+#
+# plt.show()
+
+
+
+# regressors_NN.append(models.create_cnn(7, 284, 1, regress=True))
+
+#
+
 #
 # cross_val_results = []
 # mean_squared_errors = []
+# train_results = []
+#
+# for regressor in regressors_traditional:
+#     print('\n=======\n')
+#     print(regressor.__name__)
+#
+#     print("Performing cross-validation.")
+#     cvr = cross_val_predict(regressor(), X, Y, cv=8)
+#     cross_val_results.append(cvr)
+#
+#     mse = mean_squared_error(Y, cvr)
+#     mean_squared_errors.append(mse)
+
+    # print("Cross validation mean squared error: ", mse)
+
+# regressor.fit(X, Y)
 
 # with open('objs.pkl', 'wb') as f:
-#     pickle.dump([X, Y, x_coord, y_coord, cross_val_results], f)
+#     pickle.dump([X, Y, channel_coord_list_inter, cross_val_results, mean_squared_errors], f)
 
-# # Getting back the objects:
-# with open('objs.pkl', 'rb') as f:
-#     X, Y, x_coord, y_coord, cross_val_results = pickle.load(f)
+
+######################################
+# ############## Plotting ############
+######################################
+# #
+# cases = tls.cases_list(case_root)
+# regressors = regressors_traditional
 #
-# plt.scatter(x_coord, y_coord, c=Y[0])
+# case_numbers = 121, 303, 278
 #
-# # plt.scatter(x_coord_fuel, y_coord_fuel, c='orange', label="Fuel Channels")
-# # plt.legend(loc='lower center', bbox_to_anchor=(0.5, -0.05), shadow=True, ncol=2)
+# fig, axs = plt.subplots((len(regressors) + 1), len(case_numbers), figsize=(10, 9))
+#
+# size = 15
+#
+# vals = []
+# scatter = []
+#
+# for j in range(len(case_numbers)):
+#
+#     case_number = case_numbers[j]
+#
+#     scatter.append(axs[0, j].scatter(channel_coord_list_inter[0], channel_coord_list_inter[1], c=Y[case_number], s=size,
+#                               cmap='nipy_spectral'))
+#
+#     axs[0, j].set_title(cases[case_numbers[j]].split('/')[-1])
+#
+#     if j == 0: axs[0, j].set_ylabel("Ground Truth Labels")
+#
+#     # append the minimum and maximum values
+#     vals.append(np.amin(Y[case_number]))
+#     vals.append(np.amin(Y[case_number]))
+#
+#     for i in range(len(regressors)):
+#
+#         # regressor_name = regressors[i].__name__
+#         regressor_name = regressors[i].__name__
+#         result = cross_val_results_traditional[i]
+#         scatter.append(
+#             axs[i + 1, j].scatter(channel_coord_list_inter[0], channel_coord_list_inter[1], c=result[case_number],
+#                                   cmap='nipy_spectral', s=size))
+#
+#         if j == 0: axs[i + 1, j].set_ylabel(regressor_name)
+#
+#         vals.append(np.amin(result[case_number]))
+#         vals.append(np.amax(result[case_number]))
+#
+# min_overall = np.amin(vals)
+# max_overall = np.amax(vals)
+#
+# for ax in axs.flatten():
+#     ax.xaxis.set_ticks_position('none')
+#     ax.yaxis.set_ticks_position('none')
+#     ax.set_xticklabels([])
+#     ax.set_yticklabels([])
+#
+# # for s in scatter:
+# #     s.set_clim(min_overall, max_overall)
+#
 # plt.show()
-#
-# # X = np.where(np.array(X) > 1, 1, np.array(X))
+
+######################################
+
+
 # #cvr = cross_val_predict(regressor, X, Y, cv=8)
 # # #     cross_val_results.append(cvr)
 # # train_results = []
@@ -319,10 +361,10 @@ def features_and_labels(path_string, time=50, result="1"):
 # #
 # # for regressor in regressors:
 # #
-# #     regressor.fit(X, Y)
+# #
 # # train_results.append(regressor.predict(X))
 #
-# #     print('\n===\n', regressor, '\n')
+# #     print('/n===/n', regressor, '/n')
 # #
 # #
 # #
@@ -334,7 +376,7 @@ def features_and_labels(path_string, time=50, result="1"):
 # # #
 # # for i, channel_ground_result in enumerate(Y):
 # #
-# #     print('\n===\ncase:', i, '\n===\n')
+# #     print('/n===/ncase:', i, '/n===/n')
 # #     case_prediction = train_results[0][i]
 # # #
 # # #     # for ground, predict in zip(channel_ground_result, case_prediction):
