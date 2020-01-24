@@ -1,20 +1,21 @@
-# from core_parse import CoreInstance as ci
-# import tools as tls
+from core_parse import CoreInstance as ci
+import tools as tls
 import matplotlib.pyplot as plt
-# from mpl_toolkits.axes_grid1 import make_axes_locatable
-# from sklearn.model_selection import train_test_split, cross_val_predict
-# from sklearn.linear_model import LinearRegression, Ridge
-# from sklearn.tree import DecisionTreeRegressor
-# from mpl_toolkits.mplot3d import Axes3D
-# from sklearn.metrics import mean_squared_error, r2_score
-# from keras.layers.convolutional import Conv1D, Conv2D
-# from keras.layers import Flatten
-# import numpy as np
+from mpl_toolkits.axes_grid1 import make_axes_locatable
+from sklearn.model_selection import train_test_split, cross_val_predict
+from sklearn.linear_model import LinearRegression, Ridge
+from sklearn.tree import DecisionTreeRegressor
+from mpl_toolkits.mplot3d import Axes3D
+from sklearn.metrics import mean_squared_error, r2_score
+from keras.layers.convolutional import Conv1D, Conv2D
+from keras.layers import Flatten
+import numpy as np
 import pickle
-# from keras.models import Sequential
-# from keras.layers.core import Dense
-# from pyimagesearch import models
-# from keras.optimizers import Adam
+from keras.models import Sequential
+from keras.layers.core import Dense
+from pyimagesearch import models
+from keras.optimizers import Adam
+
 
 #
 # def features_and_labels_single_frame(path_string, time=50, result="1", x_type='positions'):
@@ -31,65 +32,67 @@ import pickle
 #         Y.append(instance.get_result_at_time(time, result_columns=str(result)))
 #
 #     return X, Y
-#
-#
-# def multi_layer_perceptron(input_dims, output_dims):
-#     # define our MLP network
-#     model = Sequential()
-#
-#     model.name = "Multi-layer Perceptron"
-#
-#     model.add(Dense(8, input_dim=input_dims, activation="relu"))
-#     model.add(Dense(4, activation="relu"))
-#     model.add(Dense(output_dims, activation="linear"))
-#
-#     # return our model
-#     return model
-#
-#
-# def wider_model(input_dims, output_dims):
-#     # create model
-#     model = Sequential()
-#
-#     model.name = "Wider Perceptron"
-#
-#     model.add(Dense(20, input_dim=input_dims, kernel_initializer='normal', activation='relu'))
-#     model.add(Dense(4, activation="relu"))
-#     model.add(Dense(output_dims, kernel_initializer='normal'))
-#
-#     return model
-#
-#
-# def cnn1D(input_dims, output_dims):
-#     # create model
-#     model = Sequential()  # add model layers
-#     model.add(Conv1D(64, kernel_size=3, activation='relu', input_shape=input_dims))
-#     model.add(Conv1D(32, kernel_size=3, activation='relu'))
-#     model.add(Flatten())
-#     model.add(Dense(output_dims, activation='softmax'))
-#
-#     # Compile model
-#     # model.compile(loss='mean_squared_error', optimizer='adam')
-#     return model
-#
-#
-# def cnn2D(input_dims, output_dims):
-#     # create model
-#     model = Sequential()  # add model layers
-#     model.add(Conv2D(64, kernel_size=3, activation='relu', input_shape=input_dims))
-#     model.add(Conv2D(32, kernel_size=3, activation='relu'))
-#     model.add(Flatten())
-#     model.add(Dense(output_dims, activation='softmax'))
-#
-#     # Name the neural network
-#     model.name = "CNN 1"
-#
-#     # model.compile(loss='mean_squared_error', optimizer='adam')
-#     return model
+
+
+def multi_layer_perceptron(input_dims, output_dims):
+    # define our MLP network
+    model = Sequential()
+
+    model.name = "Multi-layer Perceptron"
+
+    model.add(Dense(8, input_dim=input_dims, activation="relu"))
+    model.add(Dense(4, activation="relu"))
+    model.add(Dense(output_dims, activation="linear"))
+
+    # return our model
+    return model
+
+
+def wider_model(input_dims, output_dims):
+    # create model
+    model = Sequential()
+
+    model.name = "Wider Perceptron"
+
+    model.add(Dense(20, input_dim=input_dims, kernel_initializer='normal', activation='relu'))
+    model.add(Dense(4, activation="relu"))
+    model.add(Dense(output_dims, kernel_initializer='normal'))
+
+    return model
+
+
+def cnn1D(input_dims, output_dims):
+    # create model
+    model = Sequential()  # add model layers
+    model.add(Conv1D(64, kernel_size=3, activation='relu', input_shape=input_dims))
+    model.add(Conv1D(32, kernel_size=3, activation='relu'))
+    model.add(Flatten())
+    model.add(Dense(output_dims, activation='softmax'))
+
+    # Compile model
+    # model.compile(loss='mean_squared_error', optimizer='adam')
+    return model
+
+
+def cnn2D(input_dims, output_dims):
+    # create model
+    model = Sequential()  # add model layers
+    model.add(Conv2D(64, kernel_size=3, activation='relu', input_shape=input_dims))
+    model.add(Conv2D(32, kernel_size=3, activation='relu'))
+    model.add(Flatten())
+    model.add(Dense(output_dims, activation='softmax'))
+
+    # Name the neural network
+    model.name = "CNN 1"
+
+    # model.compile(loss='mean_squared_error', optimizer='adam')
+    return model
+
+
 #
 
 ##########
-# CAN COMMENT ALL THIS OUT AFTER DOING IT ONCE
+# LOADS DATA FROM CASES - CAN COMMENT ALL THIS OUT AFTER DOING IT ONCE
 ##########
 
 # case_intact = 'C:/Users/Huw/PycharmProjects/Results/intact_core'
@@ -113,48 +116,52 @@ case_root = 'D:/parmec_results/'
 with open('objs.pkl', 'rb') as f:
     X, Y, channel_coord_list_inter, cross_val_results_traditional, mean_squared_errors = pickle.load(f)
 
+# Convert to numpy arrays
+X = np.array(X)
+Y = np.array(Y)
 
-# # Convert to numpy arrays
-# X = np.array(X)
-# Y = np.array(Y)
-#
-# # X_1D = numpyX.reshape((numpyX.shape[0], numpyX.shape[1], 1))
-# # X_2D = numpyX.reshape((numpyX.shape[0], 284, 7, 1))
-#
-# X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2, random_state=42)
+# X_1D = numpyX.reshape((numpyX.shape[0], numpyX.shape[1], 1))
+# X_2D = numpyX.reshape((numpyX.shape[0], 284, 7, 1))
+
+X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2, random_state=42)
 #
 # # 1D data
 # # X_train_1D = X_train.reshape(X_train.shape[0], X_train.shape[1], 1)
 # # X_test_1D = X_test.reshape(X_test.shape[0], X_test.shape[1], 1)
 #
-# # 2D data
-# X_train_2D = X_train.reshape(X_train.shape[0], 284, 7, 1)
-# X_test_2D = X_test.reshape(X_test.shape[0], 284, 7, 1)
+# 2D data
+X_train_2D = X_train.reshape(X_train.shape[0], 284, 7, 1)
+X_test_2D = X_test.reshape(X_test.shape[0], 284, 7, 1)
 #
-# regressors_traditional = [LinearRegression, DecisionTreeRegressor, Ridge]
-#
-# regressors_NN_1D = [
-#                     multi_layer_perceptron(X_train.shape[1], len(Y_train[0])),
-#                     wider_model(X_train.shape[1], len(Y_train[0]))
-#                     ]
-#
-# regressors_NN_2D = [
-#                     cnn2D((X_train_2D.shape[1], X_train_2D.shape[2], X_train_2D.shape[3]), len(Y_train[0])),
-#                     models.create_cnn(X_train_2D.shape[2], X_train_2D.shape[1], 1, regress=True)
-#                     ]
-#
-# opt = Adam(lr=1e-3, decay=1e-3 / 200)
-#
+regressors_traditional = [LinearRegression, DecisionTreeRegressor, Ridge]
+
+regressors_NN_1D = [
+                    multi_layer_perceptron(X_train.shape[1], len(Y_train[0])),
+                    wider_model(X_train.shape[1], len(Y_train[0]))
+                    ]
+
+regressors_NN_2D = [
+                    # cnn2D((X_train_2D.shape[1], X_train_2D.shape[2], X_train_2D.shape[3]), len(Y_train[0])),
+                    models.create_cnn(X_train_2D.shape[2], X_train_2D.shape[1], 1, regress=True)
+                    ]
+
+opt = Adam(lr=1e-3, decay=1e-3 / 200)
+
+model_names = []
+
+training_results = []
+testing_results = []
+
+training_accuracies = []
+testing_accuracies = []
+
+#################################################
+########### Traditional Methods #################
+#################################################
+
 # print("\n Starting 1D input models \n")
-#
-# model_names = []
-#
-# training_results = []
-# testing_results = []
-#
-# training_accuracies = []
-# testing_accuracies = []
-#
+
+
 # for regressor in regressors_traditional:
 #
 #     print("\n=============\n")
@@ -180,6 +187,10 @@ with open('objs.pkl', 'rb') as f:
 #     print("Training accuracy: ", mse_training)
 #     print("Testing accuracy: ", mse_testing)
 #
+
+#################################################
+########### Neural Networks #####################
+#################################################
 #
 # for model in regressors_NN_1D:
 #     model.compile(loss="mean_absolute_percentage_error", optimizer=opt)
@@ -209,37 +220,44 @@ with open('objs.pkl', 'rb') as f:
 #     print("Testing accuracy: ", mse_testing)
 #
 #     print("\n=============\n")
-#
-# print("\n Starting 2D input models \n")
-#
-# for model in regressors_NN_2D:
-#     model.compile(loss="mean_absolute_percentage_error", optimizer=opt)
-#     model.fit(X_train_2D, Y_train, epochs=500, validation_data=(X_test_2D, Y_test), verbose=0)
-#
-#     print("\n=============\n")
-#
-#     model_name = model.name
-#     print(model_name)
-#     print("\n")
-#
-#     model_names.append(model_name)
-#
-#     training_result = model.predict(X_train_2D)
-#     testing_result = model.predict(X_test_2D)
-#
-#     training_results.append(training_result)
-#     testing_results.append(testing_result)
-#
-#     mse_training = round(mean_squared_error(training_result, Y_train), 2)
-#     mse_testing = round(mean_squared_error(testing_result, Y_test), 2)
-#
-#     training_accuracies.append(mse_training)
-#     testing_accuracies.append(mse_testing)
-#
-#     print("Training accuracy: ", mse_training)
-#     print("Testing accuracy: ", mse_testing)
-#
-#     print("\n=============\n")
+
+
+#################################################
+################ Convo Nets #####################
+#################################################
+
+print("\n Starting 2D input models \n")
+
+for model in regressors_NN_2D:
+    model.compile(loss="mean_absolute_percentage_error", optimizer=opt)
+
+    model.summary()
+    # model.fit(X_train_2D, Y_train, epochs=100, validation_data=(X_test_2D, Y_test))
+    #
+    # print("\n=============\n")
+    #
+    # model_name = model.name
+    # print(model_name)
+    # print("\n")
+    #
+    # model_names.append(model_name)
+    #
+    # training_result = model.predict(X_train_2D)
+    # testing_result = model.predict(X_test_2D)
+    #
+    # training_results.append(training_result)
+    # testing_results.append(testing_result)
+    #
+    # mse_training = round(mean_squared_error(training_result, Y_train), 2)
+    # mse_testing = round(mean_squared_error(testing_result, Y_test), 2)
+    #
+    # training_accuracies.append(mse_training)
+    # testing_accuracies.append(mse_testing)
+    #
+    # print("Training accuracy: ", mse_training)
+    # print("Testing accuracy: ", mse_testing)
+    #
+    # print("\n=============\n")
 #
 # names = ['LR', 'DT', 'R', 'MLP', 'WP', 'CNN 1', 'CNN 2']
 #
@@ -262,7 +280,6 @@ with open('objs.pkl', 'rb') as f:
 # plt.show()
 
 
-
 # regressors_NN.append(models.create_cnn(7, 284, 1, regress=True))
 
 #
@@ -283,7 +300,7 @@ with open('objs.pkl', 'rb') as f:
 #     mse = mean_squared_error(Y, cvr)
 #     mean_squared_errors.append(mse)
 
-    # print("Cross validation mean squared error: ", mse)
+# print("Cross validation mean squared error: ", mse)
 
 # regressor.fit(X, Y)
 
