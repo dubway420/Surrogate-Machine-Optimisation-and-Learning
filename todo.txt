@@ -1,12 +1,17 @@
-<<<<<<< HEAD
+Data analysis:
+1. Composite plot of means across core
+2. histogram of central channels
+3. histogram of which channel has highest value
+
+Time history of accuracy
+
+Have model summaries visible on laptop
+filter stuff
+
+
 How much variation is there between instances? side by side analysis
-Correlation between no. cracks/displacement
-Pick frame where correlation is highest?
+
+
 
 take magnitude of x and y displacement
-=======
-multivariate cnn
 
-
->>>>>>> 417c534212b6538f9c05428ec1e673ad53892659
-CNN
