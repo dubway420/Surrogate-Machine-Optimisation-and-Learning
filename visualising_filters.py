@@ -22,8 +22,8 @@ y_test = to_categorical(y_test)
 
 # create model
 conv2d = Sequential()
-conv2d.add(Conv2D(64, kernel_size=5, activation='sigmoid', input_shape=(28, 28, 1)))
-conv2d.add(Conv2D(32, kernel_size=5, activation='relu'))
+conv2d.add(Conv2D(64, kernel_size=3, activation='sigmoid', input_shape=(28, 28, 1)))
+conv2d.add(Conv2D(32, kernel_size=3, activation='relu'))
 conv2d.add(Flatten())
 conv2d.add(Dense(10, activation='softmax'))
 
@@ -36,13 +36,13 @@ for layer in conv2d.layers:
 
 model = Model(inputs=conv2d.inputs, outputs=conv2d.layers[0].output)
 
-conv2d.fit(X_train, y_train, validation_data=(X_test, y_test), epochs=epochs)
+# conv2d.fit(X_train, y_train, validation_data=(X_test, y_test), epochs=epochs)
 
-conv2d.save_weights("conv2d.h5")
-# conv2d.load_weights("conv2d.h5")
+# conv2d.save_weights("conv2d.h5")
+conv2d.load_weights("conv2d.h5")
 
 case = 50
-channel = 63
+channel = 0
 
 plt.imshow(X_train[case].reshape(28, 28), cmap='gray')
 plt.show()
@@ -88,7 +88,7 @@ for row_no in range(rows_cols):
         ax.set_xticks([])
         ax.set_yticks([])
         # plot filter channel in grayscale
-        ax.imshow(filter_Shreshold, cmap='Greys')
+        ax.imshow(filter_Shreshold, cmap='gray')
 
 # show the figure
 plt.show()
