@@ -36,10 +36,10 @@ for layer in conv2d.layers:
 
 model = Model(inputs=conv2d.inputs, outputs=conv2d.layers[0].output)
 
-# conv2d.fit(X_train, y_train, validation_data=(X_test, y_test), epochs=epochs)
+conv2d.fit(X_train, y_train, validation_data=(X_test, y_test), epochs=epochs)
 
-# conv2d.save_weights("conv2d.h5")
-conv2d.load_weights("conv2d.h5")
+conv2d.save_weights("conv2d.h5")
+# conv2d.load_weights("conv2d.h5")
 
 case = 50
 channel = 63
