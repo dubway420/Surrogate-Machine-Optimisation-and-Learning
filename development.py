@@ -1,14 +1,14 @@
-from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LinearRegression, Ridge
-from sklearn.tree import DecisionTreeRegressor
-from keras.layers.convolutional import Conv1D, Conv2D
-from keras.layers import Flatten
+# from sklearn.model_selection import train_test_split
+# from sklearn.linear_model import LinearRegression, Ridge
+# from sklearn.tree import DecisionTreeRegressor
+# from keras.layers.convolutional import Conv1D, Conv2D
+# from keras.layers import Flatten
 import numpy as np
 import pickle
-from keras.models import Sequential
-from keras.layers.core import Dense
-from pyimagesearch import models
-from keras.optimizers import Adam
+# from keras.models import Sequential
+# from keras.layers.core import Dense
+# from pyimagesearch import models
+# from keras.optimizers import Adam
 import seaborn as sns
 import matplotlib.pyplot as plt
 
@@ -30,59 +30,59 @@ import matplotlib.pyplot as plt
 #     return X, Y
 
 
-def multi_layer_perceptron(input_dims, output_dims):
-    # define our MLP network
-    model = Sequential()
-
-    model.name = "Multi-layer Perceptron"
-
-    model.add(Dense(8, input_dim=input_dims, activation="relu"))
-    model.add(Dense(4, activation="relu"))
-    model.add(Dense(output_dims, activation="linear"))
-
-    # return our model
-    return model
-
-
-def wider_model(input_dims, output_dims):
-    # create model
-    model = Sequential()
-
-    model.name = "Wider Perceptron"
-
-    model.add(Dense(20, input_dim=input_dims, kernel_initializer='normal', activation='relu'))
-    model.add(Dense(4, activation="relu"))
-    model.add(Dense(output_dims, kernel_initializer='normal'))
-
-    return model
-
-
-def cnn1D(input_dims, output_dims):
-    # create model
-    model = Sequential()  # add model layers
-    model.add(Conv1D(64, kernel_size=3, activation='relu', input_shape=input_dims))
-    model.add(Conv1D(32, kernel_size=3, activation='relu'))
-    model.add(Flatten())
-    model.add(Dense(output_dims, activation='softmax'))
-
-    # Compile model
-    # model.compile(loss='mean_squared_error', optimizer='adam')
-    return model
-
-
-def cnn2D(input_dims, output_dims):
-    # create model
-    model = Sequential()  # add model layers
-    model.add(Conv2D(64, kernel_size=3, activation='relu', input_shape=input_dims))
-    model.add(Conv2D(32, kernel_size=3, activation='relu'))
-    model.add(Flatten())
-    model.add(Dense(output_dims, activation='softmax'))
-
-    # Name the neural network
-    model.name = "CNN 1"
-
-    # model.compile(loss='mean_squared_error', optimizer='adam')
-    return model
+# def multi_layer_perceptron(input_dims, output_dims):
+#     # define our MLP network
+#     model = Sequential()
+#
+#     model.name = "Multi-layer Perceptron"
+#
+#     model.add(Dense(8, input_dim=input_dims, activation="relu"))
+#     model.add(Dense(4, activation="relu"))
+#     model.add(Dense(output_dims, activation="linear"))
+#
+#     # return our model
+#     return model
+#
+#
+# def wider_model(input_dims, output_dims):
+#     # create model
+#     model = Sequential()
+#
+#     model.name = "Wider Perceptron"
+#
+#     model.add(Dense(20, input_dim=input_dims, kernel_initializer='normal', activation='relu'))
+#     model.add(Dense(4, activation="relu"))
+#     model.add(Dense(output_dims, kernel_initializer='normal'))
+#
+#     return model
+#
+#
+# def cnn1D(input_dims, output_dims):
+#     # create model
+#     model = Sequential()  # add model layers
+#     model.add(Conv1D(64, kernel_size=3, activation='relu', input_shape=input_dims))
+#     model.add(Conv1D(32, kernel_size=3, activation='relu'))
+#     model.add(Flatten())
+#     model.add(Dense(output_dims, activation='softmax'))
+#
+#     # Compile model
+#     # model.compile(loss='mean_squared_error', optimizer='adam')
+#     return model
+#
+#
+# def cnn2D(input_dims, output_dims):
+#     # create model
+#     model = Sequential()  # add model layers
+#     model.add(Conv2D(64, kernel_size=3, activation='relu', input_shape=input_dims))
+#     model.add(Conv2D(32, kernel_size=3, activation='relu'))
+#     model.add(Flatten())
+#     model.add(Dense(output_dims, activation='softmax'))
+#
+#     # Name the neural network
+#     model.name = "CNN 1"
+#
+#     # model.compile(loss='mean_squared_error', optimizer='adam')
+#     return model
 
 
 #
@@ -441,9 +441,27 @@ Y = np.array(Y)
 # ########### Histogram ##############
 ######################################
 
+channel_average = np.mean(Y, axis=0)
+
+plt.scatter(channel_coord_list_inter[0], channel_coord_list_inter[1], c=channel_average)
+
+plt.show(
+
+)
 sns.set(color_codes=True)
 
-sns.distplot(Y.flatten(), rug=True)
+Y_central = Y[:, 160]
+
+Y_central_top = Y[:, 140: 143]
+Y_central_mid = Y[:, 159: 162]
+Y_central_bot = Y[:, 178: 181]
+
+Y_central_channels = np.concatenate((Y_central_bot, Y_central_mid, Y_central_top))
+
+sns.distplot(Y_central.flatten(), label="Central Channel Only")
+sns.distplot(Y_central_channels.flatten(), label="9 Central Channels")
+
 plt.ylabel("Frequency")
 plt.xlabel("Displacement value (mm)")
+plt.legend()
 plt.show()
