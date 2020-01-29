@@ -9,6 +9,8 @@ from keras.models import Sequential
 from keras.layers.core import Dense
 from pyimagesearch import models
 from keras.optimizers import Adam
+import seaborn as sns
+import matplotlib.pyplot as plt
 
 
 #
@@ -116,116 +118,116 @@ Y = np.array(Y)
 
 # X_1D = numpyX.reshape((numpyX.shape[0], numpyX.shape[1], 1))
 # X_2D = numpyX.reshape((numpyX.shape[0], 284, 7, 1))
-
-X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2, random_state=42)
 #
-# # 1D data
-# # X_train_1D = X_train.reshape(X_train.shape[0], X_train.shape[1], 1)
-# # X_test_1D = X_test.reshape(X_test.shape[0], X_test.shape[1], 1)
+# X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2, random_state=42)
+# #
+# # # 1D data
+# # # X_train_1D = X_train.reshape(X_train.shape[0], X_train.shape[1], 1)
+# # # X_test_1D = X_test.reshape(X_test.shape[0], X_test.shape[1], 1)
+# #
+# # 2D data
+# X_train_2D = X_train.reshape(X_train.shape[0], 284, 7, 1)
+# X_test_2D = X_test.reshape(X_test.shape[0], 284, 7, 1)
+# #
+# regressors_traditional = [LinearRegression, DecisionTreeRegressor, Ridge]
 #
-# 2D data
-X_train_2D = X_train.reshape(X_train.shape[0], 284, 7, 1)
-X_test_2D = X_test.reshape(X_test.shape[0], 284, 7, 1)
+# regressors_NN_1D = [
+#                     multi_layer_perceptron(X_train.shape[1], len(Y_train[0])),
+#                     wider_model(X_train.shape[1], len(Y_train[0]))
+#                     ]
 #
-regressors_traditional = [LinearRegression, DecisionTreeRegressor, Ridge]
-
-regressors_NN_1D = [
-                    multi_layer_perceptron(X_train.shape[1], len(Y_train[0])),
-                    wider_model(X_train.shape[1], len(Y_train[0]))
-                    ]
-
-regressors_NN_2D = [
-                    # cnn2D((X_train_2D.shape[1], X_train_2D.shape[2], X_train_2D.shape[3]), len(Y_train[0])),
-                    models.create_cnn(X_train_2D.shape[2], X_train_2D.shape[1], 1, regress=True)
-                    ]
-
-opt = Adam(lr=1e-3, decay=1e-3 / 200)
-
-model_names = []
-
-training_results = []
-testing_results = []
-
-training_accuracies = []
-testing_accuracies = []
-
-#################################################
-########### Traditional Methods #################
-#################################################
-
-# print("\n Starting 1D input models \n")
-
-
-# for regressor in regressors_traditional:
+# regressors_NN_2D = [
+#                     # cnn2D((X_train_2D.shape[1], X_train_2D.shape[2], X_train_2D.shape[3]), len(Y_train[0])),
+#                     models.create_cnn(X_train_2D.shape[2], X_train_2D.shape[1], 1, regress=True)
+#                     ]
 #
-#     print("\n=============\n")
+# opt = Adam(lr=1e-3, decay=1e-3 / 200)
 #
-#     model_name = regressor.__name__
-#     print(model_name)
-#     print("\n")
+# model_names = []
 #
-#     model = regressor()
-#     model.fit(X_train, Y_train)
-#     training_result = model.predict(X_train)
-#     testing_result = model.predict(X_test)
+# training_results = []
+# testing_results = []
 #
-#     training_results.append(training_result)
-#     testing_results.append(testing_result)
+# training_accuracies = []
+# testing_accuracies = []
 #
-#     mse_training = round(mean_squared_error(training_result, Y_train), 2)
-#     mse_testing = round(mean_squared_error(testing_result, Y_test), 2)
+# #################################################
+# ########### Traditional Methods #################
+# #################################################
 #
-#     training_accuracies.append(mse_training)
-#     testing_accuracies.append(mse_testing)
+# # print("\n Starting 1D input models \n")
 #
-#     print("Training accuracy: ", mse_training)
-#     print("Testing accuracy: ", mse_testing)
 #
-
-#################################################
-########### Neural Networks #####################
-#################################################
+# # for regressor in regressors_traditional:
+# #
+# #     print("\n=============\n")
+# #
+# #     model_name = regressor.__name__
+# #     print(model_name)
+# #     print("\n")
+# #
+# #     model = regressor()
+# #     model.fit(X_train, Y_train)
+# #     training_result = model.predict(X_train)
+# #     testing_result = model.predict(X_test)
+# #
+# #     training_results.append(training_result)
+# #     testing_results.append(testing_result)
+# #
+# #     mse_training = round(mean_squared_error(training_result, Y_train), 2)
+# #     mse_testing = round(mean_squared_error(testing_result, Y_test), 2)
+# #
+# #     training_accuracies.append(mse_training)
+# #     testing_accuracies.append(mse_testing)
+# #
+# #     print("Training accuracy: ", mse_training)
+# #     print("Testing accuracy: ", mse_testing)
+# #
 #
-# for model in regressors_NN_1D:
+# #################################################
+# ########### Neural Networks #####################
+# #################################################
+# #
+# # for model in regressors_NN_1D:
+# #     model.compile(loss="mean_absolute_percentage_error", optimizer=opt)
+# #     model.fit(X_train, Y_train, epochs=500, validation_data=(X_test, Y_test), verbose=0)
+# #
+# #     print("\n=============\n")
+# #
+# #     model_name = model.name
+# #     print(model_name)
+# #     print("\n")
+# #
+# #     model_names.append(model_name)
+# #
+# #     training_result = model.predict(X_train)
+# #     testing_result = model.predict(X_test)
+# #
+# #     training_results.append(training_result)
+# #     testing_results.append(testing_result)
+# #
+# #     mse_training = round(mean_squared_error(training_result, Y_train), 2)
+# #     mse_testing = round(mean_squared_error(testing_result, Y_test), 2)
+# #
+# #     training_accuracies.append(mse_training)
+# #     testing_accuracies.append(mse_testing)
+# #
+# #     print("Training accuracy: ", mse_training)
+# #     print("Testing accuracy: ", mse_testing)
+# #
+# #     print("\n=============\n")
+#
+#
+# #################################################
+# ################ Convo Nets #####################
+# #################################################
+#
+# print("\n Starting 2D input models \n")
+#
+# for model in regressors_NN_2D:
 #     model.compile(loss="mean_absolute_percentage_error", optimizer=opt)
-#     model.fit(X_train, Y_train, epochs=500, validation_data=(X_test, Y_test), verbose=0)
 #
-#     print("\n=============\n")
-#
-#     model_name = model.name
-#     print(model_name)
-#     print("\n")
-#
-#     model_names.append(model_name)
-#
-#     training_result = model.predict(X_train)
-#     testing_result = model.predict(X_test)
-#
-#     training_results.append(training_result)
-#     testing_results.append(testing_result)
-#
-#     mse_training = round(mean_squared_error(training_result, Y_train), 2)
-#     mse_testing = round(mean_squared_error(testing_result, Y_test), 2)
-#
-#     training_accuracies.append(mse_training)
-#     testing_accuracies.append(mse_testing)
-#
-#     print("Training accuracy: ", mse_training)
-#     print("Testing accuracy: ", mse_testing)
-#
-#     print("\n=============\n")
-
-
-#################################################
-################ Convo Nets #####################
-#################################################
-
-print("\n Starting 2D input models \n")
-
-for model in regressors_NN_2D:
-    model.compile(loss="mean_absolute_percentage_error", optimizer=opt)
-
-    model.summary()
+#     model.summary()
     # model.fit(X_train_2D, Y_train, epochs=100, validation_data=(X_test_2D, Y_test))
     #
     # print("\n=============\n")
@@ -434,3 +436,14 @@ for model in regressors_NN_2D:
 # # array = instance1.linear_crack_array_1d(levels="all")
 # #
 # # print(array)
+
+######################################
+# ########### Histogram ##############
+######################################
+
+sns.set(color_codes=True)
+
+sns.distplot(Y.flatten(), rug=True)
+plt.ylabel("Frequency")
+plt.xlabel("Displacement value (mm)")
+plt.show()
