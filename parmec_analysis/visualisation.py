@@ -61,7 +61,7 @@ for i in range(no_cases):
 
     # Generates an instance of core parse for each case
     path = case_root + case + "/" + case
-    inst = CoreInstance(path)
+    inst = core.Parse(path)
 
     # Gets the number of cracks surrounding each channel
     cracks_channel_specific.append(inst.channel_specific_cracks()[1])
@@ -110,7 +110,8 @@ cbar = counts_grid.cbar_axes[0].colorbar(im)
 
 # Saves the figure
 filenm = "./Comparing_three_cases/concentration_of_cracks.png"
-plt.savefig(filenm)
+# plt.savefig(filenm)
+plt.show()
 
 ##################################################
 # ################ RESULT PLOT ###################
@@ -186,7 +187,7 @@ for result in results_of_interest:
 
     # Saves the file
     filenm = "./Comparing_three_cases/results" + str(result) + ".png"
-    plt.savefig(filenm)
+    # plt.savefig(filenm)
 
     ########################################################################################
     # ######################## result vs concentration #####################################
@@ -230,5 +231,5 @@ for result in results_of_interest:
 
     # Saves the file
     filenm = "./Comparing_three_cases/correlation" + str(result) + ".png"
-    plt.savefig(filenm)
+    # plt.savefig(filenm)
     print(np.mean(pearson_coeffs, axis=0))
