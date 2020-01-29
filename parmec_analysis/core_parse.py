@@ -29,10 +29,10 @@
 import numpy as np
 import pandas as pd
 import math
-import tools as tls
+from parmec_analysis import utils as utls
 
 
-class CoreInstance:
+class Parse:
     """ Instance representing the entire core, including crack positions in 3D array and post earthquake
     array of displacements"""
 
@@ -94,7 +94,7 @@ class CoreInstance:
             self.set_id("DEFAULT_ID")
             self.crack_array = self.base_crack_array()
         else:
-            self.set_id(tls.get_id_from_filename(case))
+            self.set_id(utls.get_id_from_filename(case))
 
             try:
                 self.set_crack_array()
@@ -106,8 +106,8 @@ class CoreInstance:
 
         # print("Calculating indices of channel items from results file")
 
-        self.fuel_indices = tls.index_array_fuel(case)  # TODO WARNING - THIS ONLY CURRENTLY WORKS FOR INTACT CASES
-        self.results_indices = tls.index_array_interstitial(case)
+        self.fuel_indices = utls.index_array_fuel(case)  # TODO WARNING - THIS ONLY CURRENTLY WORKS FOR INTACT CASES
+        self.results_indices = utls.index_array_interstitial(case)
 
         # =============
 
@@ -175,11 +175,11 @@ class CoreInstance:
             # Can handle slight misspellings or capitalisation
 
             # Orientations - just returns the base array
-            if tls.is_in(array_type, "ori"):
+            if utls.is_in(array_type, "ori"):
                 array = self.crack_array
 
             # Positions - makes the maximum of the array 1
-            elif tls.is_in(array_type, "pos"):
+            elif utls.is_in(array_type, "pos"):
                 array = np.where(self.crack_array > 1, 1, self.crack_array)
             else:
                 print("WARNING: ambiguous output type specified. Defaulting to orientations.")
@@ -226,7 +226,7 @@ class CoreInstance:
 
         min_level, max_level = self.parse_level_argument(levels)
 
-        if tls.is_in(channel_type, "fuel"):
+        if utls.is_in(channel_type, "fuel"):
             row_start = row_origin - array_size
             row_end = row_origin + array_size + 1
             column_start = column_origin - array_size
@@ -350,12 +350,12 @@ class CoreInstance:
         time_file = case_path + '.' + str(time_index) + ext
 
         # Get the unsorted array corresponding to the specified user time_frame
-        time_array_base = tls.read_output_file(time_file)
+        time_array_base = utls.read_output_file(time_file)
 
         # ==============================================
         number_of_output_metrics = len(time_array_base[0])
 
-        if tls.is_in(result_columns, "all"):
+        if utls.is_in(result_columns, "all"):
             min_column = 0
             max_column = number_of_output_metrics
 
@@ -365,7 +365,7 @@ class CoreInstance:
             max_column = int(result_columns)
 
         else:
-            components = tls.string_splitter(result_columns)
+            components = utls.string_splitter(result_columns)
             min_column = components[0] - 1
             max_column = components[1]
 
@@ -383,20 +383,20 @@ class CoreInstance:
 
         # ==============================================
 
-        if tls.is_in(result_type, "max"):
+        if utls.is_in(result_type, "max"):
             command = np.max
-        elif tls.is_in(result_type, "min"):
+        elif utls.is_in(result_type, "min"):
             command = np.min
-        elif tls.is_in(result_type, "sum"):
+        elif utls.is_in(result_type, "sum"):
             command = np.sum
-        elif tls.is_in(result_type, "mean"):
+        elif utls.is_in(result_type, "mean"):
             command = np.mean
-        elif tls.is_in(result_type, "med"):
+        elif utls.is_in(result_type, "med"):
             command = np.median
-        elif tls.is_in(result_type, "abs") and tls.is_in(result_type, "sum"):
-            command = tls.absolute_sum
-        elif tls.is_in(result_type, "all"):
-            command = tls.return_all
+        elif utls.is_in(result_type, "abs") and utls.is_in(result_type, "sum"):
+            command = utls.absolute_sum
+        elif utls.is_in(result_type, "all"):
+            command = utls.return_all
         # TODO min vs max function
         else:
             command = np.sum
@@ -425,12 +425,12 @@ class CoreInstance:
         time_file = case_path + '.' + str(time_index) + ext
 
         # Get the unsorted array corresponding to the specified user time_frame
-        time_array_base = tls.read_output_file(time_file)
+        time_array_base = utls.read_output_file(time_file)
 
         # ==============================================
         number_of_output_metrics = len(time_array_base[0])
 
-        if tls.is_in(result_columns, "all"):
+        if utls.is_in(result_columns, "all"):
             min_column = 0
             max_column = number_of_output_metrics
 
@@ -440,7 +440,7 @@ class CoreInstance:
             max_column = int(result_columns)
 
         else:
-            components = tls.string_splitter(result_columns)
+            components = utls.string_splitter(result_columns)
             min_column = components[0] - 1
             max_column = components[1]
 
@@ -458,20 +458,20 @@ class CoreInstance:
 
         # ==============================================
 
-        if tls.is_in(result_type, "max"):
+        if utls.is_in(result_type, "max"):
             command = np.max
-        elif tls.is_in(result_type, "min"):
+        elif utls.is_in(result_type, "min"):
             command = np.min
-        elif tls.is_in(result_type, "sum"):
+        elif utls.is_in(result_type, "sum"):
             command = np.sum
-        elif tls.is_in(result_type, "mean"):
+        elif utls.is_in(result_type, "mean"):
             command = np.mean
-        elif tls.is_in(result_type, "med"):
+        elif utls.is_in(result_type, "med"):
             command = np.median
-        elif tls.is_in(result_type, "abs") and tls.is_in(result_type, "sum"):
-            command = tls.absolute_sum
-        elif tls.is_in(result_type, "all"):
-            command = tls.return_all
+        elif utls.is_in(result_type, "abs") and utls.is_in(result_type, "sum"):
+            command = utls.absolute_sum
+        elif utls.is_in(result_type, "all"):
+            command = utls.return_all
         # TODO min vs max function
         else:
             command = np.sum
@@ -510,7 +510,7 @@ class CoreInstance:
             result_type = "all"
 
         # Fuel or interstitial
-        if tls.is_in(channel_type, 'inter'):
+        if utls.is_in(channel_type, 'inter'):
             command = self.get_result_at_time
         else:
             command = self.get_fuel_result_at_time
@@ -530,13 +530,13 @@ class CoreInstance:
         # Variables include the number of channels of that type and the first channel number on each row
 
         # if fuel
-        if tls.is_in(channel_type, "fuel"):
+        if utls.is_in(channel_type, "fuel"):
             number_of_channels = self.fuel_channels
             first_numbers_row = self.first_numbers_row_fuel
             first_columns_row = self.first_columns_row_fuel
 
         # if interstitial
-        elif tls.is_in(channel_type, "inter"):
+        elif utls.is_in(channel_type, "inter"):
             number_of_channels = self.interstitial_channels
             first_numbers_row = self.first_numbers_row_interstitial
             first_columns_row = self.first_columns_row_interstitial
@@ -607,7 +607,7 @@ class CoreInstance:
 
         # Depending on whether fuel or interstitial type is specified, sets the last channel i.e. the number of channels
         # of that type (284 for fuel, 321 interstitial by default)
-        if tls.is_in(channel_type, "fuel"):
+        if utls.is_in(channel_type, "fuel"):
             return self.fuel_channels
         else:
             return self.interstitial_channels
@@ -625,22 +625,22 @@ class CoreInstance:
 
             # Can handle slight misspellings or capitalisation
             # DEFAULT return all levels
-            elif tls.is_in(levels, "all"):
+            elif utls.is_in(levels, "all"):
                 return 0, self.core_levels
 
             # Top level
-            elif tls.is_in(levels, "top"):
+            elif utls.is_in(levels, "top"):
                 return self.core_levels - 1, self.core_levels
 
             # Bottom level
-            elif tls.is_in(levels, "bot"):
+            elif utls.is_in(levels, "bot"):
                 components = 0, 1
 
             # If the user specifies something else, it tries to work out what it is
 
             else:
 
-                split_items = tls.string_splitter(levels)
+                split_items = utls.string_splitter(levels)
                 components = split_items[0] - 1, split_items[1]
 
             # check if component[0] (min_level) is in acceptable range
@@ -702,17 +702,17 @@ class CoreInstance:
 
             # Can handle slight misspellings or capitalisation
             # DEFAULT return all channels
-            elif tls.is_in(channels, "all"):
+            elif utls.is_in(channels, "all"):
                 min_channel = 1
                 max_channel = last_channel
 
             # Last channel
-            elif tls.is_in(channels, "last"):
+            elif utls.is_in(channels, "last"):
                 min_channel = last_channel
                 max_channel = last_channel
 
             # First channel
-            elif tls.is_in(channels, "first"):
+            elif utls.is_in(channels, "first"):
                 min_channel = 1
                 max_channel = 1
 
@@ -720,7 +720,7 @@ class CoreInstance:
 
             else:
 
-                components = tls.string_splitter(channels)
+                components = utls.string_splitter(channels)
 
                 # check if component[0] (min_channel) is in acceptable range
                 if 1 <= int(components[0]) <= last_channel:
@@ -773,7 +773,7 @@ class CoreInstance:
         numbers = self.channel_coordinates(channel_no, channel_type)
 
         # Gets the dimensions of the core from the object, unless specified otherwise
-        if tls.is_in(channel_type, "fuel"):
+        if utls.is_in(channel_type, "fuel"):
 
             if rows == "": rows = self.core_rows - 1
             if columns == "": columns = self.core_columns - 1

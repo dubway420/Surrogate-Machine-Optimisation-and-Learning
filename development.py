@@ -1,12 +1,6 @@
-from core_parse import CoreInstance as ci
-import tools as tls
-import matplotlib.pyplot as plt
-from mpl_toolkits.axes_grid1 import make_axes_locatable
-from sklearn.model_selection import train_test_split, cross_val_predict
+from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression, Ridge
 from sklearn.tree import DecisionTreeRegressor
-from mpl_toolkits.mplot3d import Axes3D
-from sklearn.metrics import mean_squared_error, r2_score
 from keras.layers.convolutional import Conv1D, Conv2D
 from keras.layers import Flatten
 import numpy as np

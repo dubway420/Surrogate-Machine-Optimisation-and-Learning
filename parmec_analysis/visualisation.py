@@ -1,13 +1,12 @@
 import matplotlib.pyplot as plt
 from mpl_toolkits.axes_grid1 import AxesGrid
 import numpy as np
-from core_parse import CoreInstance as CoreInstance
-from tools import cases_list
+import parmec_analysis.core_parse as core
+from parmec_analysis.utils import cases_list
 from random import seed
 from random import randint
 import pandas as pd
 from scipy.stats import pearsonr
-import seaborn as sns
 
 
 def turn_off_graph_decorations(axis):
@@ -32,18 +31,16 @@ results_of_interest = [1, 2]
 
 # Make sure this points to the folder which contains all of the cases
 case_root = 'D:/parmec_results/'
-##################################################
 
 # This should point to an intact case
 case_intact = 'C:/Users/Huw/PycharmProjects/Results/intact_core'
 
+
 # Generates a core instance of the intact case
-instance = CoreInstance(case_intact)
+instance = core.Parse(case_intact)
 
 # Gets the xy coordinates of the fuel channels
 channel_coord_list_fuel = instance.get_brick_xyz_positions('xy', channel_type='fuel')
-
-##################################################
 
 # Makes a list of all the cases in the root directory
 total_cases = cases_list(case_root)
@@ -57,7 +54,6 @@ cracks_channel_specific = []
 for i in range(no_cases):
     # for each case, generates a number between 0 and the count of cases
     case_no = randint(0, len(total_cases) - 1)
-    print(case_no)
 
     # Gets the base name of the case and appends it to a list
     case = total_cases[case_no].split('/')[-1]
