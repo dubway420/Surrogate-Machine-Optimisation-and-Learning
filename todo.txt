@@ -9,8 +9,6 @@ Have model summaries visible on laptop
 filter stuff
 
 
-How much variation is there between instances? side by side analysis
-
 
 
 take magnitude of x and y displacement
