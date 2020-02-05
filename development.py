@@ -3,14 +3,17 @@
 # from sklearn.tree import DecisionTreeRegressor
 # from keras.layers.convolutional import Conv1D, Conv2D
 # from keras.layers import Flatten
-import numpy as np
-import pickle
 # from keras.models import Sequential
 # from keras.layers.core import Dense
 # from pyimagesearch import models
 # from keras.optimizers import Adam
+import numpy as np
+import pickle
 import seaborn as sns
+
+from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
+from parmec_analysis import core_parse as core
 
 
 #
@@ -29,7 +32,7 @@ import matplotlib.pyplot as plt
 #
 #     return X, Y
 
-
+#
 # def multi_layer_perceptron(input_dims, output_dims):
 #     # define our MLP network
 #     model = Sequential()
@@ -65,6 +68,7 @@ import matplotlib.pyplot as plt
 #     model.add(Flatten())
 #     model.add(Dense(output_dims, activation='softmax'))
 #
+#     model.name = "CNN 1D"
 #     # Compile model
 #     # model.compile(loss='mean_squared_error', optimizer='adam')
 #     return model
@@ -79,7 +83,7 @@ import matplotlib.pyplot as plt
 #     model.add(Dense(output_dims, activation='softmax'))
 #
 #     # Name the neural network
-#     model.name = "CNN 1"
+#     model.name = "CNN 2D - 1"
 #
 #     # model.compile(loss='mean_squared_error', optimizer='adam')
 #     return model
@@ -91,58 +95,83 @@ import matplotlib.pyplot as plt
 # LOADS DATA FROM CASES - CAN COMMENT ALL THIS OUT AFTER DOING IT ONCE
 ##########
 
-# case_intact = 'C:/Users/Huw/PycharmProjects/Results/intact_core'
-# instance_intact = ci(case_intact)
-#
-# # spatial coordinates of the interstitial channels - two lists, each of length 321.
-# # first list contains x, second list contains y coordinates
-# channel_coord_list_inter = instance_intact.get_brick_xyz_positions('xy', channel_type='inter')
-#
-# # Location of results
-case_root = 'D:/parmec_results/'
-#
-# X, Y = features_and_labels_single_frame(case_root, time=48)
-#
-# with open('objs.pkl', 'wb') as f:
-#     pickle.dump([X, Y, channel_coord_list_inter], f)
+case_intact = 'intact_core_rb'
+instance_intact = core.Parse(case_intact)
+brick_coord_list_fuel = instance_intact.get_brick_xyz_positions('xyz', channel_type="fuel", channels_only=0)
 
-# ##########
-
-# Load the dataset and channel coordinates
-with open('objs.pkl', 'rb') as f:
+with open('xy_coords.pkl', 'rb') as f:
     X, Y, channel_coord_list_inter, cross_val_results_traditional, mean_squared_errors = pickle.load(f)
 
-# Convert to numpy arrays
-X = np.array(X)
-Y = np.array(Y)
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
 
-# X_1D = numpyX.reshape((numpyX.shape[0], numpyX.shape[1], 1))
-# X_2D = numpyX.reshape((numpyX.shape[0], 284, 7, 1))
+ax.scatter(brick_coord_list_fuel[0], brick_coord_list_fuel[1], brick_coord_list_fuel[2], c=X[100], cmap='bwr')
+
+
+ax.view_init(45, 45)
+plt.show()
+
 #
+# #
+# # # spatial coordinates of the interstitial channels - two lists, each of length 321.
+# # # first list contains x, second list contains y coordinates
+# # channel_coord_list_inter = instance_intact.get_brick_xyz_positions('xy', channel_type='inter')
+# #
+# # # Location of results
+# # case_root = 'D:/parmec_results/'
+# #
+# # X, Y = features_and_labels_single_frame(case_root, time=48)
+# #
+# # with open('xy_coords.pkl', 'wb') as f:
+# #     pickle.dump([X, Y, channel_coord_list_inter], f)
+#
+# # ##########
+#
+# # Load the dataset and channel coordinates
+# with open('xy_coords.pkl', 'rb') as f:
+#     X, Y, channel_coord_list_inter, cross_val_results_traditional, mean_squared_errors = pickle.load(f)
+#
+# # Convert to numpy arrays
+# X = np.array(X)
+# Y = np.array(Y)
+#
+# # X_1D = numpyX.reshape((numpyX.shape[0], numpyX.shape[1], 1))
+# # X_2D = numpyX.reshape((numpyX.shape[0], 284, 7, 1))
+# #
 # X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2, random_state=42)
-# #
-# # # 1D data
-# # # X_train_1D = X_train.reshape(X_train.shape[0], X_train.shape[1], 1)
-# # # X_test_1D = X_test.reshape(X_test.shape[0], X_test.shape[1], 1)
-# #
+# # #
+# # # # 1D data
+# # # # X_train_1D = X_train.reshape(X_train.shape[0], X_train.shape[1], 1)
+# # # # X_test_1D = X_test.reshape(X_test.shape[0], X_test.shape[1], 1)
+# # #
 # # 2D data
 # X_train_2D = X_train.reshape(X_train.shape[0], 284, 7, 1)
 # X_test_2D = X_test.reshape(X_test.shape[0], 284, 7, 1)
+# # #
+# # regressors_traditional = [LinearRegression, DecisionTreeRegressor, Ridge]
 # #
-# regressors_traditional = [LinearRegression, DecisionTreeRegressor, Ridge]
-#
 # regressors_NN_1D = [
 #                     multi_layer_perceptron(X_train.shape[1], len(Y_train[0])),
-#                     wider_model(X_train.shape[1], len(Y_train[0]))
-#                     ]
-#
-# regressors_NN_2D = [
-#                     # cnn2D((X_train_2D.shape[1], X_train_2D.shape[2], X_train_2D.shape[3]), len(Y_train[0])),
+#                     wider_model(X_train.shape[1], len(Y_train[0])),
+# #                     ]
+# #
+# # regressors_NN_2D = [
+#                     cnn2D((X_train_2D.shape[1], X_train_2D.shape[2], X_train_2D.shape[3]), len(Y_train[0])),
 #                     models.create_cnn(X_train_2D.shape[2], X_train_2D.shape[1], 1, regress=True)
 #                     ]
 #
 # opt = Adam(lr=1e-3, decay=1e-3 / 200)
 #
+# for model in regressors_NN_1D:
+#
+#     print("\n ====== \n")
+#
+#     model.summary()
+#
+#     print("\n")
+
+
+
 # model_names = []
 #
 # training_results = []
@@ -300,7 +329,7 @@ Y = np.array(Y)
 
 # regressor.fit(X, Y)
 
-# with open('objs.pkl', 'wb') as f:
+# with open('xy_coords.pkl', 'wb') as f:
 #     pickle.dump([X, Y, channel_coord_list_inter, cross_val_results, mean_squared_errors], f)
 
 
@@ -440,28 +469,38 @@ Y = np.array(Y)
 ######################################
 # ########### Histogram ##############
 ######################################
+#
+# channel_average = np.mean(Y, axis=0)
+#
+# plt.scatter(channel_coord_list_inter[0], channel_coord_list_inter[1], c=channel_average)
+#
+# plt.show(
+#
+# )
+# sns.set(color_codes=True)
+#
+# Y_central = Y[:, 160]
+#
+# Y_central_top = Y[:, 140: 143]
+# Y_central_mid = Y[:, 159: 162]
+# Y_central_bot = Y[:, 178: 181]
+#
+# Y_central_channels = np.concatenate((Y_central_bot, Y_central_mid, Y_central_top))
+#
+# sns.distplot(Y_central.flatten(), label="Central Channel Only")
+# sns.distplot(Y_central_channels.flatten(), label="9 Central Channels")
+#
+# plt.ylabel("Frequency")
+# plt.xlabel("Displacement value (mm)")
+# plt.legend()
+# plt.show()
 
-channel_average = np.mean(Y, axis=0)
-
-plt.scatter(channel_coord_list_inter[0], channel_coord_list_inter[1], c=channel_average)
-
-plt.show(
-
-)
-sns.set(color_codes=True)
-
-Y_central = Y[:, 160]
-
-Y_central_top = Y[:, 140: 143]
-Y_central_mid = Y[:, 159: 162]
-Y_central_bot = Y[:, 178: 181]
-
-Y_central_channels = np.concatenate((Y_central_bot, Y_central_mid, Y_central_top))
-
-sns.distplot(Y_central.flatten(), label="Central Channel Only")
-sns.distplot(Y_central_channels.flatten(), label="9 Central Channels")
-
-plt.ylabel("Frequency")
-plt.xlabel("Displacement value (mm)")
-plt.legend()
-plt.show()
+# fig = plt.figure()
+# ax = plt.subplot(111)
+#
+# ax.scatter(channel_coord_list_fuel[0], channel_coord_list_fuel[1], c='b', label="Fuel Channel")
+# ax.scatter(channel_coord_list_inter[0], channel_coord_list_inter[1], c='r', label="Interstitial Channel")
+#
+# ax.legend(loc='upper center', bbox_to_anchor=(0.5, -0.05), shadow=True, ncol=2)
+#
+# plt.show()

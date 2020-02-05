@@ -42,7 +42,7 @@ model = Model(inputs=conv2d.inputs, outputs=conv2d.layers[0].output)
 conv2d.load_weights("conv2d.h5")
 
 case = 50
-channel = 0
+channel = 15
 
 plt.imshow(X_train[case].reshape(28, 28), cmap='gray')
 plt.show()

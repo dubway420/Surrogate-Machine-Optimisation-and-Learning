@@ -29,7 +29,7 @@
 import numpy as np
 import pandas as pd
 import math
-from parmec_analysis import utils as utls
+from parmec_analysis import utils as utils
 
 
 class Parse:
@@ -94,7 +94,7 @@ class Parse:
             self.set_id("DEFAULT_ID")
             self.crack_array = self.base_crack_array()
         else:
-            self.set_id(utls.get_id_from_filename(case))
+            self.set_id(utils.get_id_from_filename(case))
 
             try:
                 self.set_crack_array()
@@ -106,8 +106,8 @@ class Parse:
 
         # print("Calculating indices of channel items from results file")
 
-        self.fuel_indices = utls.index_array_fuel(case)  # TODO WARNING - THIS ONLY CURRENTLY WORKS FOR INTACT CASES
-        self.results_indices = utls.index_array_interstitial(case)
+        self.fuel_indices = utils.index_array_fuel(case)  # TODO WARNING - THIS ONLY CURRENTLY WORKS FOR INTACT CASES
+        self.results_indices = utils.index_array_interstitial(case)
 
         # =============
 
@@ -175,11 +175,11 @@ class Parse:
             # Can handle slight misspellings or capitalisation
 
             # Orientations - just returns the base array
-            if utls.is_in(array_type, "ori"):
+            if utils.is_in(array_type, "ori"):
                 array = self.crack_array
 
             # Positions - makes the maximum of the array 1
-            elif utls.is_in(array_type, "pos"):
+            elif utils.is_in(array_type, "pos"):
                 array = np.where(self.crack_array > 1, 1, self.crack_array)
             else:
                 print("WARNING: ambiguous output type specified. Defaulting to orientations.")
@@ -226,16 +226,20 @@ class Parse:
 
         min_level, max_level = self.parse_level_argument(levels)
 
-        if utls.is_in(channel_type, "fuel"):
+        # TODO come up with something more elegant than this.
+        fudge = 0
+        if array_size > 0: fudge = -1
+
+        if utils.is_in(channel_type, "fuel"):
             row_start = row_origin - array_size
             row_end = row_origin + array_size + 1
             column_start = column_origin - array_size
             column_end = column_origin + array_size + 1
         else:
             row_start = max(row_origin - array_size - 1, 0)
-            row_end = row_origin + array_size
+            row_end = row_origin + array_size + fudge
             column_start = max(column_origin - array_size - 1, 0)
-            column_end = column_origin + array_size
+            column_end = column_origin + array_size + fudge
 
         channel_crack_array = core_array[min_level:max_level, row_start: row_end,
                               column_start: column_end]
@@ -329,7 +333,7 @@ class Parse:
         # Iterate through channels
         for i in range(1, self.last_channel(channel_type=channel_type) + 1):
             local, adjacent, outer = self.get_cracks_per_layer(str(i), array_type='pos', channel_type=channel_type,
-                    inclusive=True)
+                                                               inclusive=True)
 
             counts_local.append(local)
             counts_adjacent.append(adjacent)
@@ -350,12 +354,12 @@ class Parse:
         time_file = case_path + '.' + str(time_index) + ext
 
         # Get the unsorted array corresponding to the specified user time_frame
-        time_array_base = utls.read_output_file(time_file)
+        time_array_base = utils.read_output_file(time_file)
 
         # ==============================================
         number_of_output_metrics = len(time_array_base[0])
 
-        if utls.is_in(result_columns, "all"):
+        if utils.is_in(result_columns, "all"):
             min_column = 0
             max_column = number_of_output_metrics
 
@@ -365,7 +369,7 @@ class Parse:
             max_column = int(result_columns)
 
         else:
-            components = utls.string_splitter(result_columns)
+            components = utils.string_splitter(result_columns)
             min_column = components[0] - 1
             max_column = components[1]
 
@@ -383,20 +387,20 @@ class Parse:
 
         # ==============================================
 
-        if utls.is_in(result_type, "max"):
+        if utils.is_in(result_type, "max"):
             command = np.max
-        elif utls.is_in(result_type, "min"):
+        elif utils.is_in(result_type, "min"):
             command = np.min
-        elif utls.is_in(result_type, "sum"):
+        elif utils.is_in(result_type, "sum"):
             command = np.sum
-        elif utls.is_in(result_type, "mean"):
+        elif utils.is_in(result_type, "mean"):
             command = np.mean
-        elif utls.is_in(result_type, "med"):
+        elif utils.is_in(result_type, "med"):
             command = np.median
-        elif utls.is_in(result_type, "abs") and utls.is_in(result_type, "sum"):
-            command = utls.absolute_sum
-        elif utls.is_in(result_type, "all"):
-            command = utls.return_all
+        elif utils.is_in(result_type, "abs") and utils.is_in(result_type, "sum"):
+            command = utils.absolute_sum
+        elif utils.is_in(result_type, "all"):
+            command = utils.return_all
         # TODO min vs max function
         else:
             command = np.sum
@@ -425,12 +429,12 @@ class Parse:
         time_file = case_path + '.' + str(time_index) + ext
 
         # Get the unsorted array corresponding to the specified user time_frame
-        time_array_base = utls.read_output_file(time_file)
+        time_array_base = utils.read_output_file(time_file)
 
         # ==============================================
         number_of_output_metrics = len(time_array_base[0])
 
-        if utls.is_in(result_columns, "all"):
+        if utils.is_in(result_columns, "all"):
             min_column = 0
             max_column = number_of_output_metrics
 
@@ -440,7 +444,7 @@ class Parse:
             max_column = int(result_columns)
 
         else:
-            components = utls.string_splitter(result_columns)
+            components = utils.string_splitter(result_columns)
             min_column = components[0] - 1
             max_column = components[1]
 
@@ -458,20 +462,20 @@ class Parse:
 
         # ==============================================
 
-        if utls.is_in(result_type, "max"):
+        if utils.is_in(result_type, "max"):
             command = np.max
-        elif utls.is_in(result_type, "min"):
+        elif utils.is_in(result_type, "min"):
             command = np.min
-        elif utls.is_in(result_type, "sum"):
+        elif utils.is_in(result_type, "sum"):
             command = np.sum
-        elif utls.is_in(result_type, "mean"):
+        elif utils.is_in(result_type, "mean"):
             command = np.mean
-        elif utls.is_in(result_type, "med"):
+        elif utils.is_in(result_type, "med"):
             command = np.median
-        elif utls.is_in(result_type, "abs") and utls.is_in(result_type, "sum"):
-            command = utls.absolute_sum
-        elif utls.is_in(result_type, "all"):
-            command = utls.return_all
+        elif utils.is_in(result_type, "abs") and utils.is_in(result_type, "sum"):
+            command = utils.absolute_sum
+        elif utils.is_in(result_type, "all"):
+            command = utils.return_all
         # TODO min vs max function
         else:
             command = np.sum
@@ -510,7 +514,7 @@ class Parse:
             result_type = "all"
 
         # Fuel or interstitial
-        if utls.is_in(channel_type, 'inter'):
+        if utils.is_in(channel_type, 'inter'):
             command = self.get_result_at_time
         else:
             command = self.get_fuel_result_at_time
@@ -530,13 +534,13 @@ class Parse:
         # Variables include the number of channels of that type and the first channel number on each row
 
         # if fuel
-        if utls.is_in(channel_type, "fuel"):
+        if utils.is_in(channel_type, "fuel"):
             number_of_channels = self.fuel_channels
             first_numbers_row = self.first_numbers_row_fuel
             first_columns_row = self.first_columns_row_fuel
 
         # if interstitial
-        elif utls.is_in(channel_type, "inter"):
+        elif utils.is_in(channel_type, "inter"):
             number_of_channels = self.interstitial_channels
             first_numbers_row = self.first_numbers_row_interstitial
             first_columns_row = self.first_columns_row_interstitial
@@ -607,7 +611,7 @@ class Parse:
 
         # Depending on whether fuel or interstitial type is specified, sets the last channel i.e. the number of channels
         # of that type (284 for fuel, 321 interstitial by default)
-        if utls.is_in(channel_type, "fuel"):
+        if utils.is_in(channel_type, "fuel"):
             return self.fuel_channels
         else:
             return self.interstitial_channels
@@ -625,22 +629,22 @@ class Parse:
 
             # Can handle slight misspellings or capitalisation
             # DEFAULT return all levels
-            elif utls.is_in(levels, "all"):
+            elif utils.is_in(levels, "all"):
                 return 0, self.core_levels
 
             # Top level
-            elif utls.is_in(levels, "top"):
+            elif utils.is_in(levels, "top"):
                 return self.core_levels - 1, self.core_levels
 
             # Bottom level
-            elif utls.is_in(levels, "bot"):
+            elif utils.is_in(levels, "bot"):
                 components = 0, 1
 
             # If the user specifies something else, it tries to work out what it is
 
             else:
 
-                split_items = utls.string_splitter(levels)
+                split_items = utils.string_splitter(levels)
                 components = split_items[0] - 1, split_items[1]
 
             # check if component[0] (min_level) is in acceptable range
@@ -702,17 +706,17 @@ class Parse:
 
             # Can handle slight misspellings or capitalisation
             # DEFAULT return all channels
-            elif utls.is_in(channels, "all"):
+            elif utils.is_in(channels, "all"):
                 min_channel = 1
                 max_channel = last_channel
 
             # Last channel
-            elif utls.is_in(channels, "last"):
+            elif utils.is_in(channels, "last"):
                 min_channel = last_channel
                 max_channel = last_channel
 
             # First channel
-            elif utls.is_in(channels, "first"):
+            elif utils.is_in(channels, "first"):
                 min_channel = 1
                 max_channel = 1
 
@@ -720,7 +724,7 @@ class Parse:
 
             else:
 
-                components = utls.string_splitter(channels)
+                components = utils.string_splitter(channels)
 
                 # check if component[0] (min_channel) is in acceptable range
                 if 1 <= int(components[0]) <= last_channel:
@@ -773,7 +777,7 @@ class Parse:
         numbers = self.channel_coordinates(channel_no, channel_type)
 
         # Gets the dimensions of the core from the object, unless specified otherwise
-        if utls.is_in(channel_type, "fuel"):
+        if utils.is_in(channel_type, "fuel"):
 
             if rows == "": rows = self.core_rows - 1
             if columns == "": columns = self.core_columns - 1
