@@ -90,47 +90,47 @@ plt.show()
 ##################################################
 # ######### CRACK CONCENTRATION PLOT #############
 ##################################################
-#
-# # Creates the figure
-# fig = plt.figure(figsize=(9, 8))
-#
-# # The maximum number of cracks that surround any channel. Used for bounding.
-# max_counts = np.amax(cracks_channel_specific)
-#
-# print("Max counts: ", max_counts)
-#
-# # Generates the plot grid for each case
-# counts_grid = AxesGrid(fig, 111,
-#                        nrows_ncols=(1, len(cases)),
-#                        axes_pad=0.12,
-#                        cbar_mode='single',
-#                        cbar_location='bottom',
-#                        cbar_pad=0.2
-#                        )
-#
-# # Iterates through each plot setting the parameters
-# for i, ax in enumerate(counts_grid):
-#     # sets the title as the case
-#     column_title = cases[i]
-#     ax.title.set_text(column_title)
-#
-#     # Turns off the labels and ticks of each axis
-#     turn_off_graph_decorations(ax)
-#
-#     # Generates the plot
-#     im = ax.scatter(channel_coord_list_inter[0], channel_coord_list_inter[1],
-#                     marker='o', c=cracks_channel_specific[i], cmap='nipy_spectral', label='inter',
-#                     s=20)
-#     im.set_clim(0, max_counts)
-#
-# # Creates the colorbar
-# cbar = ax.cax.colorbar(im)
-# cbar = counts_grid.cbar_axes[0].colorbar(im)
-#
-# # Saves the figure
-# filenm = "./Comparing_three_cases/concentration_of_cracks.png"
-# # plt.savefig(filenm)
-# plt.show()
+
+# Creates the figure
+fig = plt.figure(figsize=(9, 8))
+
+# The maximum number of cracks that surround any channel. Used for bounding.
+max_counts = np.amax(cracks_channel_specific)
+
+print("Max counts: ", max_counts)
+
+# Generates the plot grid for each case
+counts_grid = AxesGrid(fig, 111,
+                       nrows_ncols=(1, len(cases)),
+                       axes_pad=0.12,
+                       cbar_mode='single',
+                       cbar_location='bottom',
+                       cbar_pad=0.2
+                       )
+
+# Iterates through each plot setting the parameters
+for i, ax in enumerate(counts_grid):
+    # sets the title as the case
+    column_title = cases[i]
+    ax.title.set_text(column_title)
+
+    # Turns off the labels and ticks of each axis
+    turn_off_graph_decorations(ax)
+
+    # Generates the plot
+    im = ax.scatter(channel_coord_list_inter[0], channel_coord_list_inter[1],
+                    marker='o', c=cracks_channel_specific[i], cmap='nipy_spectral', label='inter',
+                    s=20)
+    im.set_clim(0, max_counts)
+
+# Creates the colorbar
+cbar = ax.cax.colorbar(im)
+cbar = counts_grid.cbar_axes[0].colorbar(im)
+
+# Saves the figure
+filenm = "./Comparing_three_cases/concentration_of_cracks.png"
+# plt.savefig(filenm)
+plt.show()
 
 ##################################################
 # ################ RESULT PLOT ###################
