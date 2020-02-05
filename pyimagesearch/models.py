@@ -112,7 +112,7 @@ def create_cnn(width, height, depth, filters=(16, 32, 64), regress=False):
     model = Model(inputs, x)
 
     # Name the neural network
-    model.name = "CNN 2"
+    model.name = "CNN 2D - 2"
 
     # return the CNN
     return model

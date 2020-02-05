@@ -236,10 +236,10 @@ class Parse:
             column_start = column_origin - array_size
             column_end = column_origin + array_size + 1
         else:
-            row_start = max(row_origin - array_size - 1, 0)
-            row_end = row_origin + array_size + fudge
-            column_start = max(column_origin - array_size - 1, 0)
-            column_end = column_origin + array_size + fudge
+            row_start = max(row_origin - array_size - 1, 0) + 1
+            row_end = row_origin + array_size + fudge + 1
+            column_start = max(column_origin - array_size - 1, 0) + 1
+            column_end = column_origin + array_size + fudge + 1
 
         channel_crack_array = core_array[min_level:max_level, row_start: row_end,
                               column_start: column_end]
