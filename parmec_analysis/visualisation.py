@@ -20,12 +20,12 @@ def turn_off_graph_decorations(axis):
 ##################################################
 # ############### USER INPUTS ####################
 ##################################################
-
-# This seed is used to generate numbers to select cases
-seed(3)
+#
+# # This seed is used to generate numbers to select cases
+# seed(3)
 
 # The number of cases to compare
-no_cases = 3
+no_cases = 1
 
 frames_of_interest = [48, 55, 65, 68]
 results_of_interest = [1, 2]
@@ -35,7 +35,6 @@ case_root = '/home/huw/PycharmProjects/Results/'
 
 # This should point to an intact case
 case_intact = 'intact_core_rb'
-
 
 # Generates a core instance of the intact case
 instance = core.Parse(case_intact)
@@ -50,8 +49,8 @@ cases = []
 instances = []
 
 cracks_channel_specific = []
-
-# Iterates through all of the cases select
+#
+# # Iterates through all of the cases select
 for i in range(no_cases):
     # for each case, generates a number between 0 and the count of cases
     # case_no = randint(0, len(total_cases) - 1)
@@ -68,24 +67,27 @@ for i in range(no_cases):
     cracks_channel_specific.append(inst.channel_specific_cracks()[1])
     instances.append(inst)
 
-# Gets the channel coordinates for each channel. This is common across all instances so can take [0]
+print(cases)
+# # Gets the channel coordinates for each channel. This is common across all instances so can take [0]
 channel_coord_list_inter = instances[0].get_brick_xyz_positions('xy', channel_type='inter')
 
 ##################################################
 # ############# 3D CRACK PLOT ####################
 ##################################################
 
-brick_coord_list_fuel = instance.get_brick_xyz_positions('xyz', channel_type="fuel", channels_only=0)
-X = instances[-1].linear_crack_array_1d(array_type="pos")
-
-fig = plt.figure()
-ax = fig.add_subplot(111, projection='3d')
-
-ax.scatter(brick_coord_list_fuel[0], brick_coord_list_fuel[1], brick_coord_list_fuel[2], c=X, cmap='bwr')
-
-
-ax.view_init(45, 45)
-plt.show()
+# brick_coord_list_fuel = instance.get_brick_xyz_positions('xyz', channel_type="fuel", channels_only=0)
+# X = instances[0].linear_crack_array_1d(array_type="pos")
+#
+# fig = plt.figure()
+# ax = fig.add_subplot(111, projection='3d')
+#
+# print(np.unique(X))
+#
+# ax.title.set_text(cases[0])
+# ax.scatter(brick_coord_list_fuel[0], brick_coord_list_fuel[1], brick_coord_list_fuel[2], c=X, cmap='gnuplot')
+# plt.legend()
+# ax.view_init(45, 45)
+# plt.show()
 
 ##################################################
 # ######### CRACK CONCENTRATION PLOT #############
@@ -104,8 +106,8 @@ counts_grid = AxesGrid(fig, 111,
                        nrows_ncols=(1, len(cases)),
                        axes_pad=0.12,
                        cbar_mode='single',
-                       cbar_location='bottom',
-                       cbar_pad=0.2
+                       cbar_location='right',
+                       cbar_pad=0.1
                        )
 
 # Iterates through each plot setting the parameters
@@ -120,7 +122,7 @@ for i, ax in enumerate(counts_grid):
     # Generates the plot
     im = ax.scatter(channel_coord_list_inter[0], channel_coord_list_inter[1],
                     marker='o', c=cracks_channel_specific[i], cmap='nipy_spectral', label='inter',
-                    s=20)
+                    s=100)
     im.set_clim(0, max_counts)
 
 # Creates the colorbar
@@ -133,14 +135,22 @@ filenm = "./Comparing_three_cases/concentration_of_cracks.png"
 plt.show()
 
 ##################################################
+# ############ EARTHQUAKE PLOT ###################
+##################################################
+
+# This gets the acceleration time history. Used for labelling.
+# earthquake_acceleration = (pd.read_csv('time_history.csv').values[:150, 2])
+#
+# plt.plot(earthquake_acceleration)
+# plt.xlabel("Time Frame (n)")
+# plt.ylabel("Ground Acceleration (m/$s^2$)")
+# plt.show()
+
+##################################################
 # ################ RESULT PLOT ###################
 ##################################################
 #
 # channel_type = 'inter'
-#
-# # This gets the acceleration time history. Used for labelling.
-# earthquake_acceleration = (pd.read_csv('time_history.csv').values[:, 2])
-#
 # # Iterates through the user defined output types of interest, generating a separate figure for each
 # for result in results_of_interest:
 #     results = []
