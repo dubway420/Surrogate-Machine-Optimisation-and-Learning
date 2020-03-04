@@ -40,7 +40,7 @@ class Parse:
     # -------------------------SET UP---------------------------
     # ==========================================================
 
-    def __init__(self, case, core_levels=7, core_rows=18, core_columns=18,
+    def __init__(self, case, fuel_levels=7, inter_levels=13, core_rows=18, core_columns=18,
                  fuel_channels=284, interstitial_channels=321, padding=2):
         """Assign ID. Initialise or extract data arrays """
 
@@ -53,7 +53,8 @@ class Parse:
         # =============
         self.core_rows = core_rows
         self.core_columns = core_columns
-        self.core_levels = core_levels
+        self.core_levels = fuel_levels
+        self.inter_levels = inter_levels
 
         # The number of fuel channels in the core. This isn't simply the product of row * columns because of peripheral
         # channels.
@@ -247,7 +248,7 @@ class Parse:
         return channel_crack_array
 
     def get_cracks_per_level(self, channel='core', size=2, array_type='orientations', levels='all', fraction=False,
-                             channel_type='fuel', quiet=False, ):
+                             channel_type='fuel', quiet=False):
         """ Returns an array stating the number of cracks in each level. If the array is of the orientations type,
         the array is 2D - the first dimension specifies crack orientation, the second specifies level"""
 
@@ -399,6 +400,8 @@ class Parse:
             command = np.median
         elif utils.is_in(result_type, "abs") and utils.is_in(result_type, "sum"):
             command = utils.absolute_sum
+        elif utils.is_in(result_type, "relu"):
+            command = utils.ReLu
         elif utils.is_in(result_type, "all"):
             command = utils.return_all
         # TODO min vs max function
@@ -794,3 +797,32 @@ class Parse:
             square_sum += (round(abs(number - self.padding - dimension / 2) + 0.5)) ** 2
 
         return math.sqrt(square_sum)
+
+    def layers_from_centre(self, channel_no, channel_type="fuel", rows="", columns=""):
+        """ Calculates the planar distance from the centre of the core given the channel coordinates """
+
+        square_sum = 0
+
+        # these are the row/column coordinates  of the channel in question
+        numbers = self.channel_coordinates(channel_no, channel_type)
+
+        # Gets the dimensions of the core from the object, unless specified otherwise
+        if utils.is_in(channel_type, "fuel"):
+
+            if rows == "": rows = self.core_rows - 1
+            if columns == "": columns = self.core_columns - 1
+
+        else:
+
+            if rows == "": rows = self.core_rows
+            if columns == "": columns = self.core_columns
+
+        core_dimensions = [rows, columns]
+
+        distances = []
+
+        # Sum of the squares of the distance of each coordinate
+        for number, dimension in zip(numbers, core_dimensions):
+            distances.append(int(abs(number - self.padding - dimension / 2)))
+
+        return max(distances)

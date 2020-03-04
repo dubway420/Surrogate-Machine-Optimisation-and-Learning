@@ -229,5 +229,9 @@ def absolute_sum(array):
     return sum(absolute_array)
 
 
+def ReLu(array):
+    return sum(np.maximum(array, 0))
+
+
 def return_all(array):
     return array

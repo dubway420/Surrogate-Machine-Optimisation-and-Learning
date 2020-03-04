@@ -14,6 +14,7 @@ import seaborn as sns
 from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
 from parmec_analysis import core_parse as core
+from parmec_analysis import utils
 
 
 #
@@ -95,21 +96,29 @@ from parmec_analysis import core_parse as core
 # LOADS DATA FROM CASES - CAN COMMENT ALL THIS OUT AFTER DOING IT ONCE
 ##########
 
-case_intact = 'intact_core_rb'
-instance_intact = core.Parse(case_intact)
-brick_coord_list_fuel = instance_intact.get_brick_xyz_positions('xyz', channel_type="fuel", channels_only=0)
+# case_intact = 'intact_core_rb'
+# instance_intact = core.Parse(case_intact)
+#
+# print(instance_intact.layers_from_centre(141, channel_type="inter"))
 
-with open('xy_coords.pkl', 'rb') as f:
-    X, Y, channel_coord_list_inter, cross_val_results_traditional, mean_squared_errors = pickle.load(f)
+x = [-1, 2, 3, -5]
 
-fig = plt.figure()
-ax = fig.add_subplot(111, projection='3d')
-
-ax.scatter(brick_coord_list_fuel[0], brick_coord_list_fuel[1], brick_coord_list_fuel[2], c=X[100], cmap='bwr')
+print(utils.ReLu(x))
 
 
-ax.view_init(45, 45)
-plt.show()
+# brick_coord_list_fuel = instance_intact.get_brick_xyz_positions('xyz', channel_type="fuel", channels_only=0)
+#
+# with open('xy_coords.pkl', 'rb') as f:
+#     X, Y, channel_coord_list_inter, cross_val_results_traditional, mean_squared_errors = pickle.load(f)
+#
+# fig = plt.figure()
+# ax = fig.add_subplot(111, projection='3d')
+#
+# ax.scatter(brick_coord_list_fuel[0], brick_coord_list_fuel[1], brick_coord_list_fuel[2], c=X[100], cmap='bwr')
+#
+#
+# ax.view_init(45, 45)
+# plt.show()
 
 #
 # #
