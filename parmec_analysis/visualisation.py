@@ -3,7 +3,7 @@ from mpl_toolkits.axes_grid1 import AxesGrid
 import numpy as np
 import seaborn as sns
 import parmec_analysis.core_parse as core
-from parmec_analysis.utils import cases_list
+from parmec_analysis.utils import cases_list, ReLu, ReLu_all
 from random import seed
 from random import randint
 import pandas as pd
@@ -560,34 +560,59 @@ with open('full_result.pkl', 'rb') as f:
 
 fig = plt.figure(figsize=(24, 12))
 
-labels_composite = np.sum(np.array(labels), axis=2)
+labels_composite = np.sum(np.array(labels), axis=3)
 
-# Creates a plot grid. Number of rows is number of frames of interest, number of columns is cases of interest
+sizes = [40, 15]
 
-grid = AxesGrid(fig, 111,
-                nrows_ncols=(len(frames_of_interest), 1),
-                axes_pad=0.12,
-                cbar_mode='single',
-                cbar_location='right',
-                cbar_pad=0.2
-                )
+for labels1, size in zip(labels_composite, sizes):
 
-for result_labels in labels_composite:
+    # sns.set(color_codes=True)
+    #
+    # Y_central_top = labels[:, 140: 143]
+    # Y_central_mid = labels[:, 159: 162]
+    # Y_central_bot = labels[:, 178: 181]
+    #
+    # Y_central_channels = np.concatenate((Y_central_bot, Y_central_mid, Y_central_top))
 
-    min_result = np.amin(result_labels)
-    max_result = np.amax(result_labels)
+    colours = ['c', 'm', 'y', 'orangered']
 
-    for composite_result_frame, ax in zip(result_labels, grid):
-        im = ax.scatter(channel_coord_list_inter[0], channel_coord_list_inter[1], marker='o', c=composite_result_frame,
-                        cmap='seismic', label='inter', s=50)
+    for frame, frame_label, colour in zip(frames_of_interest, labels1, colours):
 
-        im.set_clim(min_result, max_result)
+        lab = "Frame: " + str(frame)
+        label = ReLu_all(frame_label)
+        sns.distplot(label, label=lab, color=colour)
 
-        # Creates the colorbar
-        cbar = ax.cax.colorbar(im)
-        cbar = grid.cbar_axes[0].colorbar(im)
+    plt.xlabel("Displacement Value (mm)")
+    plt.legend(prop={'size': size})
+    plt.show()
 
-    fig.show()
+#
+# # Creates a plot grid. Number of rows is number of frames of interest, number of columns is cases of interest
+#
+# grid = AxesGrid(fig, 111,
+#                 nrows_ncols=(len(frames_of_interest), 1),
+#                 axes_pad=0.12,
+#                 cbar_mode='single',
+#                 cbar_location='right',
+#                 cbar_pad=0.2
+#                 )
+#
+# for result_labels in labels_composite:
+#
+#     min_result = np.amin(result_labels)
+#     max_result = np.amax(result_labels)
+#
+#     for composite_result_frame, ax in zip(result_labels, grid):
+#         im = ax.scatter(channel_coord_list_inter[0], channel_coord_list_inter[1], marker='o', c=composite_result_frame,
+#                         cmap='seismic', label='inter', s=50)
+#
+#         im.set_clim(min_result, max_result)
+#
+#         # Creates the colorbar
+#         cbar = ax.cax.colorbar(im)
+#         cbar = grid.cbar_axes[0].colorbar(im)
+#
+#     fig.show()
 
 # composite_result = np.sum(np.array(labels_1_48), axis=0)
 #

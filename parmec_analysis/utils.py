@@ -230,7 +230,11 @@ def absolute_sum(array):
 
 
 def ReLu(array):
-    return sum(np.maximum(array, 0))
+    return sum(ReLu_all(array))
+
+
+def ReLu_all(array):
+    return np.maximum(array, 0)
 
 
 def return_all(array):
