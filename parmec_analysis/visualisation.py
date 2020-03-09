@@ -51,14 +51,11 @@ def features_and_labels_single_frame(path_string, time=50, result="1", x_type='p
 # This seed is used to generate numbers to select cases
 seed(2)
 
-# The number of cases to compare
-no_cases = 3
-
 frames_of_interest = [48, 55, 65, 68]
 results_of_interest = [1, 2]
 
 # Make sure this points to the folder which contains all of the cases
-case_root = '/media/huw/Seagate Expansion Drive/parmec_results/'
+case_root = '/media/huw/Seagate Expansion Drive/variable_crack_percentage/seed_5015/'
 
 # This should point to an intact case
 case_intact = 'intact_core_rb'
@@ -75,7 +72,10 @@ inter_channels = instance_intact.interstitial_channels
 channel_coord_list_fuel = instance_intact.get_brick_xyz_positions('xy', channel_type='fuel')
 
 # Makes a list of all the cases in the root directory
-# total_cases = cases_list(case_root)
+total_cases = cases_list(case_root)
+
+for i, case in enumerate(total_cases):
+    print(i, case)
 
 cases = []
 instances = []
@@ -84,38 +84,45 @@ cracks_channel_specific = []
 cracks_level_specific = []
 cracks_region_specific = []
 
+case_chosen = [2, 0, 1]
+
+# The number of cases to compare
+no_cases = len(case_chosen)
+
 # Iterates through all of the cases select
-# for i in range(no_cases):
-#     # for each case, generates a number between 0 and the count of cases
-#     case_no = randint(0, len(total_cases) - 1)
+for i in range(no_cases):
+    # for each case, generates a number between 0 and the count of cases
+    # case_no = randint(0, len(total_cases) - 1)
+
+    case_no = case_chosen[i]
+
+    # Gets the base name of the case and appends it to a list
+    case = total_cases[case_no].split('/')[-1]
+    cases.append(case)
+
+    # Generates an instance of core parse for each case
+    path = case_root + case + "/" + case
+    inst = core.Parse(path)
+
+    cracks_per_layer = []
+    for size in inclusive_layers:
+        cracks_per_layer.append(inst.get_cracks_per_layer(channel="161", array_type="positions",
+                                                          size=size, channel_type="interstitial")[-1])
+
+    cracks_region_specific.append(cracks_per_layer)
+
+    # Gets the number of cracks surrounding each channel
+    cracks_channel_specific.append(inst.channel_specific_cracks()[1])
 #
-#     # Gets the base name of the case and appends it to a list
-#     case = total_cases[case_no].split('/')[-1]
-#     cases.append(case)
+#     # Gets the cracks per level
 #
-#     # Generates an instance of core parse for each case
-#     path = case_root + case + "/" + case
-#     inst = core.Parse(path)
+#     # TODO MAKE THIS INTO A FUNCTION OF ITS OWN
+#     # cracks_per_level = [inst.get_cracks_per_level(array_type="positions", quiet=True)]
+#     # for size in inclusive_layers:
+#     #     cracks_per_level.append(inst.get_cracks_per_level(channel="161", array_type="positions", quiet=True,
+#     #                                                       size=size, channel_type="interstitial"))
 #
-#     cracks_per_layer = []
-#     for size in inclusive_layers:
-#         cracks_per_layer.append(inst.get_cracks_per_layer(channel="161", array_type="positions",
-#                                                           size=size, channel_type="interstitial")[-1])
-#
-#     cracks_region_specific.append(cracks_per_layer)
-#     #
-#     #     # Gets the number of cracks surrounding each channel
-#     #     cracks_channel_specific.append(inst.channel_specific_cracks()[1])
-#     #
-#     #     # Gets the cracks per level
-#     #
-#     #     # TODO MAKE THIS INTO A FUNCTION OF ITS OWN
-#     #     # cracks_per_level = [inst.get_cracks_per_level(array_type="positions", quiet=True)]
-#     #     # for size in inclusive_layers:
-#     #     #     cracks_per_level.append(inst.get_cracks_per_level(channel="161", array_type="positions", quiet=True,
-#     #     #                                                       size=size, channel_type="interstitial"))
-#     #
-#     #     # cracks_level_specific.append(cracks_per_level)
+#     # cracks_level_specific.append(cracks_per_level)
 #     #
 #     instances.append(inst)
 
@@ -152,48 +159,47 @@ channel_coord_list_inter = instance_intact.get_brick_xyz_positions('xy', channel
 ##################################################
 # ######### CRACK CONCENTRATION PLOT #############
 ##################################################
-#
-# # Creates the figure
-# fig = plt.figure(figsize=(10, 9))
-#
-# # The maximum number of cracks that surround any channel. Used for bounding.
-# max_counts = np.amax(cracks_channel_specific)
-#
-# print("Max counts: ", max_counts)
-#
-# # Generates the plot grid for each case
-# counts_grid = AxesGrid(fig, 111,
-#                        nrows_ncols=(1, len(cases)),
-#                        axes_pad=0.2,
-#                        cbar_mode='single',
-#                        cbar_location='right',
-#                        cbar_pad=0.2
-#                        )
-#
-# # Iterates through each plot setting the parameters
-# for i, ax in enumerate(counts_grid):
-#     # sets the title as the case
-#     column_title = cases[i]
-#     ax.title.set_text(column_title)
-#
-#     # Turns off the labels and ticks of each axis
-#     turn_off_graph_decorations(ax)
-#
-#     # Generates the plot
-#     im = ax.scatter(channel_coord_list_inter[0], channel_coord_list_inter[1],
-#                     marker='o', c=cracks_channel_specific[i], cmap='OrRd', label='inter',
-#                     s=600)
-#     im.set_clim(0, max_counts)
-#
-# # Creates the colorbar
-# cbar = ax.cax.colorbar(im)
-# cbar = counts_grid.cbar_axes[0].colorbar(im)
-#
-# # Saves the figure
-# filenm = "./Comparing_three_cases/concentration_of_cracks.png"
-# # plt.savefig(filenm)
-# plt.show()
 
+# Creates the figure
+fig = plt.figure(figsize=(10, 9))
+
+# The maximum number of cracks that surround any channel. Used for bounding.
+max_counts = np.amax(cracks_channel_specific)
+
+print("Max counts: ", max_counts)
+
+# Generates the plot grid for each case
+counts_grid = AxesGrid(fig, 111,
+                       nrows_ncols=(1, len(cases)),
+                       axes_pad=0.2,
+                       cbar_mode='single',
+                       cbar_location='bottom',
+                       cbar_pad=0.2
+                       )
+
+# Iterates through each plot setting the parameters
+for i, ax in enumerate(counts_grid):
+    # sets the title as the case
+    column_title = cases[i]
+    ax.title.set_text(column_title)
+
+    # Turns off the labels and ticks of each axis
+    turn_off_graph_decorations(ax)
+
+    # Generates the plot
+    im = ax.scatter(channel_coord_list_inter[0], channel_coord_list_inter[1],
+                    marker='o', c=cracks_channel_specific[i], cmap='OrRd', label='inter',
+                    s=100)
+    im.set_clim(0, max_counts)
+
+# Creates the colorbar
+cbar = ax.cax.colorbar(im)
+cbar = counts_grid.cbar_axes[0].colorbar(im)
+
+# Saves the figure
+filenm = "./Comparing_three_cases/concentration_of_cracks.png"
+# plt.savefig(filenm)
+plt.show()
 
 ##################################################
 # ############ CRACK AREA PLOT ###################
@@ -555,36 +561,36 @@ channel_type = 'inter'
 # with open('full_result.pkl', 'wb') as f:
 #     pickle.dump([features, labels], f)
 
-with open('full_result.pkl', 'rb') as f:
-    features, labels = pickle.load(f)
-
-fig = plt.figure(figsize=(24, 12))
-
-labels_composite = np.sum(np.array(labels), axis=3)
-
-sizes = [40, 15]
-
-for labels1, size in zip(labels_composite, sizes):
-
-    # sns.set(color_codes=True)
-    #
-    # Y_central_top = labels[:, 140: 143]
-    # Y_central_mid = labels[:, 159: 162]
-    # Y_central_bot = labels[:, 178: 181]
-    #
-    # Y_central_channels = np.concatenate((Y_central_bot, Y_central_mid, Y_central_top))
-
-    colours = ['c', 'm', 'y', 'orangered']
-
-    for frame, frame_label, colour in zip(frames_of_interest, labels1, colours):
-
-        lab = "Frame: " + str(frame)
-        label = ReLu_all(frame_label)
-        sns.distplot(label, label=lab, color=colour)
-
-    plt.xlabel("Displacement Value (mm)")
-    plt.legend(prop={'size': size})
-    plt.show()
+# with open('full_result.pkl', 'rb') as f:
+#     features, labels = pickle.load(f)
+#
+# fig = plt.figure(figsize=(24, 12))
+#
+# labels_composite = np.sum(np.array(labels), axis=3)
+#
+# sizes = [40, 15]
+#
+# for labels1, size in zip(labels_composite, sizes):
+#
+#     # sns.set(color_codes=True)
+#     #
+#     # Y_central_top = labels[:, 140: 143]
+#     # Y_central_mid = labels[:, 159: 162]
+#     # Y_central_bot = labels[:, 178: 181]
+#     #
+#     # Y_central_channels = np.concatenate((Y_central_bot, Y_central_mid, Y_central_top))
+#
+#     colours = ['c', 'm', 'y', 'orangered']
+#
+#     for frame, frame_label, colour in zip(frames_of_interest, labels1, colours):
+#
+#         lab = "Frame: " + str(frame)
+#         label = ReLu_all(frame_label)
+#         sns.distplot(label, label=lab, color=colour)
+#
+#     plt.xlabel("Displacement Value (mm)")
+#     plt.legend(prop={'size': size})
+#     plt.show()
 
 #
 # # Creates a plot grid. Number of rows is number of frames of interest, number of columns is cases of interest
