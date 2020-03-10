@@ -50,15 +50,15 @@ def features_and_labels_single_frame(path_string, time=50, result="1", x_type='p
 
 # This seed is used to generate numbers to select cases
 seed(2)
-
+#
 frames_of_interest = [48, 55, 65, 68]
 results_of_interest = [1, 2]
-
+#
 # Make sure this points to the folder which contains all of the cases
-case_root = '/media/huw/Seagate Expansion Drive/variable_crack_percentage/seed_5015/'
+case_root = 'D:/parmec_results/'
 
 # This should point to an intact case
-case_intact = 'intact_core_rb'
+case_intact = 'C:/Users/Huw/PycharmProjects/parmec_agr_ml_surrogate/intact_core_rb'
 
 # Generates a core instance of the intact case
 instance_intact = core.Parse(case_intact)
@@ -67,6 +67,9 @@ instance_intact = core.Parse(case_intact)
 inter_levels = instance_intact.inter_levels
 
 inter_channels = instance_intact.interstitial_channels
+
+# # Gets the channel coordinates for each channel. This is common across all instances so can take [0]
+channel_coord_list_inter = instance_intact.get_brick_xyz_positions('xy', channel_type='inter')
 
 # Gets the xy coordinates of the fuel channels
 channel_coord_list_fuel = instance_intact.get_brick_xyz_positions('xy', channel_type='fuel')
@@ -113,30 +116,28 @@ for i in range(no_cases):
 
     # Gets the number of cracks surrounding each channel
     cracks_channel_specific.append(inst.channel_specific_cracks()[1])
-#
-#     # Gets the cracks per level
-#
-#     # TODO MAKE THIS INTO A FUNCTION OF ITS OWN
-#     # cracks_per_level = [inst.get_cracks_per_level(array_type="positions", quiet=True)]
-#     # for size in inclusive_layers:
-#     #     cracks_per_level.append(inst.get_cracks_per_level(channel="161", array_type="positions", quiet=True,
-#     #                                                       size=size, channel_type="interstitial"))
-#
-#     # cracks_level_specific.append(cracks_per_level)
-#     #
-#     instances.append(inst)
 
-# cracks_region_specific_max = np.amax(np.array(cracks_region_specific))
-# cracks_region_specific_norm = (cracks_region_specific / np.amax(cracks_region_specific)) * 0.5
+    # Gets the cracks per level
 
-# # Gets the channel coordinates for each channel. This is common across all instances so can take [0]
-channel_coord_list_inter = instance_intact.get_brick_xyz_positions('xy', channel_type='inter')
+    # TODO MAKE THIS INTO A FUNCTION OF ITS OWN
+    # cracks_per_level = [inst.get_cracks_per_level(array_type="positions", quiet=True)]
+    # for size in inclusive_layers:
+    #     cracks_per_level.append(inst.get_cracks_per_level(channel="161", array_type="positions", quiet=True,
+    #                                                       size=size, channel_type="interstitial"))
 
-# layer_no_of_channels = np.zeros(instance_intact.interstitial_channels)
+    # cracks_level_specific.append(cracks_per_level)
+    #
+    instances.append(inst)
 
-# for i in range(instance_intact.interstitial_channels):
-#     channel_no = i + 1
-#     layer_no_of_channels[i] = instance_intact.layers_from_centre(channel_no, channel_type='inter')
+cracks_region_specific_max = np.amax(np.array(cracks_region_specific))
+cracks_region_specific_norm = (cracks_region_specific / np.amax(cracks_region_specific)) * 0.5
+
+
+layer_no_of_channels = np.zeros(instance_intact.interstitial_channels)
+
+for i in range(instance_intact.interstitial_channels):
+    channel_no = i + 1
+    layer_no_of_channels[i] = instance_intact.layers_from_centre(channel_no, channel_type='inter')
 
 ##################################################
 # ############# 3D CRACK PLOT ####################
@@ -672,3 +673,34 @@ channel_type = 'inter'
 # plt.xlabel("Displacement value (mm)")
 # plt.legend()
 # plt.show()
+
+########################################################################################
+# ######################### VARIABLE CRACK FRACTION ####################################
+########################################################################################
+
+# case_folders = ["D:/variable_crack_percentage/seed_5004",
+#                 "D:/variable_crack_percentage/seed_5008"
+#                 "D:/variable_crack_percentage/seed_5015"]
+#
+# no_cases = len(case_folders)
+#
+# # Creates the figure
+# fig = plt.figure(figsize=(10, 9))
+#
+# crack_fractions = [5, 10, 20]
+#
+# no_fractions = [crack_fractions]
+#
+# # Generates the plot grid for each case
+# counts_grid = AxesGrid(fig, 111,
+#                        nrows_ncols=(no_fractions, no_cases),
+#                        axes_pad=0.2,
+#                        cbar_mode='single',
+#                        cbar_location='bottom',
+#                        cbar_pad=0.2
+#                        )
+#
+# for fraction in crack_fractions:
+#
+#     fraction_percentage = "P" + str(fraction)
+#     print(fraction_percentage)
