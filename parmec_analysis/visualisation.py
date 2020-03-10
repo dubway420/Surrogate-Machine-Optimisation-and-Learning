@@ -3,7 +3,7 @@ from mpl_toolkits.axes_grid1 import AxesGrid
 import numpy as np
 import seaborn as sns
 import parmec_analysis.core_parse as core
-from parmec_analysis.utils import cases_list, ReLu, ReLu_all
+from parmec_analysis.utils import cases_list, ReLu, ReLu_all, is_in
 from random import seed
 from random import randint
 import pandas as pd
@@ -75,69 +75,69 @@ channel_coord_list_inter = instance_intact.get_brick_xyz_positions('xy', channel
 channel_coord_list_fuel = instance_intact.get_brick_xyz_positions('xy', channel_type='fuel')
 
 # Makes a list of all the cases in the root directory
-total_cases = cases_list(case_root)
+# total_cases = cases_list(case_root)
+#
+# for i, case in enumerate(total_cases):
+#     print(i, case)
+#
+# cases = []
+# instances = []
+#
+# cracks_channel_specific = []
+# cracks_level_specific = []
+# cracks_region_specific = []
+#
+# case_chosen = [2, 0, 1]
+#
+# # The number of cases to compare
+# no_cases = len(case_chosen)
+#
+# # Iterates through all of the cases select
+# for i in range(no_cases):
+#     # for each case, generates a number between 0 and the count of cases
+#     # case_no = randint(0, len(total_cases) - 1)
+#
+#     case_no = case_chosen[i]
+#
+#     # Gets the base name of the case and appends it to a list
+#     case = total_cases[case_no].split('/')[-1]
+#     cases.append(case)
+#
+#     # Generates an instance of core parse for each case
+#     path = case_root + case + "/" + case
+#     inst = core.Parse(path)
+#
+#     cracks_per_layer = []
+#     for size in inclusive_layers:
+#         cracks_per_layer.append(inst.get_cracks_per_layer(channel="161", array_type="positions",
+#                                                           size=size, channel_type="interstitial")[-1])
+#
+#     cracks_region_specific.append(cracks_per_layer)
+#
+#     # Gets the number of cracks surrounding each channel
+#     cracks_channel_specific.append(inst.channel_specific_cracks()[1])
 
-for i, case in enumerate(total_cases):
-    print(i, case)
+# Gets the cracks per level
 
-cases = []
-instances = []
+# TODO MAKE THIS INTO A FUNCTION OF ITS OWN
+# cracks_per_level = [inst.get_cracks_per_level(array_type="positions", quiet=True)]
+# for size in inclusive_layers:
+#     cracks_per_level.append(inst.get_cracks_per_level(channel="161", array_type="positions", quiet=True,
+#                                                       size=size, channel_type="interstitial"))
 
-cracks_channel_specific = []
-cracks_level_specific = []
-cracks_region_specific = []
-
-case_chosen = [2, 0, 1]
-
-# The number of cases to compare
-no_cases = len(case_chosen)
-
-# Iterates through all of the cases select
-for i in range(no_cases):
-    # for each case, generates a number between 0 and the count of cases
-    # case_no = randint(0, len(total_cases) - 1)
-
-    case_no = case_chosen[i]
-
-    # Gets the base name of the case and appends it to a list
-    case = total_cases[case_no].split('/')[-1]
-    cases.append(case)
-
-    # Generates an instance of core parse for each case
-    path = case_root + case + "/" + case
-    inst = core.Parse(path)
-
-    cracks_per_layer = []
-    for size in inclusive_layers:
-        cracks_per_layer.append(inst.get_cracks_per_layer(channel="161", array_type="positions",
-                                                          size=size, channel_type="interstitial")[-1])
-
-    cracks_region_specific.append(cracks_per_layer)
-
-    # Gets the number of cracks surrounding each channel
-    cracks_channel_specific.append(inst.channel_specific_cracks()[1])
-
-    # Gets the cracks per level
-
-    # TODO MAKE THIS INTO A FUNCTION OF ITS OWN
-    # cracks_per_level = [inst.get_cracks_per_level(array_type="positions", quiet=True)]
-    # for size in inclusive_layers:
-    #     cracks_per_level.append(inst.get_cracks_per_level(channel="161", array_type="positions", quiet=True,
-    #                                                       size=size, channel_type="interstitial"))
-
-    # cracks_level_specific.append(cracks_per_level)
-    #
-    instances.append(inst)
-
-cracks_region_specific_max = np.amax(np.array(cracks_region_specific))
-cracks_region_specific_norm = (cracks_region_specific / np.amax(cracks_region_specific)) * 0.5
-
-
-layer_no_of_channels = np.zeros(instance_intact.interstitial_channels)
-
-for i in range(instance_intact.interstitial_channels):
-    channel_no = i + 1
-    layer_no_of_channels[i] = instance_intact.layers_from_centre(channel_no, channel_type='inter')
+# cracks_level_specific.append(cracks_per_level)
+#
+#     instances.append(inst)
+#
+# cracks_region_specific_max = np.amax(np.array(cracks_region_specific))
+# cracks_region_specific_norm = (cracks_region_specific / np.amax(cracks_region_specific)) * 0.5
+#
+#
+# layer_no_of_channels = np.zeros(instance_intact.interstitial_channels)
+#
+# for i in range(instance_intact.interstitial_channels):
+#     channel_no = i + 1
+#     layer_no_of_channels[i] = instance_intact.layers_from_centre(channel_no, channel_type='inter')
 
 ##################################################
 # ############# 3D CRACK PLOT ####################
@@ -161,46 +161,46 @@ for i in range(instance_intact.interstitial_channels):
 # ######### CRACK CONCENTRATION PLOT #############
 ##################################################
 
-# Creates the figure
-fig = plt.figure(figsize=(10, 9))
-
-# The maximum number of cracks that surround any channel. Used for bounding.
-max_counts = np.amax(cracks_channel_specific)
-
-print("Max counts: ", max_counts)
-
-# Generates the plot grid for each case
-counts_grid = AxesGrid(fig, 111,
-                       nrows_ncols=(1, len(cases)),
-                       axes_pad=0.2,
-                       cbar_mode='single',
-                       cbar_location='bottom',
-                       cbar_pad=0.2
-                       )
-
-# Iterates through each plot setting the parameters
-for i, ax in enumerate(counts_grid):
-    # sets the title as the case
-    column_title = cases[i]
-    ax.title.set_text(column_title)
-
-    # Turns off the labels and ticks of each axis
-    turn_off_graph_decorations(ax)
-
-    # Generates the plot
-    im = ax.scatter(channel_coord_list_inter[0], channel_coord_list_inter[1],
-                    marker='o', c=cracks_channel_specific[i], cmap='OrRd', label='inter',
-                    s=100)
-    im.set_clim(0, max_counts)
-
-# Creates the colorbar
-cbar = ax.cax.colorbar(im)
-cbar = counts_grid.cbar_axes[0].colorbar(im)
-
-# Saves the figure
-filenm = "./Comparing_three_cases/concentration_of_cracks.png"
-# plt.savefig(filenm)
-plt.show()
+# # Creates the figure
+# fig = plt.figure(figsize=(10, 9))
+#
+# # The maximum number of cracks that surround any channel. Used for bounding.
+# max_counts = np.amax(cracks_channel_specific)
+#
+# print("Max counts: ", max_counts)
+#
+# # Generates the plot grid for each case
+# counts_grid = AxesGrid(fig, 111,
+#                        nrows_ncols=(1, len(cases)),
+#                        axes_pad=0.2,
+#                        cbar_mode='single',
+#                        cbar_location='bottom',
+#                        cbar_pad=0.2
+#                        )
+#
+# # Iterates through each plot setting the parameters
+# for i, ax in enumerate(counts_grid):
+#     # sets the title as the case
+#     column_title = cases[i]
+#     ax.title.set_text(column_title)
+#
+#     # Turns off the labels and ticks of each axis
+#     turn_off_graph_decorations(ax)
+#
+#     # Generates the plot
+#     im = ax.scatter(channel_coord_list_inter[0], channel_coord_list_inter[1],
+#                     marker='o', c=cracks_channel_specific[i], cmap='OrRd', label='inter',
+#                     s=100)
+#     im.set_clim(0, max_counts)
+#
+# # Creates the colorbar
+# cbar = ax.cax.colorbar(im)
+# cbar = counts_grid.cbar_axes[0].colorbar(im)
+#
+# # Saves the figure
+# filenm = "./Comparing_three_cases/concentration_of_cracks.png"
+# # plt.savefig(filenm)
+# plt.show()
 
 ##################################################
 # ############ CRACK AREA PLOT ###################
@@ -678,27 +678,42 @@ channel_type = 'inter'
 # ######################### VARIABLE CRACK FRACTION ####################################
 ########################################################################################
 
-# case_folders = ["D:/variable_crack_percentage/seed_5004",
-#                 "D:/variable_crack_percentage/seed_5008"
-#                 "D:/variable_crack_percentage/seed_5015"]
-#
-# no_cases = len(case_folders)
-#
+case_folders = ["D:/variable_crack_percentage/seed_5004/",
+                "D:/variable_crack_percentage/seed_5008/",
+                "D:/variable_crack_percentage/seed_5015/",
+                "D:/variable_crack_percentage/seed_5016/"]
+
+cases = np.array([cases_list(case_folder) for case_folder in case_folders])
+
+crack_fractions = [5, 10, 20]
+
+no_seeds = len(case_folders)
+no_fractions = len(crack_fractions)
+
+results = np.zeros([no_seeds, no_fractions, inter_channels])
+
+for i, seed_cases in enumerate(cases):
+
+    for case_path in seed_cases:
+
+        for j, fraction in enumerate(crack_fractions):
+            search_term = "P" + str(fraction)
+            if is_in(case_path, search_term):
+
+                instance = core.Parse(case_path)
+                results[i, j] = instance.channel_specific_cracks()[1]
+
 # # Creates the figure
-# fig = plt.figure(figsize=(10, 9))
-#
-# crack_fractions = [5, 10, 20]
-#
-# no_fractions = [crack_fractions]
-#
+fig = plt.figure(figsize=(10, 9))
+
 # # Generates the plot grid for each case
-# counts_grid = AxesGrid(fig, 111,
-#                        nrows_ncols=(no_fractions, no_cases),
-#                        axes_pad=0.2,
-#                        cbar_mode='single',
-#                        cbar_location='bottom',
-#                        cbar_pad=0.2
-#                        )
+grid = AxesGrid(fig, 111,
+                nrows_ncols=(no_fractions, no_seeds),
+                axes_pad=0.12,
+                cbar_mode='single',
+                cbar_location='right',
+                cbar_pad=0.2
+                )
 #
 # for fraction in crack_fractions:
 #
