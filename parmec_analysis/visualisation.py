@@ -58,7 +58,7 @@ results_of_interest = [1, 2]
 case_root = 'D:/parmec_results/'
 
 # This should point to an intact case
-case_intact = 'C:/Users/Huw/PycharmProjects/parmec_agr_ml_surrogate/intact_core_rb'
+case_intact = 'intact_core_rb'
 
 # Generates a core instance of the intact case
 instance_intact = core.Parse(case_intact)
@@ -678,30 +678,35 @@ channel_type = 'inter'
 # ######################### VARIABLE CRACK FRACTION ####################################
 ########################################################################################
 
-case_folders = ["D:/variable_crack_percentage/seed_5004/",
-                "D:/variable_crack_percentage/seed_5008/",
-                "D:/variable_crack_percentage/seed_5015/",
-                "D:/variable_crack_percentage/seed_5016/"]
+case_folders = ["/media/huw/Disk1/variable_crack_percentage/seed_5004/",
+                "/media/huw/Disk1/variable_crack_percentage/seed_5008/",
+                "/media/huw/Disk1/variable_crack_percentage/seed_5015/",
+                "/media/huw/Disk1/variable_crack_percentage/seed_5016/"]
 
-cases = np.array([cases_list(case_folder) for case_folder in case_folders])
+# cases = np.array([cases_list(case_folder) for case_folder in case_folders])
+cases = [case_folder.split('/')[-2] for case_folder in case_folders]
 
 crack_fractions = [5, 10, 20]
 
 no_seeds = len(case_folders)
 no_fractions = len(crack_fractions)
 
-results = np.zeros([no_seeds, no_fractions, inter_channels])
+# results = np.zeros([no_seeds, no_fractions, inter_channels])
+#
+# for i, seed_cases in enumerate(cases):
+#
+#     for case_path in seed_cases:
+#
+#         for j, fraction in enumerate(crack_fractions):
+#             search_term = "P" + str(fraction)
+#             if is_in(case_path, search_term):
+#
+#                 instance = core.Parse(case_path)
+#                 results[i, j] = instance.channel_specific_cracks()[1]
 
-for i, seed_cases in enumerate(cases):
+# np.save('variable_fraction', results)
 
-    for case_path in seed_cases:
-
-        for j, fraction in enumerate(crack_fractions):
-            search_term = "P" + str(fraction)
-            if is_in(case_path, search_term):
-
-                instance = core.Parse(case_path)
-                results[i, j] = instance.channel_specific_cracks()[1]
+results = np.load("variable_fraction.npy")
 
 # # Creates the figure
 fig = plt.figure(figsize=(10, 9))
@@ -711,11 +716,37 @@ grid = AxesGrid(fig, 111,
                 nrows_ncols=(no_fractions, no_seeds),
                 axes_pad=0.12,
                 cbar_mode='single',
-                cbar_location='right',
+                cbar_location='bottom',
                 cbar_pad=0.2
                 )
-#
-# for fraction in crack_fractions:
-#
-#     fraction_percentage = "P" + str(fraction)
-#     print(fraction_percentage)
+
+max_counts = np.amax(results)
+
+for i, ax in enumerate(grid):
+    row = int(i / no_seeds)
+    column = i % no_seeds
+
+    if row == 0:
+        column_title = cases[i]
+        ax.title.set_text(column_title)
+
+    if column == 0:
+        fraction = crack_fractions[row]
+        y_label = str(fraction) + "% cracked"
+        ax.set_ylabel(y_label)
+
+    # Turns off the labels and ticks of each axis
+    turn_off_graph_decorations(ax)
+
+    # Generates the plot
+    im = ax.scatter(channel_coord_list_inter[0], channel_coord_list_inter[1],
+                    marker='o', c=results[column, row], cmap='OrRd', label='inter',
+                    s=50)
+    im.set_clim(0, max_counts)
+
+    # Creates the colorbar
+    cbar = ax.cax.colorbar(im)
+    cbar = grid.cbar_axes[0].colorbar(im)
+
+
+plt.show()
