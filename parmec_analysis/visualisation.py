@@ -3,7 +3,7 @@ from mpl_toolkits.axes_grid1 import AxesGrid
 import numpy as np
 import seaborn as sns
 import parmec_analysis.core_parse as core
-from parmec_analysis.utils import cases_list, ReLu, ReLu_all, is_in
+from parmec_analysis.utils import cases_list, is_in
 from random import seed
 from random import randint
 import pandas as pd
@@ -55,7 +55,7 @@ frames_of_interest = [48, 55, 65, 68]
 results_of_interest = [1, 2]
 #
 # Make sure this points to the folder which contains all of the cases
-case_root = 'D:/parmec_results/'
+case_root = '/media/huw/Disk1/parmec_results/'
 
 # This should point to an intact case
 case_intact = 'intact_core_rb'
@@ -75,38 +75,38 @@ channel_coord_list_inter = instance_intact.get_brick_xyz_positions('xy', channel
 channel_coord_list_fuel = instance_intact.get_brick_xyz_positions('xy', channel_type='fuel')
 
 # Makes a list of all the cases in the root directory
-# total_cases = cases_list(case_root)
-#
-# for i, case in enumerate(total_cases):
-#     print(i, case)
-#
-# cases = []
-# instances = []
-#
-# cracks_channel_specific = []
-# cracks_level_specific = []
-# cracks_region_specific = []
-#
-# case_chosen = [2, 0, 1]
-#
-# # The number of cases to compare
-# no_cases = len(case_chosen)
-#
-# # Iterates through all of the cases select
-# for i in range(no_cases):
-#     # for each case, generates a number between 0 and the count of cases
-#     # case_no = randint(0, len(total_cases) - 1)
-#
-#     case_no = case_chosen[i]
-#
-#     # Gets the base name of the case and appends it to a list
-#     case = total_cases[case_no].split('/')[-1]
-#     cases.append(case)
-#
-#     # Generates an instance of core parse for each case
-#     path = case_root + case + "/" + case
-#     inst = core.Parse(path)
-#
+total_cases = cases_list(case_root)
+
+cases = []
+instances = []
+
+cracks_channel_specific = []
+cracks_level_specific = []
+cracks_region_specific = []
+
+case_chosen = [2, 0, 1]
+
+
+# # This gets the acceleration time history. Used for labelling.
+earthquake_acceleration = (pd.read_csv('time_history.csv').values[:150, 2])
+
+# The number of cases to compare
+no_cases = len(case_chosen)
+
+# Iterates through all of the cases select
+for i in range(no_cases):
+    # for each case, generates a number between 0 and the count of cases
+    case_no = randint(0, len(total_cases) - 1)
+
+    # Gets the base name of the case and appends it to a list
+    case = total_cases[case_no].split('/')[-1]
+    cases.append(case)
+
+    # Generates an instance of core parse for each case
+    path = case_root + case + "/" + case
+    inst = core.Parse(path)
+    instances.append(inst)
+
 #     cracks_per_layer = []
 #     for size in inclusive_layers:
 #         cracks_per_layer.append(inst.get_cracks_per_layer(channel="161", array_type="positions",
@@ -114,8 +114,8 @@ channel_coord_list_fuel = instance_intact.get_brick_xyz_positions('xy', channel_
 #
 #     cracks_region_specific.append(cracks_per_layer)
 #
-#     # Gets the number of cracks surrounding each channel
-#     cracks_channel_specific.append(inst.channel_specific_cracks()[1])
+    # Gets the number of cracks surrounding each channel
+    cracks_channel_specific.append(inst.channel_specific_cracks()[1])
 
 # Gets the cracks per level
 
@@ -127,7 +127,7 @@ channel_coord_list_fuel = instance_intact.get_brick_xyz_positions('xy', channel_
 
 # cracks_level_specific.append(cracks_per_level)
 #
-#     instances.append(inst)
+#
 #
 # cracks_region_specific_max = np.amax(np.array(cracks_region_specific))
 # cracks_region_specific_norm = (cracks_region_specific / np.amax(cracks_region_specific)) * 0.5
@@ -260,8 +260,6 @@ channel_coord_list_fuel = instance_intact.get_brick_xyz_positions('xy', channel_
 # ############ EARTHQUAKE PLOT ###################
 ##################################################
 
-# # This gets the acceleration time history. Used for labelling.
-# earthquake_acceleration = (pd.read_csv('time_history.csv').values[:150, 2])
 #
 # for frame in frames_of_interest:
 #     plt.plot([frame, frame], [np.amin(earthquake_acceleration), np.amax(earthquake_acceleration)], color='silver')
@@ -278,74 +276,75 @@ channel_coord_list_fuel = instance_intact.get_brick_xyz_positions('xy', channel_
 # ################ RESULT PLOT ###################
 ##################################################
 
-# channel_type = 'inter'
-# # Iterates through the user defined output types of interest, generating a separate figure for each
-# for result in results_of_interest:
-#     results = []
-#
-#     fig = plt.figure(figsize=(12, 12))
-#
-#     # Iterate through the frames of interest, generating a row for each
-#     for frame_no, frame in enumerate(frames_of_interest):
-#
-#         # Gets the earthquake acceleration at the given time-step
-#         accel = earthquake_acceleration[frame]
-#
-#         # Iterate through instances (cases) generating an array of length 321 i.e. the result for each channel
-#         for instance_no, instance in enumerate(instances):
-#             results.append(instance.get_result_at_time(time_index=frame, result_columns=str(result), result_type="sum"))
-#
-#     # Multiplies the results by 1000 to convert from meters to millimeters
-#     results = np.multiply(results, 1000)
-#
-#     # Gets the min and max value result across all cases and frames.
-#     # Used for setting a common range across all plots and the colorbar
-#     min_result = np.amin(results)
-#     max_result = np.amax(results)
-#
-#     # Creates a plot grid. Number of rows is number of frames of interest, number of columns is cases of interest
-#     grid = AxesGrid(fig, 111,
-#                     nrows_ncols=(len(frames_of_interest), len(cases)),
-#                     axes_pad=0.12,
-#                     cbar_mode='single',
-#                     cbar_location='right',
-#                     cbar_pad=0.2
-#                     )
-#
-#     frame_no = 0
-#
-#     # Iterates through all plots in the grid, assigning the results to the plot
-#     for i, ax in enumerate(grid):
-#
-#         # If the iterator is in the first row, assigns the title as the case
-#         if i < len(cases):
-#             column_title = cases[i]
-#             ax.title.set_text(column_title)
-#
-#         # If the iterator is in the first column, assigns a row title which includes the frame number and earthquake
-#         # acceleration
-#         if (i % 3) == 0:
-#             frame = frames_of_interest[frame_no]
-#             row_title = "Frame: " + str(frame) + " - Acc: " + str(round(earthquake_acceleration[frame], 2))
-#             ax.set_ylabel(row_title)
-#             frame_no += 1
-#
-#         # Turns off the other graph markings
-#         turn_off_graph_decorations(ax)
-#
-#         # Plots the results for the case/frame
-#         im = ax.scatter(channel_coord_list_inter[0], channel_coord_list_inter[1],
-#                         marker='o', c=results[i], cmap='seismic', label='inter',
-#                         s=50)
-#         im.set_clim(min_result, max_result)
-#
-#     cbar = ax.cax.colorbar(im)
-#     cbar = grid.cbar_axes[0].colorbar(im)
-#
-#     # Saves the file
-#     filenm = "./Comparing_three_cases/results" + str(result) + ".png"
-#     plt.savefig(filenm)
-# plt.show()
+channel_type = 'inter'
+# Iterates through the user defined output types of interest, generating a separate figure for each
+for result in results_of_interest:
+    results = []
+
+    fig = plt.figure(figsize=(12, 12))
+
+    # Iterate through the frames of interest, generating a row for each
+    for frame_no, frame in enumerate(frames_of_interest):
+
+        # Gets the earthquake acceleration at the given time-step
+        accel = earthquake_acceleration[frame]
+
+        # Iterate through instances (cases) generating an array of length 321 i.e. the result for each channel
+        for instance_no, instance in enumerate(instances):
+            results.append(instance.get_result_at_time(time_index=frame, result_columns=str(result),
+                                                       result_type="max absolute"))
+
+    # Multiplies the results by 1000 to convert from meters to millimeters
+    results = np.multiply(results, 1000)
+
+    # Gets the min and max value result across all cases and frames.
+    # Used for setting a common range across all plots and the colorbar
+    min_result = np.amin(results)
+    max_result = np.amax(results)
+
+    # Creates a plot grid. Number of rows is number of frames of interest, number of columns is cases of interest
+    grid = AxesGrid(fig, 111,
+                    nrows_ncols=(len(frames_of_interest), len(cases)),
+                    axes_pad=0.12,
+                    cbar_mode='single',
+                    cbar_location='right',
+                    cbar_pad=0.2
+                    )
+
+    frame_no = 0
+
+    # Iterates through all plots in the grid, assigning the results to the plot
+    for i, ax in enumerate(grid):
+
+        # If the iterator is in the first row, assigns the title as the case
+        if i < len(cases):
+            column_title = cases[i]
+            ax.title.set_text(column_title)
+
+        # If the iterator is in the first column, assigns a row title which includes the frame number and earthquake
+        # acceleration
+        if (i % 3) == 0:
+            frame = frames_of_interest[frame_no]
+            row_title = "Frame: " + str(frame) + " - Acc: " + str(round(earthquake_acceleration[frame], 2))
+            ax.set_ylabel(row_title)
+            frame_no += 1
+
+        # Turns off the other graph markings
+        turn_off_graph_decorations(ax)
+
+        # Plots the results for the case/frame
+        im = ax.scatter(channel_coord_list_inter[0], channel_coord_list_inter[1],
+                        marker='o', c=results[i], cmap='Reds', label='inter',
+                        s=50)
+        im.set_clim(min_result, max_result)
+
+    cbar = ax.cax.colorbar(im)
+    cbar = grid.cbar_axes[0].colorbar(im)
+
+    # Saves the file
+    filenm = "./Comparing_three_cases/results" + str(result) + ".png"
+    plt.savefig(filenm)
+plt.show()
 #
 #     ########################################################################################
 #     # ############################### Regional Results #####################################
@@ -547,20 +546,20 @@ channel_type = 'inter'
 #     ########################################################################################
 
 
-# labels = []
-#
-# for result in results_of_interest:
-#
-#     result_labels = []
-#     for frame in frames_of_interest:
-#
-#         features, frame_labels = features_and_labels_single_frame(case_root, result=str(result), time=frame)
-#         result_labels.append(frame_labels)
-#
-#     labels.append(result_labels)
+labels = []
 
-# with open('full_result.pkl', 'wb') as f:
-#     pickle.dump([features, labels], f)
+for result in results_of_interest:
+
+    result_labels = []
+    for frame in frames_of_interest:
+
+        features, frame_labels = features_and_labels_single_frame(case_root, result=str(result), time=frame)
+        result_labels.append(frame_labels)
+
+    labels.append(result_labels)
+
+with open('full_result_.pkl', 'wb') as f:
+    pickle.dump([features, labels], f)
 
 # with open('full_result.pkl', 'rb') as f:
 #     features, labels = pickle.load(f)
@@ -678,20 +677,24 @@ channel_type = 'inter'
 # ######################### VARIABLE CRACK FRACTION ####################################
 ########################################################################################
 
-case_folders = ["/media/huw/Disk1/variable_crack_percentage/seed_5004/",
-                "/media/huw/Disk1/variable_crack_percentage/seed_5008/",
-                "/media/huw/Disk1/variable_crack_percentage/seed_5015/",
-                "/media/huw/Disk1/variable_crack_percentage/seed_5016/"]
-
+# case_folders = ["/media/huw/Disk1/variable_crack_percentage/seed_5004/",
+#                 "/media/huw/Disk1/variable_crack_percentage/seed_5008/",
+#                 "/media/huw/Disk1/variable_crack_percentage/seed_5015/"
+#                 ]
+#
 # cases = np.array([cases_list(case_folder) for case_folder in case_folders])
-cases = [case_folder.split('/')[-2] for case_folder in case_folders]
-
-crack_fractions = [5, 10, 20]
-
-no_seeds = len(case_folders)
-no_fractions = len(crack_fractions)
-
-# results = np.zeros([no_seeds, no_fractions, inter_channels])
+#
+# crack_fractions = [5, 10, 20, 40]
+#
+# no_seeds = len(case_folders)
+# no_fractions = len(crack_fractions)
+#
+# result_column = 1
+# frame = 48
+# #
+# # channel_cracks = np.zeros([no_seeds, no_fractions, inter_channels])
+#
+# channel_results = np.zeros([no_seeds, no_fractions, inter_channels])
 #
 # for i, seed_cases in enumerate(cases):
 #
@@ -700,53 +703,87 @@ no_fractions = len(crack_fractions)
 #         for j, fraction in enumerate(crack_fractions):
 #             search_term = "P" + str(fraction)
 #             if is_in(case_path, search_term):
-#
 #                 instance = core.Parse(case_path)
-#                 results[i, j] = instance.channel_specific_cracks()[1]
+#                 channel_results[i, j] = instance.get_result_at_time(time_index=frame, result_columns=str(result_column),
+#                                                                     result_type="absolute max")
 
-# np.save('variable_fraction', results)
+#                 channel_cracks[i, j] = instance.channel_specific_cracks()[1]
+#
+# np.save('variable_fraction', channel_cracks)
 
-results = np.load("variable_fraction.npy")
+# channel_cracks = np.load("variable_fraction.npy")
+#
+# # # Creates the figure
+# fig = plt.figure(figsize=(10, 9))
+#
+# # # Generates the plot grid for each case
+# grid = AxesGrid(fig, 111,
+#                 nrows_ncols=(no_fractions, no_seeds),
+#                 axes_pad=0.12,
+#                 cbar_mode='single',
+#                 cbar_location='right',
+#                 cbar_pad=0.2
+#                 )
+#
+# max_counts = np.amax(channel_cracks)
 
-# # Creates the figure
-fig = plt.figure(figsize=(10, 9))
+# for i, ax in enumerate(grid):
+#     row = int(i / no_seeds)
+#     column = i % no_seeds
+#
+#     if row == 0:
+#         column_title = case_folders[i].split('/')[-2]
+#         ax.title.set_text(column_title)
+#
+#     if column == 0:
+#         fraction = crack_fractions[row]
+#         y_label = str(fraction) + "% cracked"
+#         ax.set_ylabel(y_label)
+#
+#     # Turns off the labels and ticks of each axis
+#     turn_off_graph_decorations(ax)
+#
+#     # Generates the plot
+#     im = ax.scatter(channel_coord_list_inter[0], channel_coord_list_inter[1],
+#                     marker='o', c=channel_cracks[column, row], cmap='OrRd', label='inter',
+#                     s=30)
+#     im.set_clim(0, max_counts)
+#
+#     # Creates the colorbar
+#     cbar = ax.cax.colorbar(im)
+#     cbar = grid.cbar_axes[0].colorbar(im)
 
-# # Generates the plot grid for each case
-grid = AxesGrid(fig, 111,
-                nrows_ncols=(no_fractions, no_seeds),
-                axes_pad=0.12,
-                cbar_mode='single',
-                cbar_location='bottom',
-                cbar_pad=0.2
-                )
+# plt.show()
 
-max_counts = np.amax(results)
+# RESULTS - TODO MOVE THE GRAPHING TO A FUNCTION OF ITS OWN
 
-for i, ax in enumerate(grid):
-    row = int(i / no_seeds)
-    column = i % no_seeds
-
-    if row == 0:
-        column_title = cases[i]
-        ax.title.set_text(column_title)
-
-    if column == 0:
-        fraction = crack_fractions[row]
-        y_label = str(fraction) + "% cracked"
-        ax.set_ylabel(y_label)
-
-    # Turns off the labels and ticks of each axis
-    turn_off_graph_decorations(ax)
-
-    # Generates the plot
-    im = ax.scatter(channel_coord_list_inter[0], channel_coord_list_inter[1],
-                    marker='o', c=results[column, row], cmap='OrRd', label='inter',
-                    s=50)
-    im.set_clim(0, max_counts)
-
-    # Creates the colorbar
-    cbar = ax.cax.colorbar(im)
-    cbar = grid.cbar_axes[0].colorbar(im)
-
-
-plt.show()
+# max_result = np.amax(channel_results)
+# min_result = np.amin(channel_results)
+#
+# for i, ax in enumerate(grid):
+#     row = int(i / no_seeds)
+#     column = i % no_seeds
+#
+#     if row == 0:
+#         column_title = case_folders[i].split('/')[-2]
+#         ax.title.set_text(column_title)
+#
+#     if column == 0:
+#         fraction = crack_fractions[row]
+#         y_label = str(fraction) + "% cracked"
+#         ax.set_ylabel(y_label)
+#
+#     # Turns off the labels and ticks of each axis
+#     turn_off_graph_decorations(ax)
+#
+#     # Generates the plot
+#     im = ax.scatter(channel_coord_list_inter[0], channel_coord_list_inter[1],
+#                     marker='o', c=channel_results[column, row], cmap='seismic', label='inter',
+#                     s=30)
+#     im.set_clim(min_result, max_result)
+#
+#     # Creates the colorbar
+#     cbar = ax.cax.colorbar(im)
+#     cbar = grid.cbar_axes[0].colorbar(im)
+#
+# plt.show()

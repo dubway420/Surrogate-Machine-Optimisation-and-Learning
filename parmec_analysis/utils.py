@@ -229,11 +229,18 @@ def absolute_sum(array):
     return sum(absolute_array)
 
 
-def ReLu(array):
-    return sum(ReLu_all(array))
+def max_absolute(array):
+    """ return the greatest value in absolute terms"""
+
+    absolute_array = np.absolute(array)
+    return max(absolute_array)
 
 
-def ReLu_all(array):
+def floor_zero_sum(array):
+    return sum(floor_zero_all(array))
+
+
+def floor_zero_all(array):
     return np.maximum(array, 0)
 
 

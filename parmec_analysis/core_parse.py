@@ -400,8 +400,12 @@ class Parse:
             command = np.median
         elif utils.is_in(result_type, "abs") and utils.is_in(result_type, "sum"):
             command = utils.absolute_sum
-        elif utils.is_in(result_type, "relu"):
-            command = utils.ReLu
+        elif utils.is_in(result_type, "floor zero sum"):
+            command = utils.floor_zero_sum
+        elif utils.is_in(result_type, "floor zero all"):
+            command = utils.floor_zero_all
+        elif utils.is_in(result_type, "abs") and utils.is_in(result_type, "max"):
+            command = utils.max_absolute
         elif utils.is_in(result_type, "all"):
             command = utils.return_all
         # TODO min vs max function
