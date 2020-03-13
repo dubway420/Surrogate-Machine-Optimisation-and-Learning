@@ -245,4 +245,4 @@ def floor_zero_all(array):
 
 
 def return_all(array):
-    return array
+    return np.array(array).flatten()

@@ -346,10 +346,15 @@ class Parse:
     # ----------------------PROCESSING--------------------------
     # ==========================================================
 
-    def get_result_at_time(self, time_index=0, ext='.csv', result_columns='all', result_type="max"):
+    def get_result_at_time(self, time_index=0, ext='.csv', result_columns='all', result_type="max", flat=False):
         """ Results results array for a particular time frame"""
 
         case_path = self.case
+
+        no_interstitial_channels = self.interstitial_channels
+        no_interstitial_levels = self.inter_levels
+
+        # These are the indices of interstitial bricks from the results array
         indices = self.results_indices
 
         time_file = case_path + '.' + str(time_index) + ext
@@ -416,16 +421,32 @@ class Parse:
 
         # ==============================================
         # Sorting the results file into sub arrays, each corresponding to a channel
-        time_array_sorted = []
+
+        # Give numpy array length of interstitial channels
+        result_array_dims = [no_interstitial_channels]
+
+        # If all of the results in a channel are requested, then the array is made 2D
+        if utils.is_in(result_type, "all"):
+            result_array_dims.append(no_interstitial_levels)
+
+        results_at_time_channel_sorted = np.zeros(result_array_dims)
 
         # For each sub array in the indices array, extract the corresponding bricks
-        for channel in indices:
+        for i, channel in enumerate(indices):
             # TODO - if there's more than one column, takes the by column function
 
             channel_result = command(time_array_user_columns[channel])
-            time_array_sorted.append(channel_result)
 
-        return time_array_sorted
+            # # One of the channels has more than 13 bricks
+            if utils.is_in(result_type, "all"):
+                channel_result = channel_result[0:13]
+
+            results_at_time_channel_sorted[i] = channel_result
+
+        if flat:
+            return results_at_time_channel_sorted.flatten()
+
+        return results_at_time_channel_sorted
 
     def get_fuel_result_at_time(self, time_index=0, ext='.csv', result_columns='all', result_type="max"):
         """ Results results array for a particular time frame"""

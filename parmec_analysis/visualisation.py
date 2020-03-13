@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.axes_grid1 import AxesGrid
 import numpy as np
 import seaborn as sns
-import parmec_analysis.core_parse as core
+import parmec_analysis.reactor_case as core
 from parmec_analysis.utils import cases_list, is_in
 from random import seed
 from random import randint
