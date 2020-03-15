@@ -10,13 +10,13 @@ import numpy as np
 
 
 def features_and_labels_single_frame(path_string, x_type='positions', result_time=50, result_column="1",
-                                     result_type='max', return_vector=None, flat=False):
+                                     result_type='max', return_vector=None, flat_y=False):
     """ Gets the features and labels from the folder of results"""
 
     if return_vector is None:
         return_vector = [True, True]
 
-    cases = cases_list(path_string)[0:10]
+    cases = cases_list(path_string)[0:1]
 
     X, Y = [], []
 
@@ -27,7 +27,7 @@ def features_and_labels_single_frame(path_string, x_type='positions', result_tim
             X.append(instance.linear_crack_array_1d(array_type=x_type))
         if return_vector[1]:
             Y.append(instance.get_result_at_time(result_time, result_columns=str(result_column),
-                                                 result_type=result_type, flat=flat))
+                                                 result_type=result_type, flat=flat_y))
 
     return X, Y
 
@@ -150,10 +150,13 @@ case_intact = 'intact_core_rb'
 instance_intact = reactor_case.Parse(case_intact)
 # channel_coord_list_inter = instance_intact.get_brick_xyz_positions('xy', channel_type='inter')
 
-features, labels = features_and_labels_single_frame("/media/huw/Disk1/parmec_results/", result_time=48,
-                                                    result_type='sum', flat=True)
+# features, labels = features_and_labels_single_frame("/media/huw/Disk1/parmec_results/", x_type='pos', result_time=48,
+#                                                     result_type='sum', flat=True)
 
-labels = np.array(labels)
+case = cases_list("/media/huw/Disk1/parmec_results/")[0:1]
 
-print(labels.shape)
+instance = reactor_case.Parse(case[0])
+print(instance.linear_crack_array_1d(channels="1", levels="5-6"))
+
+
 

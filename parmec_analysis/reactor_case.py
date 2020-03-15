@@ -302,27 +302,41 @@ class Parse:
 
     def linear_crack_array_1d(self, channels='all', array_type='orientations', levels='all'):
 
-        min_level, max_level = self.parse_level_argument(levels)
-        number_of_levels = max_level - min_level
+        # Gets the instance crack array
+        crack_array_3d = self.channel_array_argument_wrapper(array_type=array_type, levels=levels, quiet=True)
 
-        # It's fuel array type because interstitial bricks don't crack
+        # Removes all padding from the array
+        crack_array_no_padding = crack_array_3d[crack_array_3d != 0]
+
+        # If all channels are requested, simply return the full array
+        if utils.is_in(channels, "all") or utils.is_in(channels, "core"):
+            return crack_array_no_padding
+
+        # If not, try and work out which channels are required
+
+        # Get the channel range. It's fuel array type because interstitial bricks don't crack
         min_channel, max_channel = self.parse_channel_argument(channels, 'fuel')
         number_of_channels = max_channel - min_channel
 
+        # Get the range of levels
+        min_level, max_level = self.parse_level_argument(levels)
+        number_of_levels = max_level - min_level
+
+        # Create a new array the size
         output_array_size = number_of_levels * number_of_channels
-        output_array = np.zeros(output_array_size)
+        crack_array_user = np.zeros(output_array_size)
 
-        i = 0
+        for i in range(number_of_levels):
 
-        for l in range(min_level + 1, max_level + 1):
+            input_start = (i * self.fuel_channels) + (min_channel - 1)
+            input_end = (i * self.fuel_channels) + (max_channel - 1)
 
-            for c in range(min_channel, max_channel):
-                # TODO replace with array flattening and removal of 0s - it works fine like this, but is inefficient.
-                #  Calling the global array and then slicing will be more efficient and easier to read.
-                output_array[i] = int(self.get_channel_crack_array(c, 0, array_type=array_type, levels=str(l))[:, 0, 0])
-                i += 1
+            output_start = i * number_of_channels
+            output_end = output_start + number_of_channels
 
-        return output_array
+            crack_array_user[output_start:output_end] = crack_array_no_padding[input_start:input_end]
+
+        return crack_array_user
 
     def channel_specific_cracks(self):
         """ Return the number of cracks local to each channel"""
@@ -734,7 +748,7 @@ class Parse:
 
             # Can handle slight misspellings or capitalisation
             # DEFAULT return all channels
-            elif utils.is_in(channels, "all"):
+            elif utils.is_in(channels, "all") or utils.is_in(channels, "core"):
                 min_channel = 1
                 max_channel = last_channel
 
