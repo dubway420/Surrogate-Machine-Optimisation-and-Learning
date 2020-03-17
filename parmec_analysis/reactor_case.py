@@ -31,7 +31,10 @@ import pandas as pd
 import math
 from parmec_analysis import utils as utils
 
+# TODO split parse into FeaturesCase and LabelsCase
 
+
+# TODO Convert to FullCase which will inherit the functions of FeaturesCase and LabelsCAse
 class Parse:
     """ Instance representing the entire core, including crack positions in 3D array and post earthquake
     array of displacements"""
@@ -300,7 +303,7 @@ class Parse:
 
         return np.array(cracks_per_layer)
 
-    def linear_crack_array_1d(self, channels='all', array_type='orientations', levels='all'):
+    def crack_array_1d(self, channels='all', array_type='orientations', levels='all'):
 
         # Gets the instance crack array
         crack_array_3d = self.channel_array_argument_wrapper(array_type=array_type, levels=levels, quiet=True)

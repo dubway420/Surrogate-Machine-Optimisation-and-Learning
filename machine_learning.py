@@ -4,9 +4,9 @@
 # from keras.layers import Flatten, Input
 # from keras.models import Model, Sequential
 # from keras.optimizers import Adam
-from parmec_analysis.utils import cases_list
+from parmec_analysis.utils import cases_list, is_in, split_separators
 from parmec_analysis import reactor_case
-from parmec_analysis.dataset_generators import features_and_labels_single_frame
+from parmec_analysis.dataset_generators import features_and_labels_single_frame, test
 import numpy as np
 
 # class RegressionModels:
@@ -123,14 +123,18 @@ import numpy as np
 # models = [getattr(RegressionModels(), string_method) for string_method in RegressionModels().__dir__()[1:-25]]
 
 # Get the coordinates of the interstitial channels
-case_intact = 'intact_core_rb'
-instance_intact = reactor_case.Parse(case_intact)
+# case_intact = 'intact_core_rb'
+# instance_intact = reactor_case.Parse(case_intact)
 # channel_coord_list_inter = instance_intact.get_brick_xyz_positions('xy', channel_type='inter')
 
-features, labels = features_and_labels_single_frame("/media/huw/Disk1/parmec_results/", x_type='pos', result_time=48,
-                                                    result_type='sum', flat_y=True)
+# features_and_labels_single_frame("/media/huw/Disk1/parmec_results/", x_type='pos', result_time=48,
+#                                  result_type='sum', flat_y=True)
 
 
-print(features.shape)
+
+
+
+
+
 
 

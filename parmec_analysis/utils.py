@@ -3,6 +3,9 @@ import numpy as np
 import re as remove
 import pandas as pd
 
+# Global Variables
+split_separators = ["to", "To", "TO", ":", "-", "/", "_", ",", " "]
+
 
 def get_id_from_filename(filename):
     """ Generates an ID tag from the name of a file specified """
@@ -87,8 +90,6 @@ def split_by_column_uniques(input_array, column_no):
 
 def string_splitter(string):
     """splits a string containing two numbers into two integers"""
-
-    split_separators = ["to", "To", "TO", ":", "-", "/", "_", ","]
 
     # Iterates through possible separators to see if they are contained in the input string
     for splitter in split_separators:
