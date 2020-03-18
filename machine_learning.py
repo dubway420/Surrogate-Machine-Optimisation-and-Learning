@@ -6,7 +6,7 @@
 # from keras.optimizers import Adam
 from parmec_analysis.utils import cases_list, is_in, split_separators
 from parmec_analysis import reactor_case
-from parmec_analysis.dataset_generators import features_and_labels_single_frame, test
+from parmec_analysis.dataset_generators import features_and_labels_single_frame
 import numpy as np
 
 # class RegressionModels:
@@ -127,8 +127,12 @@ import numpy as np
 # instance_intact = reactor_case.Parse(case_intact)
 # channel_coord_list_inter = instance_intact.get_brick_xyz_positions('xy', channel_type='inter')
 
-# features_and_labels_single_frame("/media/huw/Disk1/parmec_results/", x_type='pos', result_time=48,
-#                                  result_type='sum', flat_y=True)
+features = features_and_labels_single_frame("/media/huw/Disk1/parmec_results/", x_type='ori',
+                                            result_time=48, result_type='sum', flat_y=True,
+                                            features_labels='feat', x_request='3d',
+                                            levels='all')
+
+
 
 
 

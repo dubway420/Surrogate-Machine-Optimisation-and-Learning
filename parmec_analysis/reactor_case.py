@@ -747,7 +747,6 @@ class Parse:
             if channels.isnumeric():
                 min_channel = int(channels)
                 max_channel = int(channels)
-                print("numeric")
 
             # Can handle slight misspellings or capitalisation
             # DEFAULT return all channels
