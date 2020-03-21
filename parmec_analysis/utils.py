@@ -121,6 +121,20 @@ def string_splitter(string):
     return 0, 0
 
 
+def features_and_or_labels(features_labels):
+    """ Takes the user defined string 'features_labels' and returns a list of booleans dep"""
+    vector = [False, False]
+
+    if is_in(features_labels, 'both', 'all'):
+        vector = [True, True]
+    if is_in(features_labels, 'feat'):
+        vector[0] = True
+    if is_in(features_labels, 'lab'):
+        vector[1] = True
+
+    return vector
+
+
 def read_output_file(filename, pandas=False):
     """ Wrapper which reads the parmec output file and returns a data structure"""
 
@@ -231,6 +245,10 @@ def index_array_interstitial(case, ext='.csv'):
 
     return flat_array
 
+
+################################################################
+################# DATA EXTRACTION FUNCTIONS ####################
+################################################################
 
 def absolute_sum(array):
     """ return the sum of the absolute of every value in an array"""

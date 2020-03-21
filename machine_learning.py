@@ -6,8 +6,9 @@
 # from keras.optimizers import Adam
 from parmec_analysis.utils import cases_list, is_in, split_separators
 from parmec_analysis import reactor_case
-from parmec_analysis.dataset_generators import features_and_labels_single_frame
+from parmec_analysis.dataset_generators import DatasetSingleFrame
 import numpy as np
+import time
 
 # class RegressionModels:
 #
@@ -118,7 +119,7 @@ import numpy as np
 #         # return the CNN
 #         return model
 
-
+t = 1
 # Lists the functions of the models
 # models = [getattr(RegressionModels(), string_method) for string_method in RegressionModels().__dir__()[1:-25]]
 
@@ -127,18 +128,34 @@ import numpy as np
 # instance_intact = reactor_case.Parse(case_intact)
 # channel_coord_list_inter = instance_intact.get_brick_xyz_positions('xy', channel_type='inter')
 
-features = features_and_labels_single_frame("/media/huw/Disk1/parmec_results/", x_type='ori',
-                                            result_time=48, result_type='sum', flat_y=True,
-                                            features_labels='feat', x_request='3d',
-                                            levels='all')
 
+time_stamps = []
 
+start = time.time()
 
+dataset = DatasetSingleFrame("/media/huw/Disk1/parmec_results/")
+time_stamps.append(time.time() - start)
 
+dataset.load_dataset_instances(100)
+time_stamps.append(time.time() - start)
 
+labels = dataset.labels(result_type='all', flat=True)
+time_stamps.append(time.time() - start)
 
+print(labels.shape)
 
+print(time_stamps[-1] - time_stamps[-2])
 
-
+# time_stamps.append(time.time() - start)
+#
+# features1 = dataset.features('1D')
+# time_stamps.append(time.time() - start)
+#
+# print(time_stamps)
+#
+#
+# dataset2 = DatasetSingleFrame("/media/huw/Disk1/parmec_results/")
+# dataset2.load_dataset_instances(10)
+# features2 = dataset.features('1D')
 
 

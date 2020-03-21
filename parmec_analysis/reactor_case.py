@@ -661,9 +661,22 @@ class Parse:
         else:
             return self.interstitial_channels
 
-    def parse_level_argument(self, levels):
+    def top_level(self, channel_type='fuel'):
+        """ Returns the level number of the top level """
+
+        # Depending on whether fuel or interstitial type is specified, sets the top level i.e. the number of levels
+        # of that type (7 for fuel, 13 interstitial by default)
+        if utils.is_in(channel_type, "fuel"):
+            return self.core_levels
+        else:
+            return self.inter_levels
+
+    def parse_level_argument(self, levels, channel_type='fuel'):
         """ Takes a string or integer as input and returns a tuple (min_level, max_level)
         stating the range of levels required by the user"""
+
+        # Gets the highest level depending
+        top_level = self.top_level(channel_type)
 
         # Handles if user specifies levels by string
         if isinstance(levels, str):
@@ -675,11 +688,11 @@ class Parse:
             # Can handle slight misspellings or capitalisation
             # DEFAULT return all levels
             elif utils.is_in(levels, "all"):
-                return 0, self.core_levels
+                return 0, top_level
 
             # Top level
             elif utils.is_in(levels, "top"):
-                return self.core_levels - 1, self.core_levels
+                return top_level - 1, top_level
 
             # Bottom level
             elif utils.is_in(levels, "bot"):
@@ -693,7 +706,7 @@ class Parse:
                 components = split_items[0] - 1, split_items[1]
 
             # check if component[0] (min_level) is in acceptable range
-            if 0 <= int(components[0]) < self.core_levels:
+            if 0 <= int(components[0]) < top_level:
                 min_level = int(components[0])
             else:
                 print("WARNING: Specified lower bound level number (" + str(components[0]).strip()
@@ -702,24 +715,24 @@ class Parse:
 
             # check if component[1] (max_level) greater than min level and lower than the
             # maximum number of levels
-            if min_level < int(components[1]) <= self.core_levels:
+            if min_level < int(components[1]) <= top_level:
                 max_level = int(components[1])
             else:
                 print("WARNING: Specified upper bound level number (" + str(components[1]).strip()
                       + ") is outside of the acceptable range. Setting to default (" +
-                      str(self.core_levels) + ")")
-                max_level = self.core_levels
+                      str(top_level) + ")")
+                max_level = top_level
 
         # Handles if user specifies level type by integer
         # In this case, the min and max level is the same - it is assumed the user is interested in just a single level
         elif isinstance(levels, int):
 
             # Checks that level is in the region 1 - 7
-            if levels < 1 or levels > self.core_levels:
+            if levels < 1 or levels > top_level:
                 print("Invalid levels argument specified (" + str(levels) + "). Setting levels to default (1 - " + str(
-                    self.core_levels) + ").")
+                    top_level) + ").")
                 min_level = 0
-                max_level = self.core_levels
+                max_level = top_level
             else:
                 min_level = levels - 1
                 max_level = levels
@@ -727,9 +740,9 @@ class Parse:
         # If it can't figure out what the user wants, it just returns all levels
         else:
             print("Invalid levels argument specified (" + str(levels) + "). Setting levels to default (1 - " + str(
-                self.core_levels) + ").")
+                top_level) + ").")
             min_level = 0
-            max_level = self.core_levels
+            max_level = top_level
 
         return min_level, max_level
 
