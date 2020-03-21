@@ -128,34 +128,12 @@ t = 1
 # instance_intact = reactor_case.Parse(case_intact)
 # channel_coord_list_inter = instance_intact.get_brick_xyz_positions('xy', channel_type='inter')
 
+# TODO Dynamic growth on load_dataset
 
-time_stamps = []
-
-start = time.time()
 
 dataset = DatasetSingleFrame("/media/huw/Disk1/parmec_results/")
-time_stamps.append(time.time() - start)
 
 dataset.load_dataset_instances(100)
-time_stamps.append(time.time() - start)
 
-labels = dataset.labels(result_type='all', flat=True)
-time_stamps.append(time.time() - start)
-
-print(labels.shape)
-
-print(time_stamps[-1] - time_stamps[-2])
-
-# time_stamps.append(time.time() - start)
-#
-# features1 = dataset.features('1D')
-# time_stamps.append(time.time() - start)
-#
-# print(time_stamps)
-#
-#
-# dataset2 = DatasetSingleFrame("/media/huw/Disk1/parmec_results/")
-# dataset2.load_dataset_instances(10)
-# features2 = dataset.features('1D')
-
+labels = dataset.labels(result_type='all', flat=True, load_from_file=True)
 
