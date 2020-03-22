@@ -133,7 +133,8 @@ t = 1
 
 dataset = DatasetSingleFrame("/media/huw/Disk1/parmec_results/")
 
-dataset.load_dataset_instances(100)
+dataset.load_dataset_instances(20)
 
 labels = dataset.labels(result_type='all', flat=True, load_from_file=True)
 
+print(labels.shape)

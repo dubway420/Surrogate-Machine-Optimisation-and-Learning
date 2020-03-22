@@ -75,8 +75,11 @@ class DatasetSingleFrame:
             # This is the path to the dataset files
             self.dataset_path = path_string
 
-            # List of cracked core instances. Left bank at this point
+            # List of cracked core instances. Left blank at this point
             self.cases_instances = None
+
+            # Number of instances requested by the user. Left blank at this point
+            self.number_of_cases_requested = None
 
     def load_dataset_instances(self, number_of_cases='all', save_local=True):
 
@@ -84,6 +87,10 @@ class DatasetSingleFrame:
             message = "You have not yet instantiated this dataset object properly. Please check and try again."
             warnings.warn(message, stacklevel=3)
             return
+
+        #############################################################
+        ################### Number of Cases #########################
+        #############################################################
 
         # Handles if user specifies number of cases by string
         if isinstance(number_of_cases, str):
@@ -102,6 +109,10 @@ class DatasetSingleFrame:
             warnings.warn(message, stacklevel=3)
             return
 
+        self.number_of_cases_requested = int_number_of_cases
+
+        #############################################################
+        loading = False
         # Checks if a local dataset exists
         file_name = self.name + "_cases.pkl"
         if os.path.exists(file_name):
@@ -114,11 +125,15 @@ class DatasetSingleFrame:
                 self.cases_list = cases_from_file[:int_number_of_cases]
                 self.cases_instances = instances_from_file[:int_number_of_cases]
                 return
+            else:
+                print(" Expanding dataset from file...")
+                loading = True
 
         cases_list_strings = self.cases_list[:int_number_of_cases]
 
         # TODO dynamic growth of data-set i.e. if the user specifies a larger dataset than is saved, it uses existing
-        # values loading from file
+
+        i = 0
 
         # Instantiate all the cases. Skip the ones with problems. Make a list of the instances of all the rest.
         cases_instances = []
@@ -127,9 +142,16 @@ class DatasetSingleFrame:
 
             try:
 
-                # Try and instantiate the case
-                cases_instances.append(reactor_case.Parse(case))
-                cases_list_updated.append(case)
+                # Loads case from file if it exists
+                if loading and i < len(cases_from_file):
+                    cases_list_updated.append(cases_from_file[i])
+                    cases_instances.append(instances_from_file[i])
+                else:
+                    # Try and instantiate the case
+                    cases_list_updated.append(case)
+                    cases_instances.append(reactor_case.Parse(case))
+
+                i = i + 1
 
             except FileNotFoundError:
                 message = "Warning: Case " + case + " was not found. Skipping this case"
@@ -244,11 +266,12 @@ class DatasetSingleFrame:
             return
 
         cases_instances = self.cases_instances
+        no_cases = len(cases_instances)
 
         # Take a single instance to get representative variables
         example_instance = cases_instances[0]
 
-        array_dims = [len(cases_instances)]
+        array_dims = [no_cases]
 
         number_inter_channels, number_inter_levels = array_shape(example_instance, channels, levels, 'labels')
 
@@ -256,13 +279,19 @@ class DatasetSingleFrame:
         if flat: flat_string = 'T'
         else: flat_string = 'F'
 
+        # Generates a filename based on the user settings
         file_name = "Y_" + self.name + "_" + str(number_inter_channels) + "_" + str(number_inter_levels) + "_" + \
                     str(result_time) + "_" + str(result_column) + "_" + flat_string + ".npy"
 
+        no_cases = self.number_of_cases_requested
+
+        # Checks if a file with similar settings was generated previously
         if os.path.exists(file_name):
             if load_from_file:
-                print("Labels dataset was found on disk. Loading...")
-                return np.load(file_name)
+                Y_loaded = np.load(file_name)
+                if no_cases <= Y_loaded.shape[0]:
+                    print("Labels dataset was found on disk. Loading...")
+                    return Y_loaded[:no_cases]
             else:
                 print("Labels dataset was found on disk. However, load_from_disk parameter is set to False. If you wish"
                       " to load this dataset, please set load_from_disk parameter to True")
