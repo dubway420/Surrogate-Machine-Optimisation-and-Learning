@@ -56,8 +56,24 @@ class DatasetSingleFrame:
 
     def __init__(self, path_string, name="dataset"):
 
-        # This is the list of cases detected in the directory
-        cases_list_path = cases_list(path_string)
+        # The user can choose to name the dataset
+        self.name = name
+
+        try:
+            # This is the list of cases detected in the directory
+            cases_list_path = cases_list(path_string)
+        except FileNotFoundError:
+            print("Can not access results directory.")
+            if self.case_exists():
+                file_name = self.name + "_cases.pkl"
+                print("Cases found saved in local file. These will be loaded but be aware the cases list can lot be "
+                      "expanded without access to the original path.")
+                with open(file_name, 'rb') as f:
+                    cases_list_path, _ = pickle.load(f)
+
+            else:
+                print("Exiting...")
+                return
 
         # First, check if the directory is empty
         if len(cases_list_path) == 0:
@@ -69,9 +85,6 @@ class DatasetSingleFrame:
             # If the directory contains folders, continue
             self.cases_list = cases_list_path
 
-            # The user can choose to name the dataset
-            self.name = name
-
             # This is the path to the dataset files
             self.dataset_path = path_string
 
@@ -80,6 +93,12 @@ class DatasetSingleFrame:
 
             # Number of instances requested by the user. Left blank at this point
             self.number_of_cases_requested = None
+
+            # Size and shape of last called feature array
+            self.feature_shape = None
+
+            # Size and shape of last called label array
+            self.label_shape = None
 
     def load_dataset_instances(self, number_of_cases='all', save_local=True):
 
@@ -112,10 +131,10 @@ class DatasetSingleFrame:
         self.number_of_cases_requested = int_number_of_cases
 
         #############################################################
-        loading = False
+        loading = self.case_exists()
         # Checks if a local dataset exists
         file_name = self.name + "_cases.pkl"
-        if os.path.exists(file_name):
+        if loading:
             with open(file_name, 'rb') as f:
                 cases_from_file, instances_from_file = pickle.load(f)
 
@@ -127,7 +146,6 @@ class DatasetSingleFrame:
                 return
             else:
                 print(" Expanding dataset from file...")
-                loading = True
 
         cases_list_strings = self.cases_list[:int_number_of_cases]
 
@@ -170,7 +188,7 @@ class DatasetSingleFrame:
             with open(file_name, 'wb') as f:
                 pickle.dump([cases_list_updated, cases_instances], f)
 
-    def features(self, requested_feature='1d', channels='all', array_type='pos', levels='all', neural_network=True):
+    def features(self, requested_feature='1d', channels='all', array_type='pos', levels='all', extra_dimension=True):
 
         # Checks if dataset has been loaded
         if self.cases_instances is None:
@@ -198,12 +216,15 @@ class DatasetSingleFrame:
             for i, instance in enumerate(cases_instances):
                 X_1d[i] = instance.crack_array_1d(channels=channels, array_type=array_type, levels=levels)
 
-            # If the user requires the array to be configured for neural networks frameworks, then the array is reshaped
-            if neural_network:
-                return X_1d.reshape([X_1d.shape[0], X_1d.shape[1], 1])
+            # If the user requires the array to be configured for convolutional networks, then the array is reshaped
+            if extra_dimension:
+                X_shape = [X_1d.shape[0], X_1d.shape[1], 1]
+                self.feature_shape = X_shape[1:]
+                return X_1d.reshape(X_shape)
 
             # Else just return the normal numpy array
             else:
+                self.feature_shape = X_1d.shape[1]
                 return X_1d
 
         def features_2d():
@@ -211,13 +232,14 @@ class DatasetSingleFrame:
             # Get the 1d array
             X_1d = features_1d()
 
-            # If the user requires the array to be configured for neural networks frameworks, then the array is reshaped
-            if neural_network:
-                return X_1d.reshape([X_1d.shape[0], no_fuel_levels, no_fuel_channels, 1])
+            X_shape = [X_1d.shape[0], no_fuel_levels, no_fuel_channels]
 
-            # Else just return the normal numpy array
-            else:
-                return X_1d.reshape([X_1d.shape[0], no_fuel_levels, no_fuel_channels])
+            # If the user requires the array to be configured for convolutional networks, then the array is reshaped
+            if extra_dimension:
+                X_shape.append(1)
+
+            self.feature_shape = X_shape[1:]
+            return X_1d.reshape(X_shape)
 
         def features_3d():
 
@@ -229,13 +251,15 @@ class DatasetSingleFrame:
                                                                        quiet=True)
 
             # Reshape the 3D array so as to to have a more appropriate 'view' onto the core for ML
-            X_3d_rs = np.zeros([len(cases_instances), rows_columns[0], rows_columns[1], no_fuel_levels])
+            X_shape = [len(cases_instances), rows_columns[0], rows_columns[1], no_fuel_levels]
+            X_3d_rs = np.zeros(X_shape)
 
             # Go through each level of the old array and reassign its location
             for level in range(X_3d_inst.shape[1]):
                 feature_slice = X_3d_inst[:, level, :, :]
                 X_3d_rs[:, :, :, level] = feature_slice
 
+            self.feature_shape = X_shape[1:]
             return X_3d_rs
 
         def features_2d_flat():
@@ -281,7 +305,7 @@ class DatasetSingleFrame:
 
         # Generates a filename based on the user settings
         file_name = "Y_" + self.name + "_" + str(number_inter_channels) + "_" + str(number_inter_levels) + "_" + \
-                    str(result_time) + "_" + str(result_column) + "_" + flat_string + ".npy"
+                    str(result_time) + "_" + str(result_column) + "_" + result_type + "_" + flat_string + ".npy"
 
         no_cases = self.number_of_cases_requested
 
@@ -291,6 +315,10 @@ class DatasetSingleFrame:
                 Y_loaded = np.load(file_name)
                 if no_cases <= Y_loaded.shape[0]:
                     print("Labels dataset was found on disk. Loading...")
+                    if len(Y_loaded.shape[1:]) == 1:
+                        self.label_shape = Y_loaded.shape[1]
+                    else:
+                        self.label_shape = Y_loaded.shape[1:]
                     return Y_loaded[:no_cases]
             else:
                 print("Labels dataset was found on disk. However, load_from_disk parameter is set to False. If you wish"
@@ -318,12 +346,14 @@ class DatasetSingleFrame:
             Y[i] = instance.get_result_at_time(result_time, result_columns=str(result_column),
                                                result_type=result_type, flat=flat)
 
+        if len(array_dims[1:]) == 1:
+            self.label_shape = array_dims[1]
+        else:
+            self.label_shape = array_dims[1:]
         print("Saving labels to file: " + file_name)
         np.save(file_name, Y)
         return Y
 
-        #
-        #
-        #
-        #
-        #
+    def case_exists(self):
+        file_name = self.name + "_cases.pkl"
+        return os.path.exists(file_name)
