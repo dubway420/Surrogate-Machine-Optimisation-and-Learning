@@ -1,4 +1,5 @@
 import os
+import inspect
 import numpy as np
 import re as remove
 import pandas as pd
@@ -133,6 +134,12 @@ def features_and_or_labels(features_labels):
         vector[1] = True
 
     return vector
+
+
+def retrieve_name(var):
+    """ For a given variable, var, returns the variable name"""
+    callers_local_vars = inspect.currentframe().f_back.f_locals.items()
+    return [var_name for var_name, var_val in callers_local_vars if var_val is var][0]
 
 
 def read_output_file(filename, pandas=False):
@@ -274,3 +281,53 @@ def floor_zero_all(array):
 
 def return_all(array):
     return np.array(array).flatten()
+
+
+def function_switch(result_type):
+    if is_in(result_type, "max"):
+        command = np.max
+    elif is_in(result_type, "min"):
+        command = np.min
+    elif is_in(result_type, "sum"):
+        command = np.sum
+    elif is_in(result_type, "mean"):
+        command = np.mean
+    elif is_in(result_type, "med"):
+        command = np.median
+    elif is_in(result_type, "abs") and is_in(result_type, "sum"):
+        command = absolute_sum
+    elif is_in(result_type, "floor zero sum"):
+        command = floor_zero_sum
+    elif is_in(result_type, "floor zero all"):
+        command = floor_zero_all
+    elif is_in(result_type, "abs") and is_in(result_type, "max"):
+        command = max_absolute
+    elif is_in(result_type, "all"):
+        command = return_all
+    # TODO min vs max function
+    else:
+        command = np.sum
+
+    return command
+
+
+##################################
+###### label set manipulation ####
+##################################
+
+def convert_all_to_channel_result(Y, result_type, no_channels, no_levels):
+    """ This converts a flat array that contains a value for all bricks to one where there's a value per channel """
+
+    # The command to use to convert the array to
+    command = function_switch(result_type)
+
+    # Initialise array to be returned
+    Y_converted = np.zeros([Y.shape[0], no_channels])
+
+    for i, case in enumerate(Y):
+
+        case_reshaped = case.reshape(no_channels, no_levels)
+        for c, channel in enumerate(case_reshaped):
+            Y_converted[i, c] = command(channel)
+
+    return Y_converted

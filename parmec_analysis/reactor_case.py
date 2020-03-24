@@ -410,29 +410,7 @@ class Parse:
 
         # ==============================================
 
-        if utils.is_in(result_type, "max"):
-            command = np.max
-        elif utils.is_in(result_type, "min"):
-            command = np.min
-        elif utils.is_in(result_type, "sum"):
-            command = np.sum
-        elif utils.is_in(result_type, "mean"):
-            command = np.mean
-        elif utils.is_in(result_type, "med"):
-            command = np.median
-        elif utils.is_in(result_type, "abs") and utils.is_in(result_type, "sum"):
-            command = utils.absolute_sum
-        elif utils.is_in(result_type, "floor zero sum"):
-            command = utils.floor_zero_sum
-        elif utils.is_in(result_type, "floor zero all"):
-            command = utils.floor_zero_all
-        elif utils.is_in(result_type, "abs") and utils.is_in(result_type, "max"):
-            command = utils.max_absolute
-        elif utils.is_in(result_type, "all"):
-            command = utils.return_all
-        # TODO min vs max function
-        else:
-            command = np.sum
+        command = utils.function_switch(result_type)
 
         time_array_user_columns = time_array_base[:, min_column:max_column]
 
@@ -452,11 +430,11 @@ class Parse:
         for i, channel in enumerate(indices):
             # TODO - if there's more than one column, takes the by column function
 
-            channel_result = command(time_array_user_columns[channel])
+            channel_result = command(time_array_user_columns[channel][0:self.inter_levels])
 
-            # # One of the channels has more than 13 bricks
-            if utils.is_in(result_type, "all"):
-                channel_result = channel_result[0:13]
+            # # # One of the channels has more than 13 bricks
+            # if utils.is_in(result_type, "all"):
+            #     channel_result = channel_result[0:13]
 
             results_at_time_channel_sorted[i] = channel_result
 

@@ -1,4 +1,4 @@
-from parmec_analysis.utils import cases_list, is_in, split_separators, features_and_or_labels
+from parmec_analysis.utils import cases_list, is_in, split_separators
 from parmec_analysis import reactor_case
 import numpy as np
 import warnings
@@ -7,20 +7,7 @@ import os
 from sys import getsizeof
 
 
-def save_features(features, folder):
-    # If there's more than one feature
-    if isinstance(features, list):
-
-        for i, array in enumerate(features):
-            file_nm = folder + "/features_" + str(i)
-            print(file_nm)
-            # np.save(file_nm, array)
-
-    # Numpy array i.e. only one feature
-    else:
-        file_nm = folder + "/features"
-        print(file_nm)
-
+# TODO make sub classes of features and labels
 
 def requested_feature_types(feature_types_string):
     """ Takes a string which the user inputs to request feature types (i.e. '1-d' or '2D')
@@ -99,6 +86,18 @@ class DatasetSingleFrame:
 
             # Size and shape of last called label array
             self.label_shape = None
+
+            # These will be lists of attributes regarding the features and labels
+            # Will be used for setting graph titles and such
+            self.feature_attributes = {}
+            self.label_attributes = {}
+
+            # Size metrics for feature and label arrays
+            self.number_feature_channels = None
+            self.number_feature_levels = None
+
+            self.number_label_channels = None
+            self.number_label_levels = None
 
     def load_dataset_instances(self, number_of_cases='all', save_local=True):
 
@@ -188,7 +187,7 @@ class DatasetSingleFrame:
             with open(file_name, 'wb') as f:
                 pickle.dump([cases_list_updated, cases_instances], f)
 
-    def features(self, requested_feature='1d', channels='all', array_type='pos', levels='all', extra_dimension=True):
+    def features(self, requested_feature='1d', channels='all', levels='all', array_type='pos', extra_dimension=True):
 
         # Checks if dataset has been loaded
         if self.cases_instances is None:
@@ -196,12 +195,20 @@ class DatasetSingleFrame:
             warnings.warn(message, stacklevel=3)
             return
 
+        self.feature_attributes['Feature Channels'] = channels
+        self.feature_attributes['Feature Levels'] = levels
+        self.feature_attributes['Feature Type'] = array_type
+
         cases_instances = self.cases_instances
 
         # Take a single instance to get representative variables
         example_instance = cases_instances[0]
 
         no_fuel_channels, no_fuel_levels = array_shape(example_instance, channels, levels)
+
+        # Save metrics
+        self.number_feature_channels = no_fuel_channels
+        self.number_feature_levels = no_fuel_levels
 
         # The total number of rows/columns which are padding
         double_padding = example_instance.padding * 2
@@ -283,6 +290,12 @@ class DatasetSingleFrame:
     def labels(self, channels='all', levels='all', result_time=50, result_column="1", result_type="max", flat=True,
                load_from_file=False):
 
+        self.label_attributes['Label Channels'] = channels
+        self.label_attributes['Label Levels'] = levels
+        self.label_attributes['Result Frame:'] = result_time
+        self.label_attributes['Result Column:'] = result_column
+        self.label_attributes['Result Type:'] = result_type
+
         # Checks if dataset has been loaded
         if self.cases_instances is None:
             message = "You have not yet loaded the dataset. Please call the load_dataset_instances function before."
@@ -290,24 +303,33 @@ class DatasetSingleFrame:
             return
 
         cases_instances = self.cases_instances
-        no_cases = len(cases_instances)
+        no_cases = self.number_of_cases_requested
 
         # Take a single instance to get representative variables
         example_instance = cases_instances[0]
 
         array_dims = [no_cases]
 
-        number_inter_channels, number_inter_levels = array_shape(example_instance, channels, levels, 'labels')
+        # Work out the number of channels
+        min_channel, max_channel = example_instance.parse_channel_argument(channels, 'label')
+        number_inter_channels = max_channel - min_channel
+
+        min_level, max_level = example_instance.parse_level_argument(levels, 'label')
+        number_inter_levels = max_level - min_level
+
+        # save metrics
+        self.number_label_channels = number_inter_channels
+        self.number_label_levels = number_inter_levels
 
         # Check if label dataset exists
-        if flat: flat_string = 'T'
-        else: flat_string = 'F'
+        if flat:
+            flat_string = 'T'
+        else:
+            flat_string = 'F'
 
         # Generates a filename based on the user settings
         file_name = "Y_" + self.name + "_" + str(number_inter_channels) + "_" + str(number_inter_levels) + "_" + \
                     str(result_time) + "_" + str(result_column) + "_" + result_type + "_" + flat_string + ".npy"
-
-        no_cases = self.number_of_cases_requested
 
         # Checks if a file with similar settings was generated previously
         if os.path.exists(file_name):
@@ -343,8 +365,18 @@ class DatasetSingleFrame:
         Y = np.zeros(array_dims)
 
         for i, instance in enumerate(cases_instances):
-            Y[i] = instance.get_result_at_time(result_time, result_columns=str(result_column),
-                                               result_type=result_type, flat=flat)
+
+            instance_result = instance.get_result_at_time(result_time, result_columns=str(result_column),
+                                                   result_type=result_type, flat=flat)
+
+            if is_in(channels, 'all') and is_in(levels, 'all'):
+                Y[i] = instance_result
+
+            else:
+                # TODO FIX THIS. MOVE CHANNEL/LEVEL RESIZE OF ARRAY INSIDE get_result_at_time function
+                instance_result_cl = instance_result.reshape([instance.interstitial_channels, instance.inter_levels])
+                # print(min_channel, max_channel, min_level, max_level)
+                Y[i] = instance_result_cl[min_channel-1:max_channel+1, min_level:max_level].flatten()
 
         if len(array_dims[1:]) == 1:
             self.label_shape = array_dims[1]
