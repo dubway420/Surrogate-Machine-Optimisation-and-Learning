@@ -320,7 +320,7 @@ class Parse:
         # Get the channel range. It's fuel array type because interstitial bricks don't crack
         min_channel, max_channel = self.parse_channel_argument(channels, 'fuel')
         number_of_channels = max_channel - min_channel
-
+        
         # Get the range of levels
         min_level, max_level = self.parse_level_argument(levels)
         number_of_levels = max_level - min_level
@@ -331,8 +331,8 @@ class Parse:
 
         for i in range(number_of_levels):
 
-            input_start = (i * self.fuel_channels) + (min_channel)
-            input_end = (i * self.fuel_channels) + (max_channel - 1)
+            input_start = (i * self.fuel_channels) + min_channel
+            input_end = (i * self.fuel_channels) + max_channel
 
             output_start = i * number_of_channels
             output_end = output_start + number_of_channels
