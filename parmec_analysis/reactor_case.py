@@ -331,7 +331,7 @@ class Parse:
 
         for i in range(number_of_levels):
 
-            input_start = (i * self.fuel_channels) + (min_channel - 1)
+            input_start = (i * self.fuel_channels) + (min_channel)
             input_end = (i * self.fuel_channels) + (max_channel - 1)
 
             output_start = i * number_of_channels
@@ -728,6 +728,8 @@ class Parse:
         """ Takes a string or integer as input and returns a tuple (min_channel, max_channel)
         stating the range of levels required by the user"""
 
+        # TODO the value returned for min_channel is not zero based. Also see 334 and 335.
+
         # Depending on whether fuel or interstitial type is specified, sets the last channel i.e. the number of channels
         # of that type (284 for fuel, 321 interstitial by default)
         last_channel = self.last_channel(channel_type)
@@ -736,23 +738,23 @@ class Parse:
         if isinstance(channels, str):
 
             if channels.isnumeric():
-                min_channel = int(channels)
+                min_channel = int(channels) - 1
                 max_channel = int(channels)
 
             # Can handle slight misspellings or capitalisation
             # DEFAULT return all channels
             elif utils.is_in(channels, "all") or utils.is_in(channels, "core"):
-                min_channel = 1
+                min_channel = 0
                 max_channel = last_channel
 
             # Last channel
             elif utils.is_in(channels, "last"):
-                min_channel = last_channel
+                min_channel = last_channel - 1
                 max_channel = last_channel
 
             # First channel
             elif utils.is_in(channels, "first"):
-                min_channel = 1
+                min_channel = 0
                 max_channel = 1
 
             # If the user specifies something else, it tries to work out what it is
@@ -763,11 +765,11 @@ class Parse:
 
                 # check if component[0] (min_channel) is in acceptable range
                 if 1 <= int(components[0]) <= last_channel:
-                    min_channel = int(components[0])
+                    min_channel = int(components[0]) - 1
                 else:
                     print("WARNING: Specified lower bound channel number (" + str(components[0]).strip()
-                          + ") is outside of the acceptable range. Setting to default (1)")
-                    min_channel = 1
+                          + ") is outside of the acceptable range. Setting to lower bound default.")
+                    min_channel = 0
 
                 # check if component[1] (max_channel) greater than min level and lower than the
                 # maximum number of levels
@@ -787,21 +789,21 @@ class Parse:
             if channels < 1 or channels > last_channel:
                 print("Invalid levels argument specified (" + str(channels) + "). Setting levels to default (1 - " +
                       str(last_channel) + ").")
-                min_channel = 1
+                min_channel = 0
                 max_channel = last_channel
             else:
-                min_channel = channels
+                min_channel = channels - 1
                 max_channel = channels
 
         # If it can't figure out what the user wants, it just returns all levels
         else:
             print("Invalid levels argument specified (" + str(channels) + "). Setting levels to default (1 - " + str(
                 last_channel) + ").")
-            min_channel = 1
+            min_channel = 0
             max_channel = last_channel
 
         # Added + 1 to max channel otherwise iterator will miss last channel
-        return min_channel, max_channel + 1
+        return min_channel, max_channel
 
     def distance_from_centre(self, channel_no, channel_type="fuel", rows="", columns=""):
         """ Calculates the planar distance from the centre of the core given the channel coordinates """
