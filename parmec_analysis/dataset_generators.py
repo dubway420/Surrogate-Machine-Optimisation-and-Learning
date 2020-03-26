@@ -1,4 +1,4 @@
-from parmec_analysis.utils import cases_list, is_in, split_separators
+from parmec_analysis.utils import cases_list, is_in, split_separators, function_switch
 from parmec_analysis import reactor_case
 import numpy as np
 import warnings
@@ -288,106 +288,156 @@ class Features3D(Features):
 
 
 class FeaturesFlat(Features3D):
-
     pass
 
-# def labels(self, channels='all', levels='all', result_time=50, result_column="1", result_type="max", flat=True,
-#            load_from_file=False):
-#
-#     # self.label_attributes['Label Channels'] = channels
-#     # self.label_attributes['Label Levels'] = levels
-#     # self.label_attributes['Result Frame:'] = result_time
-#     # self.label_attributes['Result Column:'] = result_column
-#     # self.label_attributes['Result Type:'] = result_type
-#
-#     # Checks if dataset has been loaded
-#     if self.cases_instances is None:
-#         message = "You have not yet loaded the dataset. Please call the load_dataset_instances function before."
-#         warnings.warn(message, stacklevel=3)
-#         return
-#
-#     cases_instances = self.cases_instances
-#     no_cases = self.number_of_cases_requested
-#
-#     # Take a single instance to get representative variables
-#     example_instance = cases_instances[0]
-#
-#     array_dims = [no_cases]
-#
-#     # Work out the number of channels
-#     min_channel, max_channel = example_instance.parse_channel_argument(channels, 'label')
-#     number_inter_channels = max_channel - min_channel
-#
-#     min_level, max_level = example_instance.parse_level_argument(levels, 'label')
-#     number_inter_levels = max_level - min_level
-#
-#     # save metrics
-#     # self.number_label_channels = number_inter_channels
-#     # self.number_label_levels = number_inter_levels
-#
-#     # Check if label dataset exists
-#     if flat:
-#         flat_string = 'T'
-#     else:
-#         flat_string = 'F'
-#
-#     # Generates a filename based on the user settings
-#     file_name = "Y_" + self.name + "_" + str(number_inter_channels) + "_" + str(number_inter_levels) + "_" + \
-#                 str(result_time) + "_" + str(result_column) + "_" + result_type + "_" + flat_string + ".npy"
-#
-#     # Checks if a file with similar settings was generated previously
-#     if os.path.exists(file_name):
-#         if load_from_file:
-#             Y_loaded = np.load(file_name)
-#             if no_cases <= Y_loaded.shape[0]:
-#                 print("Labels dataset was found on disk. Loading...")
-#                 if len(Y_loaded.shape[1:]) == 1:
-#                     self.label_shape = Y_loaded.shape[1]
-#                 else:
-#                     self.label_shape = Y_loaded.shape[1:]
-#                 return Y_loaded[:no_cases]
-#         else:
-#             print("Labels dataset was found on disk. However, load_from_disk parameter is set to False. If you wish"
-#                   " to load this dataset, please set load_from_disk parameter to True")
-#             return
-#
-#     # If the result for all bricks is being returned
-#     if is_in(result_type, 'all'):
-#         # Flat 1D
-#         if flat:
-#             array_dims.append(number_inter_channels * number_inter_levels)
-#
-#         # 2d
-#         else:
-#             array_dims.append(number_inter_channels)
-#             array_dims.append(number_inter_levels)
-#
-#     # Level specific results
-#     else:
-#         array_dims.append(number_inter_channels)
-#
-#     Y = np.zeros(array_dims)
-#
-#     for i, instance in enumerate(cases_instances):
-#
-#         instance_result = instance.get_result_at_time(result_time, result_columns=str(result_column),
-#                                                result_type=result_type, flat=flat)
-#
-#         if is_in(channels, 'all') and is_in(levels, 'all'):
-#             Y[i] = instance_result
-#
-#         else:
-#             # TODO FIX THIS. MOVE CHANNEL/LEVEL RESIZE OF ARRAY INSIDE get_result_at_time function
-#             instance_result_cl = instance_result.reshape([instance.interstitial_channels, instance.inter_levels])
-#             # print(min_channel, max_channel, min_level, max_level)
-#             Y[i] = instance_result_cl[min_channel-1:max_channel+1, min_level:max_level].flatten()
-#
-#     if len(array_dims[1:]) == 1:
-#         self.label_shape = array_dims[1]
-#     else:
-#         self.label_shape = array_dims[1:]
-#     print("Saving labels to file: " + file_name)
-#     np.save(file_name, Y)
-#     return Y
-#
-#
+
+class Labels:
+
+    def __init__(self, dataset, channels='all', levels='all', result_time=50, result_column="1", result_type="max",
+                 flat=True, load_from_file=True):
+        self.dataset = dataset
+        self.number_instances = len(dataset.cases_list)
+
+        example_instance = dataset.core_instances[0]
+
+        channels_range, levels_range = min_max_channels_levels(example_instance, channels, levels, 'inter')
+
+        self.channels_range = channels_range
+        self.levels_range = levels_range
+
+        self.number_channels = channels_range[1] - channels_range[0]
+        self.number_levels = levels_range[1] - levels_range[0]
+
+        self.time = result_time
+
+        self.column = result_column
+
+        self.type = result_type
+
+        self.flat = flat
+
+        ##############################################################
+        ######### Attempt to load data from file #####################
+        ##############################################################
+
+        Y_loaded = self.load_labels_from_file()
+        if len(Y_loaded) > 0:
+
+            if not load_from_file:
+                print("Labels dataset was found on disk. However, load_from_disk parameter is set to False. If you wish"
+                      " to load this dataset, please set load_from_disk parameter to True")
+                return
+
+            number_loaded = len(Y_loaded)
+            if number_loaded >= self.number_instances:
+                self.values = Y_loaded[:self.number_instances]
+
+                if len(Y_loaded.shape) > 2:
+                    self.label_shape = Y_loaded.shape[1:]
+                else:
+                    self.label_shape = Y_loaded.shape[1]
+
+                return
+            else:
+                print("Expanding label set with cases located at path...")
+        else:
+            number_loaded = 0
+
+        ##############################################################
+        ######### Load data from path ################################
+        ##############################################################
+
+        # Load data from path
+        array_dims = [self.number_instances]
+
+        # If the result for all bricks is being returned
+        if is_in(result_type, 'all'):
+            # Flat 1D
+            if flat:
+                array_dims.append(self.number_channels * self.number_levels)
+
+            # 2d
+            else:
+                array_dims.append(self.number_channels)
+                array_dims.append(self.number_levels)
+
+        # channel specific results (max, sum, average etc.)
+        else:
+            array_dims.append(self.number_channels)
+
+        Y = np.zeros(array_dims)
+
+        for i, instance in enumerate(dataset.core_instances):
+
+            if i < number_loaded:
+                Y[i] = Y_loaded[i]
+            else:
+
+                if is_in(channels, 'all') and is_in(levels, 'all'):
+                    Y[i] = instance.get_result_at_time(result_time, result_columns=str(result_column),
+                                                       result_type=result_type, flat=flat)
+
+                else:
+                    # Get the instance result - note that result_type is set to 'all and falt to false
+                    instance_result = instance.get_result_at_time(result_time, result_columns=str(result_column),
+                                                                  result_type='all', flat=False)
+
+                    # the slice of the instance result array corresponding to the channels and levels required
+                    instance_result_slice = instance_result[self.channels_range[0]:self.channels_range[1],
+                                            self.levels_range[0]:self.levels_range[1]]
+
+                    # if the result type is all
+                    if is_in(result_type, 'all'):
+                        if flat:
+                            Y[i] = instance_result_slice.flatten()
+                        else:
+                            Y[i] = instance_result_slice
+
+                    # channel specific result. One result per channel requested
+                    else:
+
+                        command = function_switch(result_type)
+
+                        # iterate through each channel
+                        for c, channel in instance_result_slice:
+                            Y[i, c] = command(channel)
+
+        self.values = Y
+
+        if flat:
+            self.label_shape = Y.shape[1]
+        else:
+            self.label_shape = Y.shape[1:]
+
+        file_name = self.generate_filename()
+        print("Saving labels to file:", file_name)
+        np.save(file_name, Y)
+
+    def generate_filename(self):
+        """ Generates a filename based on the user settings """
+
+        # Check if label dataset exists
+        if self.flat:
+            flat_string = 'T'
+        else:
+            flat_string = 'F'
+
+        file_name = "Y_" + self.dataset.name + "_C" + str(self.channels_range[0]) + "_" + str(self.channels_range[1])
+
+        file_name += "_L" + str(self.levels_range[0]) + "_" + str(self.levels_range[1]) + "_T" + str(self.time)
+
+        file_name += "_R" + str(self.column) + "_" + str(self.type) + "_" + flat_string + ".npy"
+
+        return file_name
+
+    def load_labels_from_file(self):
+        """ Determines if labels storage file exists and if so loads data"""
+
+        file_name = self.generate_filename()
+
+        if not os.path.exists(file_name):
+            return []
+
+        print("Labels dataset was found on file:", file_name, "Loading...")
+        return np.load(file_name)
+
