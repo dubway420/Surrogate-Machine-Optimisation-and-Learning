@@ -399,7 +399,7 @@ class Labels:
                         command = function_switch(result_type)
 
                         # iterate through each channel
-                        for c, channel in instance_result_slice:
+                        for c, channel in enumerate(instance_result_slice):
                             Y[i, c] = command(channel)
 
         self.values = Y
