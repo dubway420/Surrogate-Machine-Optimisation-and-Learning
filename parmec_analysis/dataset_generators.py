@@ -116,6 +116,7 @@ class DatasetSingleFrame:
                 print('Loading cases from file: ' + file_name + '...')
                 self.cases_list = cases_from_file
                 self.core_instances = instances_from_file
+                self.number_instances = len(self.cases_list)
                 return
 
             # If the user requests a number of cases less than the number of cases on file
@@ -123,6 +124,7 @@ class DatasetSingleFrame:
                 print('Loading cases from file: ' + file_name + '...')
                 self.cases_list = cases_from_file[:number_of_cases_requested]
                 self.core_instances = instances_from_file[:number_of_cases_requested]
+                self.number_instances = len(self.cases_list)
                 return
 
             # Continue to data extraction below
@@ -200,6 +202,26 @@ class DatasetSingleFrame:
         core_instances_pre = self.core_instances
         np.random.shuffle(core_instances_pre)
         self.core_instances = core_instances_pre
+
+    def roll(self, increment=1, fraction=0.2, quiet=False):
+        """ rolls the data by a multiple of a fraction. Useful for folding and validation"""
+
+        if increment > int(1 / fraction) and not quiet:
+            message = "You have specified an increment number (" + str(increment) + ") which is greater than 1 / " \
+                                                                                    "fraction. The data-set will " \
+                                                                                    "simply wrap."
+            warnings.warn(message, stacklevel=3)
+
+        # The number of instances that is represented by the fraction. This could be the validation fraction for eg.
+        number_per_fraction = int(self.number_instances * fraction)
+
+        roll_by_number = number_per_fraction * int(increment)
+
+        cases_rolled = np.roll(self.cases_list, roll_by_number, axis=0)
+        instances_rolled = np.roll(self.core_instances, roll_by_number, axis=0)
+
+        self.cases_list = cases_rolled
+        self.core_instances = instances_rolled
 
 
 class Features:
@@ -399,7 +421,7 @@ class Labels:
 
                     # the slice of the instance result array corresponding to the channels and levels required
                     instance_result_slice = instance_result[self.channels_range[0]:self.channels_range[1],
-                                                            self.levels_range[0]:self.levels_range[1]]
+                                            self.levels_range[0]:self.levels_range[1]]
 
                     # if the result type is all
                     if is_in(result_type, 'all'):
