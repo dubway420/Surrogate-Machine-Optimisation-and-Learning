@@ -16,7 +16,8 @@ def requested_feature_types(feature_types_string):
 
     # Cycles through each possible feature type. Returns the int number of the feature requested
     for i in range(1, 4):
-        if is_in(feature_types_string, (str(i) + "d")): return i
+        if is_in(feature_types_string, (str(i) + "d")):
+            return i
 
     # If it finds nothing, returns 0 (i.e. error)
     return 0
@@ -93,7 +94,7 @@ class DatasetSingleFrame:
         file_name = name + "_cases.pkl"
 
         #################################################################################################
-        ################## LOADING FROM LOCAL DISK ######################################################
+        # ################# LOADING FROM LOCAL DISK ######################################################
         #################################################################################################
         # this section determines if there is locally stored data i.e. if this dataset has been loaded
         # previously. If there is evidence of a
@@ -137,7 +138,7 @@ class DatasetSingleFrame:
             return
 
         #################################################################################################
-        ################## LOADING FROM PATH ############################################################
+        # ################# LOADING FROM PATH ############################################################
         #################################################################################################
         # if the program is running for the first time, this section runs first. It iterates through
         # the data set loading data from a saved file if it exists (loaded in previous section) or
@@ -178,6 +179,7 @@ class DatasetSingleFrame:
 
         self.cases_list = cases_list_updated
         self.core_instances = core_instances_updated
+        self.number_instances = len(cases_list_updated)
 
         # Save instances to local file if requested and number loaded
         # greater than the number existing on file
@@ -185,6 +187,19 @@ class DatasetSingleFrame:
             print("Saving core instances to file " + file_name + "...")
             with open(file_name, 'wb') as f:
                 pickle.dump([cases_list_updated, core_instances_updated], f)
+
+    def shuffle(self, seed=12):
+        """ shuffle the cases and instances lists. For use in generating new """
+
+        np.random.seed(seed)
+        cases_list_pre = self.cases_list
+        np.random.shuffle(cases_list_pre)
+        self.cases_list = cases_list_pre
+
+        np.random.seed(seed)
+        core_instances_pre = self.core_instances
+        np.random.shuffle(core_instances_pre)
+        self.core_instances = core_instances_pre
 
 
 class Features:
@@ -317,7 +332,7 @@ class Labels:
         self.flat = flat
 
         ##############################################################
-        ######### Attempt to load data from file #####################
+        # ######## Attempt to load data from file #####################
         ##############################################################
 
         Y_loaded = self.load_labels_from_file()
@@ -344,7 +359,7 @@ class Labels:
             number_loaded = 0
 
         ##############################################################
-        ######### Load data from path ################################
+        # ######## Load data from path ################################
         ##############################################################
 
         # Load data from path
@@ -384,7 +399,7 @@ class Labels:
 
                     # the slice of the instance result array corresponding to the channels and levels required
                     instance_result_slice = instance_result[self.channels_range[0]:self.channels_range[1],
-                                            self.levels_range[0]:self.levels_range[1]]
+                                                            self.levels_range[0]:self.levels_range[1]]
 
                     # if the result type is all
                     if is_in(result_type, 'all'):
@@ -440,4 +455,3 @@ class Labels:
 
         print("Labels dataset was found on file:", file_name, "Loading...")
         return np.load(file_name)
-
