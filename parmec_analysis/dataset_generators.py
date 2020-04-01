@@ -75,10 +75,18 @@ def load_data_from_file(file_name):
 
 class DatasetSingleFrame:
 
-    def __init__(self, path_string="", name="dataset", number_of_cases='all', save_local=True):
+    def __init__(self, path_string="", name="dataset", number_of_cases='all', validation_split=0.2, save_local=True):
 
         # The user can choose to name the dataset
         self.name = name
+        self.validation_split = validation_split
+
+        # These variables will be defined in the assign_attributes method
+
+        self.cases_list = None
+        self.core_instances = None
+        self.number_instances = None
+        self.split_number = None
 
         cases_from_path = []
         cases_from_file, instances_from_file = [], []
@@ -114,17 +122,14 @@ class DatasetSingleFrame:
             if not number_of_cases_requested and len(cases_from_file) >= len(cases_from_path):
                 # Load entire locally stored dataset
                 print('Loading cases from file: ' + file_name + '...')
-                self.cases_list = cases_from_file
-                self.core_instances = instances_from_file
-                self.number_instances = len(self.cases_list)
+                self.assign_attributes(cases_from_file, instances_from_file)
                 return
 
             # If the user requests a number of cases less than the number of cases on file
             elif number_of_cases_requested <= len(cases_from_file):
                 print('Loading cases from file: ' + file_name + '...')
-                self.cases_list = cases_from_file[:number_of_cases_requested]
-                self.core_instances = instances_from_file[:number_of_cases_requested]
-                self.number_instances = len(self.cases_list)
+                self.assign_attributes(cases_from_file[:number_of_cases_requested],
+                                       instances_from_file[:number_of_cases_requested])
                 return
 
             # Continue to data extraction below
@@ -179,9 +184,7 @@ class DatasetSingleFrame:
 
         print("Successfully obtained", i, "cases.")
 
-        self.cases_list = cases_list_updated
-        self.core_instances = core_instances_updated
-        self.number_instances = len(cases_list_updated)
+        self.assign_attributes(cases_list_updated, core_instances_updated)
 
         # Save instances to local file if requested and number loaded
         # greater than the number existing on file
@@ -189,6 +192,25 @@ class DatasetSingleFrame:
             print("Saving core instances to file " + file_name + "...")
             with open(file_name, 'wb') as f:
                 pickle.dump([cases_list_updated, core_instances_updated], f)
+
+    def assign_attributes(self, case_list, core_instances):
+
+        self.cases_list = case_list
+        self.core_instances = core_instances
+        self.number_instances = len(case_list)
+        self.split_number = int(self.number_instances * (1 - self.validation_split))
+
+    def training_cases(self):
+        return self.cases_list[:self.split_number]
+
+    def validation_cases(self):
+        return self.cases_list[self.split_number:]
+
+    def training_instances(self):
+        return self.core_instances[:self.split_number]
+
+    def validation_instances(self):
+        return self.core_instances[self.split_number:]
 
     def shuffle(self, seed=12):
         """ shuffle the cases and instances lists. For use in generating new """
@@ -203,7 +225,7 @@ class DatasetSingleFrame:
         np.random.shuffle(core_instances_pre)
         self.core_instances = core_instances_pre
 
-    def roll(self, increment=1, fraction=0.2, quiet=False):
+    def roll(self, increment=1, fraction=None, quiet=False):
         """ rolls the data by a multiple of a fraction. Useful for folding and validation"""
 
         if increment > int(1 / fraction) and not quiet:
@@ -211,6 +233,9 @@ class DatasetSingleFrame:
                                                                                     "fraction. The data-set will " \
                                                                                     "simply wrap."
             warnings.warn(message, stacklevel=3)
+
+        if not fraction:
+            fraction = self.validation_split
 
         # The number of instances that is represented by the fraction. This could be the validation fraction for eg.
         number_per_fraction = int(self.number_instances * fraction)
@@ -247,6 +272,14 @@ class Features:
         self.number_levels = levels_range[1] - levels_range[0]
 
         self.array_type = array_type
+
+        self.values, self.feature_shape = None, None
+
+    def training_set(self):
+        return self.values[:self.dataset.split_number]
+
+    def validation_set(self):
+        return self.values[self.dataset.split_number:]
 
 
 class Features1D(Features):
@@ -477,3 +510,9 @@ class Labels:
 
         print("Labels dataset was found on file:", file_name, "Loading...")
         return np.load(file_name)
+
+    def training_set(self):
+        return self.values[:self.dataset.split_number]
+
+    def validation_set(self):
+        return self.values[self.dataset.split_number:]
