@@ -331,3 +331,46 @@ def convert_all_to_channel_result(Y, result_type, no_channels, no_levels):
             Y_converted[i, c] = command(channel)
 
     return Y_converted
+
+
+def convert_case_to_channel_result(y, result_type, no_channels, no_levels):
+    # The command to use to convert the array to
+    command = function_switch(result_type)
+
+    y_converted = np.zeros(no_channels)
+    y_reshaped = y.reshape(no_channels, no_levels)
+
+    for c, channel in enumerate(y_reshaped):
+        y_converted[c] = command(channel)
+
+    return y_converted
+
+
+def plot_names_title(model, dataset, features, labels, iteration):
+    line = ""
+    file_name = dataset.name + "_" + model.short_name
+
+    line += "Feature Channels/Levels: " + str(features.channels_range[0] + 1) + "-" + \
+            str(features.channels_range[1]) + ", " + str(features.levels_range[0] + 1) + "-" + \
+            str(features.levels_range[1]) + ", Array Type: " + str(features.array_type)
+
+    line += "\n"
+
+    file_name += "_C" + str(features.channels_range[0]) + "_" + str(features.channels_range[1]) + "_" \
+                 + "L" + str(features.levels_range[0]) + "_" + str(features.levels_range[1]) + "_"
+
+    # Label data
+
+    line += "Label Channels/Levels: " + str(labels.channels_range[0] + 1) + "-" + \
+            str(labels.channels_range[1]) + ", " + str(labels.levels_range[0] + 1) + "-" + \
+            str(labels.levels_range[1]) + ", Time: " + str(labels.time) + ", Column: " + \
+            str(labels.column) + ", Result Type: " + str(labels.type)
+
+    file_name += str(labels.channels_range[0]) + "_" + str(labels.channels_range[1]) + "_" + \
+                 str(labels.levels_range[0]) + "_" + str(labels.levels_range[1]) + "_" + \
+                 str(labels.time) + "_" + str(labels.column) + "_" + str(labels.type) + \
+                 "I" + str(iteration)
+
+    file_name += ".png"
+
+    return line, file_name
