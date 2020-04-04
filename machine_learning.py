@@ -174,7 +174,7 @@ models = [getattr(RegressionModels(), string_method) for string_method in Regres
 
 results_path = sys.argv[-1]
 
-no_instances = 80
+no_instances = 'all'
 
 # Features
 channels_features = 'all'
@@ -191,7 +191,7 @@ result_column = 1
 # Machine learning
 opt = Adam(lr=1e-3, decay=1e-3 / 200)
 loss = mean_absolute_percentage_error
-repeat_each_model = 2
+repeat_each_model = 10
 epochs = 50
 
 ###########################################################
@@ -206,12 +206,12 @@ experiments = [
 
     Experiment("MLP", models[0], Features1D(dataset_80), labels_48_all),
     Experiment("WP", models[1], Features1D(dataset_80), labels_48_all),
-    # Experiment("CNN1D Flat", models[2], Features1D(dataset_80, extra_dimension=True), labels_48_all),
-    # Experiment("CNN1D Multi", models[2], Features2D(dataset_80), labels_48_all),
-    # Experiment("CNN2D T1", models[3], Features2D(dataset_80, extra_dimension=True), labels_48_all),
-    # Experiment("CNN2D T2", models[4], Features2D(dataset_80, extra_dimension=True), labels_48_all),
-    # Experiment("CNN3D T1", models[3], Features3D(dataset_80), labels_48_all),
-    # Experiment("CNN3D T2", models[4], Features3D(dataset_80), labels_48_all),
+    Experiment("CNN1D Flat", models[2], Features1D(dataset_80, extra_dimension=True), labels_48_all),
+    Experiment("CNN1D Multi", models[2], Features2D(dataset_80), labels_48_all),
+    Experiment("CNN2D T1", models[3], Features2D(dataset_80, extra_dimension=True), labels_48_all),
+    Experiment("CNN2D T2", models[4], Features2D(dataset_80, extra_dimension=True), labels_48_all),
+    Experiment("CNN3D T1", models[3], Features3D(dataset_80), labels_48_all),
+    Experiment("CNN3D T2", models[4], Features3D(dataset_80), labels_48_all),
 
 ]
 
