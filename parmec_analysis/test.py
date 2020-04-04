@@ -1,11 +1,4 @@
 import numpy as np
+import sys
 
-array = np.array(
-    [
-        [34, 56, 5848, 454],
-        [45, 54, 65, 433],
-        [563, 87, 54, 345]
-    ])
-
-
-print(np.mean(array, axis=1))
+print(sys.argv[-1])

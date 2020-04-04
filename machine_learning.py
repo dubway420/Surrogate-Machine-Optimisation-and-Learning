@@ -6,10 +6,9 @@ from keras.layers import Flatten, Input
 from keras.models import Model, Sequential
 from keras.optimizers import Adam
 from keras.losses import mean_absolute_percentage_error
-import matplotlib.pyplot as plt
-from parmec_analysis.dataset_generators import DatasetSingleFrame, Features1D, Labels
-from parmec_analysis.utils import plot_names_title
+from parmec_analysis.dataset_generators import DatasetSingleFrame, Features1D, Features2D, Features3D, Labels
 from parmec_analysis.visualisation import CoreView, TrainingHistoryRealTime, model_comparison
+import sys
 import numpy as np
 
 
@@ -23,6 +22,7 @@ class SequentialBespoke(Sequential):
 
 class RegressionModels:
 
+    # 0
     @staticmethod
     def multi_layer_perceptron(input_dims, output_dims):
 
@@ -39,6 +39,7 @@ class RegressionModels:
         # return our model
         return model
 
+    # 1
     @staticmethod
     def wider_model(input_dims, output_dims):
 
@@ -54,6 +55,7 @@ class RegressionModels:
 
         return model
 
+    # 2
     @staticmethod
     def cnn1D(input_dims, output_dims):
 
@@ -69,6 +71,7 @@ class RegressionModels:
 
         return model
 
+    # 3
     @staticmethod
     def cnn2D_type1(input_dims, output_dims):
         # create model
@@ -85,6 +88,7 @@ class RegressionModels:
         # model.compile(loss='mean_squared_error', optimizer='adam')
         return model
 
+    # 4
     @staticmethod
     def cnn_type2(width, height, depth, filters=(16, 32, 64), regress=True):
 
@@ -155,10 +159,20 @@ class LossHistory(Callback):
             self.view.update_data(epoch, self.model)
 
 
-# Lists the functions of the models
+class Experiment:
+
+    def __init__(self, name, model, features, labels):
+        self.name = name
+        self.model = model
+        self.features = features
+        self.labels = labels
+
+    # Lists the functions of the models
+
+
 models = [getattr(RegressionModels(), string_method) for string_method in RegressionModels().__dir__()[1:-25]]
 
-results_path = "/media/huw/Disk1/parmec_results/"
+results_path = sys.argv[-1]
 
 no_instances = 80
 
@@ -186,9 +200,21 @@ epochs = 50
 
 dataset_80 = DatasetSingleFrame(results_path, number_of_cases=no_instances)
 
-features_1d = Features1D(dataset_80)
-
 labels_48_all = Labels(dataset_80, result_time=48, result_type='all')
+
+experiments = [
+
+    Experiment("MLP", models[0], Features1D(dataset_80), labels_48_all),
+    Experiment("WP", models[1], Features1D(dataset_80), labels_48_all),
+    # Experiment("CNN1D Flat", models[2], Features1D(dataset_80, extra_dimension=True), labels_48_all),
+    # Experiment("CNN1D Multi", models[2], Features2D(dataset_80), labels_48_all),
+    # Experiment("CNN2D T1", models[3], Features2D(dataset_80, extra_dimension=True), labels_48_all),
+    # Experiment("CNN2D T2", models[4], Features2D(dataset_80, extra_dimension=True), labels_48_all),
+    # Experiment("CNN3D T1", models[3], Features3D(dataset_80), labels_48_all),
+    # Experiment("CNN3D T2", models[4], Features3D(dataset_80), labels_48_all),
+
+]
+
 
 ###########################################################
 # ################## Model Setup ###########################
@@ -202,7 +228,7 @@ model_histories = []
 losses_training = []
 losses_validation = []
 
-for model_no in range(2):
+for experiment in experiments:
 
     models_type = []
     models_type_histories = []
@@ -211,18 +237,18 @@ for model_no in range(2):
     model_losses_validation = []
 
     for i in range(1, repeat_each_model + 1):
-        history = LossHistory(loss, dataset_80, features_1d, labels_48_all, i)
-        models_type.append(models[model_no](features_1d.feature_shape, labels_48_all.label_shape))
+        history = LossHistory(loss, dataset_80, experiment.features, labels_48_all, i)
+        models_type.append(experiment.model(experiment.features.feature_shape, labels_48_all.label_shape))
         models_type[-1].compile(loss=loss.__name__, optimizer=opt)
-        model_fit = models_type[-1].fit(features_1d.training_set(), labels_48_all.training_set(),
-                                        validation_data=(features_1d.validation_set(),
+        model_fit = models_type[-1].fit(experiment.features.training_set(), labels_48_all.training_set(),
+                                        validation_data=(experiment.features.validation_set(),
                                                          labels_48_all.validation_set()),
                                         epochs=epochs, verbose=0, callbacks=[history])
         models_type_histories.append(model_fit)
         model_losses_training.append(model_fit.history['loss'][-1])
         model_losses_validation.append(model_fit.history['val_loss'][-1])
 
-    model_short_names.append(models_type[-1].short_name)
+    model_short_names.append(experiment.name)
 
     models_compiled.append(models_type)
     model_histories.append(models_type_histories)
@@ -230,8 +256,10 @@ for model_no in range(2):
     losses_training.append(model_losses_training)
     losses_validation.append(model_losses_validation)
 
-losses_mean_training = np.mean(losses_training, axis=1)
-losses_mean_validation = np.mean(losses_validation, axis=1)
+    losses_mean_training = np.mean(losses_training, axis=1)
+    errors_training = [np.min(losses_training, axis=1), np.max(losses_training, axis=1)]
 
+    losses_mean_validation = np.mean(losses_validation, axis=1)
+    errors_validation = [np.min(losses_validation, axis=1), np.max(losses_validation, axis=1)]
 
-model_comparison(model_short_names, losses_mean_training, losses_mean_validation)
+    model_comparison(model_short_names, losses_mean_training, losses_mean_validation, errors_training, errors_validation)

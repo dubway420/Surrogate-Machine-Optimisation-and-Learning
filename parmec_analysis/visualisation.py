@@ -23,14 +23,14 @@ def turn_off_graph_decorations(axis):
     axis.set_yticklabels([])
 
 
-def model_comparison(model_names, training_loss, validation_loss):
+def model_comparison(model_names, training_loss, validation_loss, errors_training, errors_validation):
 
     x = np.arange(len(model_names))  # the label locations
     width = 0.35  # the width of the bars
 
     fig, ax = plt.subplots()
-    rects1 = ax.bar((x - width / 2), training_loss, width, label='Training')
-    rects2 = ax.bar((x + width / 2), validation_loss, width, label='Validation')
+    rects1 = ax.bar((x - width / 2), training_loss, width, yerr=errors_training, capsize=5, label='Training')
+    rects2 = ax.bar((x + width / 2), validation_loss, width,  yerr=errors_validation, capsize=5, label='Validation')
 
     # Add some text for labels, title and custom x-axis tick labels, etc.
     ax.set_ylabel('Mean Squared Error')
