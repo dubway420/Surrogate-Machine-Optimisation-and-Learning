@@ -211,7 +211,7 @@ experiments = [
     Experiment("CNN2D T1", models[3], Features2D(dataset_80, extra_dimension=True), labels_48_all),
     Experiment("CNN2D T2", models[4], Features2D(dataset_80, extra_dimension=True), labels_48_all),
     Experiment("CNN3D T1", models[3], Features3D(dataset_80), labels_48_all),
-    Experiment("CNN3D T2", models[4], Features3D(dataset_80), labels_48_all),
+    Experiment("CNN3D T2", models[4], Features3D(dataset_80), labels_48_all)
 
 ]
 
