@@ -41,7 +41,7 @@ def model_comparison(model_names, training_loss, validation_loss, errors_trainin
 
     fig.tight_layout()
 
-    plt.show()
+    plt.savefig("comparing_models.png")
 
 
 class CoreView:
