@@ -1,3 +1,7 @@
+import matplotlib as mpl
+
+# Agg backend will render without X server on a compute node in batch
+mpl.use('Agg')
 import matplotlib.pyplot as plt
 from mpl_toolkits.axes_grid1 import AxesGrid
 import numpy as np
@@ -24,13 +28,12 @@ def turn_off_graph_decorations(axis):
 
 
 def model_comparison(model_names, training_loss, validation_loss, errors_training, errors_validation):
-
     x = np.arange(len(model_names))  # the label locations
     width = 0.35  # the width of the bars
 
     fig, ax = plt.subplots()
     rects1 = ax.bar((x - width / 2), training_loss, width, yerr=errors_training, capsize=5, label='Training')
-    rects2 = ax.bar((x + width / 2), validation_loss, width,  yerr=errors_validation, capsize=5, label='Validation')
+    rects2 = ax.bar((x + width / 2), validation_loss, width, yerr=errors_validation, capsize=5, label='Validation')
 
     # Add some text for labels, title and custom x-axis tick labels, etc.
     ax.set_ylabel('Mean Squared Error')
@@ -41,7 +44,7 @@ def model_comparison(model_names, training_loss, validation_loss, errors_trainin
 
     fig.tight_layout()
 
-    plt.savefig("comparing_models.png")
+    plt.savefig("plots/" + "comparing_models.png")
 
 
 class CoreView:
@@ -213,14 +216,14 @@ class CoreView:
 
             # Saves the figure
 
-            file_name = stage + "_" + self.file_name
+            file_name = "plots/" + stage + "_" + self.file_name
             plt.savefig(file_name)
             # plt.show()
 
 
 class TrainingHistoryRealTime:
 
-    def __init__(self, dataset, features, labels, iteration, loss_function):
+    def __init__(self, dataset, features, labels, iteration, loss_function, plot_from=10):
         self.main_title = ""
 
         self.dataset = dataset
@@ -235,6 +238,7 @@ class TrainingHistoryRealTime:
         self.loss_function = loss_function
         self.losses = []
         self.val_losses = []
+        self.plot_from = plot_from
 
     def update_data(self, logs, model, plot=True):
         self.losses.append(logs.get('loss'))
@@ -242,7 +246,7 @@ class TrainingHistoryRealTime:
 
         self.model = model
 
-        if plot:
+        if plot and len(self.losses) >= self.plot_from:
             self.plotting()
 
     def plotting(self):
@@ -253,16 +257,31 @@ class TrainingHistoryRealTime:
         subtitle, file_name = plot_names_title(self.model, self.dataset, self.features, self.labels, self.iteration)
 
         self.subtitle = subtitle
-        self.file_name = "RThistory_" + file_name
+        self.file_name = "plots/RThistory_" + file_name
 
-        # create plots with training and label history
-        plt.plot(np.arange(len(self.losses)), self.losses, label='Training')
-        straight_line = [self.losses[-1] for _ in self.losses]
-        plt.plot(np.arange(len(self.losses)), straight_line, 'k:')
+        # generate plot data
 
-        plt.plot(np.arange(len(self.val_losses)), self.val_losses, label='Validation')
-        straight_line = [self.val_losses[-1] for _ in self.val_losses]
-        plt.plot(np.arange(len(self.val_losses)), straight_line, 'k:')
+        training_losses_plot = self.losses[self.plot_from:]
+        validation_losses_plot = self.val_losses[self.plot_from:]
+
+        epochs_range = np.arange(len(training_losses_plot)) + self.plot_from
+
+        last_result_line_training = [training_losses_plot[-1] for _ in training_losses_plot]
+        last_result_line_validation = [validation_losses_plot[-1] for _ in validation_losses_plot]
+
+        # create training plots
+
+        plt.plot(epochs_range, training_losses_plot, label='Training')
+
+        plt.plot(epochs_range, last_result_line_training, 'k:')
+
+        # create validation plots
+
+        plt.plot(epochs_range, validation_losses_plot, label='Validation')
+
+        plt.plot(epochs_range, last_result_line_validation, 'k:')
+
+        # Titles and annotation
 
         plt.suptitle(self.main_title, fontsize=16, y=1.005)
         plt.title(self.subtitle, fontsize=10, pad=5)
