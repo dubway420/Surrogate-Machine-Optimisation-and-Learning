@@ -264,7 +264,7 @@ class TrainingHistoryRealTime:
         training_losses_plot = self.losses[self.plot_from:]
         validation_losses_plot = self.val_losses[self.plot_from:]
         
-        epochs_range = np.arange(len(training_losses_plot) + self.plot_from
+        epochs_range = np.arange(len(training_losses_plot)) + self.plot_from
 
         last_result_line_training = [training_losses_plot[-1] for _ in training_losses_plot]
         last_result_line_validation = [validation_losses_plot[-1] for _ in validation_losses_plot]
