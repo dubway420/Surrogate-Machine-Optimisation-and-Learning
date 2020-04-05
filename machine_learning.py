@@ -155,7 +155,7 @@ class LossHistory(Callback):
     def on_epoch_end(self, epoch, logs={}):
         self.train_history.update_data(logs, self.model)
 
-        if epoch > 0 and (epoch % 10) == 0:
+        if epoch > 0 and (epoch % 100) == 0:
             self.view.update_data(epoch, self.model)
 
 
@@ -192,7 +192,7 @@ result_column = 1
 opt = Adam(lr=1e-3, decay=1e-3 / 200)
 loss = mean_absolute_percentage_error
 repeat_each_model = 10
-epochs = 50
+epochs = 500
 
 ###########################################################
 # ################## Dataset ################################
@@ -206,12 +206,12 @@ experiments = [
 
     Experiment("MLP", models[0], Features1D(dataset_80), labels_48_all),
     Experiment("WP", models[1], Features1D(dataset_80), labels_48_all),
-    Experiment("CNN1D Flat", models[2], Features1D(dataset_80, extra_dimension=True), labels_48_all),
-    Experiment("CNN1D Multi", models[2], Features2D(dataset_80), labels_48_all),
-    Experiment("CNN2D T1", models[3], Features2D(dataset_80, extra_dimension=True), labels_48_all),
-    Experiment("CNN2D T2", models[4], Features2D(dataset_80, extra_dimension=True), labels_48_all),
-    Experiment("CNN3D T1", models[3], Features3D(dataset_80), labels_48_all),
-    Experiment("CNN3D T2", models[4], Features3D(dataset_80), labels_48_all)
+    Experiment("CNN1D_Flat", models[2], Features1D(dataset_80, extra_dimension=True), labels_48_all),
+    Experiment("CNN1D_Multi", models[2], Features2D(dataset_80), labels_48_all),
+    Experiment("CNN2D_T1", models[3], Features2D(dataset_80, extra_dimension=True), labels_48_all),
+    Experiment("CNN2D_T2", models[4], Features2D(dataset_80, extra_dimension=True), labels_48_all),
+    Experiment("CNN3D_T1", models[3], Features3D(dataset_80), labels_48_all),
+    Experiment("CNN3D_T2", models[4], Features3D(dataset_80), labels_48_all)
 
 ]
 
