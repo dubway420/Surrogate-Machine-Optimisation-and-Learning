@@ -3,6 +3,7 @@ import inspect
 import numpy as np
 import re as remove
 import pandas as pd
+import pickle
 
 # Global Variables
 split_separators = ["to", "To", "TO", ":", "-", "/", "_", ",", " "]
@@ -62,6 +63,45 @@ def cases_list(path_string):
         case_list.append(path_string + base + '/' + base)
 
     return case_list
+
+
+def get_number(input_val):
+    """ converts an input to an int. If it's char input, return None"""
+
+    # Handles if user specifies number of cases by string
+    if isinstance(input_val, str):
+
+        if input_val.isnumeric():
+            return int(input_val)
+        else:
+            pass
+
+    elif isinstance(input_val, int):
+        return input_val
+
+    return None
+
+
+def check_directory(path):
+    """ check a directory for validity """
+
+    if not os.path.exists(path):
+        return False
+    elif cases_list(path) == 0:
+        return False
+    else:
+        return True
+
+
+def load_data_from_file(file_name):
+    """ attempts to load data from a given file name. If file doesn't exist, returns False"""
+
+    if os.path.exists(file_name):
+        with open(file_name, 'rb') as f:
+            loaded = pickle.load(f)
+            return loaded
+    else:
+        return False
 
 
 def split_by_column_uniques(input_array, column_no):
@@ -187,7 +227,8 @@ def index_array_fuel(case, ext='.csv'):
             if len(stack) == 7:
                 channels_row.append(stack[:, 6])
 
-        if len(channels_row) > 0: channels_core.append(channels_row)
+        if len(channels_row) > 0:
+            channels_core.append(channels_row)
 
     # Reverse the order of the indices - this reverses the order of the rows (which are switched from bottom to
     # top to visa-versa) but keeps the order of the columns (which go from left to right).
@@ -234,7 +275,8 @@ def index_array_interstitial(case, ext='.csv'):
             if len(stack) >= 13:
                 channels_row.append(stack[:, 6])
 
-        if len(channels_row) > 0: channels_core.append(channels_row)
+        if len(channels_row) > 0:
+            channels_core.append(channels_row)
 
     # Reverse the order of the indices - this reverses the order of the rows (which are switched from bottom to
     # top to visa-versa) but keeps the order of the columns (which go from left to right).
@@ -254,7 +296,7 @@ def index_array_interstitial(case, ext='.csv'):
 
 
 ################################################################
-################# DATA EXTRACTION FUNCTIONS ####################
+# ################ DATA EXTRACTION FUNCTIONS ###################
 ################################################################
 
 def absolute_sum(array):
@@ -312,7 +354,7 @@ def function_switch(result_type):
 
 
 ##################################
-###### label set manipulation ####
+# ##### label set manipulation ####
 ##################################
 
 def convert_all_to_channel_result(Y, result_type, no_channels, no_levels):
@@ -346,9 +388,16 @@ def convert_case_to_channel_result(y, result_type, no_channels, no_levels):
     return y_converted
 
 
-def plot_names_title(model, dataset, features, labels, iteration):
+def plot_names_title(experiment, iteration):
+    # TODO replace everything that can be with experiment
+
+    # Unpack objects used by dataset
+    dataset = experiment.dataset
+    features = experiment.features
+    labels = experiment.labels
+
     line = ""
-    file_name = dataset.name + "_" + model.short_name
+    file_name = dataset.name + "_" + experiment.name
 
     line += "Feature Channels/Levels: " + str(features.channels_range[0] + 1) + "-" + \
             str(features.channels_range[1]) + ", " + str(features.levels_range[0] + 1) + "-" + \
@@ -374,3 +423,18 @@ def plot_names_title(model, dataset, features, labels, iteration):
     file_name += ".png"
 
     return line, file_name
+
+
+def load_results(trial_name):
+    loaded = load_data_from_file(trial_name)
+
+    # check if a test with the test_name has been done. If so, the file should exist -
+    if loaded:
+
+        results_dict = loaded
+
+    # - if not, create a dictionary
+    else:
+        results_dict = {}
+
+    return results_dict

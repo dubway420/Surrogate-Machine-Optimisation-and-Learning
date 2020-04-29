@@ -26,17 +26,21 @@ def turn_off_graph_decorations(axis):
     axis.set_yticklabels([])
 
 
-def model_comparison(model_names, training_loss, validation_loss, errors_training, errors_validation):
-
+def model_comparison(model_names, training_loss, validation_loss, errors_training, errors_validation, loss_func):
     x = np.arange(len(model_names))  # the label locations
     width = 0.35  # the width of the bars
 
     fig, ax = plt.subplots()
+    
+    fig.set_figheight(15)
+    fig.set_figwidth(15)
+    
     rects1 = ax.bar((x - width / 2), training_loss, width, yerr=errors_training, capsize=5, label='Training')
-    rects2 = ax.bar((x + width / 2), validation_loss, width,  yerr=errors_validation, capsize=5, label='Validation')
+    rects2 = ax.bar((x + width / 2), validation_loss, width, yerr=errors_validation, capsize=5, label='Validation')
 
     # Add some text for labels, title and custom x-axis tick labels, etc.
-    ax.set_ylabel('Mean Squared Error')
+    ax.set_xlabel("Experiment (iterations)")
+    ax.set_ylabel(loss_func)
     # ax.set_title('Scores by group and gender')
     ax.set_xticks(x)
     ax.set_xticklabels(model_names)
@@ -44,24 +48,31 @@ def model_comparison(model_names, training_loss, validation_loss, errors_trainin
 
     fig.tight_layout()
 
-    plt.savefig("plots/" + "comparing_models.png")
+    plt.savefig("comparing_models.png")
 
 
 class CoreView:
 
-    def __init__(self, model, dataset, features, labels, iteration, plot_no_cases=3, cases_seed=4235, convert_to="sum"):
+    def __init__(self, trail_name, iteration, experiment, plot_no_cases=3, cases_seed=4235,
+                 convert_to="sum"):
+
         # Items used for visualisation
         self.instance_intact = core.Parse('intact_core_rb')
         self.channel_coord_list_inter = self.instance_intact.get_brick_xyz_positions('xy', channel_type='inter')
 
+        # Wider trial name
+        self.trail_name = trail_name
+
         # Generated at start of training process
         self.iteration = iteration
 
-        # Objects used by dataset
-        self.model = model
-        self.dataset = dataset
-        self.features = features
-        self.labels = labels
+        # Unpack objects used by dataset
+        self.model = experiment.model
+        self.dataset = experiment.dataset
+        self.features = experiment.features
+        self.labels = experiment.labels
+
+        self.experiment = experiment
 
         # Model callbacks
         self.epochs_with_data = []
@@ -70,8 +81,9 @@ class CoreView:
         # Generate the numbers of the cases to be plotted
         seed(cases_seed)
 
-        self.cases_to_plot_train = [randint(0, len(labels.training_set()) - 1) for _ in range(plot_no_cases)]
-        self.cases_to_plot_val = [randint(0, len(labels.validation_set()) - 1) for _ in range(plot_no_cases)]
+        # Pseudo-randomly select cases to plot
+        self.cases_to_plot_train = [randint(0, len(self.labels.training_set()) - 1) for _ in range(plot_no_cases)]
+        self.cases_to_plot_val = [randint(0, len(self.labels.validation_set()) - 1) for _ in range(plot_no_cases)]
 
         # get the id of each chosen case
         self.cases_to_plot_id = [[self.dataset.training_instances()[i].get_id() for i in self.cases_to_plot_train]]
@@ -80,29 +92,29 @@ class CoreView:
         self.plot_no_cases = plot_no_cases
 
         # The features of the cases to plot
-        self.plot_features_train = np.array([features.training_set()[i] for i in self.cases_to_plot_train])
-        self.plot_features_val = np.array([features.validation_set()[i] for i in self.cases_to_plot_val])
+        self.plot_features_train = np.array([self.features.training_set()[i] for i in self.cases_to_plot_train])
+        self.plot_features_val = np.array([self.features.validation_set()[i] for i in self.cases_to_plot_val])
 
         # Values used to generate plots. These will be updated every time update data is accessed
         self.number_of_plots = plot_no_cases
 
         self.convert_to = convert_to
 
-        if not is_in(labels.type, 'all'):
+        if not is_in(self.labels.type, 'all'):
             # if per channel results are being returned e.g. sum, avg, max etc.
-            self.plot_results = [[labels.training_set()[i] for i in self.cases_to_plot_train]]
-            self.plot_results.append([labels.validation_set()[i] for i in self.cases_to_plot_val])
+            self.plot_results = [[self.labels.training_set()[i] for i in self.cases_to_plot_train]]
+            self.plot_results.append([self.labels.validation_set()[i] for i in self.cases_to_plot_val])
         else:
             # if it's an 'all' result then it can't be easily visualised in a 2D setting. Convert to a channel-wise
             # variable instead
-            self.plot_results = [[convert_case_to_channel_result(labels.training_set()[i], convert_to,
-                                                                 labels.number_channels,
-                                                                 labels.number_levels)
+            self.plot_results = [[convert_case_to_channel_result(self.labels.training_set()[i], convert_to,
+                                                                 self.labels.number_channels,
+                                                                 self.labels.number_levels)
                                   for i in self.cases_to_plot_train]]
 
-            self.plot_results.append([convert_case_to_channel_result(labels.validation_set()[i], convert_to,
-                                                                     labels.number_channels,
-                                                                     labels.number_levels)
+            self.plot_results.append([convert_case_to_channel_result(self.labels.validation_set()[i], convert_to,
+                                                                     self.labels.number_channels,
+                                                                     self.labels.number_levels)
                                       for i in self.cases_to_plot_val])
 
         self.plot_results_min = [0, 0]
@@ -126,7 +138,7 @@ class CoreView:
                           str(self.iteration) + ")"
 
         # # plot titles and filename
-        sub_title, file_name = plot_names_title(model, self.dataset, self.features, self.labels, self.iteration)
+        sub_title, file_name = plot_names_title(self.experiment, self.iteration)
 
         self.subtitle = sub_title
         self.file_name = "CoreView_" + file_name
@@ -216,21 +228,27 @@ class CoreView:
 
             # Saves the figure
 
-            file_name = "plots/" + stage + "_" + self.file_name
+            file_name = self.trail_name + "/" + stage + "_" + self.file_name
             plt.savefig(file_name)
-            # plt.show()
+        plt.close()
 
 
 class TrainingHistoryRealTime:
 
-    def __init__(self, dataset, features, labels, iteration, loss_function, plot_from=10):
+    def __init__(self, trail_name, iteration, experiment, loss_function, plot_from=50):
+
         self.main_title = ""
 
-        self.dataset = dataset
-        self.features = features
-        self.labels = labels
+        # Wider trial name
+        self.trail_name = trail_name
+
+        self.dataset = experiment.dataset
+        self.features = experiment.features
+        self.labels = experiment.labels
         self.iteration = iteration
         self.model = None
+
+        self.experiment = experiment
 
         self.subtitle = ""
         self.file_name = ""
@@ -254,22 +272,21 @@ class TrainingHistoryRealTime:
                           str(len(self.features.validation_set())) + " - Iteration: " + \
                           str(self.iteration) + ")"
 
-        subtitle, file_name = plot_names_title(self.model, self.dataset, self.features, self.labels, self.iteration)
+        subtitle, file_name = plot_names_title(self.experiment, self.iteration)
 
         self.subtitle = subtitle
-        self.file_name = "plots/RThistory_" + file_name
+        self.file_name = self.trail_name + "/TrainHistory_" + file_name
 
         # generate plot data
 
         training_losses_plot = self.losses[self.plot_from:]
         validation_losses_plot = self.val_losses[self.plot_from:]
-        
+
         epochs_range = np.arange(len(training_losses_plot)) + self.plot_from
 
         last_result_line_training = [training_losses_plot[-1] for _ in training_losses_plot]
         last_result_line_validation = [validation_losses_plot[-1] for _ in validation_losses_plot]
-        
-        
+
         # create training plots
 
         plt.plot(epochs_range, training_losses_plot, label='Training')
@@ -279,7 +296,7 @@ class TrainingHistoryRealTime:
         # create validation plots
 
         plt.plot(epochs_range, validation_losses_plot, label='Validation')
-        
+
         plt.plot(epochs_range, last_result_line_validation, 'k:')
 
         # Titles and annotation
@@ -289,7 +306,7 @@ class TrainingHistoryRealTime:
 
         plt.xlabel("Epoch")
         plt.ylabel(self.loss_function.__name__)
-        plt.legend(loc='upper right')
+        plt.legend(loc=0)
 
         plt.savefig(self.file_name, bbox_inches="tight", pad_inches=0.25)
         plt.close()

@@ -1,4 +1,5 @@
-from parmec_analysis.utils import cases_list, is_in, split_separators, function_switch
+from parmec_analysis.utils import cases_list, is_in, split_separators, function_switch, get_number, check_directory
+from parmec_analysis.utils import load_data_from_file
 from parmec_analysis import reactor_case
 import numpy as np
 import warnings
@@ -32,45 +33,6 @@ def min_max_channels_levels(core_instance, channels, levels, channel_type='fuel'
     min_level, max_level = core_instance.parse_level_argument(levels, channel_type)
 
     return (min_channel, max_channel), (min_level, max_level)
-
-
-def get_number(input_val):
-    """ converts an input to an int. If it's char input, return None"""
-
-    # Handles if user specifies number of cases by string
-    if isinstance(input_val, str):
-
-        if input_val.isnumeric():
-            return int(input_val)
-        else:
-            pass
-
-    elif isinstance(input_val, int):
-        return input_val
-
-    return None
-
-
-def check_directory(path):
-    """ check a directory for validity """
-
-    if not os.path.exists(path):
-        return False
-    elif cases_list(path) == 0:
-        return False
-    else:
-        return True
-
-
-def load_data_from_file(file_name):
-    """ attempts to load data from a given file name. If file doesn't exist, returns False"""
-
-    if os.path.exists(file_name):
-        with open(file_name, 'rb') as f:
-            cases_list_file, instances_file = pickle.load(f)
-            return cases_list_file, instances_file
-    else:
-        return False
 
 
 class DatasetSingleFrame:
