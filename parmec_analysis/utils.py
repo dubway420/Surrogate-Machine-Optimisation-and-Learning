@@ -438,3 +438,73 @@ def load_results(trial_name):
         results_dict = {}
 
     return results_dict
+
+
+# MACHINE LEARNING STUFF *********************
+
+def experiment_assignment_validation(experiments, experiment_number):
+    """ Check that it has selected a valid experiment number and assign experiment if so.
+    :param experiments: a list of objects of the experiments class
+    :param experiment_number: an experiment number. The purpose of this function to ensure that the number is between
+    0 and len(experiments) -1
+    :return: an experiment object
+    """
+
+    try:
+
+        experiment_selected = experiments[int(experiment_number)]
+
+    except IndexError:
+
+        print("You have entered an experiment number,", experiment_number, ", which is invalid. Please enter an integer"
+                                                                           " corresponding to one of the following: ")
+
+        for i, exp in enumerate(experiments):
+            print(i, exp.name)
+        sys.exit()
+
+    return experiment_selected
+
+
+def folder_validation(trial_name):
+    cwd = os.getcwd()
+
+    try:
+
+        os.mkdir(cwd + "/" + trial_name)
+
+    except FileExistsError:
+
+        pass
+
+
+def experiment_iteration(exp_name, trial_name, ext=".ind"):
+    results_file_name = trial_name + ext
+
+    results_dict = load_results(results_file_name)
+
+    if exp_name in results_dict:
+
+        exp_i = len(results_dict[exp_name])
+
+    else:
+        exp_i = 0
+        results_dict[exp_name] = []
+
+    results_dict[exp_name].append([])
+
+    with open(results_file_name, 'wb') as f:
+        pickle.dump(results_dict, f, protocol=pickle.HIGHEST_PROTOCOL)
+
+    return exp_i
+
+
+def save_results(exp_name, trial_name, exp_i, exp_result, ext=".ind"):
+    results_file_name = trial_name + ext
+
+    results_dict = load_results(results_file_name)
+
+    results_dict[exp_name][exp_i] = exp_result
+
+    with open(results_file_name, 'wb') as f:
+        pickle.dump(results_dict, f, protocol=pickle.HIGHEST_PROTOCOL)

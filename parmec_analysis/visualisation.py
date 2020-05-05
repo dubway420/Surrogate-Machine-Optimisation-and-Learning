@@ -228,7 +228,7 @@ class CoreView:
 
             # Saves the figure
 
-            file_name = self.trail_name + "/" + stage + "_" + self.file_name
+            file_name = self.trail_name + "/" + self.experiment.name + "/" + stage + "_" + self.file_name
             plt.savefig(file_name)
         plt.close()
 
@@ -275,7 +275,7 @@ class TrainingHistoryRealTime:
         subtitle, file_name = plot_names_title(self.experiment, self.iteration)
 
         self.subtitle = subtitle
-        self.file_name = self.trail_name + "/TrainHistory_" + file_name
+        self.file_name = self.trail_name + "/" + self.experiment.name + "/TrainHistory_" + file_name
 
         # generate plot data
 
