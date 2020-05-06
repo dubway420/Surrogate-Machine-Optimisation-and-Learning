@@ -50,6 +50,12 @@ class DatasetSingleFrame:
         self.number_instances = None
         self.split_number = None
 
+        self.shuffled = False
+        self.shuffle_seed = 0
+
+        self.rolled = False
+        self.rolled_by_increment = 0
+
         cases_from_path = []
         cases_from_file, instances_from_file = [], []
 
@@ -187,17 +193,19 @@ class DatasetSingleFrame:
         np.random.shuffle(core_instances_pre)
         self.core_instances = core_instances_pre
 
-    def roll(self, increment=1, fraction=None, quiet=False):
+        self.shuffled = True
+        self.shuffle_seed = seed
+
+    def roll(self, increment=1, quiet=False):
         """ rolls the data by a multiple of a fraction. Useful for folding and validation"""
+
+        fraction = self.validation_split
 
         if increment > int(1 / fraction) and not quiet:
             message = "You have specified an increment number (" + str(increment) + ") which is greater than 1 / " \
                                                                                     "fraction. The data-set will " \
                                                                                     "simply wrap."
             warnings.warn(message, stacklevel=3)
-
-        if not fraction:
-            fraction = self.validation_split
 
         # The number of instances that is represented by the fraction. This could be the validation fraction for eg.
         number_per_fraction = int(self.number_instances * fraction)
@@ -210,10 +218,37 @@ class DatasetSingleFrame:
         self.cases_list = cases_rolled
         self.core_instances = instances_rolled
 
+        self.rolled = True
+        self.rolled_by_increment = increment
+
+    def summary(self):
+
+        summary_text = [
+            "Dataset: " + self.name,
+            "Total number of instances: " + str(self.number_instances),
+            str(self.split_number) + " Training",
+            str(self.number_instances - self.split_number) + " Validation",
+            "Validation split: " + str(self.validation_split)
+
+        ]
+
+        if self.shuffled:
+            shuffle_text = "Shuffled using seed: " + str(self.shuffle_seed)
+            summary_text.append(shuffle_text)
+
+        if self.rolled:
+            roll_text = "Rolled by " + str(self.rolled_by_increment) + " increments"
+            summary_text.append(roll_text)
+
+        return summary_text
+
 
 class Features:
+    """ An abstract class to be inherited by one of the options below"""
 
     def __init__(self, dataset, channels, levels, array_type):
+        self.feature_mode = None
+
         self.dataset = dataset
         self.number_instances = len(dataset.cases_list)
 
@@ -243,12 +278,25 @@ class Features:
     def validation_set(self):
         return self.values[self.dataset.split_number:]
 
+    def summary(self):
+        summary_text = [
+            "Feature mode: " + self.feature_mode,
+            "Input shape: " + str(self.feature_shape),
+            "Input channels range: " + str(self.channels_range),
+            "Input levels range: " + str(self.levels_range),
+            "Input array type: " + self.array_type
+
+        ]
+
+        return summary_text
+
 
 class Features1D(Features):
 
     def __init__(self, dataset, channels='all', levels='all', array_type='positions only', extra_dimension=False):
         super().__init__(dataset, channels, levels, array_type)
 
+        self.feature_mode = "1D (flat)"
         self.values, self.feature_shape = self.generate_array(dataset, channels, levels, array_type, extra_dimension)
         self.extra_dimension = extra_dimension
 
@@ -275,6 +323,7 @@ class Features2D(Features1D):
     def __init__(self, dataset, channels='all', levels='all', array_type='positions only', extra_dimension=False):
         Features.__init__(self, dataset, channels, levels, array_type)
 
+        self.feature_mode = "2D (multi-channel)"
         self.values, self.feature_shape = self.generate_array(dataset, channels, levels, array_type, extra_dimension)
         self.extra_dimension = extra_dimension
 
@@ -296,6 +345,7 @@ class Features3D(Features):
     def __init__(self, dataset, levels='all', array_type='positions only'):
         super().__init__(dataset, channels='all', levels=levels, array_type=array_type)
 
+        self.feature_mode = "3D (multi-channel)"
         self.values, self.feature_shape = self.generate_array(dataset, levels, array_type)
 
     def generate_array(self, dataset, levels, array_type):
@@ -416,7 +466,7 @@ class Labels:
 
                     # the slice of the instance result array corresponding to the channels and levels required
                     instance_result_slice = instance_result[self.channels_range[0]:self.channels_range[1],
-                                            self.levels_range[0]:self.levels_range[1]]
+                                                            self.levels_range[0]:self.levels_range[1]]
 
                     # if the result type is all
                     if is_in(result_type, 'all'):
@@ -478,3 +528,19 @@ class Labels:
 
     def validation_set(self):
         return self.values[self.dataset.split_number:]
+
+    def summary(self):
+
+        summary_text = [
+            "Output shape: " + str(self.label_shape),
+            "Output channels range: " + str(self.channels_range),
+            "Output levels range: " + str(self.levels_range),
+            "Output time-frame: " + str(self.time),
+
+            "Output result column: " + str(self.column),
+
+            "Output result type: " + str(self.type),
+
+        ]
+
+        return summary_text

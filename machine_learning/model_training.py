@@ -1,12 +1,10 @@
 from keras.callbacks import Callback
-from keras.optimizers import Adam
 import tensorflow as tf
 from keras import backend as K
 from parmec_analysis.utils import folder_validation, experiment_iteration, save_results
 from parmec_analysis.visualisation import CoreView, TrainingHistoryRealTime
-import sys
+from machine_learning.experiment_summary import summary
 import os
-import pickle
 
 
 class LossHistory(Callback):
@@ -55,6 +53,8 @@ def run_experiment(experiment):
 
     experiment_folder = trial_name + "/" + experiment.name
     folder_validation(experiment_folder)
+
+    summary(experiment)
 
     exp_i = experiment_iteration(experiment.name, trial_name)
 

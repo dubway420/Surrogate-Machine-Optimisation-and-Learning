@@ -1,8 +1,8 @@
 from keras.layers.convolutional import Conv1D, Conv2D
 from keras.layers.normalization import BatchNormalization
 from keras.layers.core import Dense, Activation, Dropout
-from keras.layers import Flatten, Input
-from keras.models import Model, Sequential
+from keras.layers import Flatten
+from keras.models import Sequential
 from collections.abc import Iterable
 
 
@@ -51,12 +51,15 @@ class RegressionModels:
 
         model.name = "Multi-layer Perceptron"
 
-        model.add(Dense(layer_output_shapes[0], input_dim=input_dims, activation=activations[0]))
+        model.add(Dense(layer_output_shapes[0], input_dim=input_dims))
+        model.add(Activation(activations[0]))
 
         for layer_output_shape, act in zip(layer_output_shapes[1:], activations[1:]):
-            model.add(Dense(layer_output_shape, activation=act))
+            model.add(Dense(layer_output_shape))
+            model.add(Activation(act))
 
-        model.add(Dense(output_dims, activation=activations[-1]))
+        model.add(Dense(output_dims))
+        model.add(Activation(activations[-1]))
 
         # return our model
         return model
