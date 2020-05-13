@@ -21,18 +21,18 @@ def layer_activations_validation(layer_output_shapes, activation):
     """ Takes inputs for the layer sizes and activations, and returns two lists of the same size"""
 
     if not iterable(layer_output_shapes):
-        layer_output_shapes = (layer_output_shapes,)
+        layer_output_shapes = [layer_output_shapes, ]
 
     if not iterable(activation):
 
-        activations = [activation for _ in range(len(layer_output_shapes) + 1)]
+        activations = [activation for _ in range(len(layer_output_shapes))]
 
     else:
 
         activations = list(activation)
 
-        if len(activations) < len(layer_output_shapes)+1:
-            for _ in layer_output_shapes[len(activations)-1:]:
+        if len(activations) < len(layer_output_shapes):
+            for _ in layer_output_shapes[len(activations):]:
                 activations.append(activations[-1])
 
     return layer_output_shapes, activations
@@ -42,7 +42,7 @@ class RegressionModels:
 
     # 0
     @staticmethod
-    def multi_layer_perceptron(input_dims, output_dims, activation="linear", layers=(8, 4)):
+    def multi_layer_perceptron(input_dims, output_dims, activation="linear", layers=(8, 4), regularizer=None):
 
         layer_output_shapes, activations = layer_activations_validation(layers, activation)
 
@@ -51,7 +51,7 @@ class RegressionModels:
 
         model.name = "Multi-layer Perceptron"
 
-        model.add(Dense(layer_output_shapes[0], input_dim=input_dims))
+        model.add(Dense(layer_output_shapes[0], input_dim=input_dims, activity_regularizer=regularizer))
         model.add(Activation(activations[0]))
 
         for layer_output_shape, act in zip(layer_output_shapes[1:], activations[1:]):
@@ -59,7 +59,7 @@ class RegressionModels:
             model.add(Activation(act))
 
         model.add(Dense(output_dims))
-        model.add(Activation(activations[-1]))
+        model.add(Activation("linear"))
 
         # return our model
         return model
@@ -150,4 +150,36 @@ class RegressionModels:
         model.name = "CNN 2D - 2"
 
         # return the CNN
+        return model
+
+    # 0
+    @staticmethod
+    def convolutional_neural_network_2d(input_dims, output_dims, activation="linear", layers=(16, 32, 64),
+                                        regularizer=None, dropout=0.5, kernel_shape=3):
+
+        layer_output_shapes, activations = layer_activations_validation(layers, activation)
+
+        # define our MLP network
+        model = Sequential()
+
+        model.name = "Convolutional Neural Network"
+
+        model.add(Conv2D(layer_output_shapes[0], kernel_size=kernel_shape, input_shape=input_dims,
+                         activity_regularizer=regularizer))
+        model.add(Activation(activations[0]))
+
+        for layer_output_shape, act in zip(layer_output_shapes[1:-2], activations[1:-2]):
+            model.add(Conv2D(layer_output_shape, kernel_size=kernel_shape))
+            model.add(Activation(act))
+
+        model.add(Flatten())
+
+        model.add(Dense(layer_output_shapes[-2], activation=activations[-2]))
+        model.add(Dropout(dropout))
+        model.add(Dense(layer_output_shapes[-1], activation=activations[-1]))
+
+        model.add(Dense(output_dims))
+        model.add(Activation("linear"))
+
+        # return our model
         return model

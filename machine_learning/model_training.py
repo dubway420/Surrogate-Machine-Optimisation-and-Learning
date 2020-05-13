@@ -24,15 +24,25 @@ class LossHistory(Callback):
         self.plot_every_n_epochs = print_every_n_epochs
 
         self.view = CoreView(trial, iteration, experiment)
-        self.train_history = TrainingHistoryRealTime(trial, iteration, experiment, loss_function, 500)
+        self.train_history = TrainingHistoryRealTime(trial, iteration, experiment, loss_function,
+                                                     self.plot_every_n_epochs)
+
+        iteration_l = str(iteration) + "L"
+
+        self.train_history_later = TrainingHistoryRealTime(trial, iteration_l, experiment, loss_function,
+                                                           (3 * self.plot_every_n_epochs))
 
     def on_epoch_end(self, epoch, logs={}):
 
-        self.train_history.update_data(logs, self.model, plot=False)
+        epoch_p1 = epoch + 1
 
-        if epoch > 0 and (epoch % self.plot_every_n_epochs) == 0:
+        self.train_history.update_data(logs, self.model, plot=False)
+        self.train_history_later.update_data(logs, self.model, plot=False)
+
+        if (epoch_p1 % self.plot_every_n_epochs) == 0:
             self.view.update_data(epoch, self.model)
             self.train_history.plotting()
+            self.train_history_later.plotting()
 
 
 NUMCORES = int(os.getenv("NSLOTS", 1))
@@ -46,7 +56,6 @@ K.set_session(sess)
 
 
 def run_experiment(experiment):
-    
     trial_name = experiment.trial.trial_name
 
     folder_validation(trial_name)

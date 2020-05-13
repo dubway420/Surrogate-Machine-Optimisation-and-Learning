@@ -1,4 +1,4 @@
-# from keras.utils.vis_utils import plot_model
+from keras.utils.vis_utils import plot_model
 
 
 def summary(experiment):
@@ -33,8 +33,8 @@ def summary(experiment):
                 fh.write(term + ": " + str(config[term]) + "\n")
             fh.write("\n")
 
-    # plot_file_name = output_file_path + ".png"
-    # plot_model(model, to_file=plot_file_name, show_shapes=True, show_layer_names=True)
+    plot_file_name = output_file_path + ".png"
+    plot_model(model, to_file=plot_file_name, show_shapes=True, show_layer_names=True)
 
 
 

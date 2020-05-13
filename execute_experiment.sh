@@ -4,6 +4,9 @@
 
 experiment_number=$1
 
+date
+echo "Starting experiment number: $experiment_number."
+
 # Load modules
 module load apps/binapps/anaconda3/2019.07               # Python 3.7.3
 module load libs/cuda
@@ -12,3 +15,6 @@ module load apps/binapps/keras/2.2.4-tensorflow-gpu      # GPU version of tensor
 export OMP_NUM_THREADS=$NSLOTS
 
 python execute_experiment.py $experiment_number
+
+echo "Experiment $experiment_number complete."
+date

@@ -32,8 +32,8 @@ def model_comparison(model_names, training_loss, validation_loss, errors_trainin
 
     fig, ax = plt.subplots()
     
-    fig.set_figheight(15)
-    fig.set_figwidth(15)
+    fig.set_figheight(20)
+    fig.set_figwidth(30)
     
     rects1 = ax.bar((x - width / 2), training_loss, width, yerr=errors_training, capsize=5, label='Training')
     rects2 = ax.bar((x + width / 2), validation_loss, width, yerr=errors_validation, capsize=5, label='Validation')
@@ -214,12 +214,14 @@ class CoreView:
                 # Turns off the other graph markings
                 turn_off_graph_decorations(ax)
 
+                #===================================================================================#
                 # Plots the results for the case/frame
                 im = ax.scatter(self.channel_coord_list_inter[0], self.channel_coord_list_inter[1],
                                 marker='o', c=self.plot_results[i][j], cmap='seismic', label='inter',
                                 s=30)
                 im.set_clim(self.plot_results_min[i], self.plot_results_max[i])
-
+                # ===================================================================================#
+                
             # cbar = ax.cax.colorbar(im)
             counts_grid.cbar_axes[0].colorbar(im)
 
