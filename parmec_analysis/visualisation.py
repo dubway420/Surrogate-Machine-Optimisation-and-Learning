@@ -1,4 +1,5 @@
 import matplotlib as mpl
+
 # Agg backend will render without X server on a compute node in batch
 mpl.use('Agg')
 import matplotlib.pyplot as plt
@@ -31,10 +32,10 @@ def model_comparison(model_names, training_loss, validation_loss, errors_trainin
     width = 0.35  # the width of the bars
 
     fig, ax = plt.subplots()
-    
+
     fig.set_figheight(20)
     fig.set_figwidth(30)
-    
+
     rects1 = ax.bar((x - width / 2), training_loss, width, yerr=errors_training, capsize=5, label='Training')
     rects2 = ax.bar((x + width / 2), validation_loss, width, yerr=errors_validation, capsize=5, label='Validation')
 
@@ -126,11 +127,17 @@ class CoreView:
             self.plot_results_min[i] = np.amin(abs_max * -1)
             self.plot_results_max[i] = np.amax(abs_max)
 
+        # difference between the ground truth labels and the predictions at each plot epoch (training, validation)
+        self.result_diffs = [[], []]
+
+        self.results_diff_min = [0, 0]
+        self.results_diff_max = [0, 0]
+
         self.subtitle = ""
         self.main_title = ""
         self.file_name = ""
 
-    def update_data(self, epoch, model, plot=True):
+    def update_data(self, epoch, model, plot=True, diff=True, compare=True):
         """ Update the predictions"""
 
         self.main_title = model.name + " (Instances: " + str(len(self.features.training_set())) + "/" + \
@@ -151,27 +158,53 @@ class CoreView:
         epoch_results_train = model.predict(self.plot_features_train)
         epoch_results_val = model.predict(self.plot_features_val)
 
+        i = 0
+
         for case_train, case_val in zip(epoch_results_train, epoch_results_val):
 
             if not is_in(self.labels.type, 'all'):
-                self.plot_results[0].append(case_train)
-                self.plot_results[1].append(case_val)
+                train_result = case_train
+                val_result = case_val
             else:
-                self.plot_results[0].append(convert_case_to_channel_result(case_train, self.convert_to,
-                                                                           self.labels.number_channels,
-                                                                           self.labels.number_levels))
-                self.plot_results[1].append(convert_case_to_channel_result(case_val, self.convert_to,
-                                                                           self.labels.number_channels,
-                                                                           self.labels.number_levels))
+                train_result = convert_case_to_channel_result(case_train, self.convert_to,
+                                                              self.labels.number_channels,
+                                                              self.labels.number_levels)
+                val_result = convert_case_to_channel_result(case_val, self.convert_to,
+                                                            self.labels.number_channels,
+                                                            self.labels.number_levels)
+
+            self.plot_results[0].append(train_result)
+            self.plot_results[1].append(val_result)
+
+            # calculate training (j = 0) and validation (j = 1) results
+            for j in range(2):
+                ground_truth = self.plot_results[j][i]
+                prediction = self.plot_results[j][-1]
+
+                self.result_diffs[j].append((prediction - ground_truth))
+
+            i += 1
 
         # update the min and max for the training and validation results
+        # the use of the absolute max
         for i in range(2):
+
             abs_max = np.amax(np.absolute(self.plot_results[i]))
             self.plot_results_min[i] = np.amin(abs_max * -1)
             self.plot_results_max[i] = np.amax(abs_max)
 
+            abs_max_diff = np.amax(np.absolute(self.plot_results[i]))
+            self.results_diff_min[i] = np.amin(abs_max_diff * -1)
+            self.results_diff_max[i] = np.amax(abs_max_diff)
+
         if plot:
             self.plot()
+
+        if diff:
+            self.plot_diff()
+
+        if compare:
+            self.plot_compare()
 
     def plot(self):
         fig = plt.figure(figsize=(18, 18))
@@ -214,14 +247,14 @@ class CoreView:
                 # Turns off the other graph markings
                 turn_off_graph_decorations(ax)
 
-                #===================================================================================#
+                # ===================================================================================#
                 # Plots the results for the case/frame
                 im = ax.scatter(self.channel_coord_list_inter[0], self.channel_coord_list_inter[1],
                                 marker='o', c=self.plot_results[i][j], cmap='seismic', label='inter',
                                 s=30)
                 im.set_clim(self.plot_results_min[i], self.plot_results_max[i])
                 # ===================================================================================#
-                
+
             # cbar = ax.cax.colorbar(im)
             counts_grid.cbar_axes[0].colorbar(im)
 
@@ -234,11 +267,120 @@ class CoreView:
             plt.savefig(file_name)
         plt.close()
 
+    def plot_diff(self):
+        fig = plt.figure(figsize=(18, 18))
+
+        # Generates the plot grid for each case
+        counts_grid = AxesGrid(fig, 111,
+                               # There's a row for each epoch data
+                               nrows_ncols=(len(self.epochs_with_data), self.plot_no_cases),
+                               axes_pad=0.3,
+                               cbar_mode='single',
+                               cbar_location='bottom',
+                               cbar_pad=0.2
+                               )
+
+        train_val = ("Training", "Validation")
+
+        # Repeat the plotting for training and validation
+        for i, stage in enumerate(train_val):
+
+            # Iterates through all plots in the grid, assigning the results to the plot
+            for j, ax in enumerate(counts_grid):
+
+                # If the iterator is in the first row, assigns the case id as title
+                if j < self.plot_no_cases:
+                    column_title = self.cases_to_plot_id[i][j]
+                    ax.title.set_text(column_title)
+
+                # If the iterator is in the first column, assigns a row title which includes
+                # the frame number and earthquake acceleration
+                if (j % self.plot_no_cases) == 0:
+                    row_number = int(j / self.plot_no_cases)
+
+                    row_title = "Epoch: " + str(self.epochs_with_data[row_number])
+                    ax.set_ylabel(row_title)
+
+                # Turns off the other graph markings
+                turn_off_graph_decorations(ax)
+
+                # ===================================================================================#
+                # Plots the results for the case/frame
+                im = ax.scatter(self.channel_coord_list_inter[0], self.channel_coord_list_inter[1],
+                                marker='o', c=self.result_diffs[i][j], cmap='PiYG', label='inter',
+                                s=30)
+                im.set_clim(self.results_diff_min[i], self.results_diff_max[i])
+                # ===================================================================================#
+
+            # cbar = ax.cax.colorbar(im)
+            counts_grid.cbar_axes[0].colorbar(im)
+
+            plt.suptitle(self.main_title)
+            plt.title(self.subtitle)
+
+            # Saves the figure
+
+            file_name = self.trail_name + "/" + self.experiment.name + "/" + stage + "_Diff" + self.file_name
+            plt.savefig(file_name)
+        plt.close()
+
+    def plot_compare(self):
+        fig = plt.figure(figsize=(18, 18))
+
+        # Generates the plot grid for each case
+        counts_grid = AxesGrid(fig, 111,
+                               # There's a row for each epoch data
+                               nrows_ncols=(len(self.epochs_with_data), self.plot_no_cases), axes_pad=0.3)
+
+        train_val = ("Training", "Validation")
+
+        # Repeat the plotting for training and validation
+        for i, stage in enumerate(train_val):
+
+            # Iterates through all plots in the grid, assigning the results to the plot
+            for j, ax in enumerate(counts_grid):
+
+                # If the iterator is in the first row, assigns the case id as title
+                if j < self.plot_no_cases:
+                    column_title = self.cases_to_plot_id[i][j]
+                    ax.title.set_text(column_title)
+
+                # If the iterator is in the first column, assigns a row title which includes
+                # the frame number and earthquake acceleration
+                if (j % self.plot_no_cases) == 0:
+                    row_number = int(j / self.plot_no_cases)
+
+                    row_title = "Epoch: " + str(self.epochs_with_data[row_number])
+                    ax.set_ylabel(row_title)
+
+                # Turns off the other graph markings
+                turn_off_graph_decorations(ax)
+
+                # ===================================================================================#
+                # Plots the predictions against ground truth labels
+                ax.scatter(self.result_diffs[i][(j % self.plot_no_cases)],
+                                self.result_diffs[i][j],
+                                marker='o', s=30)
+                # ===================================================================================#
+
+                ax.plot(self.result_diffs[i][(j % self.plot_no_cases)],
+                           self.result_diffs[i][(j % self.plot_no_cases)])
+
+            # cbar = ax.cax.colorbar(im)
+
+            plt.suptitle(self.main_title)
+            plt.title(self.subtitle)
+
+            # Saves the figure
+
+            file_name = self.trail_name + "/" + self.experiment.name + "/" + stage + "_Compare" + self.file_name
+            plt.savefig(file_name)
+        plt.close()
+
 
 class TrainingHistoryRealTime:
 
     def __init__(self, trail_name, iteration, experiment, loss_function, plot_from=50):
-
         self.main_title = ""
 
         # Wider trial name
