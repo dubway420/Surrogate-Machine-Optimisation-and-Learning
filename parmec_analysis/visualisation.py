@@ -52,6 +52,21 @@ def model_comparison(model_names, training_loss, validation_loss, errors_trainin
     plt.savefig("comparing_models.png")
 
 
+def plot_grid(size, rows, columns, pad=0.02, cbar_mode=None, cbar_loc="right", cbar_pad=None):
+    fig = plt.figure(figsize=size)
+
+    # Generates the plot grid for each case
+    return AxesGrid(fig, 111,
+                    # There's a row for each epoch data plus one for the ground truth labels
+                    # There's a column for each case to be plotted
+                    nrows_ncols=(rows, columns),
+                    axes_pad=pad,
+                    cbar_mode=cbar_mode,
+                    cbar_location=cbar_loc,
+                    cbar_pad=cbar_pad
+                    )
+
+
 class CoreView:
 
     def __init__(self, trail_name, iteration, experiment, plot_no_cases=3, cases_seed=4235,
@@ -133,14 +148,7 @@ class CoreView:
         self.results_diff_min = [0, 0]
         self.results_diff_max = [0, 0]
 
-        self.subtitle = ""
-        self.main_title = ""
-        self.file_name = ""
-
-    def update_data(self, epoch, model, plot=True, diff=True, compare=True):
-        """ Update the predictions"""
-
-        self.main_title = model.name + " (Instances: " + str(len(self.features.training_set())) + "/" + \
+        self.main_title = experiment.model.name + " (Instances: " + str(len(self.features.training_set())) + "/" + \
                           str(len(self.features.validation_set())) + " - Iteration: " + \
                           str(self.iteration) + ")"
 
@@ -150,6 +158,9 @@ class CoreView:
         self.subtitle = sub_title
         self.file_name = "CoreView_" + file_name
 
+    def update_data(self, epoch, model, plot=True, diff=True, compare=True):
+        """ Update the predictions"""
+
         self.epochs_with_data.append(epoch)
 
         # update the model
@@ -158,6 +169,7 @@ class CoreView:
         epoch_results_train = model.predict(self.plot_features_train)
         epoch_results_val = model.predict(self.plot_features_val)
 
+        # this variable should iterate between zero and number_of_cases - 1
         i = 0
 
         for case_train, case_val in zip(epoch_results_train, epoch_results_val):
@@ -173,9 +185,11 @@ class CoreView:
                                                             self.labels.number_channels,
                                                             self.labels.number_levels)
 
+            # Straight results
             self.plot_results[0].append(train_result)
             self.plot_results[1].append(val_result)
 
+            # Differences
             # calculate training (j = 0) and validation (j = 1) results
             for j in range(2):
                 ground_truth = self.plot_results[j][i]
@@ -188,7 +202,6 @@ class CoreView:
         # update the min and max for the training and validation results
         # the use of the absolute max
         for i in range(2):
-
             abs_max = np.amax(np.absolute(self.plot_results[i]))
             self.plot_results_min[i] = np.amin(abs_max * -1)
             self.plot_results_max[i] = np.amax(abs_max)
@@ -233,8 +246,7 @@ class CoreView:
                     column_title = self.cases_to_plot_id[i][j]
                     ax.title.set_text(column_title)
 
-                # If the iterator is in the first column, assigns a row title which includes
-                # the frame number and earthquake acceleration
+                # If the iterator is in the first column, assigns a row title
                 if (j % self.plot_no_cases) == 0:
                     row_number = int(j / self.plot_no_cases)
 
@@ -293,8 +305,7 @@ class CoreView:
                     column_title = self.cases_to_plot_id[i][j]
                     ax.title.set_text(column_title)
 
-                # If the iterator is in the first column, assigns a row title which includes
-                # the frame number and earthquake acceleration
+                # If the iterator is in the first column, assigns a row title
                 if (j % self.plot_no_cases) == 0:
                     row_number = int(j / self.plot_no_cases)
 
@@ -337,6 +348,7 @@ class CoreView:
         # Repeat the plotting for training and validation
         for i, stage in enumerate(train_val):
 
+            counts_grid = plot_grid((18, 6), len(self.epochs_with_data), self.plot_no_cases, pad=0.3)
             # Iterates through all plots in the grid, assigning the results to the plot
             for j, ax in enumerate(counts_grid):
 
@@ -345,8 +357,7 @@ class CoreView:
                     column_title = self.cases_to_plot_id[i][j]
                     ax.title.set_text(column_title)
 
-                # If the iterator is in the first column, assigns a row title which includes
-                # the frame number and earthquake acceleration
+                # If the iterator is in the first column, assigns a row title
                 if (j % self.plot_no_cases) == 0:
                     row_number = int(j / self.plot_no_cases)
 
@@ -358,13 +369,16 @@ class CoreView:
 
                 # ===================================================================================#
                 # Plots the predictions against ground truth labels
-                ax.scatter(self.result_diffs[i][(j % self.plot_no_cases)],
-                                self.result_diffs[i][j],
-                                marker='o', s=30)
+                ax.scatter(self.plot_results[i][(j % self.plot_no_cases)],
+                           self.plot_results[i][j + self.plot_no_cases],
+                           marker='o', s=30)
                 # ===================================================================================#
 
-                ax.plot(self.result_diffs[i][(j % self.plot_no_cases)],
-                           self.result_diffs[i][(j % self.plot_no_cases)])
+                ax.plot(self.plot_results[i][(j % self.plot_no_cases)],
+                        self.plot_results[i][(j % self.plot_no_cases)])
+
+                asp = np.diff(ax.get_xlim())[0] / np.diff(ax.get_ylim())[0]
+                ax.set_aspect(asp)
 
             # cbar = ax.cax.colorbar(im)
 
@@ -375,7 +389,7 @@ class CoreView:
 
             file_name = self.trail_name + "/" + self.experiment.name + "/" + stage + "_Compare" + self.file_name
             plt.savefig(file_name)
-        plt.close()
+            plt.close()
 
 
 class TrainingHistoryRealTime:
