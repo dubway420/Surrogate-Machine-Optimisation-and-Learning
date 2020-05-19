@@ -341,7 +341,7 @@ class Parse:
 
         return crack_array_user
 
-    def channel_specific_cracks(self):
+    def channel_specific_cracks(self, levels="all"):
         """ Return the number of cracks local to each channel"""
 
         channel_type = 'inter'
@@ -351,7 +351,7 @@ class Parse:
         # Iterate through channels
         for i in range(1, self.last_channel(channel_type=channel_type) + 1):
             local, adjacent, outer = self.get_cracks_per_layer(str(i), array_type='pos', channel_type=channel_type,
-                                                               inclusive=True)
+                                                               inclusive=True, levels=levels)
 
             counts_local.append(local)
             counts_adjacent.append(adjacent)

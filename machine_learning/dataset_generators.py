@@ -246,7 +246,7 @@ class DatasetSingleFrame:
 class Features:
     """ An abstract class to be inherited by one of the options below"""
 
-    def __init__(self, dataset, channels, levels, array_type):
+    def __init__(self, dataset, channels, levels, array_type, channel_type='fuel'):
         self.feature_mode = None
 
         self.dataset = dataset
@@ -260,7 +260,7 @@ class Features:
         self.core_rows = example_instance.core_rows + double_padding
         self.core_columns = example_instance.core_columns + double_padding
 
-        channels_range, levels_range = min_max_channels_levels(example_instance, channels, levels)
+        channels_range, levels_range = min_max_channels_levels(example_instance, channels, levels, channel_type)
 
         self.channels_range = channels_range
         self.levels_range = levels_range
@@ -373,6 +373,36 @@ class FeaturesFlat(Features3D):
     pass
 
 
+class FeaturesConcentration1D(Features):
+
+    def __init__(self, dataset, channels='all', levels='all', array_type='positions only', extra_dimension=False):
+        super().__init__(dataset, channels, levels, array_type, 'inter')
+
+        self.feature_mode = "Concentration 1D"
+        self.values, self.feature_shape = self.generate_array(dataset, channels, levels, array_type, extra_dimension)
+        self.extra_dimension = extra_dimension
+
+    def generate_array(self, dataset, channels, levels, array_type, extra_dimension):
+
+        # TODO make options for channels, array type etc.
+
+        instance_array_length = self.number_channels
+        X_1d = np.zeros([len(dataset.cases_list), instance_array_length])
+
+        for i, instance in enumerate(dataset.core_instances):
+
+            X_1d[i] = instance.channel_specific_cracks(levels)[1]
+
+        # If the user requires the array to be configured for convolutional networks, then the array is reshaped
+        if extra_dimension:
+            X_shape = [X_1d.shape[0], X_1d.shape[1], 1]
+            return X_1d.reshape(X_shape), X_shape[1:]
+
+        # Else just return the normal numpy array
+        else:
+            return X_1d, X_1d.shape[1]
+
+
 class Labels:
 
     def __init__(self, dataset, channels='all', levels='all', result_time=50, result_column="1", result_type="max",
@@ -466,7 +496,7 @@ class Labels:
 
                     # the slice of the instance result array corresponding to the channels and levels required
                     instance_result_slice = instance_result[self.channels_range[0]:self.channels_range[1],
-                                                            self.levels_range[0]:self.levels_range[1]]
+                                            self.levels_range[0]:self.levels_range[1]]
 
                     # if the result type is all
                     if is_in(result_type, 'all'):
