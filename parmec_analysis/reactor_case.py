@@ -56,6 +56,10 @@ class Parse:
         # =============
         self.core_rows = core_rows
         self.core_columns = core_columns
+
+        self.inter_rows = core_rows + 1
+        self.inter_columns = core_columns + 1
+
         self.core_levels = fuel_levels
         self.inter_levels = inter_levels
 

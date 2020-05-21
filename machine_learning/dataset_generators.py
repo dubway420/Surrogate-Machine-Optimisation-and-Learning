@@ -246,13 +246,19 @@ class DatasetSingleFrame:
 class Features:
     """ An abstract class to be inherited by one of the options below"""
 
-    def __init__(self, dataset, channels, levels, array_type, channel_type='fuel'):
-        self.feature_mode = None
+    def __init__(self, dataset, channels, levels, array_type, channel_type='fuel', load_from_file=True):
+        # self.feature_mode = None
 
         self.dataset = dataset
         self.number_instances = len(dataset.cases_list)
 
         example_instance = dataset.core_instances[0]
+
+        self.example_instance = example_instance
+
+        # TODO delete later
+        self.example_instance.inter_rows = 19
+        self.example_instance.inter_columns = 19
 
         # The total number of rows/columns which are padding
         double_padding = example_instance.padding * 2
@@ -270,7 +276,69 @@ class Features:
 
         self.array_type = array_type
 
-        self.values, self.feature_shape = None, None
+        # self.values, self.feature_shape = None, None
+        self.values = None
+
+        # Handles loading from file
+
+        X_loaded = self.load_features_from_file()
+        if len(X_loaded) > 0:
+
+            if not load_from_file:
+                print("Features dataset was found on disk. However, load_from_disk parameter is set to False. "
+                      "If you wish to load this dataset, please set load_from_disk parameter to True")
+                return
+
+            number_loaded = len(X_loaded)
+            if number_loaded >= self.number_instances:
+                self.values = X_loaded[:self.number_instances]
+
+                return
+            else:
+                print("There are too few instances on locally found dataset. Loading features from "
+                      "cases located at path...")
+
+    def generate_filename(self):
+        """ Generates a filename based on the user settings """
+
+        file_name = "X_" + self.feature_mode + "_" + self.dataset.name + "_C" + str(self.channels_range[0]) + "_" \
+
+        file_name += str(self.channels_range[1])
+
+        file_name += "_L" + str(self.levels_range[0]) + "_" + str(self.levels_range[1]) + "_T"
+
+        if is_in(self.array_type, 'pos'):
+
+            file_name += "pos"
+
+        else:
+
+            file_name += 'ori'
+
+        if self.extra_dimension:
+            file_name += "_ED"
+
+        file_name += ".npy"
+
+        return file_name
+
+    def load_features_from_file(self):
+        """ Determines if labels storage file exists and if so loads data"""
+
+        file_name = self.generate_filename()
+
+        if not os.path.exists(file_name):
+            return []
+
+        print("Features dataset was found on file:", file_name, "Loading...")
+        return np.load(file_name)
+
+    def save(self):
+
+        file_name = self.generate_filename()
+
+        print("Saving features to file:", file_name)
+        np.save(file_name, self.values)
 
     def training_set(self):
         return self.values[:self.dataset.split_number]
@@ -294,11 +362,23 @@ class Features:
 class Features1D(Features):
 
     def __init__(self, dataset, channels='all', levels='all', array_type='positions only', extra_dimension=False):
+
+        self.feature_mode = "1D_flat"
+
+        self.extra_dimension = extra_dimension
+
         super().__init__(dataset, channels, levels, array_type)
 
-        self.feature_mode = "1D (flat)"
-        self.values, self.feature_shape = self.generate_array(dataset, channels, levels, array_type, extra_dimension)
-        self.extra_dimension = extra_dimension
+        # the super class tries to load features from files. If it fails, the features are loaded from the dataset
+        if self.values is None:
+            self.values = self.generate_array(dataset, channels, levels, array_type, extra_dimension)
+
+        if self.extra_dimension:
+            self.feature_shape = self.values.shape[1:]
+        else:
+            self.feature_shape = self.values.shape[1]
+
+        self.save()
 
     def generate_array(self, dataset, channels, levels, array_type, extra_dimension):
 
@@ -311,25 +391,34 @@ class Features1D(Features):
         # If the user requires the array to be configured for convolutional networks, then the array is reshaped
         if extra_dimension:
             X_shape = [X_1d.shape[0], X_1d.shape[1], 1]
-            return X_1d.reshape(X_shape), X_shape[1:]
+            return X_1d.reshape(X_shape)
 
         # Else just return the normal numpy array
         else:
-            return X_1d, X_1d.shape[1]
+            return X_1d
 
 
 class Features2D(Features1D):
 
     def __init__(self, dataset, channels='all', levels='all', array_type='positions only', extra_dimension=False):
-        Features.__init__(self, dataset, channels, levels, array_type)
 
-        self.feature_mode = "2D (multi-channel)"
-        self.values, self.feature_shape = self.generate_array(dataset, channels, levels, array_type, extra_dimension)
+        self.feature_mode = "2D_multi"
         self.extra_dimension = extra_dimension
 
+        Features.__init__(self, dataset, channels, levels, array_type)
+
+        # the super class tries to load features from files. If it fails, the features are loaded from the dataset
+        if self.values is None:
+            self.values = self.generate_array(dataset, channels, levels, array_type, extra_dimension)
+
+        self.feature_shape = self.values.shape[1:]
+
+        self.save()
+
     def generate_array(self, dataset, channels, levels, array_type, extra_dimension):
+
         # Get the 1d feature array
-        values_1d, _ = Features1D.generate_array(self, dataset, channels, levels, array_type, extra_dimension)
+        values_1d = Features1D.generate_array(self, dataset, channels, levels, array_type, extra_dimension)
 
         X_shape = [values_1d.shape[0], self.number_levels, self.number_channels]
 
@@ -337,16 +426,25 @@ class Features2D(Features1D):
         if extra_dimension:
             X_shape.append(1)
 
-        return values_1d.reshape(X_shape), X_shape[1:]
+        return values_1d.reshape(X_shape)
 
 
 class Features3D(Features):
 
     def __init__(self, dataset, levels='all', array_type='positions only'):
+
+        self.feature_mode = "3D_multi"
+        self.extra_dimension = False
+
         super().__init__(dataset, channels='all', levels=levels, array_type=array_type)
 
-        self.feature_mode = "3D (multi-channel)"
-        self.values, self.feature_shape = self.generate_array(dataset, levels, array_type)
+        # the super class tries to load features from files. If it fails, the features are loaded from the dataset
+        if self.values is None:
+            self.values = self.generate_array(dataset, levels, array_type)
+
+        self.feature_shape = self.values.shape[1:]
+
+        self.save()
 
     def generate_array(self, dataset, levels, array_type):
 
@@ -366,7 +464,7 @@ class Features3D(Features):
             feature_slice = X_3d_inst[:, level, :, :]
             X_3d_rs[:, :, :, level] = feature_slice
 
-        return X_3d_rs, X_shape[1:]
+        return X_3d_rs
 
 
 class FeaturesFlat(Features3D):
@@ -376,11 +474,20 @@ class FeaturesFlat(Features3D):
 class FeaturesConcentration1D(Features):
 
     def __init__(self, dataset, channels='all', levels='all', array_type='positions only', extra_dimension=False):
+
+        self.feature_mode = "Concentration1D"
+
+        self.extra_dimension = extra_dimension
+
         super().__init__(dataset, channels, levels, array_type, 'inter')
 
-        self.feature_mode = "Concentration 1D"
-        self.values, self.feature_shape = self.generate_array(dataset, channels, levels, array_type, extra_dimension)
-        self.extra_dimension = extra_dimension
+        # the super class tries to load features from files. If it fails, the features are loaded from the dataset
+        if self.values is None:
+            self.values = self.generate_array(dataset, channels, levels, array_type, extra_dimension)
+
+        self.feature_shape = self.values.shape[1:]
+
+        self.save()
 
     def generate_array(self, dataset, channels, levels, array_type, extra_dimension):
 
@@ -390,17 +497,62 @@ class FeaturesConcentration1D(Features):
         X_1d = np.zeros([len(dataset.cases_list), instance_array_length])
 
         for i, instance in enumerate(dataset.core_instances):
-
             X_1d[i] = instance.channel_specific_cracks(levels)[1]
 
         # If the user requires the array to be configured for convolutional networks, then the array is reshaped
         if extra_dimension:
             X_shape = [X_1d.shape[0], X_1d.shape[1], 1]
-            return X_1d.reshape(X_shape), X_shape[1:]
+            return X_1d.reshape(X_shape)
 
         # Else just return the normal numpy array
         else:
-            return X_1d, X_1d.shape[1]
+            return X_1d
+
+
+class FeaturesConcentration2D(FeaturesConcentration1D):
+
+    def __init__(self, dataset, channels='all', levels='all', array_type='positions only', extra_dimension=False):
+        self.feature_mode = "Concentration2D"
+        self.extra_dimension = extra_dimension
+
+        Features.__init__(self, dataset, channels, levels, array_type, 'inter')
+
+        # the super class tries to load features from files. If it fails, the features are loaded from the dataset
+        if self.values is None:
+            self.values = self.generate_array(dataset, channels, levels, array_type, extra_dimension)
+
+        self.feature_shape = self.values.shape[1:]
+
+        self.save()
+
+    def generate_array(self, dataset, channels, levels, array_type, extra_dimension):
+        # Get the 1d feature array
+
+        values_1d = FeaturesConcentration1D.generate_array(self, dataset, channels, levels, array_type, extra_dimension)
+
+        values_2d = np.zeros([len(dataset.cases_list),
+                              self.example_instance.inter_rows,
+                              self.example_instance.inter_columns])
+
+        inter_rows = self.example_instance.inter_rows
+        inter_columns = self.example_instance.inter_columns
+
+        for instance_no in range(values_2d.shape[0]):
+
+            print("\n ======== \n")
+
+            i = 0
+            instance_vals = values_1d[instance_no]
+
+            for row in range(inter_rows):
+                column_offset = self.example_instance.first_columns_row_interstitial[row]
+                row_values = instance_vals[i:(i+(inter_columns - (column_offset*2)))]
+                i += len(row_values)
+
+                values_2d[instance_no, row, column_offset:(inter_columns-column_offset)] = row_values
+
+        return values_2d
+
 
 
 class Labels:
