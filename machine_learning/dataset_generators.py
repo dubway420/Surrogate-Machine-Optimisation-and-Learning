@@ -302,7 +302,7 @@ class Features:
         """ Generates a filename based on the user settings """
 
         file_name = "X_" + self.feature_mode + "_" + self.dataset.name + "_C" + str(self.channels_range[0]) + "_" \
-
+ 
         file_name += str(self.channels_range[1])
 
         file_name += "_L" + str(self.levels_range[0]) + "_" + str(self.levels_range[1]) + "_T"
@@ -531,8 +531,8 @@ class FeaturesConcentration2D(FeaturesConcentration1D):
         values_1d = FeaturesConcentration1D.generate_array(self, dataset, channels, levels, array_type, extra_dimension)
 
         array_shape = [len(dataset.cases_list),
-                              self.example_instance.inter_rows,
-                              self.example_instance.inter_columns]
+                       self.example_instance.inter_rows,
+                       self.example_instance.inter_columns]
 
         if extra_dimension:
             array_shape.append(1)
@@ -551,13 +551,12 @@ class FeaturesConcentration2D(FeaturesConcentration1D):
 
             for row in range(inter_rows):
                 column_offset = self.example_instance.first_columns_row_interstitial[row]
-                row_values = instance_vals[i:(i+(inter_columns - (column_offset*2)))]
+                row_values = instance_vals[i:(i + (inter_columns - (column_offset * 2)))]
                 i += len(row_values)
 
-                values_2d[instance_no, row, column_offset:(inter_columns-column_offset)] = row_values
+                values_2d[instance_no, row, column_offset:(inter_columns - column_offset)] = row_values
 
         return values_2d
-
 
 
 class Labels:
