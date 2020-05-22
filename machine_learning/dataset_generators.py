@@ -530,9 +530,14 @@ class FeaturesConcentration2D(FeaturesConcentration1D):
 
         values_1d = FeaturesConcentration1D.generate_array(self, dataset, channels, levels, array_type, extra_dimension)
 
-        values_2d = np.zeros([len(dataset.cases_list),
+        array_shape = [len(dataset.cases_list),
                               self.example_instance.inter_rows,
-                              self.example_instance.inter_columns])
+                              self.example_instance.inter_columns]
+
+        if extra_dimension:
+            array_shape.append(1)
+
+        values_2d = np.zeros(array_shape)
 
         inter_rows = self.example_instance.inter_rows
         inter_columns = self.example_instance.inter_columns
