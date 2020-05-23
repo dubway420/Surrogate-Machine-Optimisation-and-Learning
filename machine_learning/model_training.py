@@ -23,7 +23,6 @@ class LossHistory(Callback):
 
         self.plot_every_n_epochs = print_every_n_epochs
 
-        self.view = CoreView(trial, iteration, experiment)
         self.train_history = TrainingHistoryRealTime(trial, iteration, experiment, loss_function,
                                                      self.plot_every_n_epochs)
 
@@ -31,6 +30,8 @@ class LossHistory(Callback):
 
         self.train_history_later = TrainingHistoryRealTime(trial, iteration_l, experiment, loss_function,
                                                            (3 * self.plot_every_n_epochs))
+
+        self.view = CoreView(trial, iteration, experiment)
 
     def on_epoch_end(self, epoch, logs={}):
 
@@ -40,19 +41,19 @@ class LossHistory(Callback):
         self.train_history_later.update_data(logs, self.model, plot=False)
 
         if (epoch_p1 % self.plot_every_n_epochs) == 0:
-            self.view.update_data(epoch, self.model)
             self.train_history.plotting()
             self.train_history_later.plotting()
+            self.view.update_data(epoch, self.model, True, True, False)
 
 
 NUMCORES = int(os.getenv("NSLOTS", 1))
 
-sess = tf.Session(config=tf.ConfigProto(inter_op_parallelism_threads=NUMCORES,
-                                        allow_soft_placement=True,
-                                        device_count={'CPU': NUMCORES}))
-
-# Set the Keras TF session
-K.set_session(sess)
+# sess = tf.Session(config=tf.ConfigProto(inter_op_parallelism_threads=NUMCORES,
+#                                         allow_soft_placement=True,
+#                                         device_count={'CPU': NUMCORES}))
+#
+# # Set the Keras TF session
+# K.set_session(sess)
 
 
 def run_experiment(experiment):

@@ -389,7 +389,7 @@ class CoreView:
 
             file_name = self.trail_name + "/" + self.experiment.name + "/" + stage + "_Compare" + self.file_name
             plt.savefig(file_name)
-            plt.close()
+        plt.close()
 
 
 class TrainingHistoryRealTime:

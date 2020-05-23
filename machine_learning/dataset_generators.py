@@ -485,7 +485,11 @@ class FeaturesConcentration1D(Features):
         if self.values is None:
             self.values = self.generate_array(dataset, channels, levels, array_type, extra_dimension)
 
-        self.feature_shape = self.values.shape[1:]
+        if extra_dimension:
+            self.feature_shape = self.values.shape[1:]
+        else:
+            self.feature_shape = self.values.shape[1]
+
 
         self.save()
 
