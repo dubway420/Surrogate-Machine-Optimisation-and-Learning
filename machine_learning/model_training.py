@@ -1,10 +1,12 @@
 from keras.callbacks import Callback
 import tensorflow as tf
 from keras import backend as K
-from parmec_analysis.utils import folder_validation, experiment_iteration, save_results
+from parmec_analysis.utils import folder_validation, experiment_iteration, save_results, plot_names_title
 from parmec_analysis.visualisation import CoreView, TrainingHistoryRealTime
 from machine_learning.experiment_summary import summary
 import os
+import numpy as np
+import matplotlib.pyplot as plt
 
 
 class LossHistory(Callback):
@@ -17,6 +19,23 @@ class LossHistory(Callback):
         self.trial = trial
         self.experiment = experiment
         self.iteration = iteration
+
+        self.features_training = self.experiment.features.training_set()
+        self.features_validation = self.experiment.features.validation_set()
+
+        labels_training_flat = self.experiment.labels.training_set().flatten()
+        labels_validation_flat = self.experiment.labels.validation_set().flatten()
+
+        # gets some random indices of the flattened training and validation lists
+        self.labels_training_sample_indices = np.random.choice(len(labels_training_flat), 10000)
+        self.labels_validation_sample_indices = np.random.choice(len(labels_validation_flat), 10000)
+
+        self.sample_labels_training = [labels_training_flat[i] for i in self.labels_training_sample_indices]
+        self.sample_labels_validation = [labels_validation_flat[i] for i in self.labels_validation_sample_indices]
+
+        # placeholders for interval predictions
+        self.interval_predictions_training = []
+        self.interval_predictions_validation = []
 
         if not print_every_n_epochs:
             print_every_n_epochs = 1000
@@ -41,12 +60,58 @@ class LossHistory(Callback):
         self.train_history_later.update_data(logs, self.model, plot=False)
 
         if (epoch_p1 % self.plot_every_n_epochs) == 0:
+
+            ###############################################################################
+            predictions_training_flat = self.model.predict(self.features_training).flatten()
+            predictions_validation_flat = self.model.predict(self.features_validation).flatten()
+
+            sample_predictions_train = [predictions_training_flat[i] for i in self.labels_training_sample_indices]
+            sample_predictions_val = [predictions_validation_flat[i] for i in self.labels_validation_sample_indices]
+
+            self.interval_predictions_training.append(sample_predictions_train)
+            self.interval_predictions_validation.append(sample_predictions_val)
+
+            fig, axes = plt.subplots(len(self.interval_predictions_training), 2, sharex=True)
+
+            if len(self.interval_predictions_training) == 1:
+                axes = [axes, ]
+
+            for i, row in enumerate(axes):
+                total_values_train = np.array([self.sample_labels_training, self.interval_predictions_training[i]])
+
+                min_vals_train = np.amin(total_values_train) * 0.8
+                max_vals_train = np.amax(total_values_train) * 1.2
+
+                row[0].scatter(self.sample_labels_training, self.interval_predictions_training[i])
+                row[0].plot([min_vals_train, max_vals_train], [min_vals_train, max_vals_train], c='yellow')
+                row[0].set_xlim([min_vals_train, max_vals_train])
+                row[0].set_ylim([min_vals_train, max_vals_train])
+
+                row[0].set_ylabel(("Epoch: " + str(epoch_p1)))
+
+                total_values_valid = np.array([self.sample_labels_validation, self.interval_predictions_validation[i]])
+                min_vals_valid = np.amin(total_values_valid) * 0.8
+                max_vals_valid = np.amax(total_values_valid) * 1.2
+
+                row[1].scatter(self.sample_labels_validation, self.interval_predictions_validation[i])
+                row[1].plot([min_vals_valid, max_vals_valid], [min_vals_valid, max_vals_valid], c='yellow')
+                row[1].set_xlim([min_vals_valid, max_vals_valid])
+                row[1].set_ylim([min_vals_valid, max_vals_valid])
+
+            _, file_name = plot_names_title(self.experiment, self.iteration)
+
+            file_name = self.trial + "/" + self.experiment.name + "/correlation_" + file_name
+            plt.savefig(file_name)
+            plt.close()
+            ###############################################################################
+
             self.train_history.plotting()
             self.train_history_later.plotting()
             self.view.update_data(epoch, self.model, True, True, False)
 
 
 NUMCORES = int(os.getenv("NSLOTS", 1))
+
 
 # sess = tf.Session(config=tf.ConfigProto(inter_op_parallelism_threads=NUMCORES,
 #                                         allow_soft_placement=True,
