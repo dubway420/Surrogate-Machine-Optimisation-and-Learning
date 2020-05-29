@@ -52,6 +52,8 @@ class LossHistory(Callback):
 
         self.view = CoreView(trial, iteration, experiment)
 
+        self.epochs_with_results = []
+
     def on_epoch_end(self, epoch, logs={}):
 
         epoch_p1 = epoch + 1
@@ -62,6 +64,9 @@ class LossHistory(Callback):
         if (epoch_p1 % self.plot_every_n_epochs) == 0:
 
             ###############################################################################
+
+            self.epochs_with_results.append(epoch_p1)
+
             predictions_training_flat = self.model.predict(self.features_training).flatten()
             predictions_validation_flat = self.model.predict(self.features_validation).flatten()
 
@@ -87,7 +92,7 @@ class LossHistory(Callback):
                 row[0].set_xlim([min_vals_train, max_vals_train])
                 row[0].set_ylim([min_vals_train, max_vals_train])
 
-                row[0].set_ylabel(("Epoch: " + str(epoch_p1)))
+                row[0].set_ylabel(("Epoch: " + str(self.epochs_with_results[i])))
 
                 total_values_valid = np.array([self.sample_labels_validation, self.interval_predictions_validation[i]])
                 min_vals_valid = np.amin(total_values_valid) * 0.8
