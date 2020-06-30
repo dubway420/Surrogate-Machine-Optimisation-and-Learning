@@ -1,6 +1,6 @@
 class Experiment:
 
-    def __init__(self, trial, name, model, dataset, features, labels):
+    def __init__(self, trial, name, model, dataset, features, labels, callbacks=[]):
 
         self.trial = trial
 
@@ -9,3 +9,4 @@ class Experiment:
         self.dataset = dataset
         self.features = features
         self.labels = labels
+        self.callbacks = callbacks

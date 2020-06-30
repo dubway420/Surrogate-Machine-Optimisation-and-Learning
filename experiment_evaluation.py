@@ -3,14 +3,12 @@ from parmec_analysis.visualisation import model_comparison
 import numpy as np
 import sys
 
-results_file_name = str(sys.argv[-1]) + ".ind"
+
+trial_name = str(sys.argv[-1])
+results_file_name = trial_name + ".ind"
 results_dict = load_results(results_file_name)
 
 names = list(results_dict.keys())
-
-
-print(names)
-print(results_dict.values())
 
 averages_training = np.zeros(len(names))
 averages_validation = np.zeros(len(names))
@@ -39,4 +37,4 @@ for i, result in enumerate(results):
     errors_validation[0:2, i] = np.abs(np.array([np.min(validation_loss), np.max(validation_loss)]) - validation_mean)
 
 model_comparison(names, averages_training, averages_validation,
-                 errors_training, errors_validation, 'Loss')
+                 errors_training, errors_validation, 'Loss', trial_name)

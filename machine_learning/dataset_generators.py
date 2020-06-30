@@ -490,7 +490,6 @@ class FeaturesConcentration1D(Features):
         else:
             self.feature_shape = self.values.shape[1]
 
-
         self.save()
 
     def generate_array(self, dataset, channels, levels, array_type, extra_dimension):
@@ -566,11 +565,15 @@ class FeaturesConcentration2D(FeaturesConcentration1D):
 class Labels:
 
     def __init__(self, dataset, channels='all', levels='all', result_time=50, result_column="1", result_type="max",
-                 flat=True, load_from_file=True):
+                 unit='meters', flat=True, load_from_file=True):
+
         self.dataset = dataset
         self.number_instances = len(dataset.cases_list)
 
         example_instance = dataset.core_instances[0]
+
+        self.channels = channels
+        self.levels = levels
 
         channels_range, levels_range = min_max_channels_levels(example_instance, channels, levels, 'inter')
 
@@ -587,6 +590,8 @@ class Labels:
         self.type = result_type
 
         self.flat = flat
+
+        self.unit = unit
 
         ##############################################################
         # ######## Attempt to load data from file #####################
@@ -714,9 +719,15 @@ class Labels:
         return np.load(file_name)
 
     def training_set(self):
+
+        if is_in(self.unit, 'milli'):
+            return self.values[:self.dataset.split_number] * 1000
         return self.values[:self.dataset.split_number]
 
     def validation_set(self):
+
+        if is_in(self.unit, 'milli'):
+            return self.values[self.dataset.split_number:] * 1000
         return self.values[self.dataset.split_number:]
 
     def summary(self):
