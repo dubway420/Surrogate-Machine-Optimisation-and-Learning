@@ -690,6 +690,8 @@ class Labels:
         print("Saving labels to file:", file_name)
         np.save(file_name, Y)
 
+        self.transformer = None
+
     def generate_filename(self):
         """ Generates a filename based on the user settings """
 
@@ -717,6 +719,14 @@ class Labels:
 
         print("Labels dataset was found on file:", file_name, "Loading...")
         return np.load(file_name)
+
+    def transform(self, transformer):
+
+        self.transformer = transformer
+        self.values = transformer.fit_transform(self.values)
+
+    def inverse_transform(self):
+        self.values = self.transformer.inverse_transform(self.values)
 
     def training_set(self):
 
