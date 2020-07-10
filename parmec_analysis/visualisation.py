@@ -20,6 +20,18 @@ inclusive_layers = [100, 6, 4, 2]
 layer_colors = ['royalblue', 'lime', 'yellow', 'red']
 
 
+def autolabel(rects, ax):
+    """Attach a text label above each bar in *rects*, displaying its height."""
+    for rect in rects:
+        height = round(rect.get_height(), 2)
+
+        ax.annotate('{}'.format(height),
+                    xy=(rect.get_x() + rect.get_width() / 2, height),
+                    xytext=(0, 3),  # 3 points vertical offset
+                    textcoords="offset points",
+                    ha='center', va='bottom')
+
+
 def turn_off_graph_decorations(axis):
     axis.xaxis.set_ticks_position('none')
     axis.yaxis.set_ticks_position('none')
@@ -27,7 +39,8 @@ def turn_off_graph_decorations(axis):
     axis.set_yticklabels([])
 
 
-def model_comparison(model_names, training_loss, validation_loss, errors_training, errors_validation, loss_func):
+def model_comparison(model_names, training_loss, validation_loss, errors_training, errors_validation, loss_func,
+                     trial_name):
     x = np.arange(len(model_names))  # the label locations
     width = 0.35  # the width of the bars
 
@@ -47,9 +60,12 @@ def model_comparison(model_names, training_loss, validation_loss, errors_trainin
     ax.set_xticklabels(model_names)
     ax.legend()
 
+    autolabel(rects1, ax)
+    autolabel(rects2, ax)
+
     fig.tight_layout()
 
-    plt.savefig("comparing_models.png")
+    plt.savefig("comparing_models_" + trial_name + ".png")
 
 
 def plot_grid(size, rows, columns, pad=0.02, cbar_mode=None, cbar_loc="right", cbar_pad=None):
@@ -138,9 +154,11 @@ class CoreView:
 
         # update the min and max for the training and validation results
         for i in range(2):
-            abs_max = np.amax(np.absolute(self.plot_results[i]))
-            self.plot_results_min[i] = np.amin(abs_max * -1)
-            self.plot_results_max[i] = np.amax(abs_max)
+            # abs_max = np.amax(np.absolute(self.plot_results[i]))
+            # self.plot_results_min[i] = np.amin(abs_max * -1)
+            # self.plot_results_max[i] = np.amax(abs_max)
+            self.plot_results_min[i] = np.amin(self.plot_results[i])
+            self.plot_results_max[i] = np.amax(self.plot_results[i])
 
         # difference between the ground truth labels and the predictions at each plot epoch (training, validation)
         self.result_diffs = [[], []]
@@ -202,9 +220,11 @@ class CoreView:
         # update the min and max for the training and validation results
         # the use of the absolute max
         for i in range(2):
-            abs_max = np.amax(np.absolute(self.plot_results[i]))
-            self.plot_results_min[i] = np.amin(abs_max * -1)
-            self.plot_results_max[i] = np.amax(abs_max)
+            # abs_max = np.amax(np.absolute(self.plot_results[i]))
+            # self.plot_results_min[i] = np.amin(abs_max * -1)
+            # self.plot_results_max[i] = np.amax(abs_max)
+            self.plot_results_min[i] = np.amin(self.plot_results[i])
+            self.plot_results_max[i] = np.amax(self.plot_results[i])
 
             abs_max_diff = np.amax(np.absolute(self.plot_results[i]))
             self.results_diff_min[i] = np.amin(abs_max_diff * -1)
@@ -394,7 +414,7 @@ class CoreView:
 
 class TrainingHistoryRealTime:
 
-    def __init__(self, trail_name, iteration, experiment, loss_function, plot_from=50):
+    def __init__(self, trail_name, iteration, experiment, loss_function, plot_from=50, average_over=None):
         self.main_title = ""
 
         # Wider trial name
@@ -414,11 +434,27 @@ class TrainingHistoryRealTime:
         self.loss_function = loss_function
         self.losses = []
         self.val_losses = []
+
+        if average_over is None:
+            average_over = int(experiment.trial.epochs * 0.01)
+
+        self.average_over = average_over
+
+        self.losses_rolling_avg = []
+        self.val_losses_rolling_avg = []
+
         self.plot_from = plot_from
 
     def update_data(self, logs, model, plot=True):
         self.losses.append(logs.get('loss'))
         self.val_losses.append(logs.get('val_loss'))
+
+        i = len(self.losses)
+
+        lb_slice = max(0, i - self.average_over)
+
+        self.losses_rolling_avg.append(np.mean(self.losses[lb_slice:i]))
+        self.val_losses_rolling_avg.append(np.mean(self.val_losses[lb_slice:i]))
 
         self.model = model
 
@@ -440,20 +476,28 @@ class TrainingHistoryRealTime:
         training_losses_plot = self.losses[self.plot_from:]
         validation_losses_plot = self.val_losses[self.plot_from:]
 
+        training_losses_plot_avg = self.losses_rolling_avg[self.plot_from:]
+        validation_losses_plot_avg = self.val_losses_rolling_avg[self.plot_from:]
+
         epochs_range = np.arange(len(training_losses_plot)) + self.plot_from
 
-        last_result_line_training = [training_losses_plot[-1] for _ in training_losses_plot]
-        last_result_line_validation = [validation_losses_plot[-1] for _ in validation_losses_plot]
+        last_result_line_training = [training_losses_plot_avg[-1] for _ in training_losses_plot]
+        last_result_line_validation = [validation_losses_plot_avg[-1] for _ in validation_losses_plot]
 
         # create training plots
 
         plt.plot(epochs_range, training_losses_plot, label='Training')
+
+        plt.plot(epochs_range, training_losses_plot_avg, c='black')
 
         plt.plot(epochs_range, last_result_line_training, 'k:')
 
         # create validation plots
 
         plt.plot(epochs_range, validation_losses_plot, label='Validation')
+
+        average_label = str(self.average_over) + ' Epoch Rolling Avg'
+        plt.plot(epochs_range, validation_losses_plot_avg, c='black', label=average_label)
 
         plt.plot(epochs_range, last_result_line_validation, 'k:')
 

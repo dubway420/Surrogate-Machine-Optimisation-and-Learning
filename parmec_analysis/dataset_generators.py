@@ -323,7 +323,27 @@ class FeaturesFlat(Features3D):
     pass
 
 
-class Labels:
+class LabelsBase:
+
+    def load_labels_from_file(self):
+        """ Determines if labels storage file exists and if so loads data"""
+
+        file_name = self.generate_filename()
+
+        if not os.path.exists(file_name):
+            return []
+
+        print("Labels dataset was found on file:", file_name, "Loading...")
+        return np.load(file_name)
+
+    def training_set(self):
+        return self.values[:self.dataset.split_number]
+
+    def validation_set(self):
+        return self.values[self.dataset.split_number:]
+
+
+class Labels(LabelsBase):
 
     def __init__(self, dataset, channels='all', levels='all', result_time=50, result_column="1", result_type="max",
                  flat=True, load_from_file=True):
@@ -462,19 +482,5 @@ class Labels:
 
         return file_name
 
-    def load_labels_from_file(self):
-        """ Determines if labels storage file exists and if so loads data"""
-
-        file_name = self.generate_filename()
-
-        if not os.path.exists(file_name):
-            return []
-
-        print("Labels dataset was found on file:", file_name, "Loading...")
-        return np.load(file_name)
-
-    def training_set(self):
-        return self.values[:self.dataset.split_number]
-
-    def validation_set(self):
-        return self.values[self.dataset.split_number:]
+class LabelsChannelsList(LabelsBase):
+    pass
