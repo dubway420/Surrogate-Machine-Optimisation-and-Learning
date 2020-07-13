@@ -279,6 +279,8 @@ class Features:
         # self.values, self.feature_shape = None, None
         self.values = None
 
+        self.transformer = None
+
         # Handles loading from file
 
         X_loaded = self.load_features_from_file()
@@ -332,6 +334,15 @@ class Features:
 
         print("Features dataset was found on file:", file_name, "Loading...")
         return np.load(file_name)
+
+    def transform(self, transformer):
+
+        self.transformer = transformer
+        self.values = transformer.fit_transform(self.values)
+
+    def inverse_transform(self):
+        self.values = self.transformer.inverse_transform(self.values)
+
 
     def save(self):
 
