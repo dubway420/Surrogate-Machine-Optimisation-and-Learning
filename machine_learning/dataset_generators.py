@@ -304,7 +304,7 @@ class Features:
         """ Generates a filename based on the user settings """
 
         file_name = "X_" + self.feature_mode + "_" + self.dataset.name + "_C" + str(self.channels_range[0]) + "_" \
- 
+
         file_name += str(self.channels_range[1])
 
         file_name += "_L" + str(self.levels_range[0]) + "_" + str(self.levels_range[1]) + "_T"
@@ -338,11 +338,56 @@ class Features:
     def transform(self, transformer):
 
         self.transformer = transformer
-        self.values = transformer.fit_transform(self.values)
+
+        # If the feature array is flat, simply transform the array as is:
+        if type(self.feature_shape) == int:
+            self.values = transformer.fit_transform(self.values)
+
+        # If the array is multi-dimensional, it has to first be flattened, the transformed,
+        # then returned to the original dimensions
+        else:
+
+            values_number_total = self.feature_shape[0]
+
+            for i in self.feature_shape[1:]:
+                values_number_total *= i
+
+            values_flat = self.values.reshape([self.number_instances, values_number_total])
+
+            values_flat_normed = transformer.fit_transform(values_flat)
+
+            original_dimensions = [self.number_instances]
+
+            for i in self.feature_shape:
+                original_dimensions.append(i)
+
+            self.values = values_flat_normed.reshape(original_dimensions)
 
     def inverse_transform(self):
-        self.values = self.transformer.inverse_transform(self.values)
 
+        # If the feature array is flat, simply transform the array as is:
+        if type(self.feature_shape) == int:
+            self.values = self.transformer.inverse_transform(self.values)
+
+            # If the array is multi-dimensional, it has to first be flattened, the transformed,
+            # then returned to the original dimensions
+        else:
+
+            values_number_total = self.feature_shape[0]
+
+            for i in self.feature_shape[1:]:
+                values_number_total *= i
+
+            values_flat = self.values.reshape([self.number_instances, values_number_total])
+
+            values_flat_unnormed = self.transformer.inverse_transform(values_flat)
+
+            original_dimensions = [self.number_instances]
+
+            for i in self.feature_shape:
+                original_dimensions.append(i)
+
+            self.values = values_flat_unnormed.reshape(original_dimensions)
 
     def save(self):
 
