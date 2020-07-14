@@ -4,6 +4,8 @@ import numpy as np
 import re as remove
 import pandas as pd
 import pickle
+import time
+import sys
 
 # Global Variables
 split_separators = ["to", "To", "TO", ":", "-", "/", "_", ",", " "]
@@ -499,12 +501,29 @@ def experiment_iteration(exp_name, trial_name, ext=".ind"):
     return exp_i
 
 
-def save_results(exp_name, trial_name, exp_i, exp_result, ext=".ind"):
+def save_results(exp_name, trial_name, exp_i, exp_result, ext=".ind", attempts=0):
     results_file_name = trial_name + ext
 
-    results_dict = load_results(results_file_name)
+    assigned = False
 
-    results_dict[exp_name][exp_i] = exp_result
+    while attempts < 4 and not assigned:
 
-    with open(results_file_name, 'wb') as f:
-        pickle.dump(results_dict, f, protocol=pickle.HIGHEST_PROTOCOL)
+        try:
+            results_dict = load_results(results_file_name)
+
+            results_dict[exp_name][exp_i] = exp_result
+
+            with open(results_file_name, 'wb') as f:
+                pickle.dump(results_dict, f, protocol=pickle.HIGHEST_PROTOCOL)
+
+            assigned = True
+
+        except KeyError:
+
+            attempts += 1
+
+            print("Error whilst saving results. Will wait 30 second then try again. "
+                  "It is possible the repository is in use.")
+            print("Attempts made:", attempts)
+            time.sleep(30)
+            save_results(exp_name, trial_name, exp_i, exp_result, attempts=attempts)
