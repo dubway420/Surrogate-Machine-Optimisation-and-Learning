@@ -81,7 +81,7 @@ class DatasetSingleFrame:
         # if data exists, continue attempting to load
         if data_from_file:
 
-            print('Case were found in file: ' + file_name + '...')
+            print('Cases were found in file: ' + file_name + '...')
 
             cases_from_file = data_from_file[0]
             instances_from_file = data_from_file[1]
