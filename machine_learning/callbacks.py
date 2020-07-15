@@ -250,8 +250,8 @@ class LossHistory(Callback):
 
 def lr_scheduler(epoch, lr):
     decay_rate = 0.1
-    decay_step = 600
-    decay_step_2 = 700
+    decay_step = 800
+    decay_step_2 = 850
 
     if epoch == decay_step or epoch == decay_step_2:
         return lr * decay_rate
