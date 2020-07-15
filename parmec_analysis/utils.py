@@ -330,7 +330,7 @@ def return_all(array):
 def function_switch(result_type):
 
     if result_type.isnumeric():
-        return_numeric_function(result_type)
+        command = return_numeric_function(result_type)
     elif is_in(result_type, "max"):
         command = np.max
     elif is_in(result_type, "min"):
