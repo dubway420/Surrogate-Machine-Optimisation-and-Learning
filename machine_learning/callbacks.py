@@ -65,11 +65,11 @@ class LossHistory(Callback):
         if experiment.labels.channels is 'all':
             self.view = CoreView(trial, iteration, experiment)
             
-                if experiment.labels.levels is 'all':
-                   self.view5 = CoreView(trial, iteration, experiment, convert_to="5")
-                   self.view7 = CoreView(trial, iteration, experiment, convert_to="7")
-                   self.view10 = CoreView(trial, iteration, experiment, convert_to="10")
-                   self.view12 = CoreView(trial, iteration, experiment, convert_to="12")
+            if experiment.labels.levels is 'all':
+               self.view5 = CoreView(trial, iteration, experiment, convert_to="5")
+               self.view7 = CoreView(trial, iteration, experiment, convert_to="7")
+               self.view10 = CoreView(trial, iteration, experiment, convert_to="10")
+               self.view12 = CoreView(trial, iteration, experiment, convert_to="12")
 
         self.epochs_with_results = []
 
