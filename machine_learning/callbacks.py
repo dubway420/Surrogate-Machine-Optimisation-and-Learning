@@ -9,6 +9,7 @@ from parmec_analysis.utils import plot_names_title
 from parmec_analysis.visualisation import CoreView, TrainingHistoryRealTime
 
 
+
 class LossHistory(Callback):
     def __init__(self, loss_function, trial, experiment, iteration, print_every_n_epochs=None):
         super().__init__()
@@ -63,6 +64,12 @@ class LossHistory(Callback):
 
         if experiment.labels.channels is 'all':
             self.view = CoreView(trial, iteration, experiment)
+            
+                if experiment.labels.levels is 'all':
+                   self.view5 = CoreView(trial, iteration, experiment, convert_to="5")
+                   self.view7 = CoreView(trial, iteration, experiment, convert_to="7")
+                   self.view10 = CoreView(trial, iteration, experiment, convert_to="10")
+                   self.view12 = CoreView(trial, iteration, experiment, convert_to="12")
 
         self.epochs_with_results = []
 
@@ -202,9 +209,17 @@ class LossHistory(Callback):
             self.train_history_later.plotting()
 
             if self.experiment.labels.channels is 'all':
-                self.view.update_data(epoch, self.model, True, True, False)
+                self.view.update_data(epoch, self.model, True, False, False)
+
+                if self.experiment.labels.levels is 'all':
+                    self.view5.update_data(epoch, self.model, True, False, False)
+                    self.view7.update_data(epoch, self.model, True, False, False)
+                    self.view10.update_data(epoch, self.model, True, False, False)
+                    self.view12.update_data(epoch, self.model, True, False, False)
 
         if epoch_p1 == self.experiment.trial.epochs:
+        
+            # Training Histogram
             sns.set(style="darkgrid")
             sns.distplot(self.labels_training.flatten(), color='green', label="Ground Truth Labels")
 
@@ -217,3 +232,29 @@ class LossHistory(Callback):
             file_name = self.trial + "/" + self.experiment.name + "/training_histogram_" + file_name
             plt.savefig(file_name)
             plt.close()
+            
+            # Validation Histogram
+            sns.set(style="darkgrid")
+            sns.distplot(self.labels_validation.flatten(), color='green', label="Ground Truth Labels")
+
+            sns.distplot(predictions_validation_flat, color='red', label="Predictions Final Epoch")
+            # plt.title('Url Length Distribution')
+            plt.legend(loc='upper right')
+            plt.xlabel('Displacement (mm)')
+            _, file_name = plot_names_title(self.experiment, self.iteration)
+
+            file_name = self.trial + "/" + self.experiment.name + "/validation_histogram_" + file_name
+            plt.savefig(file_name)
+            plt.close()
+
+
+def lr_scheduler(epoch, lr):
+    decay_rate = 0.1
+    decay_step = 600
+    decay_step_2 = 700
+
+    if epoch == decay_step or epoch == decay_step_2:
+        return lr * decay_rate
+
+    return lr
+
