@@ -11,7 +11,7 @@ from parmec_analysis.visualisation import CoreView, TrainingHistoryRealTime
 
 
 class LossHistory(Callback):
-    def __init__(self, loss_function, trial, experiment, iteration, print_every_n_epochs=None):
+    def __init__(self, loss_function, trial, experiment, iteration, print_every_n_epochs=None, channel_to_plot=161):
         super().__init__()
         self.losses = []
         self.val_losses = []
@@ -72,6 +72,8 @@ class LossHistory(Callback):
                self.view12 = CoreView(trial, iteration, experiment, convert_to="12")
 
         self.epochs_with_results = []
+
+        self.channel_to_plot = channel_to_plot
 
     def on_epoch_end(self, epoch, logs={}):
 
@@ -150,10 +152,15 @@ class LossHistory(Callback):
 
             ground_truth_row[0].set_ylabel("GT")
 
+            # These values allow the slicing of the label arrays to get the result for the channel to plot
+            start_channel = (self.channel_to_plot-1) * self.experiment.labels.number_levels
+            end_channel = start_channel + self.experiment.labels.number_levels + 1
+
             for i, ax in enumerate(ground_truth_row):
                 case_title = self.experiment.dataset.training_instances()[self.cases[i]].get_id()
                 ax.set_title(case_title)
-                ax.barh(np.arange(len(self.labels_training_select[i])), self.labels_training_select[i])
+                ground_truth = self.labels_training_select[i][start_channel:end_channel]
+                ax.barh(np.arange(len(ground_truth)), ground_truth)
 
             for i, row in enumerate(axes[1:]):
 
@@ -161,7 +168,7 @@ class LossHistory(Callback):
                 row[0].set_ylabel(row_title)
 
                 for j, ax in enumerate(row):
-                    case_result = self.predictions_training_select[i][j]
+                    case_result = self.predictions_training_select[i][j][start_channel:end_channel]
 
                     ax.barh(np.arange(len(case_result)), case_result)
 
