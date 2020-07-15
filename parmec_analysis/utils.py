@@ -328,6 +328,9 @@ def return_all(array):
 
 
 def function_switch(result_type):
+
+    if result_type.isnumeric():
+        return_numeric_function(result_type)
     if is_in(result_type, "max"):
         command = np.max
     elif is_in(result_type, "min"):
@@ -354,6 +357,17 @@ def function_switch(result_type):
 
     return command
 
+
+def return_numeric_function(n):
+    """ This function returns a function which extracts the value n from an array """
+
+    int_n = int(n)
+
+    def level(*args):
+        for arg in args:
+            return arg[int_n - 1]
+
+    return level
 
 ##################################
 # ##### label set manipulation ####
