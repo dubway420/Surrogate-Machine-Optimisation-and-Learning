@@ -19,6 +19,18 @@ inclusive_layers = [100, 6, 4, 2]
 
 layer_colors = ['royalblue', 'lime', 'yellow', 'red']
 
+def autolabel(rects, ax):
+    """Attach a text label above each bar in *rects*, displaying its height."""
+    for rect in rects:
+        height = round(rect.get_height(), 2)
+
+        ax.annotate('{}'.format(height),
+                    xy=(rect.get_x() + rect.get_width() / 2, height),
+                    xytext=(0, 3),  # 3 points vertical offset
+                    textcoords="offset points",
+                    ha='center', va='bottom')
+
+
 
 def autolabel(rects, ax):
     """Attach a text label above each bar in *rects*, displaying its height."""
@@ -174,7 +186,7 @@ class CoreView:
         sub_title, file_name = plot_names_title(self.experiment, self.iteration)
 
         self.subtitle = sub_title
-        self.file_name = "CoreView_" + file_name
+        self.file_name = "CoreView_" + self.convert_to + "_" + file_name
 
     def update_data(self, epoch, model, plot=True, diff=True, compare=True):
         """ Update the predictions"""
