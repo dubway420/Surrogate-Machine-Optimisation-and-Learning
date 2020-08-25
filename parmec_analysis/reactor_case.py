@@ -157,7 +157,7 @@ class Parse:
     # ---------------------FEATURE EXTRACTION-------------------
     # ==========================================================
 
-    def get_crack_array(self, array_type="orientations", levels='all'):
+    def get_crack_array(self, array_type="orientations", levels='all', print_mode=False):
         """ Returns the crack array. Can be of type 'orientations' or 'positions' """
 
         # The array is simply stored as self.crack array.
@@ -212,6 +212,9 @@ class Parse:
 
         # Interprets the 'levels' argument
         min_level, max_level = self.parse_level_argument(levels)
+
+        if print_mode:
+            return array[min_level:max_level].astype(int)
 
         return array[min_level:max_level]
 
@@ -367,7 +370,8 @@ class Parse:
     # ----------------------PROCESSING--------------------------
     # ==========================================================
 
-    def get_result_at_time(self, time_index=0, ext='.csv', result_columns='all', result_type="max", flat=False):
+    def get_result_at_time(self, time_index=0, ext='.csv', result_columns='all', result_type="max", flat=False,
+                           one_dim=True):
         """ Results results array for a particular time frame"""
 
         case_path = self.case
