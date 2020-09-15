@@ -155,6 +155,38 @@ class RegressionModels:
     # 0
     @staticmethod
     def convolutional_neural_network_2d(input_dims, output_dims, activation="linear", layers=(16, 32, 64),
+                                        regularizer=None, dropout=0.5, kernel_shape=3, padding="valid"):
+
+        layer_output_shapes, activations = layer_activations_validation(layers, activation)
+
+        # define our MLP network
+        model = Sequential()
+
+        model.name = "Convolutional Neural Network"
+
+        model.add(Conv2D(layer_output_shapes[0], kernel_size=kernel_shape, input_shape=input_dims,
+                         activity_regularizer=regularizer, padding=padding))
+        model.add(Activation(activations[0]))
+
+        for layer_output_shape, act in zip(layer_output_shapes[1:-2], activations[1:-2]):
+            model.add(Conv2D(layer_output_shape, kernel_size=kernel_shape, padding=padding))
+            model.add(Activation(act))
+
+        model.add(Flatten())
+
+        model.add(Dense(layer_output_shapes[-2], activation=activations[-2]))
+        model.add(Dropout(dropout))
+        model.add(Dense(layer_output_shapes[-1], activation=activations[-1]))
+
+        model.add(Dense(output_dims))
+        model.add(Activation("linear"))
+
+        # return our model
+        return model
+        
+        # 0
+    @staticmethod
+    def convolutional_neural_network_2d_no_fc(input_dims, output_dims, activation="linear", layers=(16, 32, 64),
                                         regularizer=None, dropout=0.5, kernel_shape=3):
 
         layer_output_shapes, activations = layer_activations_validation(layers, activation)
@@ -182,4 +214,4 @@ class RegressionModels:
         model.add(Activation("linear"))
 
         # return our model
-        return model
+        return model    

@@ -19,7 +19,7 @@ class TrialParameters:
             "Training for: " + str(self.epochs) + " epochs",
             "Optimiser: " + type(self.optimiser).__name__,
             "Learning rate: " + '%.2E' % Decimal(self.optimiser.get_config()['lr']),
-            "Decay: " + '%.2E' % Decimal(self.optimiser.get_config()['decay']),
+#            "Decay: " + '%.2E' % Decimal(self.optimiser.get_config()['decay']),
             "Loss function: " + self.loss_function.__name__
 
         ]
