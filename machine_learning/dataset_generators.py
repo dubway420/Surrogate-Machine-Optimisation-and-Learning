@@ -439,15 +439,31 @@ class Features1D(Features):
     def generate_array(self, dataset, channels, levels, array_type, extra_dimension):
 
         instance_array_length = self.number_channels * self.number_levels
-        X_1d = np.zeros([len(dataset.cases_list), instance_array_length])
+
+        shape = [len(dataset.cases_list), instance_array_length]
+
+        if is_in(array_type, "orien"):
+            shape.append(4)
+
+        X_1d = np.zeros(shape)
 
         for i, instance in enumerate(dataset.core_instances):
-            X_1d[i] = instance.crack_array_1d(channels=channels, levels=levels, array_type=array_type)
+            crack_array = instance.crack_array_1d(channels=channels, levels=levels, array_type=array_type)
+            if is_in(array_type, "pos"):
+                X_1d[i] = crack_array
+            else:
+                for j in range(1, 5):
+                    X_1d[i, :, j - 1] = np.where(crack_array == float(j), 1, 0)
+
 
         # If the user requires the array to be configured for convolutional networks, then the array is reshaped
         if extra_dimension:
-            X_shape = [X_1d.shape[0], X_1d.shape[1], 1]
-            return X_1d.reshape(X_shape)
+            if is_in(array_type, "pos"):
+                X_shape = [X_1d.shape[0], X_1d.shape[1], 1]
+                return X_1d.reshape(X_shape)
+            else:
+                X_shape = [X_1d.shape[0], X_1d.shape[1], X_1d.shape[2], 1]
+                return X_1d.reshape(X_shape)
 
         # Else just return the normal numpy array
         else:
@@ -477,6 +493,9 @@ class Features2D(Features1D):
         values_1d = Features1D.generate_array(self, dataset, channels, levels, array_type, extra_dimension)
 
         X_shape = [values_1d.shape[0], self.number_levels, self.number_channels]
+
+        if is_in(array_type, "orien"):
+            X_shape.append(4)
 
         # If the user requires the array to be configured for convolutional networks, then the array is reshaped
         if extra_dimension:
