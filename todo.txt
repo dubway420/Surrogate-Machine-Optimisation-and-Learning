@@ -1,0 +1,38 @@
+x 2019-08-26 _is_in function
+x 2019-08-27 number of cracks of each type
+x 2019-08-30 Specified channel array (1 d array showing crack the crack status of only the bricks in that channel)
+x 2019-09-09 cracks per layer
+number of cracks orientated towards channel
+x 2020-10-21 channel proximity to central
+reflector channels number
+peripheral channel true/false
+x 2020-03-10 resize padding?
+x 2020-03-10 interstitial array centered
+x 2019-09-12 look at output spreadsheet - get labels
+x 2020-03-10 max displacement
+set acceptable/unnacceptable cut off
+write documentation
+x 2020-10-07 Get array of crack coordinates
+------
+x 2019-10-03 Get new output files extracted
+x 2019-09-13 Set up and run batch2 - intact and smaller number of cracks
+x 2019-11-12 Channel Coordinates - fuel and interstitial
+x 2019-11-12 Query channel values (pick all the bricks that go into that channel)
+x 2019-10-03 Compare total/max displacement between cases
+x 2019-10-03 Time history of damage
+x 2019-10-17 Python dataprocesspr
+x 2019-10-17 Amend pipeline to include python processor
+x 2019-10-17 Figure out which interstitials contain control rods
+x 2019-10-17 Higher sample rate case runs
+x 2019-11-12 Create new time history file
+x 2020-03-10 Result array
+one-hot encoding
+x 2020-10-07 Variable cracks
+x 2020-10-07 Joint plot
+x 2020-10-07 Correlations
+(B) Convert to classification - positive/negative
+x 2020-10-21 Code Review
+(A) minimum number of layers to get acceptable result
+(A) Early stopping
+(A) Multiple repeats of best experiment and take best weights
+(B) True 3D convolution
