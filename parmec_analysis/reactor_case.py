@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Created by Huw Rhys Jones - huw.jones-5@postgrad.manchester.ac.uk - August 2019
+# Created by Huw Rhys Jones - huw.jones@postgrad.manchester.ac.uk - August 2019
 # 
 # *******************CoreInstance*******************
 # 
