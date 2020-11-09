@@ -1,12 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6283d45d-8671-4f80-b908-219a03427a8e" name="Default Changelist" comment="">
+    <list default="true" id="6283d45d-8671-4f80-b908-219a03427a8e" name="Default Changelist" comment="Merge branch 'Development' of https://gitlab.cs.man.ac.uk/q59494hj/parmec_agr_ml_surrogate into Development&#10;&#10;# Conflicts:&#10;#&#9;.idea/misc.xml&#10;#&#9;parmec_analysis/__pycache__/utils.cpython-37.pyc">
+      <change afterPath="$PROJECT_DIR$/.idea/dictionaries/huw.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Comparing_three_cases/abs_max_results1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Comparing_three_cases/abs_max_results2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/channel_unique_dev.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/machine_learning.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mixed_training.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/parmec_analysis/dataset_generators.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/parmec_analysis/test.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/variable_cracks/variable_crack_distribution.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/variable_cracks/variable_results_48_abs_max.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/variable_cracks/variable_results_48_sum.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/variable_fraction.npy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/Huw.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/Huw.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/parmec_agr_ml_surrogate.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/parmec_agr_ml_surrogate.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/parmec_analysis/reactor_case.py" beforeDir="false" afterPath="$PROJECT_DIR$/parmec_analysis/reactor_case.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Comparing_three_cases/results1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Comparing_three_cases/results2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/development.py" beforeDir="false" afterPath="$PROJECT_DIR$/development.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/intact_core_rb.0.csv" beforeDir="false" afterPath="$PROJECT_DIR$/parmec_analysis/intact_core_rb.0.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/parmec_analysis/core_parse.py" beforeDir="false" afterPath="$PROJECT_DIR$/parmec_analysis/reactor_case.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/parmec_analysis/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/parmec_analysis/utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/parmec_analysis/visualisation.py" beforeDir="false" afterPath="$PROJECT_DIR$/parmec_analysis/visualisation.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -128,6 +148,9 @@
       <workItem from="1603289444655" duration="10962000" />
       <workItem from="1603467507081" duration="2040000" />
       <workItem from="1604590869087" duration="291000" />
+      <workItem from="1604927574422" duration="599000" />
+      <workItem from="1604929379025" duration="3000" />
+      <workItem from="1604937073604" duration="743000" />
     </task>
     <task id="LOCAL-00001" summary="Added 'shuffle' function to dataset generator, number of instances attribute, other cosmetic changes">
       <created>1585661610794</created>
@@ -203,65 +226,38 @@
     <MESSAGE value="Added training and testing splitting functions to all three main classes" />
     <MESSAGE value="experiments nearly set up" />
     <MESSAGE value="experiments fully set up" />
-    <option name="LAST_COMMIT_MESSAGE" value="experiments fully set up" />
+    <MESSAGE value="Merge branch 'Development' of https://gitlab.cs.man.ac.uk/q59494hj/parmec_agr_ml_surrogate into Development&#10;&#10;# Conflicts:&#10;#&#9;.idea/misc.xml&#10;#&#9;parmec_analysis/__pycache__/utils.cpython-37.pyc" />
+    <option name="LAST_COMMIT_MESSAGE" value="Merge branch 'Development' of https://gitlab.cs.man.ac.uk/q59494hj/parmec_agr_ml_surrogate into Development&#10;&#10;# Conflicts:&#10;#&#9;.idea/misc.xml&#10;#&#9;parmec_analysis/__pycache__/utils.cpython-37.pyc" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="141" y="55" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1585960776140">
-      <screen x="0" y="25" width="1366" height="743" />
-    </state>
-    <state x="141" y="55" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.25.1366.743@0.25.1366.743" timestamp="1585960776140" />
-    <state x="294" y="25" width="769" height="738" key="CommitChangelistDialog2" timestamp="1585961019897">
-      <screen x="0" y="25" width="1366" height="743" />
-    </state>
-    <state x="294" y="25" width="769" height="738" key="CommitChangelistDialog2/0.25.1366.743@0.25.1366.743" timestamp="1585961019897" />
-    <state x="99" y="125" width="1168" height="544" key="DiffContextDialog" timestamp="1585961562709">
-      <screen x="0" y="25" width="1366" height="743" />
-    </state>
-    <state x="99" y="125" width="1168" height="544" key="DiffContextDialog/0.25.1366.743@0.25.1366.743" timestamp="1585961562709" />
-    <state x="466" y="155" width="426" height="479" key="FileChooserDialogImpl" timestamp="1585435573795">
-      <screen x="0" y="25" width="1366" height="743" />
-    </state>
-    <state x="466" y="155" width="426" height="479" key="FileChooserDialogImpl/0.25.1366.743@0.25.1366.743" timestamp="1585435573795" />
-    <state width="1320" height="207" key="GridCell.Tab.0.bottom" timestamp="1585960783478">
-      <screen x="0" y="25" width="1366" height="743" />
-    </state>
-    <state width="1320" height="207" key="GridCell.Tab.0.bottom/0.25.1366.743@0.25.1366.743" timestamp="1585960783478" />
-    <state width="1320" height="207" key="GridCell.Tab.0.center" timestamp="1585960783473">
-      <screen x="0" y="25" width="1366" height="743" />
-    </state>
-    <state width="1320" height="207" key="GridCell.Tab.0.center/0.25.1366.743@0.25.1366.743" timestamp="1585960783473" />
-    <state width="1320" height="207" key="GridCell.Tab.0.left" timestamp="1585960783472">
-      <screen x="0" y="25" width="1366" height="743" />
-    </state>
-    <state width="1320" height="207" key="GridCell.Tab.0.left/0.25.1366.743@0.25.1366.743" timestamp="1585960783472" />
-    <state width="1320" height="207" key="GridCell.Tab.0.right" timestamp="1585960783474">
-      <screen x="0" y="25" width="1366" height="743" />
-    </state>
-    <state width="1320" height="207" key="GridCell.Tab.0.right/0.25.1366.743@0.25.1366.743" timestamp="1585960783474" />
-    <state x="187" y="32" key="SettingsEditor" timestamp="1585588573592">
-      <screen x="0" y="25" width="1366" height="743" />
-    </state>
-    <state x="187" y="32" key="SettingsEditor/0.25.1366.743@0.25.1366.743" timestamp="1585588573592" />
-    <state x="278" y="121" width="802" height="546" key="Vcs.Push.Dialog.v2" timestamp="1585961023389">
-      <screen x="0" y="25" width="1366" height="743" />
-    </state>
-    <state x="278" y="121" width="802" height="546" key="Vcs.Push.Dialog.v2/0.25.1366.743@0.25.1366.743" timestamp="1585961023389" />
-    <state x="376" y="224" key="com.intellij.ide.util.TipDialog" timestamp="1585918805308">
-      <screen x="0" y="25" width="1366" height="743" />
-    </state>
-    <state x="376" y="224" key="com.intellij.ide.util.TipDialog/0.25.1366.743@0.25.1366.743" timestamp="1585918805308" />
-    <state x="488" y="317" width="382" height="155" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1585962005845">
-      <screen x="0" y="25" width="1366" height="743" />
-    </state>
-    <state x="488" y="317" width="382" height="155" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.25.1366.743@0.25.1366.743" timestamp="1585962005845" />
-    <state x="460" y="102" width="437" height="584" key="git4idea.branch.GitSmartOperationDialog" timestamp="1585961099959">
-      <screen x="0" y="25" width="1366" height="743" />
-    </state>
-    <state x="460" y="102" width="437" height="584" key="git4idea.branch.GitSmartOperationDialog/0.25.1366.743@0.25.1366.743" timestamp="1585961099959" />
-    <state x="427" y="191" width="504" height="407" key="git4idea.merge.GitMergeDialog" timestamp="1585961616699">
-      <screen x="0" y="25" width="1366" height="743" />
-    </state>
-    <state x="427" y="191" width="504" height="407" key="git4idea.merge.GitMergeDialog/0.25.1366.743@0.25.1366.743" timestamp="1585961616699" />
+    <state x="141" y="55" key="#com.intellij.execution.impl.EditConfigurationsDialog" />
+    <state x="141" y="55" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.25.1366.743@0.25.1366.743" />
+    <state x="294" y="25" width="769" height="738" key="CommitChangelistDialog2" />
+    <state x="294" y="25" width="769" height="738" key="CommitChangelistDialog2/0.25.1366.743@0.25.1366.743" />
+    <state x="99" y="125" width="1168" height="544" key="DiffContextDialog" />
+    <state x="99" y="125" width="1168" height="544" key="DiffContextDialog/0.25.1366.743@0.25.1366.743" />
+    <state x="466" y="155" width="426" height="479" key="FileChooserDialogImpl" />
+    <state x="466" y="155" width="426" height="479" key="FileChooserDialogImpl/0.25.1366.743@0.25.1366.743" />
+    <state width="1320" height="207" key="GridCell.Tab.0.bottom" />
+    <state width="1320" height="207" key="GridCell.Tab.0.bottom/0.25.1366.743@0.25.1366.743" />
+    <state width="1320" height="207" key="GridCell.Tab.0.center" />
+    <state width="1320" height="207" key="GridCell.Tab.0.center/0.25.1366.743@0.25.1366.743" />
+    <state width="1320" height="207" key="GridCell.Tab.0.left" />
+    <state width="1320" height="207" key="GridCell.Tab.0.left/0.25.1366.743@0.25.1366.743" />
+    <state width="1320" height="207" key="GridCell.Tab.0.right" />
+    <state width="1320" height="207" key="GridCell.Tab.0.right/0.25.1366.743@0.25.1366.743" />
+    <state x="187" y="32" key="SettingsEditor" />
+    <state x="187" y="32" key="SettingsEditor/0.25.1366.743@0.25.1366.743" />
+    <state x="278" y="121" width="802" height="546" key="Vcs.Push.Dialog.v2" />
+    <state x="278" y="121" width="802" height="546" key="Vcs.Push.Dialog.v2/0.25.1366.743@0.25.1366.743" />
+    <state x="376" y="224" key="com.intellij.ide.util.TipDialog" />
+    <state x="376" y="224" key="com.intellij.ide.util.TipDialog/0.25.1366.743@0.25.1366.743" />
+    <state x="488" y="317" width="382" height="155" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" />
+    <state x="488" y="317" width="382" height="155" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.25.1366.743@0.25.1366.743" />
+    <state x="460" y="102" width="437" height="584" key="git4idea.branch.GitSmartOperationDialog" />
+    <state x="460" y="102" width="437" height="584" key="git4idea.branch.GitSmartOperationDialog/0.25.1366.743@0.25.1366.743" />
+    <state x="427" y="191" width="504" height="407" key="git4idea.merge.GitMergeDialog" />
+    <state x="427" y="191" width="504" height="407" key="git4idea.merge.GitMergeDialog/0.25.1366.743@0.25.1366.743" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/parmec_agr_ml_surrogate$test.coverage" NAME="test Coverage Results" MODIFIED="1603469248274" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />

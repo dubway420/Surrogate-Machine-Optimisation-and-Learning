@@ -1,96 +1,100 @@
-# from sklearn.model_selection import train_test_split
-# from sklearn.linear_model import LinearRegression, Ridge
-# from sklearn.tree import DecisionTreeRegressor
-# from keras.layers.convolutional import Conv1D, Conv2D
-# from keras.layers import Flatten
-# from keras.models import Sequential
-# from keras.layers.core import Dense
-# from pyimagesearch import models
-# from keras.optimizers import Adam
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression, Ridge
+from sklearn.tree import DecisionTreeRegressor
+from keras.layers.convolutional import Conv1D, Conv2D
+from keras.layers import Flatten
+from keras.models import Sequential
+from keras.layers.core import Dense
+from pyimagesearch import models
+from keras.optimizers import Adam
 import numpy as np
 import pickle
 import seaborn as sns
 
 from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
-from parmec_analysis import core_parse as core
+from parmec_analysis import reactor_case as core
 from parmec_analysis import utils
 
 
 #
-# def features_and_labels_single_frame(path_string, time=50, result="1", x_type='positions'):
-#     """ Gets the features and labels from the folder of results"""
-#
-#     cases = tls.cases_list(path_string)
-#
-#     X, Y = [], []
-#
-#     for case in cases:
-#         instance = ci(case)
-#
-#         X.append(instance.linear_crack_array_1d(array_type=x_type))
-#         Y.append(instance.get_result_at_time(time, result_columns=str(result)))
-#
-#     return X, Y
+def features_and_labels_single_frame(path_string, time=50, result="1", x_type='positions'):
+    """ Gets the features and labels from the folder of results"""
 
-#
-# def multi_layer_perceptron(input_dims, output_dims):
-#     # define our MLP network
-#     model = Sequential()
-#
-#     model.name = "Multi-layer Perceptron"
-#
-#     model.add(Dense(8, input_dim=input_dims, activation="relu"))
-#     model.add(Dense(4, activation="relu"))
-#     model.add(Dense(output_dims, activation="linear"))
-#
-#     # return our model
-#     return model
-#
-#
-# def wider_model(input_dims, output_dims):
-#     # create model
-#     model = Sequential()
-#
-#     model.name = "Wider Perceptron"
-#
-#     model.add(Dense(20, input_dim=input_dims, kernel_initializer='normal', activation='relu'))
-#     model.add(Dense(4, activation="relu"))
-#     model.add(Dense(output_dims, kernel_initializer='normal'))
-#
-#     return model
-#
-#
-# def cnn1D(input_dims, output_dims):
-#     # create model
-#     model = Sequential()  # add model layers
-#     model.add(Conv1D(64, kernel_size=3, activation='relu', input_shape=input_dims))
-#     model.add(Conv1D(32, kernel_size=3, activation='relu'))
-#     model.add(Flatten())
-#     model.add(Dense(output_dims, activation='softmax'))
-#
-#     model.name = "CNN 1D"
-#     # Compile model
-#     # model.compile(loss='mean_squared_error', optimizer='adam')
-#     return model
-#
-#
-# def cnn2D(input_dims, output_dims):
-#     # create model
-#     model = Sequential()  # add model layers
-#     model.add(Conv2D(64, kernel_size=3, activation='relu', input_shape=input_dims))
-#     model.add(Conv2D(32, kernel_size=3, activation='relu'))
-#     model.add(Flatten())
-#     model.add(Dense(output_dims, activation='softmax'))
-#
-#     # Name the neural network
-#     model.name = "CNN 2D - 1"
-#
-#     # model.compile(loss='mean_squared_error', optimizer='adam')
-#     return model
+    cases = tls.cases_list(path_string)
+
+    X, Y = [], []
+
+    for case in cases:
+        instance = ci(case)
+
+        X.append(instance.linear_crack_array_1d(array_type=x_type))
+        Y.append(instance.get_result_at_time(time, result_columns=str(result)))
+
+    return X, Y
+
+class MLModels:
+
+    @staticmethod
+    def multi_layer_perceptron(input_dims, output_dims):
+
+        # define our MLP network
+        model = Sequential()
+
+        model.name = "Multi-layer Perceptron"
+
+        model.add(Dense(8, input_dim=input_dims, activation="relu"))
+        model.add(Dense(4, activation="relu"))
+        model.add(Dense(output_dims, activation="linear"))
+
+        # return our model
+        return model
+
+    @staticmethod
+    def wider_model(input_dims, output_dims):
+
+        # create model
+        model = Sequential()
+
+        model.name = "Wider Perceptron"
+
+        model.add(Dense(20, input_dim=input_dims, kernel_initializer='normal', activation='relu'))
+        model.add(Dense(4, activation="relu"))
+        model.add(Dense(output_dims, kernel_initializer='normal'))
+
+        return model
+
+    @staticmethod
+    def cnn1D(input_dims, output_dims):
+
+        # create model
+        model = Sequential()  # add model layers
+        model.add(Conv1D(64, kernel_size=3, activation='relu', input_shape=input_dims))
+        model.add(Conv1D(32, kernel_size=3, activation='relu'))
+        model.add(Flatten())
+        model.add(Dense(output_dims, activation='softmax'))
+
+        model.name = "CNN 1D"
+
+        return model
+
+    @staticmethod
+    def cnn2D(input_dims, output_dims):
+        # create model
+        model = Sequential()  # add model layers
+        model.add(Conv2D(64, kernel_size=3, activation='relu', input_shape=input_dims))
+        model.add(Conv2D(32, kernel_size=3, activation='relu'))
+        model.add(Flatten())
+        model.add(Dense(output_dims, activation='softmax'))
+
+        # Name the neural network
+        model.name = "CNN 2D - 1"
+
+        # model.compile(loss='mean_squared_error', optimizer='adam')
+        return model
 
 
-#
+ml_models().cnn2D([2, 3], [3, 4])
 
 ##########
 # LOADS DATA FROM CASES - CAN COMMENT ALL THIS OUT AFTER DOING IT ONCE
@@ -101,9 +105,9 @@ from parmec_analysis import utils
 #
 # print(instance_intact.layers_from_centre(141, channel_type="inter"))
 
-x = [-1, 2, 3, -5]
-
-print(utils.ReLu(x))
+# x = [-1, 2, 3, -5]
+#
+# print(utils.ReLu(x))
 
 
 # brick_coord_list_fuel = instance_intact.get_brick_xyz_positions('xyz', channel_type="fuel", channels_only=0)
@@ -178,7 +182,6 @@ print(utils.ReLu(x))
 #     model.summary()
 #
 #     print("\n")
-
 
 
 # model_names = []
@@ -266,32 +269,32 @@ print(utils.ReLu(x))
 #     model.compile(loss="mean_absolute_percentage_error", optimizer=opt)
 #
 #     model.summary()
-    # model.fit(X_train_2D, Y_train, epochs=100, validation_data=(X_test_2D, Y_test))
-    #
-    # print("\n=============\n")
-    #
-    # model_name = model.name
-    # print(model_name)
-    # print("\n")
-    #
-    # model_names.append(model_name)
-    #
-    # training_result = model.predict(X_train_2D)
-    # testing_result = model.predict(X_test_2D)
-    #
-    # training_results.append(training_result)
-    # testing_results.append(testing_result)
-    #
-    # mse_training = round(mean_squared_error(training_result, Y_train), 2)
-    # mse_testing = round(mean_squared_error(testing_result, Y_test), 2)
-    #
-    # training_accuracies.append(mse_training)
-    # testing_accuracies.append(mse_testing)
-    #
-    # print("Training accuracy: ", mse_training)
-    # print("Testing accuracy: ", mse_testing)
-    #
-    # print("\n=============\n")
+# model.fit(X_train_2D, Y_train, epochs=100, validation_data=(X_test_2D, Y_test))
+#
+# print("\n=============\n")
+#
+# model_name = model.name
+# print(model_name)
+# print("\n")
+#
+# model_names.append(model_name)
+#
+# training_result = model.predict(X_train_2D)
+# testing_result = model.predict(X_test_2D)
+#
+# training_results.append(training_result)
+# testing_results.append(testing_result)
+#
+# mse_training = round(mean_squared_error(training_result, Y_train), 2)
+# mse_testing = round(mean_squared_error(testing_result, Y_test), 2)
+#
+# training_accuracies.append(mse_training)
+# testing_accuracies.append(mse_testing)
+#
+# print("Training accuracy: ", mse_training)
+# print("Testing accuracy: ", mse_testing)
+#
+# print("\n=============\n")
 #
 # names = ['LR', 'DT', 'R', 'MLP', 'WP', 'CNN 1', 'CNN 2']
 #

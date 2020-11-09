@@ -1,0 +1,21 @@
+
+inputs=[
+1. 1d_linear,
+2. 1d_multichannel (2d with nn=False),
+3. 2d,
+4. 3d (level as channel depth)
+]
+
+output_shapes=[
+1. linear 1d    } Results comparable
+2. 2d,          }
+
+3. max          )  not comparable with each other or the other group
+4. sum          )
+5. min          )
+6. average      )
+]
+
+each for result column 1 & 2
+
+Total of 48 cases

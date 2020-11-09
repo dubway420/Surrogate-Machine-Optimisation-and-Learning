@@ -1,7 +1,11 @@
 import os
+import inspect
 import numpy as np
 import re as remove
 import pandas as pd
+
+# Global Variables
+split_separators = ["to", "To", "TO", ":", "-", "/", "_", ",", " "]
 
 
 def get_id_from_filename(filename):
@@ -10,20 +14,29 @@ def get_id_from_filename(filename):
     return os.path.splitext(os.path.basename(filename))[0]
 
 
-def is_in(string, search_term):
+def is_in(string, search_term, *args):
     """ This method tells the user if a search term is contained within another string.
     It's an extension of the 'in' qualifier, but does so for all capitalisations"""
 
     # Converts both input arguments to lowercase
     string_lowercase = string.lower()
-    search_term_lowercase = search_term.lower()
 
-    # checks if the lowercase search_string is in the string
+    # If there are any optional arguments, convert those to lower case too
+    terms_lowercase = [search_term.lower()]
+    for term in args:
+        if isinstance(term, str):
+            terms_lowercase.append(term.lower())
+        else:
+            print("skipping term: ", term, "which is not a valid string")
+
+    # checks if the lowercase search_string is in each string
     # If it is, return true, else false
-    if search_term_lowercase in string_lowercase:
-        return True
-    else:
-        return False
+
+    for search_term_lowercase in terms_lowercase:
+        if search_term_lowercase in string_lowercase:
+            return True
+
+    return False
 
 
 def directories_in_path(path):
@@ -79,8 +92,6 @@ def split_by_column_uniques(input_array, column_no):
 def string_splitter(string):
     """splits a string containing two numbers into two integers"""
 
-    split_separators = ["to", "To", "TO", ":", "-", "/", "_", ","]
-
     # Iterates through possible separators to see if they are contained in the input string
     for splitter in split_separators:
 
@@ -109,6 +120,26 @@ def string_splitter(string):
     # If none of the split separators are found in the input string, sends a warning and returns default (0, 0)
     print('Warning: could not split string \"', string, '\" into two equal parts. Returning default output (0, 0)')
     return 0, 0
+
+
+def features_and_or_labels(features_labels):
+    """ Takes the user defined string 'features_labels' and returns a list of booleans dep"""
+    vector = [False, False]
+
+    if is_in(features_labels, 'both', 'all'):
+        vector = [True, True]
+    if is_in(features_labels, 'feat'):
+        vector[0] = True
+    if is_in(features_labels, 'lab'):
+        vector[1] = True
+
+    return vector
+
+
+def retrieve_name(var):
+    """ For a given variable, var, returns the variable name"""
+    callers_local_vars = inspect.currentframe().f_back.f_locals.items()
+    return [var_name for var_name, var_val in callers_local_vars if var_val is var][0]
 
 
 def read_output_file(filename, pandas=False):
@@ -222,6 +253,10 @@ def index_array_interstitial(case, ext='.csv'):
     return flat_array
 
 
+################################################################
+################# DATA EXTRACTION FUNCTIONS ####################
+################################################################
+
 def absolute_sum(array):
     """ return the sum of the absolute of every value in an array"""
 
@@ -229,13 +264,113 @@ def absolute_sum(array):
     return sum(absolute_array)
 
 
-def ReLu(array):
-    return sum(ReLu_all(array))
+def max_absolute(array):
+    """ return the greatest value in absolute terms"""
+
+    absolute_array = np.absolute(array)
+    return max(absolute_array)
 
 
-def ReLu_all(array):
+def floor_zero_sum(array):
+    return sum(floor_zero_all(array))
+
+
+def floor_zero_all(array):
     return np.maximum(array, 0)
 
 
 def return_all(array):
-    return array
+    return np.array(array).flatten()
+
+
+def function_switch(result_type):
+    if is_in(result_type, "max"):
+        command = np.max
+    elif is_in(result_type, "min"):
+        command = np.min
+    elif is_in(result_type, "sum"):
+        command = np.sum
+    elif is_in(result_type, "mean"):
+        command = np.mean
+    elif is_in(result_type, "med"):
+        command = np.median
+    elif is_in(result_type, "abs") and is_in(result_type, "sum"):
+        command = absolute_sum
+    elif is_in(result_type, "floor zero sum"):
+        command = floor_zero_sum
+    elif is_in(result_type, "floor zero all"):
+        command = floor_zero_all
+    elif is_in(result_type, "abs") and is_in(result_type, "max"):
+        command = max_absolute
+    elif is_in(result_type, "all"):
+        command = return_all
+    # TODO min vs max function
+    else:
+        command = np.sum
+
+    return command
+
+
+##################################
+###### label set manipulation ####
+##################################
+
+def convert_all_to_channel_result(Y, result_type, no_channels, no_levels):
+    """ This converts a flat array that contains a value for all bricks to one where there's a value per channel """
+
+    # The command to use to convert the array to
+    command = function_switch(result_type)
+
+    # Initialise array to be returned
+    Y_converted = np.zeros([Y.shape[0], no_channels])
+
+    for i, case in enumerate(Y):
+
+        case_reshaped = case.reshape(no_channels, no_levels)
+        for c, channel in enumerate(case_reshaped):
+            Y_converted[i, c] = command(channel)
+
+    return Y_converted
+
+
+def convert_case_to_channel_result(y, result_type, no_channels, no_levels):
+    # The command to use to convert the array to
+    command = function_switch(result_type)
+
+    y_converted = np.zeros(no_channels)
+    y_reshaped = y.reshape(no_channels, no_levels)
+
+    for c, channel in enumerate(y_reshaped):
+        y_converted[c] = command(channel)
+
+    return y_converted
+
+
+def plot_names_title(model, dataset, features, labels, iteration):
+    line = ""
+    file_name = dataset.name + "_" + model.short_name
+
+    line += "Feature Channels/Levels: " + str(features.channels_range[0] + 1) + "-" + \
+            str(features.channels_range[1]) + ", " + str(features.levels_range[0] + 1) + "-" + \
+            str(features.levels_range[1]) + ", Array Type: " + str(features.array_type)
+
+    line += "\n"
+
+    file_name += "_C" + str(features.channels_range[0]) + "_" + str(features.channels_range[1]) + "_" \
+                 + "L" + str(features.levels_range[0]) + "_" + str(features.levels_range[1]) + "_"
+
+    # Label data
+
+    line += "Label Channels/Levels: " + str(labels.channels_range[0] + 1) + "-" + \
+            str(labels.channels_range[1]) + ", " + str(labels.levels_range[0] + 1) + "-" + \
+            str(labels.levels_range[1]) + ", Time: " + str(labels.time) + ", Column: " + \
+            str(labels.column) + ", Result Type: " + str(labels.type)
+
+    file_name += str(labels.channels_range[0]) + "_" + str(labels.channels_range[1]) + "_" + \
+                 str(labels.levels_range[0]) + "_" + str(labels.levels_range[1]) + "_" + \
+                 str(labels.time) + "_" + str(labels.column) + "_" + str(labels.type) + \
+                 "I" + str(iteration)
+
+    file_name += ".png"
+
+    return line, file_name

@@ -31,7 +31,10 @@ import pandas as pd
 import math
 from parmec_analysis import utils as utils
 
+# TODO split parse into FeaturesCase and LabelsCase
 
+
+# TODO Convert to FullCase which will inherit the functions of FeaturesCase and LabelsCAse
 class Parse:
     """ Instance representing the entire core, including crack positions in 3D array and post earthquake
     array of displacements"""
@@ -300,29 +303,43 @@ class Parse:
 
         return np.array(cracks_per_layer)
 
-    def linear_crack_array_1d(self, channels='all', array_type='orientations', levels='all'):
+    def crack_array_1d(self, channels='all', array_type='orientations', levels='all'):
 
+        # Gets the instance crack array
+        crack_array_3d = self.channel_array_argument_wrapper(array_type=array_type, levels=levels, quiet=True)
+
+        # Removes all padding from the array
+        crack_array_no_padding = crack_array_3d[crack_array_3d != 0]
+
+        # If all channels are requested, simply return the full array
+        if utils.is_in(channels, "all") or utils.is_in(channels, "core"):
+            return crack_array_no_padding
+
+        # If not, try and work out which channels are required
+
+        # Get the channel range. It's fuel array type because interstitial bricks don't crack
+        min_channel, max_channel = self.parse_channel_argument(channels, 'fuel')
+        number_of_channels = max_channel - min_channel
+        
+        # Get the range of levels
         min_level, max_level = self.parse_level_argument(levels)
         number_of_levels = max_level - min_level
 
-        # It's fuel array type because interstitial bricks don't crack
-        min_channel, max_channel = self.parse_channel_argument(channels, 'fuel')
-        number_of_channels = max_channel - min_channel
-
+        # Create a new array the size
         output_array_size = number_of_levels * number_of_channels
-        output_array = np.zeros(output_array_size)
+        crack_array_user = np.zeros(output_array_size)
 
-        i = 0
+        for i in range(number_of_levels):
 
-        for l in range(min_level + 1, max_level + 1):
+            input_start = (i * self.fuel_channels) + min_channel
+            input_end = (i * self.fuel_channels) + max_channel
 
-            for c in range(min_channel, max_channel):
-                # TODO replace with array flattening and removal of 0s - it works fine like this, but is inefficient.
-                #  Calling the global array and then slicing will be more efficient and easier to read.
-                output_array[i] = int(self.get_channel_crack_array(c, 0, array_type=array_type, levels=str(l))[:, 0, 0])
-                i += 1
+            output_start = i * number_of_channels
+            output_end = output_start + number_of_channels
 
-        return output_array
+            crack_array_user[output_start:output_end] = crack_array_no_padding[input_start:input_end]
+
+        return crack_array_user
 
     def channel_specific_cracks(self):
         """ Return the number of cracks local to each channel"""
@@ -346,10 +363,15 @@ class Parse:
     # ----------------------PROCESSING--------------------------
     # ==========================================================
 
-    def get_result_at_time(self, time_index=0, ext='.csv', result_columns='all', result_type="max"):
+    def get_result_at_time(self, time_index=0, ext='.csv', result_columns='all', result_type="max", flat=False):
         """ Results results array for a particular time frame"""
 
         case_path = self.case
+
+        no_interstitial_channels = self.interstitial_channels
+        no_interstitial_levels = self.inter_levels
+
+        # These are the indices of interstitial bricks from the results array
         indices = self.results_indices
 
         time_file = case_path + '.' + str(time_index) + ext
@@ -388,40 +410,38 @@ class Parse:
 
         # ==============================================
 
-        if utils.is_in(result_type, "max"):
-            command = np.max
-        elif utils.is_in(result_type, "min"):
-            command = np.min
-        elif utils.is_in(result_type, "sum"):
-            command = np.sum
-        elif utils.is_in(result_type, "mean"):
-            command = np.mean
-        elif utils.is_in(result_type, "med"):
-            command = np.median
-        elif utils.is_in(result_type, "abs") and utils.is_in(result_type, "sum"):
-            command = utils.absolute_sum
-        elif utils.is_in(result_type, "relu"):
-            command = utils.ReLu
-        elif utils.is_in(result_type, "all"):
-            command = utils.return_all
-        # TODO min vs max function
-        else:
-            command = np.sum
+        command = utils.function_switch(result_type)
 
         time_array_user_columns = time_array_base[:, min_column:max_column]
 
         # ==============================================
         # Sorting the results file into sub arrays, each corresponding to a channel
-        time_array_sorted = []
+
+        # Give numpy array length of interstitial channels
+        result_array_dims = [no_interstitial_channels]
+
+        # If all of the results in a channel are requested, then the array is made 2D
+        if utils.is_in(result_type, "all"):
+            result_array_dims.append(no_interstitial_levels)
+
+        results_at_time_channel_sorted = np.zeros(result_array_dims)
 
         # For each sub array in the indices array, extract the corresponding bricks
-        for channel in indices:
+        for i, channel in enumerate(indices):
             # TODO - if there's more than one column, takes the by column function
 
-            channel_result = command(time_array_user_columns[channel])
-            time_array_sorted.append(channel_result)
+            channel_result = command(time_array_user_columns[channel][0:self.inter_levels])
 
-        return time_array_sorted
+            # # # One of the channels has more than 13 bricks
+            # if utils.is_in(result_type, "all"):
+            #     channel_result = channel_result[0:13]
+
+            results_at_time_channel_sorted[i] = channel_result
+
+        if flat:
+            return results_at_time_channel_sorted.flatten()
+
+        return results_at_time_channel_sorted
 
     def get_fuel_result_at_time(self, time_index=0, ext='.csv', result_columns='all', result_type="max"):
         """ Results results array for a particular time frame"""
@@ -619,9 +639,22 @@ class Parse:
         else:
             return self.interstitial_channels
 
-    def parse_level_argument(self, levels):
+    def top_level(self, channel_type='fuel'):
+        """ Returns the level number of the top level """
+
+        # Depending on whether fuel or interstitial type is specified, sets the top level i.e. the number of levels
+        # of that type (7 for fuel, 13 interstitial by default)
+        if utils.is_in(channel_type, "fuel"):
+            return self.core_levels
+        else:
+            return self.inter_levels
+
+    def parse_level_argument(self, levels, channel_type='fuel'):
         """ Takes a string or integer as input and returns a tuple (min_level, max_level)
         stating the range of levels required by the user"""
+
+        # Gets the highest level depending
+        top_level = self.top_level(channel_type)
 
         # Handles if user specifies levels by string
         if isinstance(levels, str):
@@ -633,11 +666,11 @@ class Parse:
             # Can handle slight misspellings or capitalisation
             # DEFAULT return all levels
             elif utils.is_in(levels, "all"):
-                return 0, self.core_levels
+                return 0, top_level
 
             # Top level
             elif utils.is_in(levels, "top"):
-                return self.core_levels - 1, self.core_levels
+                return top_level - 1, top_level
 
             # Bottom level
             elif utils.is_in(levels, "bot"):
@@ -651,7 +684,7 @@ class Parse:
                 components = split_items[0] - 1, split_items[1]
 
             # check if component[0] (min_level) is in acceptable range
-            if 0 <= int(components[0]) < self.core_levels:
+            if 0 <= int(components[0]) < top_level:
                 min_level = int(components[0])
             else:
                 print("WARNING: Specified lower bound level number (" + str(components[0]).strip()
@@ -660,24 +693,24 @@ class Parse:
 
             # check if component[1] (max_level) greater than min level and lower than the
             # maximum number of levels
-            if min_level < int(components[1]) <= self.core_levels:
+            if min_level < int(components[1]) <= top_level:
                 max_level = int(components[1])
             else:
                 print("WARNING: Specified upper bound level number (" + str(components[1]).strip()
                       + ") is outside of the acceptable range. Setting to default (" +
-                      str(self.core_levels) + ")")
-                max_level = self.core_levels
+                      str(top_level) + ")")
+                max_level = top_level
 
         # Handles if user specifies level type by integer
         # In this case, the min and max level is the same - it is assumed the user is interested in just a single level
         elif isinstance(levels, int):
 
             # Checks that level is in the region 1 - 7
-            if levels < 1 or levels > self.core_levels:
+            if levels < 1 or levels > top_level:
                 print("Invalid levels argument specified (" + str(levels) + "). Setting levels to default (1 - " + str(
-                    self.core_levels) + ").")
+                    top_level) + ").")
                 min_level = 0
-                max_level = self.core_levels
+                max_level = top_level
             else:
                 min_level = levels - 1
                 max_level = levels
@@ -685,15 +718,17 @@ class Parse:
         # If it can't figure out what the user wants, it just returns all levels
         else:
             print("Invalid levels argument specified (" + str(levels) + "). Setting levels to default (1 - " + str(
-                self.core_levels) + ").")
+                top_level) + ").")
             min_level = 0
-            max_level = self.core_levels
+            max_level = top_level
 
         return min_level, max_level
 
     def parse_channel_argument(self, channels, channel_type="fuel"):
         """ Takes a string or integer as input and returns a tuple (min_channel, max_channel)
         stating the range of levels required by the user"""
+
+        # TODO the value returned for min_channel is not zero based. Also see 334 and 335.
 
         # Depending on whether fuel or interstitial type is specified, sets the last channel i.e. the number of channels
         # of that type (284 for fuel, 321 interstitial by default)
@@ -703,24 +738,23 @@ class Parse:
         if isinstance(channels, str):
 
             if channels.isnumeric():
-                min_channel = int(channels)
+                min_channel = int(channels) - 1
                 max_channel = int(channels)
-                print("numeric")
 
             # Can handle slight misspellings or capitalisation
             # DEFAULT return all channels
-            elif utils.is_in(channels, "all"):
-                min_channel = 1
+            elif utils.is_in(channels, "all") or utils.is_in(channels, "core"):
+                min_channel = 0
                 max_channel = last_channel
 
             # Last channel
             elif utils.is_in(channels, "last"):
-                min_channel = last_channel
+                min_channel = last_channel - 1
                 max_channel = last_channel
 
             # First channel
             elif utils.is_in(channels, "first"):
-                min_channel = 1
+                min_channel = 0
                 max_channel = 1
 
             # If the user specifies something else, it tries to work out what it is
@@ -731,11 +765,11 @@ class Parse:
 
                 # check if component[0] (min_channel) is in acceptable range
                 if 1 <= int(components[0]) <= last_channel:
-                    min_channel = int(components[0])
+                    min_channel = int(components[0]) - 1
                 else:
                     print("WARNING: Specified lower bound channel number (" + str(components[0]).strip()
-                          + ") is outside of the acceptable range. Setting to default (1)")
-                    min_channel = 1
+                          + ") is outside of the acceptable range. Setting to lower bound default.")
+                    min_channel = 0
 
                 # check if component[1] (max_channel) greater than min level and lower than the
                 # maximum number of levels
@@ -755,21 +789,21 @@ class Parse:
             if channels < 1 or channels > last_channel:
                 print("Invalid levels argument specified (" + str(channels) + "). Setting levels to default (1 - " +
                       str(last_channel) + ").")
-                min_channel = 1
+                min_channel = 0
                 max_channel = last_channel
             else:
-                min_channel = channels
+                min_channel = channels - 1
                 max_channel = channels
 
         # If it can't figure out what the user wants, it just returns all levels
         else:
             print("Invalid levels argument specified (" + str(channels) + "). Setting levels to default (1 - " + str(
                 last_channel) + ").")
-            min_channel = 1
+            min_channel = 0
             max_channel = last_channel
 
         # Added + 1 to max channel otherwise iterator will miss last channel
-        return min_channel, max_channel + 1
+        return min_channel, max_channel
 
     def distance_from_centre(self, channel_no, channel_type="fuel", rows="", columns=""):
         """ Calculates the planar distance from the centre of the core given the channel coordinates """
