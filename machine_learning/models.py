@@ -36,6 +36,25 @@ def layer_activations_validation(layer_output_shapes, activation):
                 activations.append(activations[-1])
 
     return layer_output_shapes, activations
+    
+    
+def kernels(number_convo_layers, kernel):
+
+    if not iterable(kernel):
+
+        kernels_list = [kernel for _ in range(number_convo_layers)]
+
+    else:
+
+        kernels_list = list(kernel)
+
+        if len(kernels_list) < number_convo_layers:
+
+            for _ in range(len(kernels_list), number_convo_layers):
+
+                kernels_list.append(kernels_list[-1])
+
+    return kernels_list    
 
 
 class RegressionModels:
