@@ -177,18 +177,20 @@ class RegressionModels:
                                         regularizer=None, dropout=0.5, kernel_shape=3, padding="valid"):
 
         layer_output_shapes, activations = layer_activations_validation(layers, activation)
+        
+        filters = kernels(len(layer_output_shapes) - 2, kernel_shape)
 
         # define our MLP network
         model = Sequential()
 
         model.name = "Convolutional Neural Network"
 
-        model.add(Conv2D(layer_output_shapes[0], kernel_size=kernel_shape, input_shape=input_dims,
+        model.add(Conv2D(layer_output_shapes[0], kernel_size=filters[0], input_shape=input_dims,
                          activity_regularizer=regularizer, padding=padding))
         model.add(Activation(activations[0]))
 
-        for layer_output_shape, act in zip(layer_output_shapes[1:-2], activations[1:-2]):
-            model.add(Conv2D(layer_output_shape, kernel_size=kernel_shape, padding=padding))
+        for i, (layer_output_shape, act) in enumerate(zip(layer_output_shapes[1:-2], activations[1:-2])):
+            model.add(Conv2D(layer_output_shape, kernel_size=filters[i+1], padding=padding))
             model.add(Activation(act))
 
         model.add(Flatten())
