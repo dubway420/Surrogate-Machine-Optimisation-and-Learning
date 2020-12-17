@@ -5,7 +5,6 @@ from parmec_analysis.utils import folder_validation, experiment_iteration, save_
 from machine_learning.experiment_summary import summary
 import os
 
-
 NUMCORES = int(os.getenv("NSLOTS", 1))
 
 sess = tf.Session(config=tf.ConfigProto(inter_op_parallelism_threads=NUMCORES,
@@ -33,7 +32,22 @@ def run_experiment(experiment):
 
     loss = experiment.trial.loss_function
 
-    experiment.callbacks[0] = experiment.callbacks[0](loss, trial_name, experiment, exp_i, experiment.trial.plot_every_n_epochs)
+    # TODO clean up this section: it shouldn't be assumed that the user is calling either of these callbacks.
+    #There should be a way of determining which callbacks are included and calling these as appropriate
+    experiment.callbacks[0] = experiment.callbacks[0](loss, trial_name, experiment, exp_i,
+                                                      experiment.trial.plot_every_n_epochs)
+
+    ###
+    checkpoint_filepath = experiment.name + "_" + exp_i + ".hdf5"
+
+    experiment.callbacks[1] = experiment.callbacks[1](
+        filepath=checkpoint_filepath,
+        save_weights_only=False,
+        monitor='val_loss',
+        mode='min',
+        save_best_only=True)
+
+    ##########################################################
 
     model_i = experiment.model
 
@@ -43,6 +57,13 @@ def run_experiment(experiment):
                             validation_data=(experiment.features.validation_set(),
                                              experiment.labels.validation_set()),
                             epochs=experiment.trial.epochs, verbose=2, callbacks=experiment.callbacks)
+
+    # This section now sorts these lists and passes the lowest to the save file
+    loss = model_fit.history['loss']
+    loss.sort(reverse=True)
+
+    val_loss = model_fit.history['val_loss']
+    val_loss.sort(reverse=True)
 
     losses = [model_fit.history['loss'][-1], model_fit.history['val_loss'][-1]]
 

@@ -3,29 +3,11 @@ from experiment_input_files.trial_common_parameters import parameters
 from machine_learning.models import RegressionModels as RegMods
 from machine_learning.dataset_generators import Features3D as Features
 from machine_learning.callbacks import LossHistory as History, lr_scheduler
-from keras.callbacks import LearningRateScheduler, ModelCheckpoint
+from keras.callbacks import ModelCheckpoint
 from sklearn import preprocessing as pre
-import os
-import ntpath
-
-checkpoint_filepath = os.path.splitext(ntpath.basename(__file__))[0] + ".{epoch:02d}-{val_loss:.2f}.hdf5"
 
 
-############################################
-# Model Checkpoint
-############################################
-
-model_checkpoint_callback = ModelCheckpoint(
-    filepath=checkpoint_filepath,
-    save_weights_only=False,
-    monitor='val_loss',
-    mode='min',
-    save_best_only=True)
-
-############################################
-
-#lrate = LearningRateScheduler(lr_scheduler, verbose=1)
-callbacks = [History, model_checkpoint_callback]
+callbacks = [History, ModelCheckpoint]
 
 dataset = parameters.dataset
 
