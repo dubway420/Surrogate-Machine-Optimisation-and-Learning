@@ -26,7 +26,7 @@ def run_experiment(experiment):
     experiment_folder = trial_name + "/" + experiment.name
     folder_validation(experiment_folder)
 
-    summary(experiment)
+#    summary(experiment)
 
     exp_i = experiment_iteration(experiment.name, trial_name)
 
@@ -38,7 +38,7 @@ def run_experiment(experiment):
                                                       experiment.trial.plot_every_n_epochs)
 
     ###
-    checkpoint_filepath = experiment.name + "_" + exp_i + ".hdf5"
+    checkpoint_filepath = experiment.name + "_" + str(exp_i) + ".hdf5"
 
     experiment.callbacks[1] = experiment.callbacks[1](
         filepath=checkpoint_filepath,
