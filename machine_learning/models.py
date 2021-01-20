@@ -36,6 +36,25 @@ def layer_activations_validation(layer_output_shapes, activation):
                 activations.append(activations[-1])
 
     return layer_output_shapes, activations
+    
+    
+def kernels(number_convo_layers, kernel):
+
+    if not iterable(kernel):
+
+        kernels_list = [kernel for _ in range(number_convo_layers)]
+
+    else:
+
+        kernels_list = list(kernel)
+
+        if len(kernels_list) < number_convo_layers:
+
+            for _ in range(len(kernels_list), number_convo_layers):
+
+                kernels_list.append(kernels_list[-1])
+
+    return kernels_list    
 
 
 class RegressionModels:
@@ -158,18 +177,20 @@ class RegressionModels:
                                         regularizer=None, dropout=0.5, kernel_shape=3, padding="valid"):
 
         layer_output_shapes, activations = layer_activations_validation(layers, activation)
+        
+        filters = kernels(len(layer_output_shapes) - 2, kernel_shape)
 
         # define our MLP network
         model = Sequential()
 
         model.name = "Convolutional Neural Network"
 
-        model.add(Conv2D(layer_output_shapes[0], kernel_size=kernel_shape, input_shape=input_dims,
+        model.add(Conv2D(layer_output_shapes[0], kernel_size=filters[0], input_shape=input_dims,
                          activity_regularizer=regularizer, padding=padding))
         model.add(Activation(activations[0]))
 
-        for layer_output_shape, act in zip(layer_output_shapes[1:-2], activations[1:-2]):
-            model.add(Conv2D(layer_output_shape, kernel_size=kernel_shape, padding=padding))
+        for i, (layer_output_shape, act) in enumerate(zip(layer_output_shapes[1:-2], activations[1:-2])):
+            model.add(Conv2D(layer_output_shape, kernel_size=filters[i+1], padding=padding))
             model.add(Activation(act))
 
         model.add(Flatten())

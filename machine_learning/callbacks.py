@@ -82,7 +82,7 @@ class LossHistory(Callback):
         self.train_history.update_data(logs, self.model, plot=False)
         self.train_history_later.update_data(logs, self.model, plot=False)
 
-        if (epoch_p1 % self.plot_every_n_epochs) == 0:
+        if (epoch_p1 % self.plot_every_n_epochs) == 0 or epoch_p1 == self.experiment.trial.epochs:
 
             self.epochs_with_results.append(epoch_p1)
 
@@ -124,6 +124,9 @@ class LossHistory(Callback):
                 row[0].plot([min_vals_train, max_vals_train], [min_vals_train, max_vals_train], c='yellow')
                 row[0].set_xlim([min_vals_train, max_vals_train])
                 row[0].set_ylim([min_vals_train, max_vals_train])
+                row[0].set_xticks([])
+                row[0].set_yticks([])
+                row[0].set_aspect('equal')
 
                 row[0].set_ylabel(("Epoch: " + str(self.epochs_with_results[i])))
 
@@ -135,11 +138,17 @@ class LossHistory(Callback):
                 row[1].plot([min_vals_valid, max_vals_valid], [min_vals_valid, max_vals_valid], c='yellow')
                 row[1].set_xlim([min_vals_valid, max_vals_valid])
                 row[1].set_ylim([min_vals_valid, max_vals_valid])
+                row[1].set_xticks([])
+                row[1].set_yticks([])
+                row[1].set_aspect('equal')
 
             _, file_name = plot_names_title(self.experiment, self.iteration)
-
+            
+            #plt.subplots_adjust(wspace=0, hspace=0)
+            #fig.tight_layout()
+            
             file_name = self.trial + "/" + self.experiment.name + "/correlation_" + file_name
-            plt.savefig(file_name)
+            plt.savefig(file_name, bbox_inches='tight')
             plt.close()
             ###############################################################################
 
@@ -257,8 +266,8 @@ class LossHistory(Callback):
 
 def lr_scheduler(epoch, lr):
     decay_rate = 0.1
-    decay_step = 800
-    decay_step_2 = 850
+    decay_step = 110
+    decay_step_2 = 310
 
     if epoch == decay_step or epoch == decay_step_2:
         return lr * decay_rate

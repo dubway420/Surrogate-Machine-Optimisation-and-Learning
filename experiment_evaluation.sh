@@ -6,5 +6,5 @@ date
 # Load modules 
 module load apps/binapps/anaconda3/2019.07               # Python 3.7.3
 
-python experiment_evaluation.py "channel154_2"
+python experiment_evaluation.py $1
 date
