@@ -21,7 +21,7 @@ min_max_scaler = pre.MinMaxScaler(feature_range=(0, 1))
 #labels.transform(min_max_scaler)
 
 model = RegMods.convolutional_neural_network_2d(features.feature_shape, labels.label_shape, activation="linear",
-                                                layers=(32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 128, 256), padding="same", kernel_shape=3)
+                                                layers=(32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 128, 256), padding="same", kernel_shape=3)
 
-experiment = Experiment(parameters, "CNN_3D_36x32_128_256", model, dataset, features, labels,
+experiment = Experiment(parameters, "CNN_3D_42x32_128_256", model, dataset, features, labels,
                         callbacks)
