@@ -243,7 +243,7 @@ class DatasetSingleFrame:
         return summary_text
 
 
-class Features:
+class Cracks:
     """ An abstract class to be inherited by one of the options below"""
 
     def __init__(self, dataset, channels, levels, array_type, channel_type='fuel', load_from_file=True):
@@ -283,11 +283,11 @@ class Features:
 
         # Handles loading from file
 
-        X_loaded = self.load_features_from_file()
+        X_loaded = self.load_cracks_from_file()
         if len(X_loaded) > 0:
 
             if not load_from_file:
-                print("Features dataset was found on disk. However, load_from_disk parameter is set to False. "
+                print("Cracks dataset was found on disk. However, load_from_disk parameter is set to False. "
                       "If you wish to load this dataset, please set load_from_disk parameter to True")
                 return
 
@@ -297,7 +297,7 @@ class Features:
 
                 return
             else:
-                print("There are too few instances on locally found dataset. Loading features from "
+                print("There are too few instances on locally found dataset. Loading cracks from "
                       "cases located at path...")
 
     def generate_filename(self):
@@ -324,15 +324,15 @@ class Features:
 
         return file_name
 
-    def load_features_from_file(self):
-        """ Determines if labels storage file exists and if so loads data"""
+    def load_cracks_from_file(self):
+        """ Determines if cracks storage file exists and if so loads data"""
 
         file_name = self.generate_filename()
 
         if not os.path.exists(file_name):
             return []
 
-        print("Features dataset was found on file:", file_name, "Loading...")
+        print("Crack pattern dataset was found on file:", file_name, "Loading...")
         return np.load(file_name)
 
     def transform(self, transformer):
@@ -393,7 +393,7 @@ class Features:
 
         file_name = self.generate_filename()
 
-        print("Saving features to file:", file_name)
+        print("Saving crack pattern to file:", file_name)
         np.save(file_name, self.values)
 
     def training_set(self):
@@ -415,7 +415,7 @@ class Features:
         return summary_text
 
 
-class Features1D(Features):
+class Cracks1D(Cracks):
 
     def __init__(self, dataset, channels='all', levels='all', array_type='positions only', extra_dimension=False):
 
@@ -425,7 +425,7 @@ class Features1D(Features):
 
         super().__init__(dataset, channels, levels, array_type)
 
-        # the super class tries to load features from files. If it fails, the features are loaded from the dataset
+        # the super class tries to load the crack configuration from files. If it fails, the cracks are loaded from the dataset
         if self.values is None:
             self.values = self.generate_array(dataset, channels, levels, array_type, extra_dimension)
 
@@ -470,16 +470,16 @@ class Features1D(Features):
             return X_1d
 
 
-class Features2D(Features1D):
+class Cracks2D(Cracks1D):
 
     def __init__(self, dataset, channels='all', levels='all', array_type='positions only', extra_dimension=False):
 
         self.feature_mode = "2D_multi"
         self.extra_dimension = extra_dimension
 
-        Features.__init__(self, dataset, channels, levels, array_type)
+        Cracks.__init__(self, dataset, channels, levels, array_type)
 
-        # the super class tries to load features from files. If it fails, the features are loaded from the dataset
+        # the super class tries to load crack pattern from files. If it fails, the cracks are loaded from the dataset
         if self.values is None:
             self.values = self.generate_array(dataset, channels, levels, array_type, extra_dimension)
 
@@ -490,7 +490,7 @@ class Features2D(Features1D):
     def generate_array(self, dataset, channels, levels, array_type, extra_dimension):
 
         # Get the 1d feature array
-        values_1d = Features1D.generate_array(self, dataset, channels, levels, array_type, extra_dimension)
+        values_1d = Cracks1D.generate_array(self, dataset, channels, levels, array_type, extra_dimension)
 
         X_shape = [values_1d.shape[0], self.number_levels, self.number_channels]
 
@@ -504,7 +504,7 @@ class Features2D(Features1D):
         return values_1d.reshape(X_shape)
 
 
-class Features3D(Features):
+class Cracks3D(Cracks):
 
     def __init__(self, dataset, levels='all', array_type='positions only'):
 
@@ -513,7 +513,7 @@ class Features3D(Features):
 
         super().__init__(dataset, channels='all', levels=levels, array_type=array_type)
 
-        # the super class tries to load features from files. If it fails, the features are loaded from the dataset
+        # the super class tries to load crack pattern from files. If it fails, the cracks are loaded from the dataset
         if self.values is None:
             self.values = self.generate_array(dataset, levels, array_type)
 
@@ -542,11 +542,11 @@ class Features3D(Features):
         return X_3d_rs
 
 
-class FeaturesFlat(Features3D):
+class CracksFlat(Cracks3D):
     pass
 
 
-class FeaturesConcentration1D(Features):
+class CracksConcentration1D(Cracks):
 
     def __init__(self, dataset, channels='all', levels='all', array_type='positions only', extra_dimension=False):
 
@@ -556,7 +556,7 @@ class FeaturesConcentration1D(Features):
 
         super().__init__(dataset, channels, levels, array_type, 'inter')
 
-        # the super class tries to load features from files. If it fails, the features are loaded from the dataset
+        # the super class tries to load crack pattern from files. If it fails, the cracks are loaded from the dataset
         if self.values is None:
             self.values = self.generate_array(dataset, channels, levels, array_type, extra_dimension)
 
@@ -587,15 +587,15 @@ class FeaturesConcentration1D(Features):
             return X_1d
 
 
-class FeaturesConcentration2D(FeaturesConcentration1D):
+class CracksConcentration2D(CracksConcentration1D):
 
     def __init__(self, dataset, channels='all', levels='all', array_type='positions only', extra_dimension=False):
         self.feature_mode = "Concentration2D"
         self.extra_dimension = extra_dimension
 
-        Features.__init__(self, dataset, channels, levels, array_type, 'inter')
+        Cracks.__init__(self, dataset, channels, levels, array_type, 'inter')
 
-        # the super class tries to load features from files. If it fails, the features are loaded from the dataset
+        # the super class tries to load crack pattern from files. If it fails, the cracks are loaded from the dataset
         if self.values is None:
             self.values = self.generate_array(dataset, channels, levels, array_type, extra_dimension)
 
@@ -606,7 +606,7 @@ class FeaturesConcentration2D(FeaturesConcentration1D):
     def generate_array(self, dataset, channels, levels, array_type, extra_dimension):
         # Get the 1d feature array
 
-        values_1d = FeaturesConcentration1D.generate_array(self, dataset, channels, levels, array_type, extra_dimension)
+        values_1d = CracksConcentration1D.generate_array(self, dataset, channels, levels, array_type, extra_dimension)
 
         array_shape = [len(dataset.cases_list),
                        self.example_instance.inter_rows,
@@ -637,7 +637,7 @@ class FeaturesConcentration2D(FeaturesConcentration1D):
         return values_2d
 
 
-class Labels:
+class Displacements:
 
     def __init__(self, dataset, channels='all', levels='all', result_time=50, result_column="1", result_type="max",
                  unit='meters', flat=True, load_from_file=True):
@@ -672,11 +672,11 @@ class Labels:
         # ######## Attempt to load data from file #####################
         ##############################################################
 
-        Y_loaded = self.load_labels_from_file()
+        Y_loaded = self.load_displacements_from_file()
         if len(Y_loaded) > 0:
 
             if not load_from_file:
-                print("Labels dataset was found on disk. However, load_from_disk parameter is set to False. If you wish"
+                print("Displacement dataset was found on disk. However, load_from_disk parameter is set to False. If you wish"
                       " to load this dataset, please set load_from_disk parameter to True")
                 return
 
@@ -762,7 +762,7 @@ class Labels:
             self.label_shape = Y.shape[1:]
 
         file_name = self.generate_filename()
-        print("Saving labels to file:", file_name)
+        print("Saving displacements to file:", file_name)
         np.save(file_name, Y)
 
         self.transformer = None
@@ -784,15 +784,15 @@ class Labels:
 
         return file_name
 
-    def load_labels_from_file(self):
-        """ Determines if labels storage file exists and if so loads data"""
+    def load_displacements_from_file(self):
+        """ Determines if displacement storage file exists and if so loads data"""
 
         file_name = self.generate_filename()
 
         if not os.path.exists(file_name):
             return []
 
-        print("Labels dataset was found on file:", file_name, "Loading...")
+        print("Displacement dataset was found on file:", file_name, "Loading...")
         return np.load(file_name)
 
     def transform(self, transformer):
