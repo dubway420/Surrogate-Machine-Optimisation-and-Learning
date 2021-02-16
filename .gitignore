@@ -1,2 +1,6 @@
-/Houses-dataset/
-/parmec_analysis/__pycache__/
+
+*.sh*
+run*
+**.npy
+**.png
+*ind

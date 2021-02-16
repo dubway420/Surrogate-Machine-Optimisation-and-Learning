@@ -222,7 +222,7 @@ class LossHistory(Callback):
             ###############################################################################
 
             self.train_history.plotting()
-            self.train_history_later.plotting()
+            #self.train_history_later.plotting()
 
             if self.experiment.labels.channels is 'all':
                 self.view.update_data(epoch, self.model, True, False, False)

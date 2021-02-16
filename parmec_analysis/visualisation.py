@@ -426,7 +426,7 @@ class CoreView:
 
 class TrainingHistoryRealTime:
 
-    def __init__(self, trail_name, iteration, experiment, loss_function, plot_from=50, average_over=None):
+    def __init__(self, trail_name, iteration, experiment, loss_function, plot_from=10, average_over=None):
         self.main_title = ""
 
         # Wider trial name
