@@ -146,7 +146,8 @@ class Parse:
 
         # cycles through all core levels, extracting the 2D array and assigning it to the 3D array
         for i in range(0, self.core_levels):
-            array[i][:] = np.pad(np.array(pd.read_excel(filename, sheet_name=i, header=None, index_col=False)),
+            array[i][:] = np.pad(np.array(pd.read_excel(filename, sheet_name=i, header=None, index_col=False,
+                                                        engine='openpyxl')),
                                  [(self.padding, self.padding), (self.padding, self.padding)], mode='constant',
                                  constant_values=0)
 
