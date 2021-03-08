@@ -456,6 +456,43 @@ def load_results(trial_name):
     return results_dict
 
 
+def result3d(result):
+
+    assert len(result.shape) > 1, "Ensure that get_result_at_time method is called with the flat=False argument"
+
+    result_3d = np.zeros([19, 19, result.shape[1]])
+
+    for row in range(19):
+
+        result_index = 0
+
+        row_offset = 0
+        channels_in_row = 19
+
+        if row == 3 or row == 15:
+            row_offset = 1
+            channels_in_row = 17
+
+        if row == 2 or row == 16:
+            row_offset = 2
+            channels_in_row = 15
+
+        if row == 1 or row == 17:
+            row_offset = 3
+            channels_in_row = 13
+
+        if row == 0 or row == 18:
+            row_offset = 4
+            channels_in_row = 11
+
+        for channel in range(channels_in_row):
+            column = channel + row_offset
+            result_3d[row, column, :] = result[result_index]
+
+            result_index += 1
+
+    return result_3d
+
 # MACHINE LEARNING STUFF *********************
 
 def experiment_assignment_validation(experiments, experiment_number):
