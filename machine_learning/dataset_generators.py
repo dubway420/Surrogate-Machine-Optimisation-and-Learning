@@ -303,8 +303,7 @@ class Cracks:
     def generate_filename(self):
         """ Generates a filename based on the user settings """
 
-        file_name = "X_" + self.feature_mode + "_" + self.dataset.name + "_C" + str(self.channels_range[0]) + "_" \
-
+        file_name = "X_" + self.feature_mode + "_" + self.dataset.name + "_C" + str(self.channels_range[0]) + "_"
         file_name += str(self.channels_range[1])
 
         file_name += "_L" + str(self.levels_range[0]) + "_" + str(self.levels_range[1]) + "_T"
@@ -454,7 +453,6 @@ class Cracks1D(Cracks):
             else:
                 for j in range(1, 5):
                     X_1d[i, :, j - 1] = np.where(crack_array == float(j), 1, 0)
-
 
         # If the user requires the array to be configured for convolutional networks, then the array is reshaped
         if extra_dimension:
@@ -637,6 +635,45 @@ class CracksConcentration2D(CracksConcentration1D):
         return values_2d
 
 
+class CracksChannelCentred(Cracks):
+
+    def __init__(self, dataset, channel=160, levels='all', array_type='positions only', array_size=2,
+                 shape="3D", extra_dimension=False):
+
+        self.feature_mode = shape + "_ChannelCentred"
+
+        self.extra_dimension = extra_dimension
+
+        self.array_size = array_size
+
+        self.channel = channel
+
+        self.levels = levels
+
+        super().__init__(dataset, channel, levels, array_type)
+
+        if self.values is None:
+            self.values = self.generate_array()
+
+        self.feature_shape = self.values.shape[1:]
+
+        self.save()
+
+    def generate_array(self):
+
+        # This array contains the data taken directly from the core instances
+        X_3d_inst = np.zeros(
+            [len(self.dataset.cases_list), self.array_size * 2, self.array_size * 2, self.number_levels])
+
+        for i, instance in enumerate(self.dataset.core_instances):
+            crack_array = instance.get_channel_crack_array(self.channel, self.array_size, array_type=self.array_type,
+                                                           levels=self.levels, channel_type='inter')
+
+            X_3d_inst[i] = np.moveaxis(crack_array, 0, 2)
+
+        return X_3d_inst
+
+
 class Displacements:
 
     def __init__(self, dataset, channels='all', levels='all', result_time=50, result_column="1", result_type="max",
@@ -676,8 +713,9 @@ class Displacements:
         if len(Y_loaded) > 0:
 
             if not load_from_file:
-                print("Displacement dataset was found on disk. However, load_from_disk parameter is set to False. If you wish"
-                      " to load this dataset, please set load_from_disk parameter to True")
+                print(
+                    "Displacement dataset was found on disk. However, load_from_disk parameter is set to False. If you wish"
+                    " to load this dataset, please set load_from_disk parameter to True")
                 return
 
             number_loaded = len(Y_loaded)
