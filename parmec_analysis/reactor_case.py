@@ -246,7 +246,7 @@ class Parse:
 
         # TODO come up with something more elegant than this.
         fudge = 0
-        if array_size > 0: fudge = -1
+        if array_size == 0: fudge = 1
 
         if utils.is_in(channel_type, "fuel"):
             row_start = row_origin - array_size
@@ -254,11 +254,11 @@ class Parse:
             column_start = column_origin - array_size
             column_end = column_origin + array_size + 1
         else:
-            row_start = row_origin - array_size
-            row_end = row_origin + array_size
+            row_start = max(row_origin - array_size, 0)
+            row_end = row_origin + array_size + fudge
 
-            column_start = column_origin - array_size
-            column_end = column_origin + array_size
+            column_start = max(column_origin - array_size, 0)
+            column_end = column_origin + array_size + fudge
 
         channel_crack_array = core_array[min_level:max_level, row_start:row_end,
                               column_start:column_end]
