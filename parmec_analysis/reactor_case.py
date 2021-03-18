@@ -31,6 +31,7 @@ import pandas as pd
 import math
 from parmec_analysis import utils as utils
 
+
 # TODO split parse into FeaturesCase and LabelsCase
 
 
@@ -44,7 +45,7 @@ class Parse:
     # ==========================================================
 
     def __init__(self, case, fuel_levels=7, inter_levels=13, core_rows=18, core_columns=18,
-                 fuel_channels=284, interstitial_channels=321, padding=3):
+                 fuel_channels=284, interstitial_channels=321, padding=3, augmentation=None):
         """Assign ID. Initialise or extract data arrays """
 
         # The number of levels represents the vertical stack height in the core i.e. the number of bricks stacked in a
@@ -78,6 +79,8 @@ class Parse:
 
         self.padding = padding
 
+        self.augmentation = augmentation
+
         # The first number of each row
         self.first_numbers_row_fuel = [1, 11, 23, 37, 53, 71, 89, 107, 125, 143, 161, 179, 197, 215, 233, 249, 263, 275]
         self.first_numbers_row_interstitial = [1, 12, 25, 40, 57, 76, 95, 114, 133, 152, 171, 190, 209, 228, 247, 266,
@@ -108,6 +111,9 @@ class Parse:
                 self.set_crack_array()
             except FileNotFoundError:
                 self.crack_array = self.base_crack_array()
+
+        if self.augmentation:
+            pass
 
         # =============
         # Results stuff
@@ -248,13 +254,14 @@ class Parse:
             column_start = column_origin - array_size
             column_end = column_origin + array_size + 1
         else:
-            row_start = max(row_origin - array_size - 1, 0) + 1
-            row_end = row_origin + array_size + fudge + 1
-            column_start = max(column_origin - array_size - 1, 0) + 1
-            column_end = column_origin + array_size + fudge + 1
+            row_start = row_origin - array_size
+            row_end = row_origin + array_size
 
-        channel_crack_array = core_array[min_level:max_level, row_start: row_end,
-                              column_start: column_end]
+            column_start = column_origin - array_size
+            column_end = column_origin + array_size
+
+        channel_crack_array = core_array[min_level:max_level, row_start:row_end,
+                              column_start:column_end]
 
         return channel_crack_array
 
@@ -328,7 +335,7 @@ class Parse:
         # Get the channel range. It's fuel array type because interstitial bricks don't crack
         min_channel, max_channel = self.parse_channel_argument(channels, 'fuel')
         number_of_channels = max_channel - min_channel
-        
+
         # Get the range of levels
         min_level, max_level = self.parse_level_argument(levels)
         number_of_levels = max_level - min_level
@@ -338,7 +345,6 @@ class Parse:
         crack_array_user = np.zeros(output_array_size)
 
         for i in range(number_of_levels):
-
             input_start = (i * self.fuel_channels) + min_channel
             input_end = (i * self.fuel_channels) + max_channel
 
