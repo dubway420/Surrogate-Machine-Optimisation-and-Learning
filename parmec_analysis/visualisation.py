@@ -19,10 +19,12 @@ inclusive_layers = [100, 6, 4, 2]
 
 layer_colors = ['royalblue', 'lime', 'yellow', 'red']
 
+
+#TODO: have a label on the upper and lower parts of the error bar i.e. show the range in numbers
 def autolabel(rects, ax):
     """Attach a text label above each bar in *rects*, displaying its height."""
     for rect in rects:
-        height = round(rect.get_height(), 2)
+        height = round(rect.get_height(), 4)
 
         ax.annotate('{}'.format(height),
                     xy=(rect.get_x() + rect.get_width() / 2, height),
@@ -30,18 +32,6 @@ def autolabel(rects, ax):
                     textcoords="offset points",
                     ha='center', va='bottom')
 
-
-
-def autolabel(rects, ax):
-    """Attach a text label above each bar in *rects*, displaying its height."""
-    for rect in rects:
-        height = round(rect.get_height(), 2)
-
-        ax.annotate('{}'.format(height),
-                    xy=(rect.get_x() + rect.get_width() / 2, height),
-                    xytext=(0, 3),  # 3 points vertical offset
-                    textcoords="offset points",
-                    ha='center', va='bottom')
 
 
 def turn_off_graph_decorations(axis):
@@ -294,7 +284,7 @@ class CoreView:
                 # ===================================================================================#
                 # Plots the results for the case/frame
                 im = ax.scatter(self.channel_coord_list_inter[0], self.channel_coord_list_inter[1],
-                                marker='o', c=self.plot_results[i][j], cmap='seismic', label='inter',
+                                marker='o', c=self.plot_results[i][j], cmap='jet', label='inter',
                                 s=30)
                 im.set_clim(self.plot_results_min[i], self.plot_results_max[i])
                 # ===================================================================================#
