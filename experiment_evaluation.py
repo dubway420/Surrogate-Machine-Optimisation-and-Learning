@@ -42,8 +42,12 @@ for i, result in enumerate(results):
 
     errors_validation[0:2, i] = np.abs(np.array([np.min(validation_loss), np.max(validation_loss)]) - validation_mean)
 
+experiment_validation_losses_min = np.zeros(len(names))
 
-experiment_validation_losses_min = np.min(experiment_validation_losses, axis=1)
+for i, exp in enumerate(experiment_validation_losses):
+    experiment_validation_losses_min[i] = np.min(exp)
+
+# experiment_validation_losses_min = np.min(experiment_validation_losses, axis=1)
 
 sort_args = np.argsort(experiment_validation_losses_min)
 
