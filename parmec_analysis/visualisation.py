@@ -5,15 +5,15 @@ mpl.use('Agg')
 import matplotlib.pyplot as plt
 from mpl_toolkits.axes_grid1 import AxesGrid
 import numpy as np
-import seaborn as sns
+# import seaborn as sns
 import parmec_analysis.reactor_case as core
 from parmec_analysis.utils import convert_case_to_channel_result, is_in, plot_names_title
 from random import seed
 from random import randint
-import pandas as pd
-from scipy.stats import pearsonr
-from mpl_toolkits.mplot3d import Axes3D
-import pickle
+# import pandas as pd
+# from scipy.stats import pearsonr
+# from mpl_toolkits.mplot3d import Axes3D
+# import pickle
 
 inclusive_layers = [100, 6, 4, 2]
 
@@ -438,7 +438,7 @@ class TrainingHistoryRealTime:
         self.val_losses = []
 
         if average_over is None:
-            average_over = int(experiment.trial.epochs * 0.01)
+            average_over = int(experiment.trial.epochs * 0.05)
 
         self.average_over = average_over
 
