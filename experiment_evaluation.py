@@ -2,6 +2,7 @@ from parmec_analysis.utils import load_results
 from parmec_analysis.visualisation import model_comparison
 import numpy as np
 import sys
+from datetime import datetime
 
 
 trial_name = str(sys.argv[-1])
@@ -59,6 +60,17 @@ names_sorted = names_np[sort_args]
 summary_file = trial_name + ".txt"
 
 f = open(summary_file, "a")
+
+header = "Summary of trial: " + trial_name + "\n"
+subhead = "Trial completed: " + datetime.now().strftime("%A %d. %B %Y - %H:%M")
+
+f.write("\n----------------------------\n")
+
+f.write(header)
+f.write(subhead)
+
+f.write("\n----------------------------\n")
+
 
 prev_result = 0
 
