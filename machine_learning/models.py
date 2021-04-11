@@ -4,6 +4,7 @@ from keras.layers.core import Dense, Activation, Dropout
 from keras.layers import Flatten
 from keras.models import Sequential
 from collections.abc import Iterable
+from tensorflow.keras import Model
 
 
 def iterable(obj):
@@ -151,7 +152,7 @@ class RegressionModels:
 
         return model
 
-    # 0
+    # 3
     @staticmethod
     def convolutional_neural_network_2d(input_dims, output_dims, activation="linear", layers=(16, 32, 64),
                                         regularizer=None, dropout=0.5, kernel_shape=3, padding="valid"):
@@ -208,3 +209,20 @@ class RegressionModels:
         return model
 
         # 0
+
+    # 4
+    @staticmethod
+    def existing(input_dims, output_dims, base_model=None, weights='imagenet', final_activation='linear', final_bias=True):
+
+        # If no model is specified, ResNet50 will be used
+        if base_model is None:
+            from tensorflow.keras.applications import ResNet50
+            base_model = ResNet50(include_top=False, input_shape=input_dims, weights=weights)
+
+        # Flatten the final layer's output
+        x = Flatten()(base_model.output)
+
+        # add the final (output) regression layer
+        x = Dense(output_dims, activation=final_activation, use_bias=final_bias)(x)
+
+        return Model(inputs=base_model.inputs, outputs=x)

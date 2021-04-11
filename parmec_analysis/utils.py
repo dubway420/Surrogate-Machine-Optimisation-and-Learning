@@ -328,7 +328,6 @@ def return_all(array):
 
 
 def function_switch(result_type):
-
     if result_type.isnumeric():
         command = return_numeric_function(result_type)
     elif is_in(result_type, "max"):
@@ -368,6 +367,7 @@ def return_numeric_function(n):
             return arg[int_n - 1]
 
     return level
+
 
 ##################################
 # ##### label set manipulation ####
@@ -456,42 +456,52 @@ def load_results(trial_name):
     return results_dict
 
 
-def result3d(result):
+def row_offset_channels(row):
+    row_offset = 0
+    channels_in_row = 19
 
+    if row == 3 or row == 15:
+        row_offset = 1
+        channels_in_row = 17
+
+    if row == 2 or row == 16:
+        row_offset = 2
+        channels_in_row = 15
+
+    if row == 1 or row == 17:
+        row_offset = 3
+        channels_in_row = 13
+
+    if row == 0 or row == 18:
+        row_offset = 4
+        channels_in_row = 11
+
+    return row_offset, channels_in_row
+
+
+def result3d(result):
     assert len(result.shape) > 1, "Ensure that get_result_at_time method is called with the flat=False argument"
 
-    result_3d = np.zeros([19, 19, result.shape[1]])
+    result_3d = np.zeros([result.shape[1], 19, 19])
 
     for row in range(19):
 
         result_index = 0
 
-        row_offset = 0
-        channels_in_row = 19
-
-        if row == 3 or row == 15:
-            row_offset = 1
-            channels_in_row = 17
-
-        if row == 2 or row == 16:
-            row_offset = 2
-            channels_in_row = 15
-
-        if row == 1 or row == 17:
-            row_offset = 3
-            channels_in_row = 13
-
-        if row == 0 or row == 18:
-            row_offset = 4
-            channels_in_row = 11
+        row_offset, channels_in_row = row_offset_channels(row)
 
         for channel in range(channels_in_row):
             column = channel + row_offset
-            result_3d[row, column, :] = result[result_index]
+            result_3d[:, row, column] = result[result_index]
 
             result_index += 1
 
     return result_3d
+
+
+def result1d(result_3d):
+    pass
+
 
 # MACHINE LEARNING STUFF *********************
 

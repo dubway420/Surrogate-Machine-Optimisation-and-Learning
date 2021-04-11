@@ -1,4 +1,4 @@
-from parmec_analysis.reactor_case import Parse
+from parmec_analysis.reactor_case import ParmecInstance
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -14,7 +14,7 @@ for i in range(time_series.shape[0]):
 
     time_series[i] = time
 
-test_case = Parse("batch21_7159_P40/batch21_7159_P40")
+test_case = ParmecInstance("batch21_7159_P40/batch21_7159_P40")
 
 print(test_case.get_id())
 fig = plt.figure(figsize=(10, 10))

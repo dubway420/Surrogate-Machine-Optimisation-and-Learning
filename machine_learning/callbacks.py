@@ -9,6 +9,50 @@ from parmec_analysis.utils import plot_names_title
 from parmec_analysis.visualisation import CoreView, TrainingHistoryRealTime
 
 
+def loss_history_graph(x, y, title):
+    plt.scatter(x, y)
+    plt.plot(x, y)
+
+    plt.title(title)
+    plt.xlabel("Epoch")
+    plt.ylabel("Loss")
+
+    plt.show()
+
+
+def correlation_graph(x, y, title, legend_vals):
+
+    # Draw a straight line from 0 to 1 denoting a 'perfect' result
+    plt.plot([0, 1], c='black')
+
+    for predictions, epoch in zip(y, legend_vals):
+        label = "Epoch " + str(epoch)
+        plt.scatter(x, predictions, label=label)
+        m, b = np.polyfit(x.flatten(), predictions, 1)
+
+        plt.plot(x, m * x + b)
+
+    plt.title(title)
+    plt.legend()
+    plt.xlabel("Ground Truth")
+    plt.ylabel("Predictions")
+    plt.show()
+
+
+def histogram(ground_truth, predictions, title, legend_vals):
+
+    colours = ['r', 'g', 'y', 'navy', 'darkorange', 'saddlebrown']
+
+    sns.distplot(ground_truth, label="Ground Truth")
+
+    for prediction, epoch in zip(predictions, legend_vals):
+        label = "Epoch " + str(epoch)
+        sns.distplot(prediction, label=label)
+
+    plt.legend(loc='upper right')
+    plt.title(title)
+    plt.show()
+
 
 class LossHistory(Callback):
     def __init__(self, loss_function, trial, experiment, iteration, print_every_n_epochs=None, channel_to_plot=161):
@@ -162,7 +206,7 @@ class LossHistory(Callback):
             ground_truth_row[0].set_ylabel("GT")
 
             # These values allow the slicing of the label arrays to get the result for the channel to plot
-            start_channel = (self.channel_to_plot-1) * self.experiment.labels.number_levels
+            start_channel = (self.channel_to_plot - 1) * self.experiment.labels.number_levels
             end_channel = start_channel + self.experiment.labels.number_levels + 1
 
             for i, ax in enumerate(ground_truth_row):
@@ -222,7 +266,7 @@ class LossHistory(Callback):
             ###############################################################################
 
             self.train_history.plotting()
-            #self.train_history_later.plotting()
+            # self.train_history_later.plotting()
 
             if self.experiment.labels.channels is 'all':
                 self.view.update_data(epoch, self.model, True, False, False)
@@ -234,7 +278,6 @@ class LossHistory(Callback):
                     self.view12.update_data(epoch, self.model, True, False, False)
 
         if epoch_p1 == self.experiment.trial.epochs:
-        
             # Training Histogram
             sns.set(style="darkgrid")
             sns.distplot(self.labels_training.flatten(), color='green', label="Ground Truth Labels")
@@ -248,7 +291,7 @@ class LossHistory(Callback):
             file_name = self.trial + "/" + self.experiment.name + "/training_histogram_" + file_name
             plt.savefig(file_name)
             plt.close()
-            
+
             # Validation Histogram
             sns.set(style="darkgrid")
             sns.distplot(self.labels_validation.flatten(), color='green', label="Ground Truth Labels")
@@ -264,6 +307,88 @@ class LossHistory(Callback):
             plt.close()
 
 
+class SimpleHistory(Callback):
+
+    def __init__(self, plot_from=1, plot_every_n_epochs=10, plot_prev_n_epochs=-5, features=None, labels=None):
+        super().__init__()
+
+        self.losses = []
+        self.val_losses = []
+
+        # The epoch to start plotting from
+        self.plot_from_epoch = plot_from
+
+        # The number of previous epochs to go back to when plotting
+        # This value should be negative
+        if plot_prev_n_epochs > 0:
+            plot_prev_n_epochs *= -1
+
+        self.plot_every_n_epochs = plot_every_n_epochs
+
+        self.epochs_plotted = []
+
+        self.plot_prev_n_epochs = plot_prev_n_epochs
+
+        self.features = features
+        self.labels = labels
+
+        self.predictions_training = []
+
+        self.predictions_testing = []
+
+    def on_epoch_end(self, epoch, logs={}):
+
+        self.losses.append(logs.get('loss'))
+        self.val_losses.append(logs.get('val_loss'))
+
+        epoch_p1 = epoch + 1
+
+        if epoch_p1 >= self.plot_from_epoch and epoch_p1 % self.plot_every_n_epochs == 0:
+
+            self.epochs_plotted.append(epoch_p1)
+
+            model = self.model
+
+            epochs_lb = max(epoch_p1 + self.plot_prev_n_epochs, 1)
+
+            y_loss = self.losses[self.plot_prev_n_epochs:]
+            y_val = self.val_losses[self.plot_prev_n_epochs:]
+
+            x = np.arange(len(y_val)) + max((len(self.val_losses) + self.plot_prev_n_epochs + 1), 1)
+
+            # Loss plots --------------------------------------
+
+            # Training loss graph
+
+            title = "Training loss for Epoch: " + str(epoch_p1)
+            loss_history_graph(x, y_loss, title)
+
+            # Validation loss Graph
+
+            title = "Testing loss for Epoch:" + str(epoch_p1)
+            loss_history_graph(x, y_val, title)
+
+            # Correlation plots --------------------------------
+
+            if self.features and self.labels:
+                self.predictions_training.append(model.predict(self.features.training_set()))
+                self.predictions_testing.append(model.predict(self.features.validation_set()))
+
+                correlation_graph(self.labels.training_set(), self.predictions_training[self.plot_prev_n_epochs:],
+                                  "Training", self.epochs_plotted[self.plot_prev_n_epochs:])
+
+                correlation_graph(self.labels.validation_set(), self.predictions_testing[self.plot_prev_n_epochs:],
+                                  "Testing", self.epochs_plotted[self.plot_prev_n_epochs:])
+
+                histogram(self.labels.training_set(), self.predictions_training[self.plot_prev_n_epochs:], "Training",
+                          self.epochs_plotted[self.plot_prev_n_epochs:])
+
+                histogram(self.labels.validation_set(), self.predictions_testing[self.plot_prev_n_epochs:], "Testing",
+                          self.epochs_plotted[self.plot_prev_n_epochs:])
+
+                plt.show()
+
+
 def lr_scheduler(epoch, lr):
     decay_rate = 0.1
     decay_step = 110
@@ -273,4 +398,3 @@ def lr_scheduler(epoch, lr):
         return lr * decay_rate
 
     return lr
-

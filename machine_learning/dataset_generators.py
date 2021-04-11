@@ -7,6 +7,24 @@ import pickle
 import os
 
 
+def int_split(x):
+    """Takes a number, x, which should be an integer. Returns two integers which sum to give x."""
+
+    # validation
+    assert type(x) == int, "Ensure that x is an int."
+
+    x_half = int(x / 2)
+
+    # if x is even, then the two return values are just x divided by two
+    if x % 2 == 0:
+
+        return x_half, x_half
+
+    # if x is not even, then return x divided by 2 (rounded down) and the same value plus 1
+    else:
+        return x_half + 1, x_half
+
+
 def requested_feature_types(feature_types_string):
     """ Takes a string which the user inputs to request feature types (i.e. '1-d' or '2D')
         Returns an integer that represents the number of the feature requested"""
@@ -540,8 +558,82 @@ class Cracks3D(Cracks):
         return X_3d_rs
 
 
-class CracksFlat(Cracks3D):
-    pass
+class CracksPlanar(Cracks):
+
+    def __init__(self, dataset, levels='all', array_type='positions only', one_hot=False, extra_dimension=False,
+                 corners=True):
+
+        self.one_hot = one_hot
+        self.corners = corners
+
+        if one_hot:
+            self.feature_mode = "Planar_OH"
+        else:
+            self.feature_mode = "Planar"
+
+        self.extra_dimension = extra_dimension
+
+        super().__init__(dataset, channels='all', levels=levels, array_type=array_type)
+
+        # the super class tries to load crack pattern from files. If it fails, the cracks are loaded from the dataset
+        if self.values is None:
+            self.values = self.generate_array(dataset, levels, array_type)
+
+        self.feature_shape = self.values.shape[1:]
+
+        # self.save()
+
+    def generate_array(self, dataset, levels, array_type):
+
+        cracks3d = Cracks3D(dataset, levels, array_type)
+
+        rows = int_split(cracks3d.number_levels)
+
+        array_shape = [cracks3d.number_instances, rows[0] * cracks3d.core_columns, 2 * cracks3d.core_rows]
+
+        flat_array = np.zeros(array_shape)
+
+        for i, instance in enumerate(cracks3d.values):
+            for j, row in enumerate(rows):
+                for k in range(row):
+                    column_slice_lb = k * cracks3d.core_columns
+                    column_slice_ub = column_slice_lb + cracks3d.core_columns
+
+                    row_slice_lb = j * cracks3d.core_rows
+                    row_slice_ub = row_slice_lb + cracks3d.core_rows
+
+                    level = j*rows[0] + k
+
+                    flat_array[i, column_slice_lb:column_slice_ub, row_slice_lb:row_slice_ub] = instance[:, :, level]
+
+        if not self.one_hot:
+
+            if self.extra_dimension:
+                array_shape.append(1)
+                return flat_array.reshape(array_shape)
+
+            return flat_array
+
+        else:
+
+            truth_values = [-1, 1]
+
+            if self.corners:
+                truth_values.append(0)
+
+            if is_in(self.array_type, 'ori'):
+                truth_values.extend([2, 3, 4])
+
+            array_shape.append(len(truth_values))
+
+            one_hot_array = np.zeros(array_shape)
+
+            for i, value in enumerate(truth_values):
+
+                one_hot_array[:, :, :, i] = (flat_array == value).astype("float64")
+
+            return one_hot_array
+
 
 
 class CracksConcentration1D(Cracks):
