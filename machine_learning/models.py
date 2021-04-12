@@ -1,7 +1,7 @@
 from keras.layers.convolutional import Conv1D, Conv2D
-from keras.layers.normalization import BatchNormalization
-from keras.layers.core import Dense, Activation, Dropout
-from keras.layers import Flatten
+from tensorflow.keras.layers import BatchNormalization
+from tensorflow.keras.layers import Dense, Activation, Dropout
+from tensorflow.keras.layers import Flatten
 from keras.models import Sequential
 from collections.abc import Iterable
 from tensorflow.keras import Model

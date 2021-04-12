@@ -18,8 +18,8 @@ class TrialParameters:
             "Part of trial: " + self.trial_name,
             "Training for: " + str(self.epochs) + " epochs",
             "Optimiser: " + type(self.optimiser).__name__,
-            "Learning rate: " + '%.2E' % Decimal(self.optimiser.get_config()['lr']),
-#            "Decay: " + '%.2E' % Decimal(self.optimiser.get_config()['decay']),
+            "Learning rate: " + '%.2E' % Decimal(self.optimiser.get_config()['learning_rate']),
+            "Decay: " + '%.2E' % Decimal(self.optimiser.get_config()['decay']),
             "Loss function: " + self.loss_function.__name__
 
         ]

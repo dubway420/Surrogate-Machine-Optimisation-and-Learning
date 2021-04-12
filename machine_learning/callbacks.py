@@ -2,7 +2,7 @@ import matplotlib as mpl
 # Agg backend will render without X server on a compute node in batch
 mpl.use('Agg')
 import numpy as np
-from keras.callbacks import Callback
+from tensorflow.keras.callbacks import Callback
 import matplotlib.pyplot as plt
 import seaborn as sns
 from parmec_analysis.utils import plot_names_title
