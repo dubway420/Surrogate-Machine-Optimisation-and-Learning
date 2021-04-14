@@ -581,7 +581,7 @@ class CracksPlanar(Cracks):
 
         self.feature_shape = self.values.shape[1:]
 
-        # self.save()
+        self.save()
 
     def generate_array(self, dataset, levels, array_type):
 
