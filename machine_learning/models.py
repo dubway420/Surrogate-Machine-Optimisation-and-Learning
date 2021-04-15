@@ -5,6 +5,7 @@ from tensorflow.keras.layers import Flatten
 from keras.models import Sequential
 from collections.abc import Iterable
 from tensorflow.keras import Model
+from parmec_analysis.utils import is_in
 
 
 def iterable(obj):
@@ -117,19 +118,20 @@ class RegressionModels:
     @staticmethod
     def multi_layer_perceptron(input_dims, output_dims, activation="linear", layers=(8, 4), regularizer=None):
 
-        layer_output_shapes, activations = layer_activations_validation(layers, activation)
+        activations = layer_activations_validation(layers, activation)
 
         # define our MLP network
         model = Sequential()
 
-        model.name = "Multi-layer Perceptron"
+        # model.name = "Multi-layer Perceptron"
 
-        model.add(Dense(layer_output_shapes[0], input_dim=input_dims, activity_regularizer=regularizer))
+        model.add(Dense(layers[0], input_dim=input_dims, activity_regularizer=regularizer))
         model.add(Activation(activations[0]))
 
-        for layer_output_shape, act in zip(layer_output_shapes[1:], activations[1:]):
+        for layer_output_shape, act in zip(layers[1:], activations[1:]):
             model.add(Dense(layer_output_shape))
             model.add(Activation(act))
+            # model.add(Dropout(0.3))
 
         model.add(Dense(output_dims))
         model.add(Activation("linear"))
@@ -212,7 +214,8 @@ class RegressionModels:
 
     # 4
     @staticmethod
-    def existing(input_dims, output_dims, base_model=None, weights='imagenet', final_activation='linear', final_bias=True):
+    def existing(input_dims, output_dims, base_model=None, weights='imagenet', final_activation='linear',
+                 final_bias=True):
 
         # If no model is specified, ResNet50 will be used
         if base_model is None:
@@ -226,3 +229,25 @@ class RegressionModels:
         x = Dense(output_dims, activation=final_activation, use_bias=final_bias)(x)
 
         return Model(inputs=base_model.inputs, outputs=x)
+
+    #5
+    @staticmethod
+    def vgg_model(input_dims, output_dims, base_model=None, weights='imagenet', final_bias=True, extra_layers=()):
+
+        # If no model is specified, VGG16 will be used
+        if base_model is None or is_in(base_model, 'vgg16'):
+            from tensorflow.keras.applications import VGG16 as Base
+        else:
+            from tensorflow.keras.applications import VGG19 as Base
+
+        base_model = Base(include_top=False, input_shape=input_dims, weights=weights)
+
+        # Flatten the final layer's output
+        x = Flatten()(base_model.output)
+
+        for layer in extra_layers:
+            x = layer(x)
+
+        x = Dense(output_dims, activation="linear", use_bias=final_bias)(x)
+        return Model(inputs=base_model.inputs, outputs=x)
+
