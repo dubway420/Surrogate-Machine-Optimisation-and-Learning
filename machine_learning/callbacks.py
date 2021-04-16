@@ -1,6 +1,6 @@
 import matplotlib as mpl
 # Agg backend will render without X server on a compute node in batch
-mpl.use('Agg')
+# mpl.use('Agg')
 import numpy as np
 from tensorflow.keras.callbacks import Callback
 import matplotlib.pyplot as plt
@@ -21,7 +21,6 @@ def loss_history_graph(x, y, title):
 
 
 def correlation_graph(x, y, title, legend_vals):
-
     # Draw a straight line from 0 to 1 denoting a 'perfect' result
     plt.plot([0, 1], c='black')
 
@@ -40,7 +39,6 @@ def correlation_graph(x, y, title, legend_vals):
 
 
 def histogram(ground_truth, predictions, title, legend_vals):
-
     colours = ['r', 'g', 'y', 'navy', 'darkorange', 'saddlebrown']
 
     sns.distplot(ground_truth, label="Ground Truth")
@@ -108,12 +106,12 @@ class LossHistory(Callback):
 
         if experiment.labels.channels is 'all':
             self.view = CoreView(trial, iteration, experiment)
-            
+
             if experiment.labels.levels is 'all':
-               self.view5 = CoreView(trial, iteration, experiment, convert_to="5")
-               self.view7 = CoreView(trial, iteration, experiment, convert_to="7")
-               self.view10 = CoreView(trial, iteration, experiment, convert_to="10")
-               self.view12 = CoreView(trial, iteration, experiment, convert_to="12")
+                self.view5 = CoreView(trial, iteration, experiment, convert_to="5")
+                self.view7 = CoreView(trial, iteration, experiment, convert_to="7")
+                self.view10 = CoreView(trial, iteration, experiment, convert_to="10")
+                self.view12 = CoreView(trial, iteration, experiment, convert_to="12")
 
         self.epochs_with_results = []
 
@@ -187,10 +185,10 @@ class LossHistory(Callback):
                 row[1].set_aspect('equal')
 
             _, file_name = plot_names_title(self.experiment, self.iteration)
-            
-            #plt.subplots_adjust(wspace=0, hspace=0)
-            #fig.tight_layout()
-            
+
+            # plt.subplots_adjust(wspace=0, hspace=0)
+            # fig.tight_layout()
+
             file_name = self.trial + "/" + self.experiment.name + "/correlation_" + file_name
             plt.savefig(file_name, bbox_inches='tight')
             plt.close()
@@ -305,6 +303,60 @@ class LossHistory(Callback):
             file_name = self.trial + "/" + self.experiment.name + "/validation_histogram_" + file_name
             plt.savefig(file_name)
             plt.close()
+
+
+class TrainingProgress(Callback):
+
+    def __init__(self):
+        super().__init__()
+
+        # These variables will store the best validation scores
+        # Initialise the loss counters to infinity as this score will be beaten by any loss on the first epoch
+        self.best_validation_losses = [np.inf]
+        self.training_losses = []
+
+        self.best_result_epochs = []
+
+    def on_epoch_end(self, epoch, logs=None):
+
+        loss_training_current = logs.get('loss')
+        loss_validation_current = logs.get('val_loss')
+
+        previous_best_validation_loss = self.best_validation_losses[-1]
+
+        # If the validation loss beats the current best, append it to the list
+        if loss_validation_current <= previous_best_validation_loss:
+
+            message = "\n----\n Best validation score updated. \n New best: {val_score:.5f}. " \
+                      "\n This represents an improvement of {percent:.1f}% improvement over the " \
+                      "previous best ({previous:.5}). \n----\n"
+
+            # Just remove the infinity if it's the first epoch
+            if previous_best_validation_loss == np.inf:
+                self.best_validation_losses.pop()
+
+            else:
+
+                percent = ((previous_best_validation_loss - loss_validation_current) / previous_best_validation_loss) \
+                          * 100.0
+
+                print(message.format(val_score=loss_validation_current, percent=percent,
+                                     previous=previous_best_validation_loss))
+
+            self.best_validation_losses.append(loss_validation_current)
+            self.training_losses.append(loss_training_current)
+            self.best_result_epochs.append(epoch + 1)
+
+    def on_train_end(self, logs=None):
+
+        # plt.plot(self.best_result_epochs, self.training_losses)
+        plt.plot(self.best_result_epochs, self.best_validation_losses)
+        plt.scatter(self.best_result_epochs, self.best_validation_losses)
+        plt.plot([self.best_result_epochs[0], self.best_result_epochs[-1]],
+                 [self.best_validation_losses[-1], self.best_validation_losses[-1]],
+                 "k:")
+
+        plt.show()
 
 
 class SimpleHistory(Callback):

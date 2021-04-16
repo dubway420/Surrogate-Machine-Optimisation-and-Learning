@@ -1,7 +1,7 @@
 from machine_learning.models import RegressionModels as Regs
-from machine_learning.dataset_generators import DatasetSingleFrame as Dataset, CracksPlanar as Features, \
+from machine_learning.dataset_generators import DatasetSingleFrame as Dataset, Cracks1D as Features, \
     Displacements as Labels
-from machine_learning.callbacks import SimpleHistory as SH
+from machine_learning.callbacks import TrainingProgress as SH
 from keras.optimizers import RMSprop, Adam, Nadam
 from keras.callbacks import ModelCheckpoint
 from sklearn import preprocessing as pre
@@ -19,7 +19,7 @@ epochs = 200
 
 dataset = Dataset()
 
-features = Features(dataset, one_hot=True)
+features = Features(dataset, extra_dimension=False)
 
 # Labels
 channels_labels = "160"
@@ -38,12 +38,11 @@ min_max_scaler = pre.MinMaxScaler(feature_range=(0, 1))
 # features.transform(min_max_scaler)
 labels.transform(min_max_scaler)
 
-sh = SH(plot_from=5, plot_every_n_epochs=25, plot_prev_n_epochs=3, features=features, labels=labels)
+sh = SH()
 
-model = Regs.existing(features.feature_shape, labels.label_shape, final_activation='relu',
-                      final_bias=False)
+model = Regs.multi_layer_perceptron(features.feature_shape, labels.label_shape, layers=(256,), activation="linear")
 
-opt = Nadam(0.05)
+opt = Adam(0.001)
 
 model.compile(loss="mse", optimizer=opt)
 
@@ -51,12 +50,7 @@ output = model.fit(features.training_set(), labels.training_set(),
                    validation_data=(features.validation_set(), labels.validation_set()), epochs=epochs,
                    callbacks=[cp, sh])
 
-loss = output.history['loss']
-val_loss = output.history['val_loss']
 
-print("minimum loss:", min(loss))
-
-print("minimum val loss:", min(val_loss))
 
 
 
