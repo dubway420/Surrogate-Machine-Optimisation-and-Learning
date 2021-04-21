@@ -2,11 +2,27 @@ import matplotlib as mpl
 # Agg backend will render without X server on a compute node in batch
 # mpl.use('Agg')
 import numpy as np
+from matplotlib import mlab
+from sympy.stats import density
 from tensorflow.keras.callbacks import Callback
 import matplotlib.pyplot as plt
 import seaborn as sns
 from parmec_analysis.utils import plot_names_title
-from parmec_analysis.visualisation import CoreView, TrainingHistoryRealTime
+from parmec_analysis.visualisation import CoreView, TrainingHistoryRealTime, autolabel
+
+
+colours = ['b', 'g', 'y', 'r', 'c', 'm', 'lime', 'darkorange']
+
+
+def histo_fit(y, bins):
+    mu = np.mean(y)
+    sigma = np.std(y)
+
+    # add a 'best fit' line
+    best_fit_line = ((1 / (np.sqrt(2 * np.pi) * sigma)) *
+                     np.exp(-0.5 * (1 / sigma * (bins - mu)) ** 2))
+
+    return best_fit_line
 
 
 def loss_history_graph(x, y, title):
@@ -307,7 +323,7 @@ class LossHistory(Callback):
 
 class TrainingProgress(Callback):
 
-    def __init__(self):
+    def __init__(self, features, labels, plot_back=5):
         super().__init__()
 
         # These variables will store the best validation scores
@@ -316,6 +332,17 @@ class TrainingProgress(Callback):
         self.training_losses = []
 
         self.best_result_epochs = []
+
+        # The number of best epochs back that need to be printed
+        if plot_back > len(colours):
+            plot_back = len(colours)
+        self.plot_back = plot_back
+
+        self.features = features
+        self.labels = labels
+
+        self.training_predictions = []
+        self.validation_predictions = []
 
     def on_epoch_end(self, epoch, logs=None):
 
@@ -326,6 +353,10 @@ class TrainingProgress(Callback):
 
         # If the validation loss beats the current best, append it to the list
         if loss_validation_current <= previous_best_validation_loss:
+
+            # Update predictions
+            self.training_predictions.append(self.model.predict(self.features.training_set()))
+            self.validation_predictions.append(self.model.predict(self.features.validation_set()))
 
             message = "\n----\n Best validation score updated. \n New best: {val_score:.5f}. " \
                       "\n This represents an improvement of {percent:.1f}% improvement over the " \
@@ -347,16 +378,76 @@ class TrainingProgress(Callback):
             self.training_losses.append(loss_training_current)
             self.best_result_epochs.append(epoch + 1)
 
-    def on_train_end(self, logs=None):
+            num_results = len(self.best_result_epochs)
 
-        # plt.plot(self.best_result_epochs, self.training_losses)
-        plt.plot(self.best_result_epochs, self.best_validation_losses)
-        plt.scatter(self.best_result_epochs, self.best_validation_losses)
-        plt.plot([self.best_result_epochs[0], self.best_result_epochs[-1]],
-                 [self.best_validation_losses[-1], self.best_validation_losses[-1]],
-                 "k:")
+            if num_results > 1:
 
-        plt.show()
+                fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2, figsize=(10, 10))
+
+                # ====================================
+                # Loss over time plot
+                # ====================================
+
+                lower_bound = max(0, (num_results - self.plot_back))
+
+                x = self.best_result_epochs[lower_bound:]
+                y = self.best_validation_losses[lower_bound:]
+                c = colours[-len(x):]
+
+                ax1.plot(x, y, c='black')
+
+                ax1.scatter(x, y,
+                            c=c)
+
+                ax1.plot([x[0], x[-1]],
+                         [y[-1], y[-1]],
+                         "k:")
+
+                ax1.set(xlabel='Epoch', ylabel='Loss')
+
+                # ====================================
+                # Correlation plot and Histogram
+                # ====================================
+
+                n, bins, patches = ax3.hist(self.labels.validation_set().flatten(), color='grey', label="Ground Truth",
+                                            density=True)
+
+                y = histo_fit(self.labels.validation_set().flatten(), bins)
+
+                ax3.plot(bins, y, '--', c='black')
+
+                # Draw a straight line from 0 to 1 denoting a 'perfect' result
+                ax2.plot([0.1, 1.1], 'k:', c='black', alpha=0.5)
+                ax2.plot([0, 1], c='black')
+                ax2.plot([-0.1, 0.9], 'k:', c='black', alpha=0.5)
+
+                for predictions, epoch, col in zip(self.validation_predictions[lower_bound:], x, c):
+                    label = "Epoch " + str(epoch)
+                    ax2.scatter(self.labels.validation_set(), predictions, label=label, c=col)
+
+                    m, b = np.polyfit(self.labels.validation_set().flatten(), predictions, 1)
+                    #
+                    ax2.plot(self.labels.validation_set(), m * self.labels.validation_set() + b, c=col)
+
+                    n, bins, patches = ax3.hist(predictions, color=col, label=label, density=True, alpha=0.5)
+
+                    y = histo_fit(predictions, bins)
+
+                    ax3.plot(bins, y, '--', c=col)
+
+                ax2.legend()
+                ax2.set(xlabel='Ground Truth', ylabel='Predictions')
+
+                ax3.legend()
+
+                # ====================================
+                # Bar Graph
+                # ====================================
+
+
+
+                fig.tight_layout()
+                plt.show()
 
 
 class SimpleHistory(Callback):

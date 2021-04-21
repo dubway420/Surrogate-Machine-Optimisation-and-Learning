@@ -1,7 +1,7 @@
 from machine_learning.models import RegressionModels as Regs
 from machine_learning.dataset_generators import DatasetSingleFrame as Dataset, Cracks1D as Features, \
     Displacements as Labels
-from machine_learning.callbacks import TrainingProgress as SH
+from machine_learning.callbacks import TrainingProgress as TP
 from keras.optimizers import RMSprop, Adam, Nadam
 from keras.callbacks import ModelCheckpoint
 from sklearn import preprocessing as pre
@@ -38,7 +38,7 @@ min_max_scaler = pre.MinMaxScaler(feature_range=(0, 1))
 # features.transform(min_max_scaler)
 labels.transform(min_max_scaler)
 
-sh = SH()
+sh = TP(features, labels, plot_back=2)
 
 model = Regs.multi_layer_perceptron(features.feature_shape, labels.label_shape, layers=(256,), activation="linear")
 
@@ -48,7 +48,7 @@ model.compile(loss="mse", optimizer=opt)
 
 output = model.fit(features.training_set(), labels.training_set(),
                    validation_data=(features.validation_set(), labels.validation_set()), epochs=epochs,
-                   callbacks=[cp, sh])
+                   callbacks=[sh])
 
 
 
