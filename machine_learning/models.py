@@ -2,7 +2,7 @@ from keras.layers.convolutional import Conv1D, Conv2D
 from tensorflow.keras.layers import BatchNormalization
 from tensorflow.keras.layers import Dense, Activation, Dropout
 from tensorflow.keras.layers import Flatten
-from keras.models import Sequential
+from tensorflow.keras.models import Sequential
 from collections.abc import Iterable
 from tensorflow.keras import Model
 from parmec_analysis.utils import is_in

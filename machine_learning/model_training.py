@@ -14,8 +14,8 @@ NUMCORES = int(os.getenv("NSLOTS", 1))
 # Set the Keras TF session
 # K.set_session(sess)
 
-config=tf.ConfigProto(inter_op_parallelism_threads=NUMCORES,
-   intra_op_parallelism_threads=NUMCORES)
+# config=tf.ConfigProto(inter_op_parallelism_threads=NUMCORES,
+#    intra_op_parallelism_threads=NUMCORES)
 
 
 # rlrop = ReduceLROnPlateau(monitor='loss', factor=0.1, patience=10, cooldown=1)

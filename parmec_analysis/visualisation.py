@@ -1,7 +1,7 @@
 import matplotlib as mpl
 
 # Agg backend will render without X server on a compute node in batch
-mpl.use('Agg')
+#mpl.use('Agg')
 import matplotlib.pyplot as plt
 from mpl_toolkits.axes_grid1 import AxesGrid
 import numpy as np
