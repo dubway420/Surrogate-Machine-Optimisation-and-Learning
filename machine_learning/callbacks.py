@@ -3,7 +3,7 @@ import matplotlib as mpl
 # mpl.use('Agg')
 import numpy as np
 from matplotlib import mlab
-from sympy.stats import density
+# from sympy.stats import density
 from tensorflow.keras.callbacks import Callback
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -153,13 +153,17 @@ def plotter_foursquare(x, y, labels_set, prediction_set, fig_title):
 
     fig.suptitle(fig_title)
     fig.tight_layout()
-    plt.show()
+    plt.savefig(fig_title, bbox_inches='tight')
+    plt.close()
 
 
 class TrainingProgress(Callback):
 
-    def __init__(self, features, labels, plot_back=5):
+    def __init__(self, experiment, iteration, plot_back=5):
         super().__init__()
+
+        self.file_name = experiment.trial.trial_name + "/" + experiment.name + "/" + "TrainingProgress_" + \
+                         str(iteration)
 
         # These variables will store the best validation scores
         # Initialise the loss counters to infinity as this score will be beaten by any loss on the first epoch
@@ -173,8 +177,8 @@ class TrainingProgress(Callback):
             plot_back = len(colours)
         self.plot_back = plot_back
 
-        self.features = features
-        self.labels = labels
+        self.features = experiment.features
+        self.labels = experiment.labels
 
         self.training_predictions = []
         self.validation_predictions = []
@@ -221,13 +225,15 @@ class TrainingProgress(Callback):
                 x = self.best_result_epochs[lower_bound:]
                 y = self.best_validation_losses[lower_bound:]
 
+                plot_name = self.file_name + "Validation Dashboard"
                 plotter_foursquare(x, y, self.labels.validation_set(), self.validation_predictions[lower_bound:],
-                                   "Validation Dashboard")
+                                   plot_name)
 
                 y = self.training_losses[lower_bound:]
 
+                plot_name = self.file_name + "Training Dashboard"
                 plotter_foursquare(x, y, self.labels.training_set(), self.training_predictions[lower_bound:],
-                                   "Training Dashboard")
+                                   plot_name)
 
 
 def lr_scheduler(epoch, lr):

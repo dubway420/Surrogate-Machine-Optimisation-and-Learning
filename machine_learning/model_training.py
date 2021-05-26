@@ -35,8 +35,7 @@ def run_experiment(experiment):
 
     loss = experiment.trial.loss_function
 
-    experiment.callbacks[0] = experiment.callbacks[0](loss, trial_name, experiment, exp_i,
-                                                      experiment.trial.plot_every_n_epochs)
+    experiment.callbacks[0] = experiment.callbacks[0](experiment, exp_i, 3)
 
     ###
     
