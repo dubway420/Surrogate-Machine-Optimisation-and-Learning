@@ -7,15 +7,15 @@ import os
 
 NUMCORES = int(os.getenv("NSLOTS", 1))
 
-#sess = tf.Session(config=tf.ConfigProto(inter_op_parallelism_threads=NUMCORES,
-#                                        allow_soft_placement=True,
-#                                        device_count={'CPU': NUMCORES}))
+sess = tf.Session(config=tf.ConfigProto(inter_op_parallelism_threads=NUMCORES,
+                                        allow_soft_placement=True,
+                                        device_count={'CPU': NUMCORES}))
 
-# Set the Keras TF session
-# K.set_session(sess)
+Set the Keras TF session
+K.set_session(sess)
 
-# config=tf.ConfigProto(inter_op_parallelism_threads=NUMCORES,
-#    intra_op_parallelism_threads=NUMCORES)
+config=tf.ConfigProto(inter_op_parallelism_threads=NUMCORES,
+                      intra_op_parallelism_threads=NUMCORES)
 
 
 # rlrop = ReduceLROnPlateau(monitor='loss', factor=0.1, patience=10, cooldown=1)
