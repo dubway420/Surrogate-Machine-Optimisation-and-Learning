@@ -1,6 +1,6 @@
 import matplotlib as mpl
 # Agg backend will render without X server on a compute node in batch
-# mpl.use('Agg')
+mpl.use('Agg')
 import numpy as np
 from matplotlib import mlab
 # from sympy.stats import density
@@ -152,8 +152,8 @@ def plotter_foursquare(x, y, labels_set, prediction_set, fig_title):
         ax2.add_patch(plt.Circle((ground_truth, prediction), 0.02, color='black', fill=False))
 
     fig.suptitle(fig_title)
-    fig.tight_layout()
-    plt.savefig(fig_title, bbox_inches='tight')
+    #fig.tight_layout()
+    plt.savefig(fig_title)
     plt.close()
 
 
@@ -162,9 +162,9 @@ class TrainingProgress(Callback):
     def __init__(self, experiment, iteration, plot_back=5):
         super().__init__()
 
-        self.file_name = experiment.trial.trial_name + "/" + experiment.name + "/" + "TrainingProgress_" + \
-                         str(iteration)
-
+        self.file_name = experiment.trial.trial_name + "/" + experiment.name + "/" + \
+                         "iteration" + str(iteration) + "_"
+                         
         # These variables will store the best validation scores
         # Initialise the loss counters to infinity as this score will be beaten by any loss on the first epoch
         self.best_validation_losses = [np.inf]
@@ -225,21 +225,21 @@ class TrainingProgress(Callback):
                 x = self.best_result_epochs[lower_bound:]
                 y = self.best_validation_losses[lower_bound:]
 
-                plot_name = self.file_name + "Validation Dashboard"
+                plot_name = self.file_name + "Validation_Dashboard"
                 plotter_foursquare(x, y, self.labels.validation_set(), self.validation_predictions[lower_bound:],
                                    plot_name)
 
                 y = self.training_losses[lower_bound:]
 
-                plot_name = self.file_name + "Training Dashboard"
+                plot_name = self.file_name + "Training_Dashboard"
                 plotter_foursquare(x, y, self.labels.training_set(), self.training_predictions[lower_bound:],
                                    plot_name)
 
 
 def lr_scheduler(epoch, lr):
     decay_rate = 0.1
-    decay_step = 110
-    decay_step_2 = 310
+    decay_step = 250
+    decay_step_2 = 300
 
     if epoch == decay_step or epoch == decay_step_2:
         return lr * decay_rate
