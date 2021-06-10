@@ -1,4 +1,4 @@
-from keras.layers.convolutional import Conv1D, Conv2D
+from tensorflow.keras.layers import Conv1D, Conv2D
 from tensorflow.keras.layers import BatchNormalization
 from tensorflow.keras.layers import Dense, Activation, Dropout
 from tensorflow.keras.layers import Flatten

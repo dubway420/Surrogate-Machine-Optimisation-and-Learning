@@ -1,7 +1,7 @@
 from machine_learning.model_training import run_experiment
 import sys
 
-package = "experiment_input_files.experiment" + sys.argv[-1]
+package = sys.argv[-1] + ".experiment_input_files.experiment" + sys.argv[-2]
 
 experiment = getattr(__import__(package, fromlist=["experiment"]), "experiment")
 

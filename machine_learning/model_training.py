@@ -11,7 +11,7 @@ sess = tf.Session(config=tf.ConfigProto(inter_op_parallelism_threads=NUMCORES,
                                         allow_soft_placement=True,
                                         device_count={'CPU': NUMCORES}))
 
-Set the Keras TF session
+#Set the Keras TF session
 K.set_session(sess)
 
 config=tf.ConfigProto(inter_op_parallelism_threads=NUMCORES,
@@ -39,16 +39,7 @@ def run_experiment(experiment):
 
     ###
     
-    if len(experiment.callbacks) > 1:
-      
-      checkpoint_filepath = experiment.name + "_" + str(exp_i) + ".hdf5"
-  
-      experiment.callbacks[1] = experiment.callbacks[1](
-          filepath=checkpoint_filepath,
-          save_weights_only=False,
-          monitor='val_loss',
-          mode='min',
-          save_best_only=True)
+
 
     ##########################################################
 
