@@ -4,7 +4,6 @@ import numpy as np
 import sys
 from datetime import datetime
 
-
 trial_name = str(sys.argv[-1])
 results_file_name = trial_name + ".ind"
 results_dict = load_results(results_file_name)
@@ -44,15 +43,19 @@ for i, result in enumerate(results):
     errors_validation[0:2, i] = np.abs(np.array([np.min(validation_loss), np.max(validation_loss)]) - validation_mean)
 
 experiment_validation_losses_min = np.zeros(len(names))
+experiment_validation_losses_std = np.zeros(len(names))
 
 for i, exp in enumerate(experiment_validation_losses):
     experiment_validation_losses_min[i] = np.min(exp)
+    experiment_validation_losses_std[i] = np.std(exp)
 
 # experiment_validation_losses_min = np.min(experiment_validation_losses, axis=1)
 
 sort_args = np.argsort(experiment_validation_losses_min)
 
 result_mins_sorted = experiment_validation_losses_min[sort_args]
+result_means_sorted = averages_validation[sort_args]
+result_std_sorted = experiment_validation_losses_std[sort_args]
 
 names_np = np.array(names)
 names_sorted = names_np[sort_args]
@@ -71,19 +74,21 @@ f.write(subhead)
 
 f.write("\n----------------------------\n")
 
-
 prev_result = 0
 
-for name, result in zip(names_sorted, result_mins_sorted):
+for name, result, mean, std in zip(names_sorted, result_mins_sorted, result_means_sorted, result_std_sorted):
+
 
     if prev_result != 0:
         diff = result - prev_result
-        percent = (diff/prev_result)*100
-        string = name + " " + str(result) + " +" + str(diff) + " (" + str(percent) + "%)" + "\n"
+        percent = (diff / prev_result) * 100
+        string = name + " " + str(round(result, 6)) + " +" + str(round(diff, 6)) + " (" + str(round(percent, 3)) + "%)"
     else:
-        string = name + " " + str(result) + "\n"
+        string = name + " " + str(round(result, 6))
 
-    f.write(string)
+    extras = " [m: " + str(round(mean, 6)) + ", std: " + str(round(std, 6)) + "] \n"
+
+    f.write((string + extras))
 
     prev_result = result
 
