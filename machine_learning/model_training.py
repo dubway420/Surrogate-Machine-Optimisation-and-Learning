@@ -5,18 +5,18 @@ from parmec_analysis.utils import folder_validation, experiment_iteration, save_
 from machine_learning.experiment_summary import summary
 import os
 
-NUMCORES = int(os.getenv("NSLOTS", 1))
-
-sess = tf.Session(config=tf.ConfigProto(inter_op_parallelism_threads=NUMCORES,
-                                        allow_soft_placement=True,
-                                        device_count={'CPU': NUMCORES}))
-
-#Set the Keras TF session
-K.set_session(sess)
-
-config=tf.ConfigProto(inter_op_parallelism_threads=NUMCORES,
-                      intra_op_parallelism_threads=NUMCORES)
-
+# NUMCORES = int(os.getenv("NSLOTS", 1))
+#
+# sess = tf.Session(config=tf.ConfigProto(inter_op_parallelism_threads=NUMCORES,
+#                                         allow_soft_placement=True,
+#                                         device_count={'CPU': NUMCORES}))
+#
+# #Set the Keras TF session
+# K.set_session(sess)
+#
+# config=tf.ConfigProto(inter_op_parallelism_threads=NUMCORES,
+#                       intra_op_parallelism_threads=NUMCORES)
+#
 
 # rlrop = ReduceLROnPlateau(monitor='loss', factor=0.1, patience=10, cooldown=1)
 
@@ -45,7 +45,7 @@ def run_experiment(experiment):
 
     model_i = experiment.model
 
-    model_i.compile(loss=loss.__name__, optimizer=experiment.trial.optimiser)
+    model_i.compile(loss=loss, optimizer=experiment.trial.optimiser)
 
     model_fit = model_i.fit(experiment.features.training_set(), experiment.labels.training_set(),
                             validation_data=(experiment.features.validation_set(),
