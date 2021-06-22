@@ -1,4 +1,4 @@
-from parmec_analysis.reactor_case import ParmecInstance
+from parmec_analysis.reactor_case import Parse
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -14,7 +14,7 @@ for i in range(time_series.shape[0]):
 
     time_series[i] = time
 
-test_case = ParmecInstance("batch21_7159_P40/batch21_7159_P40")
+test_case = Parse("batch21_7159_P40/batch21_7159_P40")
 
 print(test_case.get_id())
 fig = plt.figure(figsize=(10, 10))
@@ -23,11 +23,13 @@ axs = [plt.subplot(2, 1, 1), plt.subplot(2, 1, 2)]
 axs[0].set_xlabel("Time From Earthquake Start (Secs)")
 axs[0].set_ylabel("Maximum channel x displacement (mm)")
 
-result = np.array(test_case.result_time_history())*1000
+result = np.array(test_case.result_time_history(result_type='bottom'))*1000
+
+print("Shape", result.shape)
 
 xy_pos = test_case.get_brick_xyz_positions(include='xy')
 
-channels = [34, 55, 61, 76, 116, 130, 154, 183, 273, 305]
+channels = [161]
 
 axs[1].scatter(xy_pos[0], xy_pos[1], color='grey', alpha=0.5, s=100)
 #
@@ -39,7 +41,7 @@ for channel in channels:
     axs[1].scatter(xy_pos[0][channel-1], xy_pos[1][channel-1], s=100)
 
 
-axs[1].set(adjustable='box-forced', aspect='equal')
+axs[1].set(adjustable='box', aspect='equal')
 
 axs[1].set_xticklabels([])
 axs[1].set_yticklabels([])

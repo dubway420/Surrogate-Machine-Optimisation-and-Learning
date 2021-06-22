@@ -533,13 +533,13 @@ class Parse:
 
         return time_array_sorted
 
-    def result_time_history(self, result="1", time_steps=271):
+    def result_time_history(self, result="1", result_type="max", time_steps=271):
         """Gets a result time history for one case i.e. one result at each time"""
 
         time_history = []
 
         for time in range(1, time_steps + 1):
-            time_history.append(self.get_result_at_time(time, result_columns=str(result)))
+            time_history.append(self.get_result_at_time(time, result_type=result_type, result_columns=str(result)))
 
         return time_history
 

@@ -327,6 +327,19 @@ def return_all(array):
     return np.array(array).flatten()
 
 
+def top_level(array):
+    return array[-1]
+
+
+def bottom_level(array):
+    return array[0]
+
+
+def mid_level(array):
+    mid_level_no = int(len(array)/2)
+    return array[mid_level_no]
+
+
 def function_switch(result_type):
     if result_type.isnumeric():
         command = return_numeric_function(result_type)
@@ -348,6 +361,12 @@ def function_switch(result_type):
         command = floor_zero_all
     elif is_in(result_type, "abs") and is_in(result_type, "max"):
         command = max_absolute
+    elif is_in(result_type, "top"):
+        command = top_level
+    elif is_in(result_type, "bottom"):
+        command = bottom_level
+    elif is_in(result_type, "mid"):
+        command = mid_level
     elif is_in(result_type, "all"):
         command = return_all
     # TODO min vs max function
