@@ -6,18 +6,27 @@ dataset = Dataset("/path/")
 
 dataset = dataset
 
-cracks3d = Cracks3D(dataset, array_type="position")
+cracks3d = Cracks3D(dataset, array_type="orientation")
 
+cracks3d_first_case = cracks3d.values[0]
 
-cracks3d_top = cracks3d.values[0, :, :, 0]
+print(cracks3d_first_case[:, :, 0].astype("int"))
 
-print(cracks3d_top.astype(int))
+print("====")
 
-cracks2d = Cracks2D(dataset, array_type="position")
+cracks_rotated = np.rot90(cracks3d_first_case, 1, (1, 0))
 
-for row in cracks2d.values[0]:
+print(cracks_rotated[:, :, 0].astype("int"))
 
-    print(row)
+# cracks3d_top = cracks3d.values[0, :, :, 0]
+#
+# print(cracks3d_top.astype(int))
+#
+# cracks2d = Cracks2D(dataset, array_type="position")
+#
+# for row in cracks2d.values[0]:
+#
+#     print(row)
 
 # print(cracks1[:, :, 0].astype(int))
 # print("\n --- \n")

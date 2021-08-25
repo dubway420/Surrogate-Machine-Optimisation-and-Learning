@@ -112,8 +112,6 @@ class Parse:
             except FileNotFoundError:
                 self.crack_array = self.base_crack_array()
 
-        if self.augmentation:
-            pass
 
         # =============
         # Results stuff
@@ -122,6 +120,8 @@ class Parse:
 
         self.fuel_indices = utils.index_array_fuel(case)  # TODO WARNING - THIS ONLY CURRENTLY WORKS FOR INTACT CASES
         self.results_indices = utils.index_array_interstitial(case)
+
+        self.results_3D_array = None
 
         # =============
 
@@ -875,3 +875,24 @@ class Parse:
             distances.append(int(abs(number - self.padding - dimension / 2)))
 
         return max(distances)
+
+    def results_2D(self):
+
+        base_indices = self.results_indices
+        indices_np = np.zeros([self.inter_rows, self.inter_columns, self.inter_levels])
+
+        first_columns_row = self.first_columns_row_interstitial
+
+        number_columns = self.inter_columns
+
+        channel = 0
+
+        for row, column_offset in enumerate(first_columns_row):
+
+            number_columns_this_row = number_columns - (2 * column_offset)
+            for column in range(column_offset, column_offset + number_columns_this_row):
+                channel_value = np.array(base_indices[channel][0:13])
+                indices_np[row, column] = channel_value
+                channel += 1
+
+        self.results_3D_array = indices_np

@@ -74,6 +74,8 @@ class DatasetSingleFrame:
         self.rolled = False
         self.rolled_by_increment = 0
 
+        self.augmented = False
+
         cases_from_path = []
         cases_from_file, instances_from_file = [], []
 
@@ -238,6 +240,16 @@ class DatasetSingleFrame:
 
         self.rolled = True
         self.rolled_by_increment = increment
+
+    def augment(self, flip=True, rotate=True):
+
+        if flip or rotate:
+            self.augmented = True
+
+
+
+        else:
+            print("Please choose at least one augmentation method")
 
     def summary(self):
 
