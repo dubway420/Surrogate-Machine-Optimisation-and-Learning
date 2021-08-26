@@ -123,6 +123,9 @@ class Parse:
 
         self.results_3D_array = None
 
+        if augmentation:
+            self.apply_augmentation()
+
         # =============
 
         # print("Initialisation complete")
@@ -377,8 +380,7 @@ class Parse:
     # ----------------------PROCESSING--------------------------
     # ==========================================================
 
-    def get_result_at_time(self, time_index=0, ext='.csv', result_columns='all', result_type="max", flat=False,
-                           one_dim=True):
+    def get_result_at_time(self, time_index=0, ext='.csv', result_columns='all', result_type="max", flat=False):
         """ Results results array for a particular time frame"""
 
         case_path = self.case
@@ -896,3 +898,33 @@ class Parse:
                 channel += 1
 
         self.results_3D_array = indices_np
+
+    def apply_augmentation(self):
+
+        self.results_2D()
+        cracks = self.crack_array
+
+        if utils.is_in(self.augmentation, "flip"):
+            pass
+
+        if utils.is_in(self.augmentation, "rot"):
+
+            _, num = self.augmentation.split("_")
+
+            rotations = int(num)
+
+            self.crack_array = np.rot90(cracks, -rotations, (1, 2))
+
+            indices_rotated = np.rot90(self.results_3D_array, rotations, (1, 0))
+
+            indices_new = []
+
+            for row in indices_rotated:
+                for channel in row:
+                    if sum(channel) > 0:
+                        indices_new.append(channel.astype(int))
+
+            self.results_indices = indices_new
+
+        else:
+            print("Please choose at least one valid augmentation method.")
