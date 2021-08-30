@@ -112,7 +112,6 @@ class Parse:
             except FileNotFoundError:
                 self.crack_array = self.base_crack_array()
 
-
         # =============
         # Results stuff
 
@@ -904,12 +903,41 @@ class Parse:
         self.results_2D()
         cracks = self.crack_array
 
-        if utils.is_in(self.augmentation, "flip"):
-            pass
+        start, num = self.augmentation.split("_")
 
-        if utils.is_in(self.augmentation, "rot"):
+        print(num)
+        print(type(num))
 
-            _, num = self.augmentation.split("_")
+        if utils.is_in(start, "flip"):
+
+            # Flip about the vertical axis
+            if num == "1":
+
+                cracks_rotated = np.rot90(cracks, -1, (1, 2))
+                cracks_rotated_flipped = np.fliplr(cracks_rotated)
+                self.crack_array = np.rot90(cracks_rotated_flipped, 1, (1, 2))
+
+                indices = self.results_3D_array
+
+                indices_rot = np.rot90(np.fliplr(indices), -1, (1, 0))
+
+                self.reassign_indices(np.rot90(indices_rot, 1, (1, 0)))
+
+            # Flip about the axis 45° from vertical
+            if num == "2":
+                pass
+
+            # Flip about the horizontal axis
+            if num == "3":
+                self.crack_array = np.fliplr(cracks)
+                indices_flipped = np.flipud(self.results_3D_array)
+                self.reassign_indices(indices_flipped)
+
+            # Flip about the axis 135° from vertical
+            if num == "4":
+                pass
+
+        elif utils.is_in(start, "rot"):
 
             rotations = int(num)
 
@@ -928,3 +956,14 @@ class Parse:
 
         else:
             print("Please choose at least one valid augmentation method.")
+
+    def reassign_indices(self, indices_3d):
+
+        indices_new = []
+
+        for row in indices_3d:
+            for channel in row:
+                if sum(channel) > 0:
+                    indices_new.append(channel.astype(int))
+
+        self.results_indices = indices_new
