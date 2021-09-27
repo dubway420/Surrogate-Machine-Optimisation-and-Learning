@@ -116,22 +116,33 @@ class RegressionModels:
 
     # 0
     @staticmethod
-    def multi_layer_perceptron(input_dims, output_dims, activation="linear", layers=(8, 4), regularizer=None):
+    def multi_layer_perceptron(input_dims, output_dims, activation="linear", layers=(8, 4), dropout=0.5, regularizer=None):
 
         activations = layer_activations_validation(layers, activation)
 
         # define our MLP network
         model = Sequential()
 
+        dropouts = dropout_validation(len(layers), dropout)
+
         # model.name = "Multi-layer Perceptron"
 
         model.add(Dense(layers[0], input_dim=input_dims, activity_regularizer=regularizer))
         model.add(Activation(activations[0]))
 
+        if dropouts[0]:
+            model.add(Dropout(dropouts[0]))
+
+
+        layer_index = 1
         for layer_output_shape, act in zip(layers[1:], activations[1:]):
             model.add(Dense(layer_output_shape))
             model.add(Activation(act))
-            # model.add(Dropout(0.3))
+
+            if dropouts[layer_index]:
+                model.add(Dropout(dropouts[layer_index]))
+
+            layer_index += 1
 
         model.add(Dense(output_dims))
         model.add(Activation("linear"))
@@ -139,20 +150,6 @@ class RegressionModels:
         # return our model
         return model
 
-    # 2
-    @staticmethod
-    def cnn1D(input_dims, output_dims):
-
-        # create model
-        model = Sequential()  # add model layers
-        model.add(Conv1D(64, kernel_size=3, activation='tanh', input_shape=input_dims))
-        model.add(Conv1D(32, kernel_size=3, activation='tanh'))
-        model.add(Flatten())
-        model.add(Dense(output_dims, activation='tanh'))
-
-        model.name = "CNN 1D"
-
-        return model
 
     # 3
     @staticmethod
