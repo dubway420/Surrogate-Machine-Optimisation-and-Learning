@@ -83,12 +83,12 @@ def plotter_foursquare(x, y, labels_set, prediction_set, fig_title):
     ax3.plot(bins, y, '--', c='black')
 
     ax2.plot([0.1, 1.1], '--', c='black', alpha=0.5, label='+/- 10%')
-    ax2.plot([-0.1, 0.9], '--', c='black', alpha=0.5)
+    ax2.plot([0, 0.9], '--', c='black', alpha=0.5)
 
     # Draw a straight line from 0 to 1 denoting a 'perfect' result
     ax2.plot([0.2, 1.2], 'k:', c='black', alpha=0.5, label='+/- 20%')
     ax2.plot([0, 1], c='black')
-    ax2.plot([-0.2, 0.8], 'k:', c='black', alpha=0.5)
+    ax2.plot([0, 0.8], 'k:', c='black', alpha=0.5)
 
     epoch_labels = ["Ground Truth"]
 
@@ -172,12 +172,12 @@ def correlation_foursquare(x, y, labels_set, prediction_set, fig_title, binary_d
 
     # Draw a straight line from 0 to 1 denoting a 'perfect' result
     ax1.plot([0.1, 1.1], '--', c='black', alpha=0.5, label='+/- 10%')
-    ax1.plot([-0.1, 0.9], '--', c='black', alpha=0.5)
+    ax1.plot([0, 0.9], '--', c='black', alpha=0.5)
 
     # Draw a straight line from 0 to 1 denoting a 'perfect' result
     ax1.plot([0.2, 1.2], 'k:', c='black', alpha=0.5, label='+/- 20%')
     ax1.plot([0, 1], c='black')
-    ax1.plot([-0.2, 0.8], 'k:', c='black', alpha=0.5)
+    ax1.plot([0, 0.8], 'k:', c='black', alpha=0.5)
 
     epoch_labels = ["Ground Truth"]
 
@@ -212,9 +212,9 @@ def correlation_foursquare(x, y, labels_set, prediction_set, fig_title, binary_d
 
     number_of_predictions = len(predictions)
 
-    LT10_percentage = str(len(set_LT10[0])) + " " + str(round(len(set_LT10[0]) / number_of_predictions * 100, 1)) + "%"
-    LT20_percentage = str(len(set_LT20[0])) + " " + str(round(len(set_LT20[0]) / number_of_predictions * 100, 1)) + "%"
-    P20_percentage = str(len(set_20P[0])) + " " + str(round(len(set_20P[0]) / number_of_predictions * 100, 1)) + "%"
+    LT10_percentage = str(len(set_LT10[0])) + " (" + str(round(len(set_LT10[0]) / number_of_predictions * 100, 1)) + "%)"
+    LT20_percentage = str(len(set_LT20[0])) + " (" + str(round(len(set_LT20[0]) / number_of_predictions * 100, 1)) + "%)"
+    P20_percentage = str(len(set_20P[0])) + " (" + str(round(len(set_20P[0]) / number_of_predictions * 100, 1)) + "%)"
 
     ax1.scatter(set_LT10[0], set_LT10[1], label=LT10_percentage, c='green')
     ax1.scatter(set_LT20[0], set_LT20[1], label=LT20_percentage, c='orange')
