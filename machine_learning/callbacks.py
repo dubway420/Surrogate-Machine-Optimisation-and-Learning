@@ -12,6 +12,9 @@ from parmec_analysis.visualisation import CoreView, TrainingHistoryRealTime, aut
 from tensorflow.keras.losses import mean_squared_error as mse, mean_absolute_error as mae
 from tensorflow.keras.losses import mean_absolute_percentage_error as mape
 from sklearn.metrics import r2_score
+import tensorflow as tf
+
+tf.enable_eager_execution()
 
 colours = ['b', 'g', 'y', 'r', 'c', 'm', 'lime', 'darkorange']
 
@@ -523,7 +526,7 @@ class TrainingProgress(Callback):
 
                 y = self.training_losses[lower_bound:]
 
-                plot_name = self.file_name + "Training_"
+                plot_name = self.file_name + "Training"
                 histogram_foursquare(x, y, self.labels.training_set(), self.training_predictions[lower_bound:],
                                        plot_name)
 
