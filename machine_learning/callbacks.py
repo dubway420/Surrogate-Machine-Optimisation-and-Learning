@@ -172,12 +172,13 @@ def correlation_foursquare(x, y, labels_set, prediction_set, fig_title, binary_d
 
     # Draw a straight line from 0 to 1 denoting a 'perfect' result
     ax1.plot([0.1, 1.1], '--', c='black', alpha=0.5, label='+/- 10%')
-    ax1.plot([0, 0.9], '--', c='black', alpha=0.5)
+    ax1.plot([-0.1, 0.9], '--', c='black', alpha=0.5)
 
     # Draw a straight line from 0 to 1 denoting a 'perfect' result
     ax1.plot([0.2, 1.2], 'k:', c='black', alpha=0.5, label='+/- 20%')
     ax1.plot([0, 1], c='black')
-    ax1.plot([0, 0.8], 'k:', c='black', alpha=0.5)
+    ax1.plot([-0.2, 0.8], 'k:', c='black', alpha=0.5)
+    ax1.set_ylim(0, 1.0)
 
     epoch_labels = ["Ground Truth"]
 
