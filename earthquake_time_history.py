@@ -25,23 +25,23 @@ for i in range(time_series.shape[0]):
     time_series[i, 0] = time_earthquake
     time_series[i, 1] = acceleration
 
-time_points = [47, 54, 64, 67]
+time_points = [47]
 
 
+
+plt.scatter(time_series[:, 0], time_series[:, 1], s=10, c="dodgerblue")
+plt.plot(time_series[:, 0], time_series[:, 1], c="dodgerblue")
 
 for x in time_points:
-    plt.plot([time_series[x, 0], time_series[x, 0]], [min(time_series[:, 1])*1.2, max(time_series[:, 1])*1.2], c='grey')
-
-plt.scatter(time_series[:, 0], time_series[:, 1], s=10, c="black")
-plt.plot(time_series[:, 0], time_series[:, 1], c="black")
+    time = time_series[x, 0]
+    label = "Time Marker: " + str(time) + " secs"
+    plt.plot([time, time], [min(time_series[:, 1]) * 1.2, max(time_series[:, 1]) * 1.2],
+             c='black', label=label)
 
 plt.xlabel("Time From Earthquake Start (Secs)")
 plt.ylabel(r"Earthquake Acceleration ($m/s^2$)")
 
-plt.ylim([min(time_series[:, 1])*1.1, max(time_series[:, 1]*1.1)])
-
+plt.ylim([min(time_series[:, 1]) * 1.1, max(time_series[:, 1] * 1.1)])
+plt.legend()
 
 plt.show()
-
-
-
