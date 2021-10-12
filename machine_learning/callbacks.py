@@ -217,9 +217,9 @@ def correlation_foursquare(x, y, labels_set, prediction_set, fig_title, binary_d
     LT20_percentage = str(len(set_LT20[0])) + " (" + str(round(len(set_LT20[0]) / number_of_predictions * 100, 1)) + "%)"
     P20_percentage = str(len(set_20P[0])) + " (" + str(round(len(set_20P[0]) / number_of_predictions * 100, 1)) + "%)"
 
-    ax1.scatter(set_LT10[0], set_LT10[1], label=LT10_percentage, c='green')
-    ax1.scatter(set_LT20[0], set_LT20[1], label=LT20_percentage, c='orange')
-    ax1.scatter(set_20P[0], set_20P[1], label=P20_percentage, c='red')
+    ax1.scatter(set_LT10[0], set_LT10[1], label=LT10_percentage, c='purple')
+    ax1.scatter(set_LT20[0], set_LT20[1], label=LT20_percentage, c='grey')
+    ax1.scatter(set_20P[0], set_20P[1], label=P20_percentage, c='y')
 
     m, b = np.polyfit(labels_set.flatten(), predictions, 1)
     #
@@ -434,7 +434,7 @@ def correlation_binary_split(ax, binary_delineater, labels_set, predictions):
     ax.scatter(true_negative[0], true_negative[1], label=TN_label, c='blue')
 
     FP_label = "False Positive (" + str(round(len(false_positive[0]) / negatives * 100, 1)) + "%)"
-    ax.scatter(false_positive[0], false_positive[1], label=FP_label, c='orange')
+    ax.scatter(false_positive[0], false_positive[1], label=FP_label, c='hotpink')
 
     ax.scatter([0, 1], [0, 1], alpha=1, label=" ", c="white")
 
@@ -442,7 +442,7 @@ def correlation_binary_split(ax, binary_delineater, labels_set, predictions):
     ax.scatter(true_positive[0], true_positive[1], label=TP_label, c='green')
 
     FN_label = "False Negative (" + str(round(len(false_negative[0]) / positives * 100, 1)) + "%)"
-    ax.scatter(false_negative[0], false_negative[1], label=FN_label, c='red')
+    ax.scatter(false_negative[0], false_negative[1], label=FN_label, c='sandybrown')
 
     ax.set(xlabel='Ground Truth', ylabel='Predictions')
 
