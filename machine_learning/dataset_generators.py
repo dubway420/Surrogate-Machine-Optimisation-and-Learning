@@ -614,7 +614,7 @@ class CracksPlanar(Cracks):
                     row_slice_lb = j * cracks3d.core_rows
                     row_slice_ub = row_slice_lb + cracks3d.core_rows
 
-                    level = j*rows[0] + k
+                    level = j * rows[0] + k
 
                     flat_array[i, column_slice_lb:column_slice_ub, row_slice_lb:row_slice_ub] = instance[:, :, level]
 
@@ -641,11 +641,9 @@ class CracksPlanar(Cracks):
             one_hot_array = np.zeros(array_shape)
 
             for i, value in enumerate(truth_values):
-
                 one_hot_array[:, :, :, i] = (flat_array == value).astype("float64")
 
             return one_hot_array
-
 
 
 class CracksConcentration1D(Cracks):
@@ -749,6 +747,10 @@ class CracksChannelCentred(Cracks):
         self.extra_dimension = extra_dimension
 
         self.array_size = array_size
+
+        self.feature_mode += ("_S" + str(array_size))
+
+        print(self.array_size)
 
         self.channel = channel
 
