@@ -187,11 +187,13 @@ def correlation_foursquare(x, y, labels_set, prediction_set, fig_title, binary_d
 
     set_LT10 = [[], []]  # within 10%
     set_LT20 = [[], []]  # within 20%
-    set_20P = [[], []]  # outside 20%
+    set_20P = [[], []]   # outside 20%
+
+    set20P_indices = []  # indices of the outlier cases
 
     # binary_delineater = np.median(labels_set)
 
-    for label, prediction in zip(labels_set, predictions):
+    for i, (label, prediction) in enumerate(zip(labels_set, predictions)):
 
         # =======================
         # Stuff for the first graph
@@ -210,11 +212,14 @@ def correlation_foursquare(x, y, labels_set, prediction_set, fig_title, binary_d
         else:
             set_20P[0].append(label)
             set_20P[1].append(prediction)
+            set20P_indices.append(i)
 
     number_of_predictions = len(predictions)
 
-    LT10_percentage = str(len(set_LT10[0])) + " (" + str(round(len(set_LT10[0]) / number_of_predictions * 100, 1)) + "%)"
-    LT20_percentage = str(len(set_LT20[0])) + " (" + str(round(len(set_LT20[0]) / number_of_predictions * 100, 1)) + "%)"
+    LT10_percentage = str(len(set_LT10[0])) + " (" + str(
+        round(len(set_LT10[0]) / number_of_predictions * 100, 1)) + "%)"
+    LT20_percentage = str(len(set_LT20[0])) + " (" + str(
+        round(len(set_LT20[0]) / number_of_predictions * 100, 1)) + "%)"
     P20_percentage = str(len(set_20P[0])) + " (" + str(round(len(set_20P[0]) / number_of_predictions * 100, 1)) + "%)"
 
     ax1.scatter(set_LT10[0], set_LT10[1], label=LT10_percentage, c='purple')
@@ -256,9 +261,12 @@ def correlation_foursquare(x, y, labels_set, prediction_set, fig_title, binary_d
     # plt.show()
     plt.close()
 
+    outlier_title = fig_title + "_outliers.csv"
+    # print(np.array(set20P_indices))
+    np.savetxt(outlier_title, np.array(set20P_indices).astype(int), delimiter=',', fmt="%i")
+
 
 def histogram_foursquare(x, y, labels_set, prediction_set, fig_title, binary_delineaters=(0.2, 0.37, 0.6)):
-
     fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2, figsize=(10, 10))
 
     predictions = prediction_set[-1]
@@ -275,9 +283,6 @@ def histogram_foursquare(x, y, labels_set, prediction_set, fig_title, binary_del
     graph_height = max(n)
 
     y = histo_fit(labels_set.flatten(), bins)
-
-
-
 
     ax1.plot(bins, y, '--', c='black')
 
@@ -302,13 +307,13 @@ def histogram_foursquare(x, y, labels_set, prediction_set, fig_title, binary_del
     ax1.plot([(pred_mean - pred_std), (pred_mean - pred_std)], [0, graph_height], '--', color='green')
     ax1.plot([(pred_mean + pred_std), (pred_mean + pred_std)], [0, graph_height], '--', color='green')
 
-    mean_label = "Ground Truth Mean: " + str(round(gt_mean, 1)) + ", Predictions Mean: " + str(round(pred_mean, 1)) + " (diff. " + str(round(diff_mean, 1)) + ")"
+    mean_label = "Ground Truth Mean: " + str(round(gt_mean, 1)) + ", Predictions Mean: " + str(
+        round(pred_mean, 1)) + " (diff. " + str(round(diff_mean, 1)) + ")"
 
     ax1.title.set_text(mean_label)
 
     ax1.legend()
     ax1.plot(bins, y, '--', c='green')
-
 
     # =============================================
     # TOP RIGHT IMAGE
@@ -329,11 +334,10 @@ def histogram_foursquare(x, y, labels_set, prediction_set, fig_title, binary_del
     y = histo_fit(predictions_right, bins)
 
     diff_STD = gt_std - pred_std
-    std_label = "Ground Truth STD: " + str(round(gt_std, 1)) + ", Predictions STD: " + str(round(pred_std, 1)) + " (diff. " + str(round(diff_STD, 1)) + ")"
+    std_label = "Ground Truth STD: " + str(round(gt_std, 1)) + ", Predictions STD: " + str(
+        round(pred_std, 1)) + " (diff. " + str(round(diff_STD, 1)) + ")"
     ax3.title.set_text(std_label)
     # ax2.plot(bins, y, '--', c='green')
-
-
 
     # =============================================
     # BOTTOM LEFT IMAGE
@@ -520,16 +524,16 @@ class TrainingProgress(Callback):
                 plot_name = self.file_name + "Validation"
 
                 histogram_foursquare(x, y, self.labels.validation_set(), self.validation_predictions[lower_bound:],
-                                       plot_name)
+                                     plot_name)
 
                 correlation_foursquare(x, y, self.labels.validation_set(), self.validation_predictions[lower_bound:],
-                                     plot_name)
+                                       plot_name)
 
                 y = self.training_losses[lower_bound:]
 
                 plot_name = self.file_name + "Training"
                 histogram_foursquare(x, y, self.labels.training_set(), self.training_predictions[lower_bound:],
-                                       plot_name)
+                                     plot_name)
 
                 correlation_foursquare(x, y, self.labels.training_set(), self.training_predictions[lower_bound:],
                                        plot_name)
