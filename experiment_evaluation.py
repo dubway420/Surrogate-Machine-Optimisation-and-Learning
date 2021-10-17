@@ -44,10 +44,12 @@ for i, result in enumerate(results):
 
 experiment_validation_losses_min = np.zeros(len(names))
 experiment_validation_losses_std = np.zeros(len(names))
+top_iterations = []
 
 for i, exp in enumerate(experiment_validation_losses):
     experiment_validation_losses_min[i] = np.min(exp)
     experiment_validation_losses_std[i] = np.std(exp)
+    top_iterations.append(np.argsort(exp)[:5])
 
 # experiment_validation_losses_min = np.min(experiment_validation_losses, axis=1)
 
@@ -56,6 +58,7 @@ sort_args = np.argsort(experiment_validation_losses_min)
 result_mins_sorted = experiment_validation_losses_min[sort_args]
 result_means_sorted = averages_validation[sort_args]
 result_std_sorted = experiment_validation_losses_std[sort_args]
+top_iterations_sorted = np.array(top_iterations)[sort_args]
 
 names_np = np.array(names)
 names_sorted = names_np[sort_args]
@@ -76,8 +79,8 @@ f.write("\n----------------------------\n")
 
 prev_result = 0
 
-for name, result, mean, std in zip(names_sorted, result_mins_sorted, result_means_sorted, result_std_sorted):
-
+for name, result, mean, std, top in zip(names_sorted, result_mins_sorted, result_means_sorted, result_std_sorted,
+                                        top_iterations_sorted):
 
     if prev_result != 0:
         diff = result - prev_result
@@ -86,9 +89,9 @@ for name, result, mean, std in zip(names_sorted, result_mins_sorted, result_mean
     else:
         string = name + " " + str(round(result, 6))
 
-    extras = " [m: " + str(round(mean, 6)) + ", std: " + str(round(std, 6)) + "] \n"
+    extras = " [m: " + str(round(mean, 6)) + ", std: " + str(round(std, 6)) + "] "
 
-    f.write((string + extras))
+    f.write((string + extras + str(top) + "\n"))
 
     prev_result = result
 
