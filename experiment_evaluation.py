@@ -21,8 +21,13 @@ results = results_dict.values()
 experiment_training_losses = []
 experiment_validation_losses = []
 
+
 for i, result in enumerate(results):
-    np_array = np.array(result)  # convert to np array
+
+    # Remove empty items (failed experiments) from results
+    result_cleaned = [x for x in result if x != []]
+
+    np_array = np.array(result_cleaned)  # convert to np array
 
     names[i] = names[i] + " (" + str(len(np_array)) + ")"
 
