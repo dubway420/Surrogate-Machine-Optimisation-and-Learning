@@ -898,21 +898,20 @@ class Parse:
 
         self.results_3D_array = indices_np
 
-    def apply_augmentation(self):
+    def apply_augmentation(self, augmentation=None):
+
+        if not augmentation:
+            augmentation = self.augmentation
 
         self.results_2D()
         cracks = self.crack_array
 
-        start, num = self.augmentation.split("_")
-
-        print(num)
-        print(type(num))
+        start, num = augmentation.split("_")
 
         if utils.is_in(start, "flip"):
 
             # Flip about the vertical axis
             if num == "1":
-
                 cracks_rotated = np.rot90(cracks, -1, (1, 2))
                 cracks_rotated_flipped = np.fliplr(cracks_rotated)
                 self.crack_array = np.rot90(cracks_rotated_flipped, 1, (1, 2))
