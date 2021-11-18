@@ -5,6 +5,7 @@ import numpy as np
 import warnings
 import pickle
 import os
+import copy
 
 
 def int_split(x):
@@ -74,7 +75,7 @@ class DatasetSingleFrame:
         self.rolled = False
         self.rolled_by_increment = 0
 
-        self.augmented = False
+        self.augmentation = False
 
         cases_from_path = []
         cases_from_file, instances_from_file = [], []
@@ -241,15 +242,77 @@ class DatasetSingleFrame:
         self.rolled = True
         self.rolled_by_increment = increment
 
-    def augment(self, flip=True, rotate=True):
+    def augment(self, flip=(1, 3), rotate=(1, 2, 3, 4)):
 
-        if flip or rotate:
-            self.augmented = True
+        aug_instances = []
+        aug_cases = []
 
+        flip_name = "_flip_"
 
+        for i in flip:
+            flip_name += str(i)
+
+        rotate_name = "_rotate_"
+
+        for i in rotate:
+            rotate_name += str(i)
+
+        augmentation = (flip_name + rotate_name)
+
+        # a file name associated with the dataset
+        file_name = self.name + "_" + augmentation + "_cases.pkl"
+
+        # Attempt to load data from the local disk
+        data_from_file = load_data_from_file(file_name)
+
+        self.augmentation = augmentation
+
+        # if data exists, continue attempting to load
+        if data_from_file:
+
+            print('Cases were found in file: ' + file_name + '...')
+
+            cases_from_file = data_from_file[0]
+            instances_from_file = data_from_file[1]
+
+            self.assign_attributes(cases_from_file, instances_from_file)
 
         else:
-            print("Please choose at least one augmentation method")
+
+            print("Applying augmentation...")
+
+            for case, instance in zip(self.cases_list, self.core_instances):
+
+                if flip:
+
+                    for aug in flip:
+                        aug_string = "flip_" + str(aug)
+                        case_aug = copy.deepcopy(instance)
+                        case_aug.apply_augmentation(aug_string)
+                        aug_instances.append(case_aug)
+                        aug_case = case + "_" + aug_string
+                        aug_cases.append(aug_case)
+                        flip_name += str(aug)
+
+                if rotate:
+
+                    for aug in rotate:
+                        aug_string = "rotate_" + str(aug)
+                        case_aug = copy.deepcopy(instance)
+                        case_aug.apply_augmentation(aug_string)
+                        aug_instances.append(case_aug)
+                        aug_case = case + "_" + aug_string
+                        aug_cases.append(aug_case)
+                        rotate_name += str(aug)
+
+            cases_updated = self.cases_list + aug_cases
+            instances_updated = self.core_instances + aug_instances
+
+            self.assign_attributes(cases_updated, instances_updated)
+
+            print("Saving core instances to file " + file_name + "...")
+            with open(file_name, 'wb') as f:
+                pickle.dump([cases_updated, instances_updated], f)
 
     def summary(self):
 
@@ -330,6 +393,9 @@ class Cracks:
                 print("There are too few instances on locally found dataset. Loading cracks from "
                       "cases located at path...")
 
+        # if dataset.augmentation:
+        #
+
     def generate_filename(self):
         """ Generates a filename based on the user settings """
 
@@ -348,6 +414,9 @@ class Cracks:
 
         if self.extra_dimension:
             file_name += "_ED"
+
+        if self.dataset.augmentation:
+            file_name += self.dataset.augmentation
 
         file_name += ".npy"
 
@@ -423,7 +492,13 @@ class Cracks:
         file_name = self.generate_filename()
 
         print("Saving crack pattern to file:", file_name)
-        np.save(file_name, self.values)
+
+        try:
+            np.save(file_name, self.values)
+
+        except OSError:
+
+            warnings.warn("Numpy was unable to save the crack configuration to disk.")
 
     def training_set(self):
         return self.values[:self.dataset.split_number]
@@ -446,15 +521,17 @@ class Cracks:
 
 class Cracks1D(Cracks):
 
-    def __init__(self, dataset, channels='all', levels='all', array_type='positions only', extra_dimension=False):
+    def __init__(self, dataset, channels='all', levels='all', array_type='positions only', extra_dimension=False,
+                 load_from_file=True):
 
         self.feature_mode = "1D_flat"
 
         self.extra_dimension = extra_dimension
 
-        super().__init__(dataset, channels, levels, array_type)
+        super().__init__(dataset, channels, levels, array_type, load_from_file=load_from_file)
 
-        # the super class tries to load the crack configuration from files. If it fails, the cracks are loaded from the dataset
+        # the super class tries to load the crack configuration from files. If it fails, the cracks are loaded from
+        # the dataset
         if self.values is None:
             self.values = self.generate_array(dataset, channels, levels, array_type, extra_dimension)
 
@@ -465,7 +542,7 @@ class Cracks1D(Cracks):
 
         self.save()
 
-    def generate_array(self, dataset, channels, levels, array_type, extra_dimension):
+    def generate_array(self, dataset, channels, levels, array_type, extra_dimension, load_from_file):
 
         instance_array_length = self.number_channels * self.number_levels
 
@@ -500,12 +577,13 @@ class Cracks1D(Cracks):
 
 class Cracks2D(Cracks1D):
 
-    def __init__(self, dataset, channels='all', levels='all', array_type='positions only', extra_dimension=False):
+    def __init__(self, dataset, channels='all', levels='all', array_type='positions only', extra_dimension=False,
+                 load_from_file=True):
 
         self.feature_mode = "2D_multi"
         self.extra_dimension = extra_dimension
 
-        Cracks.__init__(self, dataset, channels, levels, array_type)
+        Cracks.__init__(self, dataset, channels, levels, array_type, load_from_file=load_from_file)
 
         # the super class tries to load crack pattern from files. If it fails, the cracks are loaded from the dataset
         if self.values is None:
@@ -518,7 +596,8 @@ class Cracks2D(Cracks1D):
     def generate_array(self, dataset, channels, levels, array_type, extra_dimension):
 
         # Get the 1d feature array
-        values_1d = Cracks1D.generate_array(self, dataset, channels, levels, array_type, extra_dimension)
+        values_1d = Cracks1D.generate_array(self, dataset, channels, levels, array_type, extra_dimension,
+                                            load_from_file=True)
 
         X_shape = [values_1d.shape[0], self.number_levels, self.number_channels]
 
@@ -534,12 +613,12 @@ class Cracks2D(Cracks1D):
 
 class Cracks3D(Cracks):
 
-    def __init__(self, dataset, levels='all', array_type='positions only'):
+    def __init__(self, dataset, levels='all', array_type='positions only', load_from_file=True):
 
         self.feature_mode = "3D_multi"
         self.extra_dimension = False
 
-        super().__init__(dataset, channels='all', levels=levels, array_type=array_type)
+        super().__init__(dataset, channels='all', levels=levels, array_type=array_type, load_from_file=load_from_file)
 
         # the super class tries to load crack pattern from files. If it fails, the cracks are loaded from the dataset
         if self.values is None:
@@ -924,7 +1003,12 @@ class Displacements:
 
         file_name += "_L" + str(self.levels_range[0]) + "_" + str(self.levels_range[1]) + "_T" + str(self.time)
 
-        file_name += "_R" + str(self.column) + "_" + str(self.type) + "_" + flat_string + ".npy"
+        file_name += "_R" + str(self.column) + "_" + str(self.type) + "_" + flat_string
+
+        if self.dataset.augmentation:
+            file_name += self.dataset.augmentation
+
+        file_name + ".npy"
 
         return file_name
 
