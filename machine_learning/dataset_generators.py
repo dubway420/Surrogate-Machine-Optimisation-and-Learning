@@ -1008,7 +1008,7 @@ class Displacements:
         if self.dataset.augmentation:
             file_name += self.dataset.augmentation
 
-        file_name + ".npy"
+        file_name += ".npy"
 
         return file_name
 
