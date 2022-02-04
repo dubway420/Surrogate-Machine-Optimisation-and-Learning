@@ -35,7 +35,9 @@ def run_experiment(experiment):
 
     loss = experiment.trial.loss_function
 
-    experiment.callbacks[0] = experiment.callbacks[0](experiment, exp_i, 3)
+    save_model = experiment.trial.save_model
+
+    experiment.callbacks[0] = experiment.callbacks[0](experiment, exp_i, 3, save_model)
 
     ###
     
