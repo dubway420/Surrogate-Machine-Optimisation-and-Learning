@@ -13,6 +13,7 @@ from tensorflow.keras.losses import mean_squared_error as mse, mean_absolute_err
 from tensorflow.keras.losses import mean_absolute_percentage_error as mape
 from sklearn.metrics import r2_score
 import tensorflow as tf
+# from keras.callbacks import ModelCheckpoint
 
 tf.enable_eager_execution()
 
@@ -455,7 +456,7 @@ def correlation_binary_split(ax, binary_delineater, labels_set, predictions):
 
 class TrainingProgress(Callback):
 
-    def __init__(self, experiment, iteration, plot_back=5):
+    def __init__(self, experiment, iteration, plot_back=5, save_model=False):
         super().__init__()
 
         self.file_name = experiment.trial.trial_name + "/" + experiment.name + "/" + \
@@ -478,6 +479,8 @@ class TrainingProgress(Callback):
 
         self.training_predictions = []
         self.validation_predictions = []
+
+        self.save_model = save_model
 
     def on_epoch_end(self, epoch, logs=None):
 
@@ -537,6 +540,9 @@ class TrainingProgress(Callback):
 
                 correlation_foursquare(x, y, self.labels.training_set(), self.training_predictions[lower_bound:],
                                        plot_name)
+
+                if self.save_model:
+                    self.model.save(self.file_name[:-1])
 
 
 def lr_scheduler(epoch, lr):
