@@ -116,7 +116,8 @@ class RegressionModels:
 
     # 0
     @staticmethod
-    def multi_layer_perceptron(input_dims, output_dims, activation="linear", layers=(8, 4), dropout=0.5, regularizer=None):
+    def multi_layer_perceptron(input_dims, output_dims, activation="linear", layers=(8, 4), dropout=0.5,
+                               regularizer=None):
 
         activations = layer_activations_validation(layers, activation)
 
@@ -133,7 +134,6 @@ class RegressionModels:
         if dropouts[0]:
             model.add(Dropout(dropouts[0]))
 
-
         layer_index = 1
         for layer_output_shape, act in zip(layers[1:], activations[1:]):
             model.add(Dense(layer_output_shape))
@@ -149,7 +149,6 @@ class RegressionModels:
 
         # return our model
         return model
-
 
     # 3
     @staticmethod
@@ -211,13 +210,26 @@ class RegressionModels:
 
     # 4
     @staticmethod
-    def existing(input_dims, output_dims, base_model=None, weights='imagenet', final_activation='linear',
+    def existing(input_dims, output_dims, base_model=None, weights='imagenet',  fix_layers=None, final_activation='linear',
                  final_bias=True):
 
         # If no model is specified, ResNet50 will be used
         if base_model is None:
             from tensorflow.keras.applications import ResNet50
             base_model = ResNet50(include_top=False, input_shape=input_dims, weights=weights)
+
+        if fix_layers is not None:
+            if isinstance(fix_layers, str):
+                if is_in(fix_layers, "base"):
+
+                    if is_in(fix_layers, "all"):
+                        base_model.trainable = False
+
+                    if is_in(fix_layers, "first"):
+                        base_model.layers[1].trainable = False
+
+                    if is_in(fix_layers, "last"):
+                        base_model.layers[-2].trainable = False
 
         # Flatten the final layer's output
         x = Flatten()(base_model.output)
@@ -227,9 +239,10 @@ class RegressionModels:
 
         return Model(inputs=base_model.inputs, outputs=x)
 
-    #5
+    # 5
     @staticmethod
-    def vgg_model(input_dims, output_dims, base_model=None, weights='imagenet', final_bias=True, extra_layers=()):
+    def vgg_model(input_dims, output_dims, base_model=None, weights='imagenet', fix_layers=None, final_bias=True,
+                  extra_layers=()):
 
         # If no model is specified, VGG16 will be used
         if base_model is None or is_in(base_model, 'vgg16'):
@@ -239,6 +252,21 @@ class RegressionModels:
 
         base_model = Base(include_top=False, input_shape=input_dims, weights=weights)
 
+        # Checks if the users wants the base model layers to have fixed weights i.e. if they are trainable or not
+
+        if fix_layers is not None:
+            if isinstance(fix_layers, str):
+                if is_in(fix_layers, "base"):
+
+                    if is_in(fix_layers, "all"):
+                        base_model.trainable = False
+
+                    if is_in(fix_layers, "first"):
+                        base_model.layers[1].trainable = False
+
+                    if is_in(fix_layers, "last"):
+                        base_model.layers[-2].trainable = False
+
         # Flatten the final layer's output
         x = Flatten()(base_model.output)
 
@@ -247,4 +275,3 @@ class RegressionModels:
 
         x = Dense(output_dims, activation="linear", use_bias=final_bias)(x)
         return Model(inputs=base_model.inputs, outputs=x)
-
