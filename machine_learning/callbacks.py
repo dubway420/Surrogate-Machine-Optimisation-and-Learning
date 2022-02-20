@@ -542,7 +542,9 @@ class TrainingProgress(Callback):
                                        plot_name)
 
                 if self.save_model:
-                    self.model.save(self.file_name[:-1])
+
+                    save_name = self.file_name[:-1] + ".mod"
+                    self.model.save(save_name)
 
 
 def lr_scheduler(epoch, lr):
