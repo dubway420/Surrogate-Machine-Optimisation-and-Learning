@@ -279,7 +279,12 @@ class DatasetSingleFrame:
             cases_from_file = data_from_file[0]
             instances_from_file = data_from_file[1]
 
-            self.assign_attributes(cases_from_file, instances_from_file)
+            if retain_validation:
+                aug_cases = len(cases_from_file) - self.number_instances
+                new_split_number = self.split_number + aug_cases
+                self.assign_attributes(cases_from_file, instances_from_file, split_number=new_split_number)
+            else:
+                self.assign_attributes(cases_from_file, instances_from_file)
 
         else:
 
