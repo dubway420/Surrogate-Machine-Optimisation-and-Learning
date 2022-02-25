@@ -80,6 +80,11 @@ class DatasetSingleFrame:
         cases_from_path = []
         cases_from_file, instances_from_file = [], []
 
+        # If the path string does not end with a forward slash, add one
+        if len(path_string) > 0:
+            if path_string[-1] != "/":
+                path_string += "/"
+
         # check the directory
         if check_directory(path_string):
             cases_from_path = cases_list(path_string)
