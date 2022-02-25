@@ -17,7 +17,7 @@ JOBID="${ADDR[0]}"
 
 J2=$(qsub -l short -terse -hold_jid $JOBID experiment_evaluation.sh $name)
 
-qsub -l short -terse -hold_jid $J2 -m ea -M huw.jones@manchester.ac.uk cleanup.sh $name
+qsub -l short -terse -hold_jid $J2 -m ea -M huw.jones@manchester.ac.uk cleanup.sh $name $J $J2
 
 
 
