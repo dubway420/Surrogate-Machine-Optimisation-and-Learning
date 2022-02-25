@@ -1,4 +1,5 @@
 import matplotlib as mpl
+
 # Agg backend will render without X server on a compute node in batch
 mpl.use('Agg')
 import numpy as np
@@ -13,6 +14,7 @@ from tensorflow.keras.losses import mean_squared_error as mse, mean_absolute_err
 from tensorflow.keras.losses import mean_absolute_percentage_error as mape
 from sklearn.metrics import r2_score
 import tensorflow as tf
+
 # from keras.callbacks import ModelCheckpoint
 
 tf.enable_eager_execution()
@@ -188,7 +190,7 @@ def correlation_foursquare(x, y, labels_set, prediction_set, fig_title, binary_d
 
     set_LT10 = [[], []]  # within 10%
     set_LT20 = [[], []]  # within 20%
-    set_20P = [[], []]   # outside 20%
+    set_20P = [[], []]  # outside 20%
 
     set20P_indices = []  # indices of the outlier cases
 
@@ -480,6 +482,8 @@ class TrainingProgress(Callback):
         self.training_predictions = []
         self.validation_predictions = []
 
+        self.epochs = experiment.trial.epochs
+
         self.save_model = save_model
 
     def on_epoch_end(self, epoch, logs=None):
@@ -542,9 +546,20 @@ class TrainingProgress(Callback):
                                        plot_name)
 
                 if self.save_model:
-
                     save_name = self.file_name[:-1] + ".mod"
                     self.model.save(save_name)
+
+        # Save the model at the half way point
+        elif epoch == int(self.epochs / 2) and self.save_model:
+
+            save_name = self.file_name[:-1] + "_halfway.mod"
+            self.model.save(save_name)
+
+        # Save the model on the final epoch
+        elif epoch == self.epochs and self.save_model:
+
+            save_name = self.file_name[:-1] + "_end.mod"
+            self.model.save(save_name)
 
 
 def lr_scheduler(epoch, lr):
