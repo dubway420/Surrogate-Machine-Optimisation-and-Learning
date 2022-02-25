@@ -45,7 +45,7 @@ class Parse:
     # ==========================================================
 
     def __init__(self, case, fuel_levels=7, inter_levels=13, core_rows=18, core_columns=18,
-                 fuel_channels=284, interstitial_channels=321, padding=3, augmentation=None):
+                 fuel_channels=284, interstitial_channels=321, padding=2, augmentation=None):
         """Assign ID. Initialise or extract data arrays """
 
         # The number of levels represents the vertical stack height in the core i.e. the number of bricks stacked in a

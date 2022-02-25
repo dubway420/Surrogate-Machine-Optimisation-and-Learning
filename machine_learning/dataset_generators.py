@@ -187,12 +187,16 @@ class DatasetSingleFrame:
             with open(file_name, 'wb') as f:
                 pickle.dump([cases_list_updated, core_instances_updated], f)
 
-    def assign_attributes(self, case_list, core_instances):
+    def assign_attributes(self, case_list, core_instances, split_number=None):
 
         self.cases_list = case_list
         self.core_instances = core_instances
         self.number_instances = len(case_list)
-        self.split_number = int(self.number_instances * (1 - self.validation_split))
+
+        if split_number:
+            self.split_number = split_number
+        else:
+            self.split_number = int(self.number_instances * (1 - self.validation_split))
 
     def training_cases(self):
         return self.cases_list[:self.split_number]
@@ -247,7 +251,7 @@ class DatasetSingleFrame:
         self.rolled = True
         self.rolled_by_increment = increment
 
-    def augment(self, flip=(1, 3), rotate=(1, 2, 3, 4)):
+    def augment(self, flip=(1, 3), rotate=(1, 2, 3, 4), retain_validation=True, save=True):
 
         aug_instances = []
         aug_cases = []
@@ -280,7 +284,12 @@ class DatasetSingleFrame:
             cases_from_file = data_from_file[0]
             instances_from_file = data_from_file[1]
 
-            self.assign_attributes(cases_from_file, instances_from_file)
+            if retain_validation:
+                aug_cases = len(cases_from_file) - self.number_instances
+                new_split_number = self.split_number + aug_cases
+                self.assign_attributes(cases_from_file, instances_from_file, split_number=new_split_number)
+            else:
+                self.assign_attributes(cases_from_file, instances_from_file)
 
         else:
 
@@ -310,14 +319,20 @@ class DatasetSingleFrame:
                         aug_cases.append(aug_case)
                         rotate_name += str(aug)
 
-            cases_updated = self.cases_list + aug_cases
-            instances_updated = self.core_instances + aug_instances
+            cases_updated = aug_cases + self.cases_list
+            instances_updated = aug_instances + self.core_instances
 
-            self.assign_attributes(cases_updated, instances_updated)
+            if retain_validation:
+                new_split_number = self.split_number + len(aug_cases)
 
-            print("Saving core instances to file " + file_name + "...")
-            with open(file_name, 'wb') as f:
-                pickle.dump([cases_updated, instances_updated], f)
+                self.assign_attributes(cases_updated, instances_updated, split_number=new_split_number)
+            else:
+                self.assign_attributes(cases_updated, instances_updated)
+
+            if save:
+                print("Saving core instances to file " + file_name + "...")
+                with open(file_name, 'wb') as f:
+                    pickle.dump([cases_updated, instances_updated], f)
 
     def summary(self):
 
