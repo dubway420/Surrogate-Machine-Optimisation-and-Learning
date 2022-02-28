@@ -550,13 +550,13 @@ class TrainingProgress(Callback):
                     self.model.save(save_name)
 
         # Save the model at the half way point
-        elif epoch == int(self.epochs / 2) and self.save_model:
+        if epoch == int(self.epochs / 2) and self.save_model:
 
             save_name = self.file_name[:-1] + "_halfway.mod"
             self.model.save(save_name)
 
         # Save the model on the final epoch
-        elif epoch == self.epochs and self.save_model:
+        if epoch == self.epochs and self.save_model:
 
             save_name = self.file_name[:-1] + "_end.mod"
             self.model.save(save_name)
