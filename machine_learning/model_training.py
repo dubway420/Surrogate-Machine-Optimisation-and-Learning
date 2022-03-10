@@ -52,7 +52,7 @@ def run_experiment(experiment):
     model_fit = model_i.fit(experiment.features.training_set(), experiment.labels.training_set(),
                             validation_data=(experiment.features.validation_set(),
                                              experiment.labels.validation_set()),
-                            epochs=experiment.trial.epochs, verbose=2, 
+                            epochs=experiment.trial.epochs, batch_size=experiment.batch_size, verbose=2,
                             callbacks=experiment.callbacks)
 
     # This section now sorts these lists and passes the lowest to the save file

@@ -25,7 +25,8 @@ def summary(experiment):
         # model.summary(print_fn=lambda x: fh.write(x + '\n'))
 
         fh.write("Machine Learning Model Parameters:\n")
-        fh.write(model.name + "\n\n")
+        fh.write(model.name + "\n")
+        fh.write("Batch Size: " + str(experiment.batch_size) + "\n\n")
 
         for layer in model.layers:
             config = layer.get_config()
