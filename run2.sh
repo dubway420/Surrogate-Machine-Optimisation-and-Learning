@@ -1,12 +1,13 @@
 #!/bin/bash --login
 #$ -cwd               # Run the job in the current directory
 #$ -l nvidia_v100=1
-#$ -t 1-128
+#$ -t 1-32
 
-experiments=4
+experiments=3
 
+#experiment_number=$(($SGE_TASK_ID%$experiments+1)) 
 
-experiment_number=$(($SGE_TASK_ID%$experiments+1)) 
+experiment_number=1
 
 sleep $(($experiment_number*20))
 
