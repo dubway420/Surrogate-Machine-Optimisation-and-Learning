@@ -553,7 +553,7 @@ class Cracks1D(Cracks):
         # the super class tries to load the crack configuration from files. If it fails, the cracks are loaded from
         # the dataset
         if self.values is None:
-            self.values = self.generate_array(dataset, channels, levels, array_type, extra_dimension)
+            self.values = self.generate_array(dataset, channels, levels, array_type, extra_dimension, load_from_file=True)
 
         if self.extra_dimension:
             self.feature_shape = self.values.shape[1:]

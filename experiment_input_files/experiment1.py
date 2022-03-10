@@ -1,7 +1,7 @@
 from machine_learning.experiment import Experiment
 # from experiment_input_files.trial_common_parameters import parameters
 from machine_learning.models import RegressionModels as RegMods
-from machine_learning.dataset_generators import CracksPlanar as Features
+from machine_learning.dataset_generators import Cracks3D as Features
 from machine_learning.callbacks import TrainingProgress as History, lr_scheduler
 from keras.callbacks import ModelCheckpoint
 from sklearn import preprocessing as pre
@@ -13,13 +13,13 @@ def experiment(trial):
 
     parameters = getattr(__import__(package, fromlist=["parameters"]), "parameters")
 
-    experiment_name = "thinning_128to16_DOp4"
+    experiment_name = "thinning_256to16_DOp4_tanh_softmax_FC256_lvls_3_7_nopadding"
 
     callbacks = [History]
 
     dataset = parameters.dataset
 
-    features = Features(parameters.dataset, array_type="Positions")
+    features = Features(parameters.dataset, levels='3-7', array_type="Positions")
 
     labels = parameters.labels
 
@@ -28,11 +28,13 @@ def experiment(trial):
     # features.transform(min_max_scaler)
     labels.transform(min_max_scaler)
 
+    batch_size = 32
+
     model = RegMods.convolutional_neural_network_2d(features.feature_shape, labels.label_shape, activation=(
-        "linear", "relu", "linear", "relu", "linear", "relu", "linear"),
-                                                    layers=(128, 64, 32, 16, 16, 64, 128),
-                                                    dropout=(None, 0.4, None, 0.4, None, 0.4, None), padding="same",
+        "tanh", "softplus", "tanh", "softplus", "tanh", "softplus", "tanh"),
+                                                    layers=(256, 64, 32, 16, 16, 64, 256),
+                                                    dropout=0.4, padding="same",
                                                     kernel_shape=3)
 
-    return Experiment(parameters, experiment_name, model, dataset, features, labels,
+    return Experiment(parameters, experiment_name, model, dataset, features, labels, batch_size,
                       callbacks)
