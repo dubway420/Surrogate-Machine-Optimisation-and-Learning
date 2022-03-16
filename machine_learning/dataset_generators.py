@@ -1,3 +1,6 @@
+from time import sleep
+from warnings import warn
+
 from parmec_analysis.utils import cases_list, is_in, split_separators, function_switch, get_number, check_directory
 from parmec_analysis.utils import load_data_from_file
 from parmec_analysis import reactor_case
@@ -396,7 +399,7 @@ class Cracks:
 
         # Handles loading from file
 
-        X_loaded = self.load_cracks_from_file()
+        X_loaded = self.load_cracks_from_file(retries=0)
         if len(X_loaded) > 0:
 
             if not load_from_file:
@@ -442,16 +445,34 @@ class Cracks:
 
         return file_name
 
-    def load_cracks_from_file(self):
+    def load_cracks_from_file(self, retries=10):
         """ Determines if cracks storage file exists and if so loads data"""
 
         file_name = self.generate_filename()
 
         if not os.path.exists(file_name):
             return []
+        try:
+            print("Crack pattern dataset was found on file:", file_name, "Loading...")
+            data = np.load(file_name)
 
-        print("Crack pattern dataset was found on file:", file_name, "Loading...")
-        return np.load(file_name)
+        except ValueError:
+            retries += 1
+
+            if retries <= 10:
+                message = "Data Loading Error. Retrying " + str(retries) + " of 10..."
+                warn(message)
+
+                # Wait 30 seconds
+                sleep(30)
+
+                # Try loading the crack file again
+                self.load_cracks_from_file(retries=retries)
+
+            else:
+                warn("Data Loading Error. Exceeded number of retries.")
+
+        return data
 
     def transform(self, transformer):
 
