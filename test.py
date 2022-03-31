@@ -4,6 +4,9 @@ from machine_learning.callbacks import correlation_foursquare, histogram_foursqu
 from tensorflow.keras.losses import mean_squared_error as mse
 import numpy as np
 from sklearn import preprocessing as pre
+import warnings
+
+warnings.filterwarnings('ignore')
 
 from os import listdir, mkdir
 from parmec_analysis.utils import is_in
@@ -105,19 +108,29 @@ for i in range(0, 8):
 print("\n ########################################## \n")
 print("\n ########################################## \n")
 
-# best_fold_losses = np.min(fold_losses, axis=1)
-#
-# best_loss_overall = np.min(best_fold_losses)
-#
-# best_fold = np.argmin(best_fold_losses)
-#
-# losses_for_best_fold = fold_losses[best_fold]
-#
-# best_model_no = np.argmin(losses_for_best_fold)
-#
-# best_model = fold_best_model[best_fold]
-#
-# print("Best result overall: ", str(best_loss_overall))
-# message = "This was for fold: " + str(best_fold) + " model: " + best_model + " (" + str(best_model_no) + ")"
-#
-# print(message)
+best_fold_losses = []
+losses_flat = []
+
+for fold in fold_losses:
+    best_fold_losses.append(np.min(fold))
+    losses_flat.extend(fold)
+
+best_loss_overall = np.min(best_fold_losses)
+
+best_fold = np.argmin(best_fold_losses)
+
+losses_for_best_fold = fold_losses[best_fold]
+
+best_model_no = np.argmin(losses_for_best_fold)
+
+best_model = fold_best_model[best_fold]
+
+print("Best result overall: ", str(best_loss_overall))
+message = "This was for fold: " + str(best_fold) + " model: " + best_model + " (" + str(best_model_no) + ")"
+print(message)
+
+print("\n---\n")
+
+print("Mean Loss: ", np.mean(losses_flat))
+
+
