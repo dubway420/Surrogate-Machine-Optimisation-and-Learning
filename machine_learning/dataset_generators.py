@@ -298,7 +298,7 @@ class DatasetSingleFrame:
 
             print("Applying augmentation...")
 
-            for case, instance in zip(self.cases_list, self.core_instances):
+            for case, instance in zip(self.training_cases(), self.training_instances()):
 
                 if flip:
 
@@ -347,6 +347,10 @@ class DatasetSingleFrame:
             "Validation split: " + str(self.validation_split)
 
         ]
+
+        if self.augmentation:
+            augmentation_text = "Data augmentation has been applied: " + self.augmentation
+            summary_text.append(augmentation_text)
 
         if self.shuffled:
             shuffle_text = "Shuffled using seed: " + str(self.shuffle_seed)
