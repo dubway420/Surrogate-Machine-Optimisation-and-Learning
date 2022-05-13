@@ -10,7 +10,7 @@ from parmec_analysis.utils import is_in
 
 dataset = DatasetSingleFrame(name="test_set")
 
-inputs = Cracks3D(dataset, levels='3-7', array_type="Positions")
+inputs = Cracks3D(dataset, array_type="Positions", levels="5-7")
 
 print(inputs.summary())
 
@@ -34,14 +34,19 @@ labels.transform(min_max_scaler)
 #########################################################
 # Replace this with the path to your download of the experiment
 #########################################################
-path = "C:/Users/Huw/Documents/PhD/Paper1Models/Paper1_vf_10pc_Huber/thinning_256to16_DOp4_tanh_softmax_FC256_lvls_3_7_nopadding"
+path = "C:/Users/Huw/Documents/MobaXterm/home/AugDown/VaryingAugRot2/levels5_7_simple_DO2"
 
 #########################################################
 # Replace this with the name of the folder you want to save your test results to
 #########################################################
-folder_name = "unaugmented_Huber/"
+folder_name = "VaryingAugRot2"
 
-mkdir(folder_name)
+try:
+    mkdir(folder_name)
+
+except FileExistsError:
+    print("Please be aware that a folder already exists by the name " + folder_name)
+    print("Continuing...\n")
 
 files = listdir(path)
 
@@ -69,7 +74,8 @@ for i, model_name in enumerate(model_files):
 
     model_losses.append(mse_iteration)
 
-    save_name = folder_name + model_name.split('.')[0]
+    save_name = folder_name + "/" + model_name.split('.')[0]
+
     correlation_foursquare(("100"), 56, labels.values, [1, predictions], save_name)
     histogram_foursquare(("100"), 56, labels.values, [1, predictions], save_name)
 
@@ -78,7 +84,7 @@ for i, model_name in enumerate(model_files):
 
 mean_error = round(np.mean(model_losses), 4)
 
-print("\n ------------------ \n ")
+print("/n ------------------ /n ")
 print("Mean error:", mean_error)
 
 best_error = np.min(model_losses)
@@ -88,3 +94,7 @@ best_model = model_files[best_i]
 message = "Best result for model: " + best_model + " (" + str(best_i) + ")"
 print(message)
 print("Result: ", round(best_error, 4))
+
+
+filename = folder_name + "/results"
+np.save(filename, model_losses)
