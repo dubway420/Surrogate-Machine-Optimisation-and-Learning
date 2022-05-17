@@ -1,19 +1,19 @@
 from tensorflow.keras import models
 from machine_learning.dataset_generators import DatasetSingleFrame, Cracks3D, Displacements
 from machine_learning.callbacks import correlation_foursquare, histogram_foursquare
+from machine_learning.utils import find_nearest
 from tensorflow.keras.losses import mean_squared_error as mse
 import numpy as np
 from sklearn import preprocessing as pre
 import warnings
-
-warnings.filterwarnings('ignore')
-
 from os import listdir, mkdir
 from parmec_analysis.utils import is_in
 
+warnings.filterwarnings('ignore')
+
 dataset = DatasetSingleFrame(name="test_set")
 
-inputs = Cracks3D(dataset, levels='3-7', array_type="Positions")
+inputs = Cracks3D(dataset, array_type="Positions", levels="5-7")
 
 print(inputs.summary())
 
@@ -37,17 +37,21 @@ fold_losses = []
 
 fold_best_model = []
 
-trial_name = "Paper1"
+trial_name = "Paper1_5_7"
 
 mkdir(trial_name)
 
-for i in range(0, 8):
+model_files_all_rolls = []
+
+for i in range(0, 10):
 
     roll = "Roll" + str(i)
 
-    path = "C:/Users/Huw/Documents/PhD/Paper1Models/" + roll
+    path = "D:/Huw_paper1_data/levels5_7/" + roll
 
-    path += "/thinning_256to16_DOp4_tanh_softmax_FC256_lvls_3_7_nopadding"
+    # path += "/thinning_256to16_DOp4_tanh_softmax_FC256_lvls_3_7_nopadding"
+
+    path += "/"
 
     folder_name = trial_name + "/" + roll + "/"
 
@@ -62,6 +66,8 @@ for i in range(0, 8):
 
         if is_in(file, ".mod"):
             model_files.append(file)
+
+    model_files_all_rolls.append(model_files)
 
     print("Fold: ", i)
 
@@ -133,4 +139,36 @@ print("\n---\n")
 
 print("Mean Loss: ", np.mean(losses_flat))
 
+print("\n---\n")
 
+print("Top Five results: \n")
+
+top5 = np.sort(losses_flat)[:5]
+
+print(top5)
+
+fold_losses = np.around(fold_losses, 8)
+
+
+for i, loss in enumerate(top5):
+
+    index = find_nearest(fold_losses, loss)
+
+    roll = index[0]
+
+    message = str(i+1) + ": Roll " + str(roll) + " model " + str(index[1])
+
+    print(message)
+
+    try:
+        model = model_files_all_rolls[index[0]][index[1]]
+
+    except TypeError:
+        pass
+
+
+    print(model)
+
+    print(loss)
+
+    print("\n == \n")

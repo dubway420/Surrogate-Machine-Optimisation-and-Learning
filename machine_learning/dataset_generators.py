@@ -254,7 +254,7 @@ class DatasetSingleFrame:
         self.rolled = True
         self.rolled_by_increment = increment
 
-    def augment(self, flip=(1, 3), rotate=(1, 2, 3, 4), retain_validation=True, save=True):
+    def augment(self, flip=(1, 3), rotate=(1, 2, 3), retain_validation=True, save=True):
 
         aug_instances = []
         aug_cases = []
@@ -874,8 +874,6 @@ class CracksChannelCentred(Cracks):
 
         self.feature_mode += ("_S" + str(array_size))
 
-        print(self.array_size)
-
         self.channel = channel
 
         self.levels = levels
@@ -940,6 +938,7 @@ class Displacements:
         ##############################################################
 
         Y_loaded = self.load_displacements_from_file()
+
         if len(Y_loaded) > 0:
 
             if not load_from_file:
