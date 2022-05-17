@@ -1,6 +1,6 @@
 
 
-line=$(sed '10q;d' experiment_input_files/trial_common_parameters.py)
+line=$(grep -m 1 "trial_name" experiment_input_files/trial_common_parameters.py)
 trial=${line:13}
 
 name=$(echo $trial | tr -d "\"")
