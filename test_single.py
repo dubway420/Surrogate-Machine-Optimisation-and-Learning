@@ -4,15 +4,13 @@ from machine_learning.callbacks import correlation_foursquare, histogram_foursqu
 from tensorflow.keras.losses import mean_squared_error as mse
 import numpy as np
 from sklearn import preprocessing as pre
-
 from os import listdir, mkdir
 from parmec_analysis.utils import is_in
+
 
 dataset = DatasetSingleFrame(name="test_set")
 
 inputs = Cracks3D(dataset, array_type="Positions", levels="5-7")
-
-print(inputs.summary())
 
 # Labels
 channels_labels = "160"
@@ -34,12 +32,14 @@ labels.transform(min_max_scaler)
 #########################################################
 # Replace this with the path to your download of the experiment
 #########################################################
-path = "C:/Users/Huw/Documents/MobaXterm/home/AugDown/VaryingAugRot2/levels5_7_simple_DO2"
+path = "C:/Users/Huw/Documents/MobaXterm/home/CustomLossMean"
 
 #########################################################
 # Replace this with the name of the folder you want to save your test results to
 #########################################################
-folder_name = "VaryingAugRot2"
+# folder_name = "CustomLossMeanRot2Flip1"
+
+folder_name = path.split("/")[-1]
 
 try:
     mkdir(folder_name)
@@ -62,7 +62,7 @@ for i, model_name in enumerate(model_files):
 
     model_path = path + "/" + model_name
 
-    model = models.load_model(model_path)
+    model = models.load_model(model_path, compile=False)
 
     predictions = model.predict(inputs.values)
 
