@@ -27,13 +27,17 @@ def huber_loss_mean(y_true, y_pred, clip_delta=1.0):
     return tf.keras.backend.mean(huber_loss(y_true, y_pred, clip_delta))
 
 
-def adjusted_mse(average):
+def adjusted_mse(average, alpha=1, square_adjust=False):
     def inner_method(y_true, y_pred):
         # calculating squared difference between target and predicted values
         loss = K.square(y_pred - y_true)
 
         # Calculates an array of adjustment values. The value will depend on the distance between the mean
-        extremeness_adjust = 1 + K.abs(y_true - average)
+        extremeness_adjust = 1 + K.abs(y_true - average)*alpha
+
+        # If square_adjust=True, we square the extremeness_adjust value
+        if square_adjust:
+            extremeness_adjust *= extremeness_adjust
 
         # multiplying the values with weights along batch dimension
         loss = loss * extremeness_adjust  # (batch_size, 2)
