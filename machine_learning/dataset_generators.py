@@ -471,7 +471,7 @@ class Cracks:
                 sleep(30)
 
                 # Try loading the crack file again
-                self.load_cracks_from_file(retries=retries)
+                data = self.load_cracks_from_file(retries=retries)
 
             else:
                 warn("Data Loading Error. Exceeded number of retries.")
@@ -567,7 +567,7 @@ class Cracks:
 class Cracks1D(Cracks):
 
     def __init__(self, dataset, channels='all', levels='all', array_type='positions only', extra_dimension=False,
-                 load_from_file=True):
+                 load_from_file=True, save=True):
 
         self.feature_mode = "1D_flat"
 
@@ -578,14 +578,16 @@ class Cracks1D(Cracks):
         # the super class tries to load the crack configuration from files. If it fails, the cracks are loaded from
         # the dataset
         if self.values is None:
-            self.values = self.generate_array(dataset, channels, levels, array_type, extra_dimension, load_from_file=True)
+            self.values = self.generate_array(dataset, channels, levels, array_type, extra_dimension,
+                                              load_from_file=True)
 
         if self.extra_dimension:
             self.feature_shape = self.values.shape[1:]
         else:
             self.feature_shape = self.values.shape[1]
 
-        self.save()
+        if save:
+            self.save()
 
     def generate_array(self, dataset, channels, levels, array_type, extra_dimension, load_from_file):
 
@@ -623,7 +625,7 @@ class Cracks1D(Cracks):
 class Cracks2D(Cracks1D):
 
     def __init__(self, dataset, channels='all', levels='all', array_type='positions only', extra_dimension=False,
-                 load_from_file=True):
+                 load_from_file=True, save=True):
 
         self.feature_mode = "2D_multi"
         self.extra_dimension = extra_dimension
@@ -636,7 +638,8 @@ class Cracks2D(Cracks1D):
 
         self.feature_shape = self.values.shape[1:]
 
-        self.save()
+        if save:
+            self.save()
 
     def generate_array(self, dataset, channels, levels, array_type, extra_dimension):
 
@@ -658,7 +661,7 @@ class Cracks2D(Cracks1D):
 
 class Cracks3D(Cracks):
 
-    def __init__(self, dataset, levels='all', array_type='positions only', load_from_file=True):
+    def __init__(self, dataset, levels='all', array_type='positions only', load_from_file=True, save=True):
 
         self.feature_mode = "3D_multi"
         self.extra_dimension = False
@@ -671,7 +674,8 @@ class Cracks3D(Cracks):
 
         self.feature_shape = self.values.shape[1:]
 
-        self.save()
+        if save:
+            self.save()
 
     def generate_array(self, dataset, levels, array_type):
 
@@ -1056,7 +1060,7 @@ class Displacements:
 
         return file_name
 
-    def load_displacements_from_file(self):
+    def load_displacements_from_file(self, retries=10):
         """ Determines if displacement storage file exists and if so loads data"""
 
         file_name = self.generate_filename()
@@ -1065,7 +1069,25 @@ class Displacements:
             return []
 
         print("Displacement dataset was found on file:", file_name, "Loading...")
-        return np.load(file_name)
+
+        try:
+            data = np.load(file_name)
+
+        except ValueError:
+
+            retries += 1
+
+            if retries <= 10:
+                message = "Data Loading Error. Retrying " + str(retries) + " of 10..."
+                warn(message)
+
+                # Wait 30 seconds
+                sleep(30)
+                data = np.load(file_name)
+        else:
+            warn("Data Loading Error. Exceeded number of retries.")
+
+        return data
 
     def transform(self, transformer):
 
