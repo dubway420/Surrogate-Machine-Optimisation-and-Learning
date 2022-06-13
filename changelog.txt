@@ -1,3 +1,6 @@
+Version 0.1.1.2
+* made some corrections to make it work server side - there was an extraneous equals symbol and added an email alert
+
 Version 0.1.1.1
 * Adding script files for running testing on the CSF3 system - files added: 1) test.sh 2) executeTest.sh
 

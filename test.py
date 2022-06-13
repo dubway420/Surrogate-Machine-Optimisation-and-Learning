@@ -42,7 +42,7 @@ base_path = sys.argv[-1]
 
 #base_path = "C:/Users/HP/Documents/PhD/Paper2/AugTransfer_mods"
 
-trial_name = base_path.split("/")[-1]
+trial_name = "TEST_" + base_path.split("/")[-1]
 
 mkdir(trial_name)
 
