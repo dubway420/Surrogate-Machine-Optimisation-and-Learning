@@ -56,7 +56,7 @@ def summary(experiment):
         message = "Tensorflow version: " + tf.__version__
         fh.write(message)
         fh.write("\n")
-        message = "Keras version:" + tfk.__version__
+        message = "Keras version: " + tfk.__version__
         fh.write(message)
         fh.write("\n")
         message = "Numpy version: " + np.__version__
