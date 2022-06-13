@@ -1,3 +1,6 @@
+Version 0.1.1.0
+* run.sh now outputs some user readable information
+
 Version 0.1.0.1
 * test.py has now been parameterised - a parameter can be specified at the command line to give the location of the
   model(s) to be tested.
