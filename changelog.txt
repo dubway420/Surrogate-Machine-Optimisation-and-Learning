@@ -1,2 +1,7 @@
+Version 0.1.0.1
+* test.py has now been parameterised - a parameter can be specified at the command line to give the location of the
+  model(s) to be tested.
+
 Version 0.1
 * Created first versioned release
+* Framework logs data about itself to the experiment.info file - including version, package numbers etc.
