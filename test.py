@@ -8,6 +8,7 @@ from sklearn import preprocessing as pre
 import warnings
 from os import listdir, mkdir
 from parmec_analysis.utils import is_in
+import sys
 
 warnings.filterwarnings('ignore')
 
@@ -37,17 +38,21 @@ fold_losses = []
 
 fold_best_model = []
 
-trial_name = "Paper1_5_7"
+base_path = sys.argv[-1]
+
+#base_path = "C:/Users/HP/Documents/PhD/Paper2/AugTransfer_mods"
+
+trial_name = base_path.split("/")[-1]
 
 mkdir(trial_name)
 
 model_files_all_rolls = []
 
-for i in range(0, 10):
+for i in range(0, 5):
 
-    roll = "Roll" + str(i)
+    roll = "M" + str(i+1)
 
-    path = "D:/Huw_paper1_data/levels5_7/" + roll
+    path = base_path + "/" + roll
 
     # path += "/thinning_256to16_DOp4_tanh_softmax_FC256_lvls_3_7_nopadding"
 
@@ -74,7 +79,7 @@ for i in range(0, 10):
     for j, model_name in enumerate(model_files):
         model_path = path + "/" + model_name
 
-        model = models.load_model(model_path)
+        model = models.load_model(model_path, compile=False)
 
         predictions = model.predict(inputs.values)
 
@@ -147,7 +152,7 @@ top5 = np.sort(losses_flat)[:5]
 
 print(top5)
 
-fold_losses = np.around(fold_losses, 8)
+# fold_losses = np.around(fold_losses, 8)
 
 
 for i, loss in enumerate(top5):
