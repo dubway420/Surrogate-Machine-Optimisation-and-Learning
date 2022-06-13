@@ -1,3 +1,6 @@
+Version 0.1.1.3
+* some other minor fixes
+
 Version 0.1.1.2
 * made some corrections to make it work server side - there was an extraneous equals symbol and added an email alert
 

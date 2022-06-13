@@ -4,7 +4,7 @@ echo
 echo "================="
 echo
 
-case==$1
+case=$1
 
 date
 echo "Beginning testing of: " $case

@@ -1,6 +1,6 @@
 #!/bin/bash --login
 #$ -cwd               # Run the job in the current directory
-#$ -l nvidia_a100=1
+#$ -l nvidia_v100=1
 
 date
 
