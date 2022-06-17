@@ -1,4 +1,0 @@
-Traceback (most recent call last):
-  File "experiment_evaluation.py", line 26, in <module>
-    training_loss = np_array[:, 0]
-IndexError: too many indices for array
