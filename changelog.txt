@@ -1,3 +1,8 @@
+Version 0.1.3
+* Adding test files for testing a single case/folder
+* Several commits have involved clean up - deleting files and ignoring non-codebase files
+* Minor changes to README.md
+
 Version 0.1.2.0
 * Minor grammatical change in experiment_summary.py
 

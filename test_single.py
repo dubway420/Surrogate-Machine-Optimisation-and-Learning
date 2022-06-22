@@ -6,11 +6,12 @@ import numpy as np
 from sklearn import preprocessing as pre
 from os import listdir, mkdir
 from parmec_analysis.utils import is_in
+import sys
 
 
 dataset = DatasetSingleFrame(name="test_set")
 
-inputs = Cracks3D(dataset, array_type="Positions", levels="5-7")
+inputs = Cracks3D(dataset, array_type="Positions", levels="3-7")
 
 # Labels
 channels_labels = "160"
@@ -32,14 +33,14 @@ labels.transform(min_max_scaler)
 #########################################################
 # Replace this with the path to your download of the experiment
 #########################################################
-path = "C:/Users/Huw/Documents/MobaXterm/home/CustomLossMean"
+path = sys.argv[-1]
 
 #########################################################
 # Replace this with the name of the folder you want to save your test results to
 #########################################################
 # folder_name = "CustomLossMeanRot2Flip1"
 
-folder_name = path.split("/")[-1]
+folder_name = "TEST_" + path.split("/")[-1]
 
 try:
     mkdir(folder_name)
