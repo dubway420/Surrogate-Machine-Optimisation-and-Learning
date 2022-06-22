@@ -4,3 +4,8 @@ run*
 **.npy
 **.png
 *ind
+*__pycache__*
+*.pkl
+*.txt
+*/*
+*.swp

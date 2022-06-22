@@ -3,7 +3,7 @@
 #$ -l nvidia_v100=1
 #$ -t 1-32
 
-experiments=3
+experiments=5
 
 #experiment_number=$(($SGE_TASK_ID%$experiments+1)) 
 
