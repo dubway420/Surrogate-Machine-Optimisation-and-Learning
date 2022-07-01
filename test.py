@@ -9,6 +9,7 @@ import warnings
 from os import listdir, mkdir
 from parmec_analysis.utils import is_in
 import sys
+import pickle
 
 warnings.filterwarnings('ignore')
 
@@ -31,8 +32,14 @@ labels = Displacements(dataset, channels=channels_labels, result_time=result_tim
                        # levels=levels_labels, unit="millimeters")
                        levels=levels_labels)
 
-min_max_scaler = pre.MinMaxScaler(feature_range=(0, 1))
-labels.transform(min_max_scaler)
+transformer_name = labels.generate_filename(ext=".tfr")
+
+transformer_name_dataset = transformer_name.replace("test_set", "dataset")
+
+with open(transformer_name_dataset, 'rb') as f:
+    transformer = pickle.load(f)
+# min_max_scaler = pre.MinMaxScaler(feature_range=(0, 1))
+labels.transform(transformer, fit=False)
 
 fold_losses = []
 

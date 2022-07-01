@@ -1038,7 +1038,7 @@ class Displacements:
 
         self.transformer = None
 
-    def generate_filename(self):
+    def generate_filename(self, ext=".npy"):
         """ Generates a filename based on the user settings """
 
         # Check if label dataset exists
@@ -1056,7 +1056,7 @@ class Displacements:
         if self.dataset.augmentation:
             file_name += self.dataset.augmentation
 
-        file_name += ".npy"
+        file_name += ext
 
         return file_name
 
@@ -1089,10 +1089,24 @@ class Displacements:
 
         return data
 
-    def transform(self, transformer):
+    def transform(self, transformer, fit=True, save=True):
 
         self.transformer = transformer
-        self.values = transformer.fit_transform(self.values)
+
+        if fit:
+            self.values = transformer.fit_transform(self.values)
+        else:
+            self.values = transformer.transform(self.values)
+
+        if save:
+
+            file_name = self.generate_filename(ext=".tfr")
+
+            print("Saving transformer to file " + file_name + "...")
+            with open(file_name, 'wb') as f:
+                pickle.dump(transformer, f)
+
+
 
     def inverse_transform(self):
         self.values = self.transformer.inverse_transform(self.values)

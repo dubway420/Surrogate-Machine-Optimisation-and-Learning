@@ -1,3 +1,5 @@
+import pickle
+
 from tensorflow.keras import models
 from machine_learning.dataset_generators import DatasetSingleFrame, Cracks3D, Displacements
 from machine_learning.callbacks import correlation_foursquare, histogram_foursquare
@@ -11,7 +13,7 @@ import sys
 
 dataset = DatasetSingleFrame(name="test_set")
 
-inputs = Cracks3D(dataset, array_type="Positions", levels="3-7")
+inputs = Cracks3D(dataset, array_type="Positions", levels="5-7")
 
 # Labels
 channels_labels = "160"
@@ -26,8 +28,14 @@ labels = Displacements(dataset, channels=channels_labels, result_time=result_tim
                        # levels=levels_labels, unit="millimeters")
                        levels=levels_labels)
 
-min_max_scaler = pre.MinMaxScaler(feature_range=(0, 1))
-labels.transform(min_max_scaler)
+transformer_name = labels.generate_filename(ext=".tfr")
+
+transformer_name_dataset = transformer_name.replace("test_set", "dataset")
+
+with open(transformer_name_dataset, 'rb') as f:
+    transformer = pickle.load(f)
+# min_max_scaler = pre.MinMaxScaler(feature_range=(0, 1))
+labels.transform(transformer, fit=False)
 
 
 #########################################################
@@ -85,7 +93,7 @@ for i, model_name in enumerate(model_files):
 
 mean_error = round(np.mean(model_losses), 4)
 
-print("/n ------------------ /n ")
+print("\n ------------------ \n ")
 print("Mean error:", mean_error)
 
 best_error = np.min(model_losses)
