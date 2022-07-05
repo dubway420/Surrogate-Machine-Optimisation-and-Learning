@@ -1,7 +1,7 @@
 import matplotlib as mpl
 
 # Agg backend will render without X server on a compute node in batch
-mpl.use('Agg')
+#mpl.use('Agg')
 import numpy as np
 from matplotlib import mlab
 # from sympy.stats import density
@@ -17,7 +17,7 @@ import tensorflow as tf
 
 # from keras.callbacks import ModelCheckpoint
 
-tf.enable_eager_execution()
+#tf.enable_eager_execution()
 
 colours = ['b', 'g', 'y', 'r', 'c', 'm', 'lime', 'darkorange']
 
@@ -174,13 +174,13 @@ def correlation_foursquare(x, y, labels_set, prediction_set, fig_title, binary_d
     fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2, figsize=(10, 10))
 
     # Draw a straight line from 0 to 1 denoting a 'perfect' result
-    ax1.plot([0.1, 1.1], '--', c='black', alpha=0.5, label='+/- 10%')
-    ax1.plot([-0.1, 0.9], '--', c='black', alpha=0.5)
+    ax1.plot([0.1, 1.1], '--',  alpha=0.5, label='+/- 10%')
+    ax1.plot([-0.1, 0.9], '--',  alpha=0.5)
 
     # Draw a straight line from 0 to 1 denoting a 'perfect' result
-    ax1.plot([0.2, 1.2], 'k:', c='black', alpha=0.5, label='+/- 20%')
+    ax1.plot([0.2, 1.2], 'k:',  alpha=0.5, label='+/- 20%')
     ax1.plot([0, 1], c='black')
-    ax1.plot([-0.2, 0.8], 'k:', c='black', alpha=0.5)
+    ax1.plot([-0.2, 0.8], 'k:',  alpha=0.5)
     ax1.set_ylim(0, 1.0)
 
     epoch_labels = ["Ground Truth"]

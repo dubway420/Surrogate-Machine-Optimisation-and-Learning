@@ -254,20 +254,37 @@ class DatasetSingleFrame:
         self.rolled = True
         self.rolled_by_increment = increment
 
-    def augment(self, flip=(1, 3), rotate=(1, 2, 3), retain_validation=True, save=True):
+    def augment(self, flip=None, rotate=None, retain_validation=True, save=True):
 
         aug_instances = []
         aug_cases = []
 
         flip_name = "_flip_"
 
-        for i in flip:
-            flip_name += str(i)
+        if flip:
+
+            # Check if the flip is a list or a single value
+            if isinstance(flip, list) or isinstance(flip, tuple):
+
+                for i in flip:
+                    flip_name += str(i)
+
+            else:
+                flip_name += str(i)    
 
         rotate_name = "_rotate_"
 
-        for i in rotate:
-            rotate_name += str(i)
+        if rotate:
+
+            # Check if the rotate is a list or a single value
+            if isinstance(rotate, list) or isinstance(rotate, tuple):
+
+                for i in rotate:
+                    rotate_name += str(i)
+
+            else:
+                rotate_name += str(i)
+
 
         augmentation = (flip_name + rotate_name)
 

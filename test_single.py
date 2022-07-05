@@ -1,5 +1,4 @@
 import pickle
-
 from tensorflow.keras import models
 from machine_learning.dataset_generators import DatasetSingleFrame, Cracks3D, Displacements
 from machine_learning.callbacks import correlation_foursquare, histogram_foursquare
@@ -34,9 +33,9 @@ transformer_name_dataset = transformer_name.replace("test_set", "dataset")
 
 with open(transformer_name_dataset, 'rb') as f:
     transformer = pickle.load(f)
-# min_max_scaler = pre.MinMaxScaler(feature_range=(0, 1))
-labels.transform(transformer, fit=False)
-
+    
+    # min_max_scaler = pre.MinMaxScaler(feature_range=(0, 1))
+labels.transform(transformer, fit=False, save=False)
 
 #########################################################
 # Replace this with the path to your download of the experiment
@@ -48,7 +47,7 @@ path = sys.argv[-1]
 #########################################################
 # folder_name = "CustomLossMeanRot2Flip1"
 
-folder_name = "TEST_" + path.split("/")[-1]
+folder_name = "TEST_" + path.split("/")[-2]
 
 try:
     mkdir(folder_name)

@@ -1,3 +1,8 @@
+Version 0.1.4.2
+* Arguement handling for augmentation is now a bit more refined. Can now use integers or iterables of integers to specify the augmentation.
+* Minor cleanup of the plotting features in a callback.
+* Single testing transformer arguements simplified
+
 Version 0.1.4.1
 * Minor corrections to indentation in loading block for displacements
 
