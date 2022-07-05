@@ -1,3 +1,6 @@
+Version 0.1.4.1
+* Minor corrections to indentation in loading block for displacements
+
 Version 0.1.4
 * Scaling of transformer is now save-able
 * The transformer can then be loaded in the test script
