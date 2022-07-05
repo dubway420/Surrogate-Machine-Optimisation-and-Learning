@@ -1084,8 +1084,8 @@ class Displacements:
                 # Wait 30 seconds
                 sleep(30)
                 data = np.load(file_name)
-        else:
-            warn("Data Loading Error. Exceeded number of retries.")
+            else:
+                warn("Data Loading Error. Exceeded number of retries.")
 
         return data
 
