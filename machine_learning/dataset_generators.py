@@ -56,6 +56,36 @@ def min_max_channels_levels(core_instance, channels, levels, channel_type='fuel'
 
     return (min_channel, max_channel), (min_level, max_level)
 
+def augmentation_string(flip=None, rotate=None):
+
+        flip_name = "_flip_"
+
+        if flip:
+
+            # Check if the flip is a list or a single value
+            if isinstance(flip, list) or isinstance(flip, tuple):
+
+                for i in flip:
+                    flip_name += str(i)
+
+            else:
+                flip_name += str(flip)    
+
+        rotate_name = "_rotate_"
+
+        if rotate:
+
+            # Check if the rotate is a list or a single value
+            if isinstance(rotate, list) or isinstance(rotate, tuple):
+
+                for i in rotate:
+                    rotate_name += str(i)
+
+            else:
+                rotate_name += str(rotate)
+
+
+        return (flip_name + rotate_name)
 
 class DatasetSingleFrame:
 
@@ -259,34 +289,7 @@ class DatasetSingleFrame:
         aug_instances = []
         aug_cases = []
 
-        flip_name = "_flip_"
-
-        if flip:
-
-            # Check if the flip is a list or a single value
-            if isinstance(flip, list) or isinstance(flip, tuple):
-
-                for i in flip:
-                    flip_name += str(i)
-
-            else:
-                flip_name += str(i)    
-
-        rotate_name = "_rotate_"
-
-        if rotate:
-
-            # Check if the rotate is a list or a single value
-            if isinstance(rotate, list) or isinstance(rotate, tuple):
-
-                for i in rotate:
-                    rotate_name += str(i)
-
-            else:
-                rotate_name += str(i)
-
-
-        augmentation = (flip_name + rotate_name)
+        augmentation = augmentation_string(flip, rotate)
 
         # a file name associated with the dataset
         file_name = self.name + "_" + augmentation + "_cases.pkl"

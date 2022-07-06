@@ -1,3 +1,8 @@
+Version 0.1.4.3
+* Added a file to generate transformers for various augmentation arrangements
+* test_single.py now has command line options for specifying the augmentation
+* general refinement for how augmentation is handled, names generated etc.
+
 Version 0.1.4.2
 * Arguement handling for augmentation is now a bit more refined. Can now use integers or iterables of integers to specify the augmentation.
 * Minor cleanup of the plotting features in a callback.

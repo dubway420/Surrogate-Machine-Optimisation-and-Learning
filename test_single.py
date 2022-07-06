@@ -1,6 +1,6 @@
 import pickle
 from tensorflow.keras import models
-from machine_learning.dataset_generators import DatasetSingleFrame, Cracks3D, Displacements
+from machine_learning.dataset_generators import DatasetSingleFrame, Cracks3D, Displacements, augmentation_string
 from machine_learning.callbacks import correlation_foursquare, histogram_foursquare
 from tensorflow.keras.losses import mean_squared_error as mse
 import numpy as np
@@ -9,6 +9,41 @@ from os import listdir, mkdir
 from parmec_analysis.utils import is_in
 import sys
 
+def value_parse(val):
+
+    if val.isnumeric():
+        return int(val)
+    elif is_in(val, "_"):
+        return val.split("_")
+    else:
+        print("Invalid value:", val)
+        return None
+
+def augmentation_handler(variables):
+
+    flip = None
+    rotate = None
+
+    for variable in variables:
+        
+        try:
+            type = variable.split("=")[0]
+            value = variable.split("=")[1]
+
+            if is_in(type, "flip"):
+                flip = value_parse(value)
+
+            elif is_in(type, "rot"):
+                rotate = value_parse(value)
+
+            else:
+                print("Invalid augmentation type:", type)
+
+        except IndexError:
+            print("Invalid entry:", variable)
+            print("augmentations need to be specified in the form <augmentation>=<value1>_<value2>_...\n")
+
+    return flip, rotate            
 
 dataset = DatasetSingleFrame(name="test_set")
 
@@ -31,6 +66,22 @@ transformer_name = labels.generate_filename(ext=".tfr")
 
 transformer_name_dataset = transformer_name.replace("test_set", "dataset")
 
+variables = sys.argv[1:]
+
+
+if len(variables) >= 2:
+
+    flip, rotate = augmentation_handler(variables[1:])
+
+    aug_name = augmentation_string(flip, rotate)
+
+    aug_name += ".tfr"
+
+    transformer_name_dataset = transformer_name_dataset.replace(".tfr", aug_name)
+
+print("Transformer name: ", transformer_name_dataset)
+
+
 with open(transformer_name_dataset, 'rb') as f:
     transformer = pickle.load(f)
     
@@ -40,14 +91,20 @@ labels.transform(transformer, fit=False, save=False)
 #########################################################
 # Replace this with the path to your download of the experiment
 #########################################################
-path = sys.argv[-1]
+path = variables[0]
+
+print("Path: ", path)
 
 #########################################################
 # Replace this with the name of the folder you want to save your test results to
 #########################################################
 # folder_name = "CustomLossMeanRot2Flip1"
 
-folder_name = "TEST_" + path.split("/")[-2]
+name = path.split("/")[-1]
+if name == "":
+    name = path.split("/")[-2]
+
+folder_name = "TEST_" + name
 
 try:
     mkdir(folder_name)
