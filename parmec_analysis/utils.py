@@ -3,6 +3,9 @@ import inspect
 import numpy as np
 import re as remove
 import pandas as pd
+import pickle
+import time
+import sys
 
 # Global Variables
 split_separators = ["to", "To", "TO", ":", "-", "/", "_", ",", " "]
@@ -62,6 +65,45 @@ def cases_list(path_string):
         case_list.append(path_string + base + '/' + base)
 
     return case_list
+
+
+def get_number(input_val):
+    """ converts an input to an int. If it's char input, return None"""
+
+    # Handles if user specifies number of cases by string
+    if isinstance(input_val, str):
+
+        if input_val.isnumeric():
+            return int(input_val)
+        else:
+            pass
+
+    elif isinstance(input_val, int):
+        return input_val
+
+    return None
+
+
+def check_directory(path):
+    """ check a directory for validity """
+
+    if not os.path.exists(path):
+        return False
+    elif cases_list(path) == 0:
+        return False
+    else:
+        return True
+
+
+def load_data_from_file(file_name):
+    """ attempts to load data from a given file name. If file doesn't exist, returns False"""
+
+    if os.path.exists(file_name):
+        with open(file_name, 'rb') as f:
+            loaded = pickle.load(f)
+            return loaded
+    else:
+        return False
 
 
 def split_by_column_uniques(input_array, column_no):
@@ -187,7 +229,8 @@ def index_array_fuel(case, ext='.csv'):
             if len(stack) == 7:
                 channels_row.append(stack[:, 6])
 
-        if len(channels_row) > 0: channels_core.append(channels_row)
+        if len(channels_row) > 0:
+            channels_core.append(channels_row)
 
     # Reverse the order of the indices - this reverses the order of the rows (which are switched from bottom to
     # top to visa-versa) but keeps the order of the columns (which go from left to right).
@@ -234,7 +277,8 @@ def index_array_interstitial(case, ext='.csv'):
             if len(stack) >= 13:
                 channels_row.append(stack[:, 6])
 
-        if len(channels_row) > 0: channels_core.append(channels_row)
+        if len(channels_row) > 0:
+            channels_core.append(channels_row)
 
     # Reverse the order of the indices - this reverses the order of the rows (which are switched from bottom to
     # top to visa-versa) but keeps the order of the columns (which go from left to right).
@@ -254,7 +298,7 @@ def index_array_interstitial(case, ext='.csv'):
 
 
 ################################################################
-################# DATA EXTRACTION FUNCTIONS ####################
+# ################ DATA EXTRACTION FUNCTIONS ###################
 ################################################################
 
 def absolute_sum(array):
@@ -283,8 +327,23 @@ def return_all(array):
     return np.array(array).flatten()
 
 
+def top_level(array):
+    return array[-1]
+
+
+def bottom_level(array):
+    return array[0]
+
+
+def mid_level(array):
+    mid_level_no = int(len(array)/2)
+    return array[mid_level_no]
+
+
 def function_switch(result_type):
-    if is_in(result_type, "max"):
+    if result_type.isnumeric():
+        command = return_numeric_function(result_type)
+    elif is_in(result_type, "max"):
         command = np.max
     elif is_in(result_type, "min"):
         command = np.min
@@ -302,6 +361,12 @@ def function_switch(result_type):
         command = floor_zero_all
     elif is_in(result_type, "abs") and is_in(result_type, "max"):
         command = max_absolute
+    elif is_in(result_type, "top"):
+        command = top_level
+    elif is_in(result_type, "bottom"):
+        command = bottom_level
+    elif is_in(result_type, "mid"):
+        command = mid_level
     elif is_in(result_type, "all"):
         command = return_all
     # TODO min vs max function
@@ -311,8 +376,20 @@ def function_switch(result_type):
     return command
 
 
+def return_numeric_function(n):
+    """ This function returns a function which extracts the value n from an array """
+
+    int_n = int(n)
+
+    def level(*args):
+        for arg in args:
+            return arg[int_n - 1]
+
+    return level
+
+
 ##################################
-###### label set manipulation ####
+# ##### label set manipulation ####
 ##################################
 
 def convert_all_to_channel_result(Y, result_type, no_channels, no_levels):
@@ -346,9 +423,16 @@ def convert_case_to_channel_result(y, result_type, no_channels, no_levels):
     return y_converted
 
 
-def plot_names_title(model, dataset, features, labels, iteration):
+def plot_names_title(experiment, iteration):
+    # TODO replace everything that can be with experiment
+
+    # Unpack objects used by dataset
+    dataset = experiment.dataset
+    features = experiment.features
+    labels = experiment.labels
+
     line = ""
-    file_name = dataset.name + "_" + model.short_name
+    file_name = dataset.name + "_" + experiment.name
 
     line += "Feature Channels/Levels: " + str(features.channels_range[0] + 1) + "-" + \
             str(features.channels_range[1]) + ", " + str(features.levels_range[0] + 1) + "-" + \
@@ -374,3 +458,152 @@ def plot_names_title(model, dataset, features, labels, iteration):
     file_name += ".png"
 
     return line, file_name
+
+
+def load_results(trial_name):
+    loaded = load_data_from_file(trial_name)
+
+    # check if a test with the test_name has been done. If so, the file should exist -
+    if loaded:
+
+        results_dict = loaded
+
+    # - if not, create a dictionary
+    else:
+        results_dict = {}
+
+    return results_dict
+
+
+def row_offset_channels(row):
+    row_offset = 0
+    channels_in_row = 19
+
+    if row == 3 or row == 15:
+        row_offset = 1
+        channels_in_row = 17
+
+    if row == 2 or row == 16:
+        row_offset = 2
+        channels_in_row = 15
+
+    if row == 1 or row == 17:
+        row_offset = 3
+        channels_in_row = 13
+
+    if row == 0 or row == 18:
+        row_offset = 4
+        channels_in_row = 11
+
+    return row_offset, channels_in_row
+
+
+def result3d(result):
+    assert len(result.shape) > 1, "Ensure that get_result_at_time method is called with the flat=False argument"
+
+    result_3d = np.zeros([result.shape[1], 19, 19])
+
+    for row in range(19):
+
+        result_index = 0
+
+        row_offset, channels_in_row = row_offset_channels(row)
+
+        for channel in range(channels_in_row):
+            column = channel + row_offset
+            result_3d[:, row, column] = result[result_index]
+
+            result_index += 1
+
+    return result_3d
+
+
+def result1d(result_3d):
+    pass
+
+
+# MACHINE LEARNING STUFF *********************
+
+def experiment_assignment_validation(experiments, experiment_number):
+    """ Check that it has selected a valid experiment number and assign experiment if so.
+    :param experiments: a list of objects of the experiments class
+    :param experiment_number: an experiment number. The purpose of this function to ensure that the number is between
+    0 and len(experiments) -1
+    :return: an experiment object
+    """
+
+    try:
+
+        experiment_selected = experiments[int(experiment_number)]
+
+    except IndexError:
+
+        print("You have entered an experiment number,", experiment_number, ", which is invalid. Please enter an integer"
+                                                                           " corresponding to one of the following: ")
+
+        for i, exp in enumerate(experiments):
+            print(i, exp.name)
+        sys.exit()
+
+    return experiment_selected
+
+
+def folder_validation(trial_name):
+    cwd = os.getcwd()
+
+    try:
+
+        os.mkdir(cwd + "/" + trial_name)
+
+    except FileExistsError:
+
+        pass
+
+
+def experiment_iteration(exp_name, trial_name, ext=".ind"):
+    results_file_name = trial_name + ext
+
+    results_dict = load_results(results_file_name)
+
+    if exp_name in results_dict:
+
+        exp_i = len(results_dict[exp_name])
+
+    else:
+        exp_i = 0
+        results_dict[exp_name] = []
+
+    results_dict[exp_name].append([])
+
+    with open(results_file_name, 'wb') as f:
+        pickle.dump(results_dict, f, protocol=pickle.HIGHEST_PROTOCOL)
+
+    return exp_i
+
+
+def save_results(exp_name, trial_name, exp_i, exp_result, ext=".ind", attempts=0):
+    results_file_name = trial_name + ext
+
+    assigned = False
+
+    while attempts < 4 and not assigned:
+
+        try:
+            results_dict = load_results(results_file_name)
+
+            results_dict[exp_name][exp_i] = exp_result
+
+            with open(results_file_name, 'wb') as f:
+                pickle.dump(results_dict, f, protocol=pickle.HIGHEST_PROTOCOL)
+
+            assigned = True
+
+        except KeyError:
+
+            attempts += 1
+
+            print("Error whilst saving results. Will wait 30 second then try again. "
+                  "It is possible the repository is in use.")
+            print("Attempts made:", attempts)
+            time.sleep(30)
+            save_results(exp_name, trial_name, exp_i, exp_result, attempts=attempts)

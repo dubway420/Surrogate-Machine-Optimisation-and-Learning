@@ -36,6 +36,7 @@ histo = np.histogram(labels.values, bins=bins)
 
 modal_bin = (histo[1][np.argmax(histo[0])] + histo[1][np.argmax(histo[0])-1])/2
 
+print(modal_bin)
 x= np.linspace(0, 1, 100)
 norm_distr = norm.pdf(x, modal_bin, std)
 norm_max = np.max(norm_distr)
@@ -48,6 +49,8 @@ y = []
 for val in vals:
     y.append(adjustment_factor(val, modal_bin, std, norm_max))
 
+
+# y = adjustment_factor(vals, modal_bin, std, norm_max)
 
 plt.scatter(vals, y, c='r')
 

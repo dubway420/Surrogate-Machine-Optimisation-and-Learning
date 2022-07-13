@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Created by Huw Rhys Jones - huw.jones-5@postgrad.manchester.ac.uk - August 2019
+# Created by Huw Rhys Jones - huw.jones@postgrad.manchester.ac.uk - August 2019
 # 
 # *******************CoreInstance*******************
 # 
@@ -31,6 +31,7 @@ import pandas as pd
 import math
 from parmec_analysis import utils as utils
 
+
 # TODO split parse into FeaturesCase and LabelsCase
 
 
@@ -44,7 +45,7 @@ class Parse:
     # ==========================================================
 
     def __init__(self, case, fuel_levels=7, inter_levels=13, core_rows=18, core_columns=18,
-                 fuel_channels=284, interstitial_channels=321, padding=2):
+                 fuel_channels=284, interstitial_channels=321, padding=2, augmentation=None):
         """Assign ID. Initialise or extract data arrays """
 
         # The number of levels represents the vertical stack height in the core i.e. the number of bricks stacked in a
@@ -56,6 +57,10 @@ class Parse:
         # =============
         self.core_rows = core_rows
         self.core_columns = core_columns
+
+        self.inter_rows = core_rows + 1
+        self.inter_columns = core_columns + 1
+
         self.core_levels = fuel_levels
         self.inter_levels = inter_levels
 
@@ -73,6 +78,8 @@ class Parse:
         # layer of padding with reflector/exterior bricks is 2 by default, but can be specified by the user.
 
         self.padding = padding
+
+        self.augmentation = augmentation
 
         # The first number of each row
         self.first_numbers_row_fuel = [1, 11, 23, 37, 53, 71, 89, 107, 125, 143, 161, 179, 197, 215, 233, 249, 263, 275]
@@ -113,6 +120,11 @@ class Parse:
         self.fuel_indices = utils.index_array_fuel(case)  # TODO WARNING - THIS ONLY CURRENTLY WORKS FOR INTACT CASES
         self.results_indices = utils.index_array_interstitial(case)
 
+        self.results_3D_array = None
+
+        if augmentation:
+            self.apply_augmentation()
+
         # =============
 
         # print("Initialisation complete")
@@ -142,7 +154,8 @@ class Parse:
 
         # cycles through all core levels, extracting the 2D array and assigning it to the 3D array
         for i in range(0, self.core_levels):
-            array[i][:] = np.pad(np.array(pd.read_excel(filename, sheet_name=i, header=None, index_col=False)),
+            array[i][:] = np.pad(np.array(pd.read_excel(filename, sheet_name=i, header=None, index_col=False,
+                                                        engine='openpyxl')),
                                  [(self.padding, self.padding), (self.padding, self.padding)], mode='constant',
                                  constant_values=0)
 
@@ -153,7 +166,7 @@ class Parse:
     # ---------------------FEATURE EXTRACTION-------------------
     # ==========================================================
 
-    def get_crack_array(self, array_type="orientations", levels='all'):
+    def get_crack_array(self, array_type="orientations", levels='all', print_mode=False):
         """ Returns the crack array. Can be of type 'orientations' or 'positions' """
 
         # The array is simply stored as self.crack array.
@@ -209,6 +222,9 @@ class Parse:
         # Interprets the 'levels' argument
         min_level, max_level = self.parse_level_argument(levels)
 
+        if print_mode:
+            return array[min_level:max_level].astype(int)
+
         return array[min_level:max_level]
 
     def get_channel_crack_array(self, channel_no, array_size=2, array_type='orientations', levels='all',
@@ -232,7 +248,7 @@ class Parse:
 
         # TODO come up with something more elegant than this.
         fudge = 0
-        if array_size > 0: fudge = -1
+        if array_size == 0: fudge = 1
 
         if utils.is_in(channel_type, "fuel"):
             row_start = row_origin - array_size
@@ -240,13 +256,14 @@ class Parse:
             column_start = column_origin - array_size
             column_end = column_origin + array_size + 1
         else:
-            row_start = max(row_origin - array_size - 1, 0) + 1
-            row_end = row_origin + array_size + fudge + 1
-            column_start = max(column_origin - array_size - 1, 0) + 1
-            column_end = column_origin + array_size + fudge + 1
+            row_start = max(row_origin - array_size, 0)
+            row_end = row_origin + array_size + fudge
 
-        channel_crack_array = core_array[min_level:max_level, row_start: row_end,
-                              column_start: column_end]
+            column_start = max(column_origin - array_size, 0)
+            column_end = column_origin + array_size + fudge
+
+        channel_crack_array = core_array[min_level:max_level, row_start:row_end,
+                              column_start:column_end]
 
         return channel_crack_array
 
@@ -320,7 +337,7 @@ class Parse:
         # Get the channel range. It's fuel array type because interstitial bricks don't crack
         min_channel, max_channel = self.parse_channel_argument(channels, 'fuel')
         number_of_channels = max_channel - min_channel
-        
+
         # Get the range of levels
         min_level, max_level = self.parse_level_argument(levels)
         number_of_levels = max_level - min_level
@@ -330,7 +347,6 @@ class Parse:
         crack_array_user = np.zeros(output_array_size)
 
         for i in range(number_of_levels):
-
             input_start = (i * self.fuel_channels) + min_channel
             input_end = (i * self.fuel_channels) + max_channel
 
@@ -341,7 +357,7 @@ class Parse:
 
         return crack_array_user
 
-    def channel_specific_cracks(self):
+    def channel_specific_cracks(self, levels="all"):
         """ Return the number of cracks local to each channel"""
 
         channel_type = 'inter'
@@ -351,7 +367,7 @@ class Parse:
         # Iterate through channels
         for i in range(1, self.last_channel(channel_type=channel_type) + 1):
             local, adjacent, outer = self.get_cracks_per_layer(str(i), array_type='pos', channel_type=channel_type,
-                                                               inclusive=True)
+                                                               inclusive=True, levels=levels)
 
             counts_local.append(local)
             counts_adjacent.append(adjacent)
@@ -518,13 +534,13 @@ class Parse:
 
         return time_array_sorted
 
-    def result_time_history(self, result="1", time_steps=271):
+    def result_time_history(self, result="1", result_type="max", time_steps=271):
         """Gets a result time history for one case i.e. one result at each time"""
 
         time_history = []
 
         for time in range(1, time_steps + 1):
-            time_history.append(self.get_result_at_time(time, result_columns=str(result)))
+            time_history.append(self.get_result_at_time(time, result_type=result_type, result_columns=str(result)))
 
         return time_history
 
@@ -860,3 +876,93 @@ class Parse:
             distances.append(int(abs(number - self.padding - dimension / 2)))
 
         return max(distances)
+
+    def results_2D(self):
+
+        base_indices = self.results_indices
+        indices_np = np.zeros([self.inter_rows, self.inter_columns, self.inter_levels])
+
+        first_columns_row = self.first_columns_row_interstitial
+
+        number_columns = self.inter_columns
+
+        channel = 0
+
+        for row, column_offset in enumerate(first_columns_row):
+
+            number_columns_this_row = number_columns - (2 * column_offset)
+            for column in range(column_offset, column_offset + number_columns_this_row):
+                channel_value = np.array(base_indices[channel][0:13])
+                indices_np[row, column] = channel_value
+                channel += 1
+
+        self.results_3D_array = indices_np
+
+    def apply_augmentation(self, augmentation=None):
+
+        if not augmentation:
+            augmentation = self.augmentation
+
+        self.results_2D()
+        cracks = self.crack_array
+
+        start, num = augmentation.split("_")
+
+        if utils.is_in(start, "flip"):
+
+            # Flip about the vertical axis
+            if num == "1":
+                cracks_rotated = np.rot90(cracks, -1, (1, 2))
+                cracks_rotated_flipped = np.fliplr(cracks_rotated)
+                self.crack_array = np.rot90(cracks_rotated_flipped, 1, (1, 2))
+
+                indices = self.results_3D_array
+
+                indices_rot = np.rot90(np.fliplr(indices), -1, (1, 0))
+
+                self.reassign_indices(np.rot90(indices_rot, 1, (1, 0)))
+
+            # Flip about the axis 45° from vertical
+            if num == "2":
+                pass
+
+            # Flip about the horizontal axis
+            if num == "3":
+                self.crack_array = np.fliplr(cracks)
+                indices_flipped = np.flipud(self.results_3D_array)
+                self.reassign_indices(indices_flipped)
+
+            # Flip about the axis 135° from vertical
+            if num == "4":
+                pass
+
+        elif utils.is_in(start, "rot"):
+
+            rotations = int(num)
+
+            self.crack_array = np.rot90(cracks, -rotations, (1, 2))
+
+            indices_rotated = np.rot90(self.results_3D_array, rotations, (1, 0))
+
+            indices_new = []
+
+            for row in indices_rotated:
+                for channel in row:
+                    if sum(channel) > 0:
+                        indices_new.append(channel.astype(int))
+
+            self.results_indices = indices_new
+
+        else:
+            print("Please choose at least one valid augmentation method.")
+
+    def reassign_indices(self, indices_3d):
+
+        indices_new = []
+
+        for row in indices_3d:
+            for channel in row:
+                if sum(channel) > 0:
+                    indices_new.append(channel.astype(int))
+
+        self.results_indices = indices_new
