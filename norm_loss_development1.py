@@ -6,6 +6,8 @@ from scipy.stats import norm
 
 dataset = DatasetSingleFrame()
 
+print(dataset.summary())
+
 
 labels = Displacements(dataset, channels="160", result_time=48, result_type="all", levels="12")
 
@@ -51,12 +53,12 @@ for i, val in zip(x, norm_distr):
     norm_distr_adj.append(adj*val)
     norm_distr_adj2.append(adj2*val)
 
-# plt.scatter(x, norm_distr_adj, c='y', label='Adjusted Normal Distribution')
-# plt.scatter(x, norm_distr_adj2, c='g', label='Non Square')    
+plt.scatter(x, norm_distr_adj, c='y', label='Adjusted Normal Distribution')
+plt.scatter(x, norm_distr_adj2, c='g', label='Non Square')    
 
-# plt.plot([modal_bin, modal_bin], [0, norm_max], '--')
+plt.plot([modal_bin, modal_bin], [0, norm_max], '--')
 
-# plt.yticks([0, 400], [1, 2])
+plt.yticks([0, 400], [1, 2])
 plt.legend(loc='upper right')
 
 plt.show()

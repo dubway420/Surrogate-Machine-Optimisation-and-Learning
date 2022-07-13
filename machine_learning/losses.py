@@ -1,5 +1,6 @@
 import keras.backend as K
 import tensorflow as tf
+from scipy.stats import norm 
 
 '''
  ' Huber loss.
@@ -48,3 +49,34 @@ def adjusted_mse(average, alpha=1, square_adjust=False):
         return loss
 
     return inner_method
+
+
+def adjustment_factor(i, modal_bin, std, norm_max, square=True):
+
+    adjustment_factor = norm.pdf(i, modal_bin, std)/norm_max
+    
+    if square:
+        adjustment_factor = adjustment_factor**2
+    
+
+    return adjustment_factor + 1
+
+def mse_norm_adjusted(modal_bin, std, norm_max, square=True, mean=False):
+
+
+    def inner_method(y_true, y_pred):
+
+        adj = adjustment_factor(y_true, modal_bin, std, norm_max, square)
+
+        # calculating squared difference between target and predicted values
+        loss = K.square(y_pred - y_true)
+
+        adj_loss = loss * adj
+
+        if mean:
+            adj_loss = K.mean(adj_loss)
+            
+        return adj_loss
+
+    return inner_method
+    
