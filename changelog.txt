@@ -1,3 +1,6 @@
+Version 0.1.5
+* New loss function that uses the distribution of the data
+
 Version 0.1.4.3
 * Added a file to generate transformers for various augmentation arrangements
 * test_single.py now has command line options for specifying the augmentation
