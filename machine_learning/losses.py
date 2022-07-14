@@ -1,6 +1,9 @@
 import keras.backend as K
 import tensorflow as tf
-from scipy.stats import norm 
+import tensorflow_probability as tfp
+import numpy as np
+
+tfd = tfp.distributions
 
 '''
  ' Huber loss.
@@ -52,8 +55,11 @@ def adjusted_mse(average, alpha=1, square_adjust=False):
 
 
 def adjustment_factor(i, modal_bin, std, norm_max, square=True):
+    
+    #convert i to 64 bit float
+    i = tf.cast(i, tf.float64)
 
-    adjustment_factor = norm.pdf(i, modal_bin, std)/norm_max
+    adjustment_factor = tfd.Normal(modal_bin, std).prob(i) #/norm_max
     
     if square:
         adjustment_factor = adjustment_factor**2
@@ -70,6 +76,10 @@ def mse_norm_adjusted(modal_bin, std, norm_max, square=True, mean=False):
 
         # calculating squared difference between target and predicted values
         loss = K.square(y_pred - y_true)
+
+        # convert loss to 64 bit float
+        loss = tf.cast(loss, tf.float64)
+
 
         adj_loss = loss * adj
 

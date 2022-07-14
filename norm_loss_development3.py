@@ -3,7 +3,9 @@ from machine_learning.dataset_generators import DatasetSingleFrame, Displacement
 import numpy as np
 from sklearn import preprocessing as pre
 from scipy.stats import norm 
-from tensorflow.keras.losses import mean_squared_error as mse
+import tensorflow as tf
+
+
 
 
 
@@ -32,7 +34,7 @@ x= np.linspace(0, 1, 100)
 norm_distr = norm.pdf(x, modal_bin, std)
 norm_max = np.max(norm_distr)
 
-loss = mse_norm_adjusted(modal_bin, std, norm_max, mean=True)
+loss = mse_norm_adjusted(modal_bin, std, norm_max, mean=False)
 
 y_true = np.array([0.01, 0.21, 0.32, 0.49, 0.71, 0.99])
 y_pred = np.array([0, 0.2, 0.31, 0.5, 0.7, 1])
@@ -40,4 +42,4 @@ y_pred = np.array([0, 0.2, 0.31, 0.5, 0.7, 1])
 print(loss(y_true, y_pred)*10000)
 print(mse(y_true, y_pred))
 print(huber_loss(y_true, y_pred))
-print(huber_loss_mean(y_true, y_pred))
+# print(huber_loss_mean(y_true, y_pred))
