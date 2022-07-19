@@ -2,6 +2,7 @@ import keras.backend as K
 import tensorflow as tf
 import tensorflow_probability as tfp
 import numpy as np
+import math as m
 
 tfd = tfp.distributions
 
@@ -58,8 +59,18 @@ def adjustment_factor(i, modal_bin, std, norm_max, square=True):
     
     #convert i to 64 bit float
     i = tf.cast(i, tf.float64)
+    std = tf.cast(std, tf.float64)
+    modal_bin = tf.cast(modal_bin, tf.float64)
 
-    adjustment_factor = tfd.Normal(modal_bin, std).prob(i) #/norm_max
+    rhs = tf.exp(tf.multiply(tf.constant(-0.5, dtype=tf.float64), tf.pow(tf.divide(i - modal_bin, std), tf.constant(2, dtype=tf.float64))))
+
+    lhs = tf.divide(1, tf.multiply(std, tf.sqrt(tf.multiply(tf.constant(2.0, dtype=tf.float64), tf.constant(m.pi, dtype=tf.float64)))))
+
+    lhs = tf.cast(lhs, tf.float64)
+    # tf.divide(
+    adjustment_factor = tf.divide(tf.multiply(lhs, rhs), tf.constant(norm_max))
+
+    # adjustment_factor = tfd.Normal(modal_bin, std).prob(i) / norm_max
     
     if square:
         adjustment_factor = adjustment_factor**2
@@ -67,19 +78,19 @@ def adjustment_factor(i, modal_bin, std, norm_max, square=True):
 
     return adjustment_factor + 1
 
+
 def mse_norm_adjusted(modal_bin, std, norm_max, square=True, mean=False):
 
 
     def inner_method(y_true, y_pred):
 
-        adj = adjustment_factor(y_true, modal_bin, std, norm_max, square)
+        adj = adjustment_factor(y_pred, modal_bin, std, norm_max, square)
 
         # calculating squared difference between target and predicted values
         loss = K.square(y_pred - y_true)
 
         # convert loss to 64 bit float
         loss = tf.cast(loss, tf.float64)
-
 
         adj_loss = loss * adj
 
@@ -89,4 +100,3 @@ def mse_norm_adjusted(modal_bin, std, norm_max, square=True, mean=False):
         return adj_loss
 
     return inner_method
-    

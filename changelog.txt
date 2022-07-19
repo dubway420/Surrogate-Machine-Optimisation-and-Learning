@@ -1,3 +1,7 @@
+Version 0.1.5.1
+* Adjustment factor is now based on prediction rather than ground truth
+* Fully set up normal distribution loss function and tested
+
 Version 0.1.5
 * New loss function that uses the distribution of the data
 
