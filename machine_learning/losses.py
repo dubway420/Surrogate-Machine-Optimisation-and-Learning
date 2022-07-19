@@ -3,8 +3,6 @@ import tensorflow as tf
 import numpy as np
 import math as m
 
-tfd = tfp.distributions
-
 '''
  ' Huber loss.
  ' https://jaromiru.com/2017/05/27/on-using-huber-loss-in-deep-q-learning/
