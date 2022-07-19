@@ -1,3 +1,6 @@
+Version 0.1.5.2
+* Removed tensorflow_probability import statement from machine_learning.losses
+
 Version 0.1.5.1
 * Adjustment factor is now based on prediction rather than ground truth
 * Fully set up normal distribution loss function and tested
