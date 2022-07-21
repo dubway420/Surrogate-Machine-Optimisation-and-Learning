@@ -1,5 +1,5 @@
 from tensorflow.keras import models
-from machine_learning.dataset_generators import DatasetSingleFrame, Cracks3D, Displacements
+from machine_learning.dataset_generators import DatasetSingleFrame, Cracks3D, Displacements, augmentation_string
 from machine_learning.callbacks import correlation_foursquare, histogram_foursquare
 from machine_learning.utils import find_nearest
 from tensorflow.keras.losses import mean_squared_error as mse
@@ -7,7 +7,7 @@ import numpy as np
 from sklearn import preprocessing as pre
 import warnings
 from os import listdir, mkdir
-from parmec_analysis.utils import is_in
+from machine_learning.utils import is_in, augmentation_handler
 import sys
 import pickle
 
@@ -36,6 +36,21 @@ transformer_name = labels.generate_filename(ext=".tfr")
 
 transformer_name_dataset = transformer_name.replace("test_set", "dataset")
 
+variables = sys.argv[1:]
+
+
+if len(variables) >= 2:
+
+    flip, rotate = augmentation_handler(variables[1:])
+
+    aug_name = augmentation_string(flip, rotate)
+
+    aug_name += ".tfr"
+
+    transformer_name_dataset = transformer_name_dataset.replace(".tfr", aug_name)
+
+print("Transformer name: ", transformer_name_dataset)
+
 with open(transformer_name_dataset, 'rb') as f:
     transformer = pickle.load(f)
 # min_max_scaler = pre.MinMaxScaler(feature_range=(0, 1))
@@ -45,7 +60,9 @@ fold_losses = []
 
 fold_best_model = []
 
-base_path = sys.argv[-1]
+base_path = variables[0]
+
+print("Path: ", base_path)
 
 #base_path = "C:/Users/HP/Documents/PhD/Paper2/AugTransfer_mods"
 

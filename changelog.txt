@@ -1,3 +1,10 @@
+Version 0.1.6
+* Made changes to test.py to bring it in line with the way test_single.py works
+* Changes include command line specification of augmentation for scalling
+* Moved some utility functions to machine_learning.utils
+* Changed import statements to reflect above point
+* Minor fix to the way dataset_generators.py generates file names for augmentated datasets
+
 Version 0.1.5.3
 * Bug fix to remove reference to imported object that no longer exists
 

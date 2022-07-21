@@ -6,44 +6,10 @@ from tensorflow.keras.losses import mean_squared_error as mse
 import numpy as np
 from sklearn import preprocessing as pre
 from os import listdir, mkdir
-from parmec_analysis.utils import is_in
+from machine_learning.utils import is_in, augmentation_handler
+
 import sys
 
-def value_parse(val):
-
-    if val.isnumeric():
-        return int(val)
-    elif is_in(val, "_"):
-        return val.split("_")
-    else:
-        print("Invalid value:", val)
-        return None
-
-def augmentation_handler(variables):
-
-    flip = None
-    rotate = None
-
-    for variable in variables:
-        
-        try:
-            type = variable.split("=")[0]
-            value = variable.split("=")[1]
-
-            if is_in(type, "flip"):
-                flip = value_parse(value)
-
-            elif is_in(type, "rot"):
-                rotate = value_parse(value)
-
-            else:
-                print("Invalid augmentation type:", type)
-
-        except IndexError:
-            print("Invalid entry:", variable)
-            print("augmentations need to be specified in the form <augmentation>=<value1>_<value2>_...\n")
-
-    return flip, rotate            
 
 dataset = DatasetSingleFrame(name="test_set")
 

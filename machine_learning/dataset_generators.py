@@ -329,7 +329,6 @@ class DatasetSingleFrame:
                         aug_instances.append(case_aug)
                         aug_case = case + "_" + aug_string
                         aug_cases.append(aug_case)
-                        flip_name += str(aug)
 
                 if rotate:
 
@@ -340,7 +339,6 @@ class DatasetSingleFrame:
                         aug_instances.append(case_aug)
                         aug_case = case + "_" + aug_string
                         aug_cases.append(aug_case)
-                        rotate_name += str(aug)
 
             cases_updated = aug_cases + self.cases_list
             instances_updated = aug_instances + self.core_instances
