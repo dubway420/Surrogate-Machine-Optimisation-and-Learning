@@ -53,7 +53,7 @@ print("Transformer name: ", transformer_name_dataset)
 
 with open(transformer_name_dataset, 'rb') as f:
     transformer = pickle.load(f)
-# min_max_scaler = pre.MinMaxScaler(feature_range=(0, 1))
+
 labels.transform(transformer, fit=False)
 
 fold_losses = []
