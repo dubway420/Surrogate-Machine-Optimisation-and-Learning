@@ -4,10 +4,8 @@ from machine_learning.dataset_generators import DatasetSingleFrame, Cracks3D, Di
 from machine_learning.callbacks import correlation_foursquare, histogram_foursquare
 from tensorflow.keras.losses import mean_squared_error as mse
 import numpy as np
-from sklearn import preprocessing as pre
 from os import listdir, mkdir
 from machine_learning.utils import is_in, augmentation_handler
-
 import sys
 
 

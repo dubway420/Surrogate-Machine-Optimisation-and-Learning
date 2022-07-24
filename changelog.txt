@@ -1,3 +1,7 @@
+Version 0.1.7
+* Post test results reader created
+* import cleanup
+
 Version 0.1.6.1
 * Removal of one redundant commented out line
 
