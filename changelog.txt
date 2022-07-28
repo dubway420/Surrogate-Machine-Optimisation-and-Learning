@@ -1,3 +1,6 @@
+Version 0.1.7.1
+* Minor change to print statements in test.py
+
 Version 0.1.7
 * Post test results reader created
 * import cleanup

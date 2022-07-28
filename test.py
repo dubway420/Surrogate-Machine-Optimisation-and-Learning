@@ -98,7 +98,7 @@ for i in range(0, 5):
 
     model_files_all_rolls.append(model_files)
 
-    print("Fold: ", i)
+    print("Model: ", roll)
 
     for j, model_name in enumerate(model_files):
         model_path = path + "/" + model_name
