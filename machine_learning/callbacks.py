@@ -170,7 +170,7 @@ def plotter_foursquare(x, y, labels_set, prediction_set, fig_title):
     plt.close()
 
 
-def correlation_foursquare(x, y, labels_set, prediction_set, fig_title, binary_delineaters=(0.2, 0.37, 0.6)):
+def correlation_foursquare(x, y, labels_set, prediction_set, fig_title, binary_delineaters=(0.2, 0.37, 0.6), y_lim=True):
     fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2, figsize=(10, 10))
 
     # Draw a straight line from 0 to 1 denoting a 'perfect' result
@@ -181,7 +181,7 @@ def correlation_foursquare(x, y, labels_set, prediction_set, fig_title, binary_d
     ax1.plot([0.2, 1.2], 'k:',  alpha=0.5, label='+/- 20%')
     ax1.plot([0, 1], c='black')
     ax1.plot([-0.2, 0.8], 'k:',  alpha=0.5)
-    ax1.set_ylim(0, 1.0)
+    
 
     epoch_labels = ["Ground Truth"]
 
@@ -258,6 +258,13 @@ def correlation_foursquare(x, y, labels_set, prediction_set, fig_title, binary_d
     # fig.title("Testing")
     fig.suptitle(fig_title)
     # fig.tight_layout()
+    
+    if y_lim:
+        
+        ax1.set_ylim(0, 1.0)
+        ax2.set_ylim(0, 1.0)
+        ax3.set_ylim(0, 1.0)
+        ax4.set_ylim(0, 1.0)
 
     save_name = fig_title + "_correlation"
     plt.savefig(save_name)

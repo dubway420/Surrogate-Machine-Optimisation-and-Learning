@@ -1,3 +1,7 @@
+Version 0.1.7.2
+* Have added arguement in correlation_foursquare in callbacks to allow clipping of the y axis 
+  to 0 to 1
+
 Version 0.1.7.1
 * Minor change to print statements in test.py
 
