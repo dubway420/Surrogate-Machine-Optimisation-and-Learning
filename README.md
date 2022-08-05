@@ -6,6 +6,6 @@ Packages are available for data generation/labelling, model design/development, 
 
 ## Model Development
 
-The main package files are located within [machine_learning](/tree/master/machine_learning)
+The main package files are located within [machine_learning](/tree/machine_learning)
 
 
