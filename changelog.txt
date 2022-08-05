@@ -1,3 +1,7 @@
+Version 0.1.8
+* Started making updates and enhancements to dataset_visualisation.py in preparation for the 
+  publication of a tutorial
+
 Version 0.1.7.2
 * Have added arguement in correlation_foursquare in callbacks to allow clipping of the y axis 
   to 0 to 1

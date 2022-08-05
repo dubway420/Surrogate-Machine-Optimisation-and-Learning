@@ -1,8 +1,10 @@
 from machine_learning.dataset_generators import Cracks1D, Cracks2D, Cracks3D
 from machine_learning.dataset_generators import DatasetSingleFrame, Displacements as Labels
+from parmec_analysis.reactor_case import Parse
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn import preprocessing as pre
+
 
 # =============================
 # THIS SECTION IS ALL THE PARAMETERS FOR THE FEATURES AND LABELS
@@ -40,8 +42,7 @@ print("\n == \n")
 # ************************************************************************
 
 # =============================
-# FEATURES 1-dimensional - Ensure the file X_1D_flat_dataset_C0_284_L0_7_Tpos.npy is
-# present in the same directory as this .py file
+# FEATURES 1-dimensional
 #
 # This format is suitable for a neural network with a dense input layer or shallow method
 # =============================
@@ -54,8 +55,7 @@ for line in features1D.summary():
 print("\n == \n")
 
 # =============================
-# FEATURES 2-dimensional - Ensure the file X_2D_multi_dataset_C0_284_L0_7_Tpos_ED.npy is
-# present in the same directory as this .py file
+# FEATURES 2-dimensional 
 #
 # This format is suitable for a neural network with a CNN2D input layer
 # =============================
@@ -68,8 +68,7 @@ for line in features2D.summary():
 print("\n == \n")
 
 # =============================
-# FEATURES 3-dimensional - Ensure the file X_3D_multi_dataset_C0_284_L0_7_Tpos.npy is
-# present in the same directory as this .py file
+# FEATURES 3-dimensional 
 #
 # This format is suitable for a neural network with a CNN2D input layer
 # =============================
@@ -80,6 +79,22 @@ print("\n == \n")
 for line in features3D.summary():
     print(line)
 print("\n == \n")
+
+intact = Parse("intact_core_rb")
+
+brick_coord_list_fuel = intact.get_brick_xyz_positions('xyz', channel_type="fuel", channels_only=0)
+X = features1D.values[0]
+
+
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+
+
+ax.title.set_text("Try dragging this image around")
+ax.scatter(brick_coord_list_fuel[0], brick_coord_list_fuel[1], brick_coord_list_fuel[2], c=X, cmap='gnuplot')
+plt.legend()
+ax.view_init(45, 45)
+plt.show()
 
 # ************************************************************************
 # ************************************************************************
