@@ -1,6 +1,6 @@
 import pickle
 from tensorflow.keras import models
-from machine_learning.dataset_generators import DatasetSingleFrame, Cracks3D, Displacements, augmentation_string
+from machine_learning.dataset_generators import DatasetSingleFrame, Cracks1D, Cracks3D, Displacements, augmentation_string
 from machine_learning.callbacks import correlation_foursquare, histogram_foursquare
 from tensorflow.keras.losses import mean_squared_error as mse
 import numpy as np
@@ -11,7 +11,8 @@ import sys
 
 dataset = DatasetSingleFrame(name="test_set")
 
-inputs = Cracks3D(dataset, array_type="Positions", levels="5-7")
+#inputs = Cracks3D(dataset, array_type="Positions", levels="5-7")
+inputs = Cracks1D(dataset, array_type="Positions", levels="5-7")
 
 # Labels
 channels_labels = "160"
@@ -64,9 +65,9 @@ print("Path: ", path)
 #########################################################
 # folder_name = "CustomLossMeanRot2Flip1"
 
-name = path.split("/")[-1]
-if name == "":
-    name = path.split("/")[-2]
+name = path.split("/")[-2] + "_" + path.split("/")[-1]
+# if name == "":
+    # name = path.split("/")[-2] + "_" + path.split("/")[-1]
 
 folder_name = "TEST_" + name
 
@@ -127,3 +128,12 @@ print("Result: ", round(best_error, 4))
 
 filename = folder_name + "/results"
 np.save(filename, model_losses)
+
+
+with open("results_summary.txt", "a") as f:
+    f.write(name + "\n")
+    f.write(message + "\n")
+    f.write("Best: " + str(best_error) + "\n")
+    f.write("Mean: " + str(mean_error) + "\n")
+    f.write("\n-----------------\n")
+    f.close()
