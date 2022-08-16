@@ -1,3 +1,6 @@
+Version 0.1.10.1
+* Summary output now written to excel file
+
 Version 0.1.10
 * Adding summary output to test_single.py
 
