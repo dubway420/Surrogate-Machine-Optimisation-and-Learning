@@ -1,3 +1,5 @@
+cd ~/parmec_agr_ml_surrogate
+
 email="huw.jones@manchester.ac.uk"
 
 py_files=$(ls experiment_input_files/*.py | wc -l)
