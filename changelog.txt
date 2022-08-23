@@ -1,3 +1,6 @@
+Version 0.1.11.2
+* Minor change to the way run_local.sh copies folders when a trial folder already exists
+
 Version 0.1.11.1
 * Minor change to run.sh to change folder at start of run
 * Including experiment_evaluation.sh changes which were missed out of last commit

@@ -16,7 +16,9 @@ makeDir=false
 [ -d $name ] && echo "Directory $name exists" || makeDir=true
 
 
-if $makeDir; then mkdir $name; echo "Folder created"; cp -r experiment_input_files $name; echo "Files copied"; fi
+if $makeDir; then mkdir $name; echo "Folder created"; echo "Files copied"; fi
+
+cp -r experiment_input_files $name;
 
 python3 execute_experiment.py $1 $name
 
