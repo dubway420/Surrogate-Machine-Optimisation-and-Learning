@@ -1,3 +1,9 @@
+Version 0.1.11
+* Runtime changes
+* Writing experiment information to journal file
+* Experiments number now dependent on number of .py files in experiment_input_files
+
+
 Version 0.1.10.1
 * Summary output now written to excel file
 

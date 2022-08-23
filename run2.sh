@@ -3,11 +3,12 @@
 #$ -l nvidia_v100=1
 #$ -t 1-32
 
-experiments=5
+experiments=$2
 
-#experiment_number=$(($SGE_TASK_ID%$experiments+1)) 
-
-experiment_number=1
+if [ $experiments -ne 1 ]
+ then experiment_number=$(($SGE_TASK_ID%$experiments+1))
+ else experiment_number=1
+fi
 
 sleep $(($experiment_number*20))
 

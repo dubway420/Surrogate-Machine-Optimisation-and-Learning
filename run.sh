@@ -1,18 +1,33 @@
 email="huw.jones@manchester.ac.uk"
 
+py_files=$(ls experiment_input_files/*.py | wc -l)
+
+# py_files minus one
+py_files=$((py_files - 1))
+
 line=$(grep -m 1 "trial_name" experiment_input_files/trial_common_parameters.py)
 trial=${line:13}
 
 name=$(echo $trial | tr -d "\"")
 
+for _ in {0..5}; do echo  ; done
+
+
 echo 
-echo 
-echo 
-echo "================="
-echo
+echo >> journal.txt
+
+
+line="================="
+
+echo $line
+echo $line >> journal.txt
+
 
 date
+date >> journal.txt
+
 echo "Beginning trial: " $trial | tr -d '"'
+echo "Beginning trial: " $trial | tr -d '"' >> journal.txt
 
 mkdir $name
 
@@ -22,7 +37,7 @@ cp -r experiment_input_files $name
 
 echo "Files copied"
 
-J=$(qsub -terse run2.sh $name)
+J=$(qsub -terse run2.sh $name $py_files)
 
 IFS='.'
 read -ra ADDR <<< "$J"
