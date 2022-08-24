@@ -1,3 +1,7 @@
+Version 0.1.11.3
+* Change to model_training.py so that it saves experiment info to journal
+* Journal log includes start times, iteration number, end times and losses
+
 Version 0.1.11.2
 * Minor change to the way run_local.sh copies folders when a trial folder already exists
 

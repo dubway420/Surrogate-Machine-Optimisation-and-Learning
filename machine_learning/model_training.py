@@ -3,7 +3,7 @@ import tensorflow as tf
 from keras import backend as K
 from parmec_analysis.utils import folder_validation, experiment_iteration, save_results
 from machine_learning.experiment_summary import summary
-import os
+import datetime
 
 # NUMCORES = int(os.getenv("NSLOTS", 1))
 #
@@ -32,6 +32,16 @@ def run_experiment(experiment):
     summary(experiment)
 
     exp_i = experiment_iteration(experiment.name, trial_name)
+
+    line="Starting experiment " + experiment.name + " (" + str(exp_i) + ") for trial " + trial_name
+
+    # Write line to journal.txt
+    with open("journal.txt", "a") as journal:
+        journal.write(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + "\n")
+        journal.write(line + "\n \n")
+        journal.close()
+
+    
 
     loss = experiment.trial.loss_function
 
@@ -65,3 +75,13 @@ def run_experiment(experiment):
     losses = [model_fit.history['loss'][-1], model_fit.history['val_loss'][-1]]
 
     save_results(experiment.name, trial_name, exp_i, losses)
+
+    line="Experiment " + experiment.name + " (" + str(exp_i) + ") for trial " + trial_name + " complete."
+
+    # Write line to journal.txt
+    with open("journal.txt", "a") as journal:
+        journal.write(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + "\n")
+        journal.write(line + "\n")
+        journal.write("Training loss: " + str(losses[0]) + "\n")
+        journal.write("Validation loss: " + str(losses[1]) + "\n \n")
+        journal.close()
