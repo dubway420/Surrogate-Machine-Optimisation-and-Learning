@@ -3,9 +3,14 @@ cd ~/parmec_agr_ml_surrogate
 email="huw.jones@manchester.ac.uk"
 
 py_files=$(ls experiment_input_files/*.py | wc -l)
-
 # py_files minus one
 py_files=$((py_files - 1))
+
+jobs=$((py_files*32))
+
+# overwrite line 4 of run2.sh
+sed -i "4s/.*/#$ -t 1-$jobs/" run2.sh
+
 
 line=$(grep -m 1 "trial_name" experiment_input_files/trial_common_parameters.py)
 trial=${line:13}

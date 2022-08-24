@@ -1,3 +1,7 @@
+Version 0.1.11.4
+* number of array jobs now dependent on number of py files (32*num)
+* .gitignore now ignores journal file
+
 Version 0.1.11.3
 * Change to model_training.py so that it saves experiment info to journal
 * Journal log includes start times, iteration number, end times and losses
