@@ -1,3 +1,7 @@
+Version 0.1.12
+* test_single.py gets list of files then iterates through. 
+* handles when there are no .mod files
+
 Version 0.1.11.4
 * number of array jobs now dependent on number of py files (32*num)
 * .gitignore now ignores journal file

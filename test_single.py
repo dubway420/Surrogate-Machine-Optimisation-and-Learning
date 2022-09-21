@@ -1,6 +1,6 @@
 import pickle
 from tensorflow.keras import models
-from machine_learning.dataset_generators import DatasetSingleFrame, Cracks1D, Cracks3D, Displacements, augmentation_string
+from machine_learning.dataset_generators import DatasetSingleFrame, Cracks1D, Cracks3D, CracksPlanar, Displacements, augmentation_string
 from machine_learning.callbacks import correlation_foursquare, histogram_foursquare
 from tensorflow.keras.losses import mean_squared_error as mse
 import numpy as np
@@ -11,7 +11,9 @@ from openpyxl import load_workbook
 
 dataset = DatasetSingleFrame(name="test_set")
 
+#inputs = CracksPlanar(dataset, extra_dimension=True, levels="5-7")
 inputs = Cracks3D(dataset, array_type="Positions", levels="5-7")
+#inputs = Cracks3D(dataset, array_type="Orient", levels="5-7")
 #inputs = Cracks1D(dataset, array_type="Positions", levels="5-7")
 
 # Labels
@@ -58,6 +60,10 @@ labels.transform(transformer, fit=False, save=False)
 #########################################################
 path = variables[0]
 
+# If the last character of path is a slash remove it
+if path[-1] == "/":
+    path = path[:-1]
+
 print("Path: ", path)
 
 #########################################################
@@ -71,22 +77,31 @@ name = path.split("/")[-2] + "_" + path.split("/")[-1]
 
 folder_name = "TEST_" + name
 
-try:
-    mkdir(folder_name)
-
-except FileExistsError:
-    print("Please be aware that a folder already exists by the name " + folder_name)
-    print("Continuing...\n")
 
 files = listdir(path)
 
 model_files = []
 model_losses = []
 
+mod_file_found = False
+# loop trough all files in the folder and check if any of them are .mod files
 for file in files:
-
     if is_in(file, ".mod"):
+        mod_file_found = True
         model_files.append(file)
+
+if not mod_file_found:
+    print("No .mod file found in the folder")
+    sys.exit()         
+
+
+    
+try:
+    mkdir(folder_name)
+
+except FileExistsError:
+    print("Please be aware that a folder already exists by the name " + folder_name)
+    print("Continuing...\n")
 
 for i, model_name in enumerate(model_files):
 
