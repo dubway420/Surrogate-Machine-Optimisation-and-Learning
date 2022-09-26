@@ -1,3 +1,10 @@
+Version 0.2
+* Adapting framework for testing on cluster systems
+* Added script file test_multiple_single.sh with module loading
+* Added test_start.py and results_summary.xlsx
+
+--------------
+
 Version 0.1.12
 * test_single.py gets list of files then iterates through. 
 * handles when there are no .mod files
