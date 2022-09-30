@@ -1,14 +1,16 @@
 from machine_learning.dataset_generators import DatasetSingleFrame, Displacements as Labels
 from machine_learning.trial import TrialParameters
 from tensorflow.keras.optimizers import RMSprop, Adam, Nadam
-from machine_learning.losses import adjusted_mse as loss
+from keras.losses import mse as loss
 import numpy as np
+import inspect
+from machine_learning.utils import is_in
 
 ###############################################################################
 # ######## FILL THIS IS WITH PARAMETERS COMMON TO THE ENTIRE TRIAL ############
 ###############################################################################
 
-trial_name = "CustomLossMeanAlpha7"
+trial_name = "TrialName"
 dataset_path = '~/training_data/cases_48_only/'
 
 # Model parameters
@@ -29,8 +31,10 @@ result_type = 'all'
 result_time = 48
 result_column = 1
 
-dataset = DatasetSingleFrame(validation_split=0.1)
-
+if is_in(inspect.stack()[-1][-5], "execute_experiment"):
+    dataset = DatasetSingleFrame(validation_split=0.1)
+else:
+    dataset = DatasetSingleFrame(name="test_set")
 #dataset.augment(flip=(3, ), rotate=(), retain_validation=True)
 
 #dataset.roll(5)
@@ -44,6 +48,6 @@ labels = Labels(dataset, channels=channels_labels, result_time=result_time, resu
 
 mean = np.mean(labels.values)
 
-loss = loss(mean, alpha=7)
+loss = loss
 
 parameters = TrialParameters(trial_name, dataset, labels, epochs, opt, loss, plot_every_n_epochs, save_model)
