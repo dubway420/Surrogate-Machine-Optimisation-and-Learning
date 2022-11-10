@@ -13,7 +13,7 @@ def experiment(trial):
 
     parameters = getattr(__import__(package, fromlist=["parameters"]), "parameters")
 
-    experiment_name = "M3"
+    experiment_name = "CNN_16_32_128"
 
     callbacks = [History]
 
@@ -30,13 +30,13 @@ def experiment(trial):
 
     batch_size = 32
 
-#    model = RegMods.convolutional_neural_network_2d(features.feature_shape, labels.label_shape, activation=(
-#        "tanh", "softplus", "tanh"),
-                                                    #layers=(256, 64, 32, 16, 16, 64, 256),
-#                                                    dropout=0.2, padding="same",
-#                                                    kernel_shape=3)
-    model_path = "/mnt/iusers01/gb01/q59494hj/parmec_agr_ml_surrogate/Best_models/M3.mod"
-    model = models.load_model(model_path, compile=False)
+    model = RegMods.convolutional_neural_network_2d(features.feature_shape, labels.label_shape, activation=(
+        "tanh", "softplus", "tanh"),
+                                                    layers=(16, 32, 128),
+                                                    dropout=0.2, padding="same",
+                                                    kernel_shape=3)
+#    model_path = "/mnt/iusers01/gb01/q59494hj/parmec_agr_ml_surrogate/BestModelsUnaugmented/Levels5_7/Roll5iteration5.mod"
+#    model = models.load_model(model_path)
 
     return Experiment(parameters, experiment_name, model, dataset, features, labels, batch_size,
                       callbacks)

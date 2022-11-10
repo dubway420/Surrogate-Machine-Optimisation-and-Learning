@@ -13,7 +13,7 @@ def experiment(trial):
 
     parameters = getattr(__import__(package, fromlist=["parameters"]), "parameters")
 
-    experiment_name = "levels5_7_simple_DO2"
+    experiment_name = "CNN_32x3"
 
     callbacks = [History]
 
@@ -32,7 +32,7 @@ def experiment(trial):
 
     model = RegMods.convolutional_neural_network_2d(features.feature_shape, labels.label_shape, activation=(
         "tanh", "softplus", "tanh"),
-                                                    #layers=(256, 64, 32, 16, 16, 64, 256),
+                                                    layers=(32, 32, 32),
                                                     dropout=0.2, padding="same",
                                                     kernel_shape=3)
 #    model_path = "/mnt/iusers01/gb01/q59494hj/parmec_agr_ml_surrogate/BestModelsUnaugmented/Levels5_7/Roll5iteration5.mod"

@@ -1,4 +1,5 @@
 Version 0.2.2
+* Fully set up automated testing
 * Adapting test_single.py to obtain dataset, features, and labels from the experiment_input_files
 * Added some tools to machine_learning/utils.py to aid extraction of model parameters
 
