@@ -1,0 +1,42 @@
+\chapter{Surrogate Model Framework}
+\label{cha:framework}
+
+
+This chapter details the programmatic framework \cite{Jones2018} developed during this PhD. This framework was developed in order to streamline the development and optimisation of surrogate machine learning model for this project. This framework is provided free and open source with the intention that other researchers will adapt and use it for their own surrogate machine learning purposes. Using this repository, the accompanying dataset \cite{huw_rhys_jones_2022_6967536} and the attached guide, the method and results presented in this thesis can be reproduced by anyone.
+\\
+
+\noindent
+The framework is developed so as to be useable on a portable batch system (PBS) as is commonly implemented on university cluster computing systems. These systems allow job queuing and parallel processing of experiments \cite{henderson1995job}. If a PBS system is not available, the framework is functional on any other standard computer.
+
+\section{Outline}
+
+This section outlines the main modules and features of the framework. 
+
+\begin{enumerate}
+	
+	\item \textbf{Original Model Data Generation} Tools to generate raw data from the original model. Nominally, this is the the Parmec \cite{wiki:xxx} model used to generate seismic displacements from crack configurations within the AGR core. The files for this module are mostly contained within the parmec\_pipeline and Excel folders. The tools included allow the batch generation and execution of Parmec cases and the extraction of useable data from them. This data is then used by other modules to create training and testing datasets.
+	
+	\item \textbf{Data Engineering} \label{frame:engineering} The tools included in the folder parmec\_analysis allow the selection and transformation of raw data from the original model. This includes selection of model inputs and outputs for any specified brick within the AGR core model. In addition, data for a range of bricks, channels, or regions can be selected and obtained. These tools use an object-oriented approach using the Python programming language \cite{lutz2013learning}. Using this tool, each Parmec case makes an individual instance.
+	
+	
+	\item \textbf{Machine Learning Module} The files within this module allow the development and optimisation of machine learning surrogate models. This module makes use of the Keras machine learning library \cite{ketkar2017introduction}, as well as numpy \cite{harris2020array}, Scikit-learn \cite{pedregosa2011scikit}, Matplotlib and Seaborn \cite{bisong2019matplotlib}. It provides three principal functions:  
+	
+	\begin{enumerate}[label=\roman*.]
+		
+		\item \textit{Datasets}. The creation of machine learning format datasets from the transformed data generated with the tools from item \ref{frame:engineering}, including both features \& labels, as well as training, validation and testing set segregations.
+		
+		\item \textit{Machine learning model design}. This function allows user specification of model architecture, parameters and metrics. For example, the user can specify the exact number of layers, number of nodes per layer, type of layer, activation function etc. 
+		
+		\item \textit{Surrogate ML model evaluation and visualisation}. Provision to evaluate models both during and after training. This feature outputs both visual and numerical representations of model performance. 
+		
+	\end{enumerate}
+	
+	\item \textbf{Experiment Execution} This feature provides high level controls over the previous items. It handles the training of models according to user specification, evaluation and comparison between experiments. If the framework is being used on a PBS, then this feature handles queuing and parallelisation.
+	
+	\section{Original Model Data Generation}
+	
+	This module of the framework is used to generate raw data to be later transformed into the machine learning dataset. As mentioned in section~\ref{Surrogate}, surrogate machine learning models require data from an existing model in order to perform as intended. In its current form, this part of the framework streamlines the production of 
+
+\end{enumerate}
+
+

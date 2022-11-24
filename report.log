@@ -1,0 +1,968 @@
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2022.10.31)  24 NOV 2022 17:30
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**report.tex
+(./report.tex
+LaTeX2e <2021-11-15> patch level 1
+L3 programming layer <2022-01-21> (./muthesis.cls
+Document Class: muthesis 2017/09/06 MU Thesis Class
+(/usr/share/texlive/texmf-dist/tex/latex/setspace/setspace.sty
+Package: setspace 2011/12/19 v6.7a set line spacing
+)
+(/usr/share/texlive/texmf-dist/tex/latex/base/report.cls
+Document Class: report 2021/10/04 v1.4n Standard LaTeX document class
+(/usr/share/texlive/texmf-dist/tex/latex/base/size12.clo
+File: size12.clo 2021/10/04 v1.4n Standard LaTeX file (size option)
+)
+\c@part=\count185
+\c@chapter=\count186
+\c@section=\count187
+\c@subsection=\count188
+\c@subsubsection=\count189
+\c@paragraph=\count190
+\c@subparagraph=\count191
+\c@figure=\count192
+\c@table=\count193
+\abovecaptionskip=\skip47
+\belowcaptionskip=\skip48
+\bibindent=\dimen138
+))
+(/usr/share/texlive/texmf-dist/tex/latex/tools/verbatim.sty
+Package: verbatim 2020-07-07 v1.5u LaTeX2e package for verbatim enhancements
+\every@verbatim=\toks16
+\verbatim@line=\toks17
+\verbatim@in@stream=\read2
+)
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/graphicx.sty
+Package: graphicx 2021/09/16 v1.2d Enhanced LaTeX Graphics (DPC,SPQR)
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/keyval.sty
+Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
+\KV@toks@=\toks18
+)
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/graphics.sty
+Package: graphics 2021/03/04 v1.4d Standard LaTeX Graphics (DPC,SPQR)
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/trig.sty
+Package: trig 2021/08/11 v1.11 sin cos tan (DPC)
+)
+(/usr/share/texlive/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
+File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
+)
+Package graphics Info: Driver file: pdftex.def on input line 107.
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics-def/pdftex.def
+File: pdftex.def 2020/10/05 v1.2a Graphics/color driver for pdftex
+))
+\Gin@req@height=\dimen139
+\Gin@req@width=\dimen140
+)
+(/usr/share/texlive/texmf-dist/tex/latex/url/url.sty
+\Urlmuskip=\muskip16
+Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
+)
+(/usr/share/texlive/texmf-dist/tex/latex/listings/listings.sty
+\lst@mode=\count194
+\lst@gtempboxa=\box50
+\lst@token=\toks19
+\lst@length=\count195
+\lst@currlwidth=\dimen141
+\lst@column=\count196
+\lst@pos=\count197
+\lst@lostspace=\dimen142
+\lst@width=\dimen143
+\lst@newlines=\count198
+\lst@lineno=\count199
+\lst@maxwidth=\dimen144
+
+(/usr/share/texlive/texmf-dist/tex/latex/listings/lstmisc.sty
+File: lstmisc.sty 2020/03/24 1.8d (Carsten Heinz)
+\c@lstnumber=\count266
+\lst@skipnumbers=\count267
+\lst@framebox=\box51
+)
+(/usr/share/texlive/texmf-dist/tex/latex/listings/listings.cfg
+File: listings.cfg 2020/03/24 1.8d listings configuration
+))
+Package: listings 2020/03/24 1.8d (Carsten Heinz)
+
+(/usr/share/texlive/texmf-dist/tex/latex/pslatex/pslatex.sty
+Package: pslatex 2021/01/13 v1.3 pslatex emulation (DPC)
+LaTeX Font Info:    Redeclaring symbol font `operators' on input line 66.
+LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
+(Font)                  OT1/cmr/m/n --> OT1/ptmcm/m/n on input line 66.
+LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
+(Font)                  OT1/cmr/bx/n --> OT1/ptmcm/m/n on input line 66.
+LaTeX Font Info:    Redeclaring symbol font `letters' on input line 67.
+LaTeX Font Info:    Overwriting symbol font `letters' in version `normal'
+(Font)                  OML/cmm/m/it --> OML/ptmcm/m/it on input line 67.
+LaTeX Font Info:    Overwriting symbol font `letters' in version `bold'
+(Font)                  OML/cmm/b/it --> OML/ptmcm/m/it on input line 67.
+LaTeX Font Info:    Redeclaring symbol font `symbols' on input line 68.
+LaTeX Font Info:    Overwriting symbol font `symbols' in version `normal'
+(Font)                  OMS/cmsy/m/n --> OMS/pzccm/m/n on input line 68.
+LaTeX Font Info:    Overwriting symbol font `symbols' in version `bold'
+(Font)                  OMS/cmsy/b/n --> OMS/pzccm/m/n on input line 68.
+LaTeX Font Info:    Redeclaring symbol font `largesymbols' on input line 69.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `normal'
+(Font)                  OMX/cmex/m/n --> OMX/psycm/m/n on input line 69.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `bold'
+(Font)                  OMX/cmex/m/n --> OMX/psycm/m/n on input line 69.
+\symbold=\mathgroup4
+\symitalic=\mathgroup5
+LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 75.
+LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
+(Font)                  OT1/cmr/bx/n --> OT1/ptm/bx/n on input line 75.
+LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
+(Font)                  OT1/cmr/bx/n --> OT1/ptm/bx/n on input line 75.
+LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 76.
+LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
+(Font)                  OT1/cmr/m/it --> OT1/ptm/m/it on input line 76.
+LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
+(Font)                  OT1/cmr/bx/it --> OT1/ptm/m/it on input line 76.
+)
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsmath.sty
+Package: amsmath 2021/10/15 v2.17l AMS math features
+\@mathmargin=\skip49
+
+For additional information on amsmath, use the `?' option.
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amstext.sty
+Package: amstext 2021/08/26 v2.01 AMS text
+
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsgen.sty
+File: amsgen.sty 1999/11/30 v2.0 generic functions
+\@emptytoks=\toks20
+\ex@=\dimen145
+))
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsbsy.sty
+Package: amsbsy 1999/11/29 v1.2d Bold Symbols
+\pmbraise@=\dimen146
+)
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsopn.sty
+Package: amsopn 2021/08/26 v2.02 operator names
+)
+\inf@bad=\count268
+LaTeX Info: Redefining \frac on input line 234.
+\uproot@=\count269
+\leftroot@=\count270
+LaTeX Info: Redefining \overline on input line 399.
+\classnum@=\count271
+\DOTSCASE@=\count272
+LaTeX Info: Redefining \ldots on input line 496.
+LaTeX Info: Redefining \dots on input line 499.
+LaTeX Info: Redefining \cdots on input line 620.
+\Mathstrutbox@=\box52
+\strutbox@=\box53
+\big@size=\dimen147
+LaTeX Font Info:    Redeclaring font encoding OML on input line 743.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 744.
+\macc@depth=\count273
+\c@MaxMatrixCols=\count274
+\dotsspace@=\muskip17
+\c@parentequation=\count275
+\dspbrk@lvl=\count276
+\tag@help=\toks21
+\row@=\count277
+\column@=\count278
+\maxfields@=\count279
+\andhelp@=\toks22
+\eqnshift@=\dimen148
+\alignsep@=\dimen149
+\tagshift@=\dimen150
+\tagwidth@=\dimen151
+\totwidth@=\dimen152
+\lineht@=\dimen153
+\@envbody=\toks23
+\multlinegap=\skip50
+\multlinetaggap=\skip51
+\mathdisplay@stack=\toks24
+LaTeX Info: Redefining \[ on input line 2938.
+LaTeX Info: Redefining \] on input line 2939.
+)
+(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/amssymb.sty
+Package: amssymb 2013/01/14 v3.01 AMS font symbols
+
+(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/amsfonts.sty
+Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
+\symAMSa=\mathgroup6
+\symAMSb=\mathgroup7
+LaTeX Font Info:    Redeclaring math symbol \hbar on input line 98.
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
+))
+(/usr/share/texlive/texmf-dist/tex/latex/enumitem/enumitem.sty
+Package: enumitem 2019/06/20 v3.9 Customized lists
+\labelindent=\skip52
+\enit@outerparindent=\dimen154
+\enit@toks=\toks25
+\enit@inbox=\box54
+\enit@count@id=\count280
+\enitdp@description=\count281
+)
+(/usr/share/texlive/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
+File: l3backend-pdftex.def 2022-01-12 L3 backend support: PDF output (pdfTeX)
+\l__color_backend_stack_int=\count282
+\l__pdf_internal_box=\box55
+)
+(./report.aux (./chapter1.aux) (./chapter2.aux) (./chapter3.aux)
+(./chapter4.aux) (./chapter5.aux) (./chapter6.aux) (./chapter7.aux)
+(./chapter8.aux))
+\openout1 = `report.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for OMS/pzccm/m/n on input line 30.
+LaTeX Font Info:    Trying to load font information for OMS+pzccm on input line
+ 30.
+ (/usr/share/texlive/texmf-dist/tex/latex/psnfss/omspzccm.fd
+File: omspzccm.fd 2000/01/03 Fontinst v1.801 font definitions for OMS/pzccm.
+)
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+
+(/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count283
+\scratchdimen=\dimen155
+\scratchbox=\box56
+\nofMPsegments=\count284
+\nofMParguments=\count285
+\everyMPshowfont=\toks26
+\MPscratchCnt=\count286
+\MPscratchDim=\dimen156
+\MPnumerator=\count287
+\makeMPintoPDFobject=\count288
+\everyMPtoPDFconversion=\toks27
+) (/usr/share/texlive/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
+Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
+Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
+85.
+
+(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
+e
+))
+\c@lstlisting=\count289
+
+[1
+
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] (./report.toc
+LaTeX Font Info:    Trying to load font information for OT1+ptmcm on input line
+ 6.
+
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1ptmcm.fd
+File: ot1ptmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OT1/ptmcm.
+)
+LaTeX Font Info:    Trying to load font information for OML+ptmcm on input line
+ 6.
+
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/omlptmcm.fd
+File: omlptmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OML/ptmcm.
+)
+LaTeX Font Info:    Trying to load font information for OMX+psycm on input line
+ 6.
+
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/omxpsycm.fd
+File: omxpsycm.fd 2000/01/03 Fontinst v1.801 font definitions for OMX/psycm.
+)
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 6.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <9> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 6.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 6.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 6.
+
+(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Trying to load font information for U+msb on input line 6.
+
+(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+) [2
+
+])
+\tf@toc=\write3
+\openout3 = `report.toc'.
+
+ (./word.count
+Underfull \hbox (badness 10000) in paragraph at lines 42--1
+
+ []
+
+) [3] (./report.lot)
+\tf@lot=\write4
+\openout4 = `report.lot'.
+
+ [4
+
+] (./report.lof [5
+
+])
+\tf@lof=\write5
+\openout5 = `report.lof'.
+
+ [6] (./abstract.tex) [7
+
+] [8
+
+]
+Overfull \hbox (1.14229pt too wide) in paragraph at lines 47--47
+\OT1/ptm/m/n/12 right works in the the-sis, for ex-am-ple graphs and ta-bles (`
+`Re-pro-duc-tions''), which
+ []
+
+
+Overfull \hbox (22.88693pt too wide) in paragraph at lines 47--47
+\OT1/ptm/m/n/12 Uni-ver-sity Li-brary, The Uni-ver-sity Li-brary's reg-u-la-tio
+ns (see $\OT1/pcr/m/n/12 http : / / www . library .
+ []
+
+[9
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 50--52
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 53--58
+
+ []
+
+[10
+
+]
+\openout2 = `chapter1.aux'.
+
+ (./chapter1.tex
+Chapter 1.
+
+Underfull \hbox (badness 10000) in paragraph at lines 7--9
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 10--13
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 14--17
+
+ []
+
+[11
+
+
+] [12] [13]) [14]
+\openout2 = `chapter2.aux'.
+
+ (./chapter2.tex
+Chapter 2.
+<Figures/AGR_plan.png, id=51, 224.33812pt x 232.61906pt>
+File: Figures/AGR_plan.png Graphic file (type png)
+<use Figures/AGR_plan.png>
+Package pdftex.def Info: Figures/AGR_plan.png  used on input line 10.
+(pdftex.def)             Requested size: 168.25317pt x 174.46385pt.
+[15
+
+
+
+
+ <./Figures/AGR_plan.png>]
+<Figures/AGR_side.png, id=55, 163.3603pt x 197.23688pt>
+File: Figures/AGR_side.png Graphic file (type png)
+<use Figures/AGR_side.png>
+Package pdftex.def Info: Figures/AGR_side.png  used on input line 20.
+(pdftex.def)             Requested size: 122.51991pt x 147.92728pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 25--27
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 32--33
+
+ []
+
+[16 <./Figures/AGR_side.png>]
+<Figures/brick_types_parmec.png, id=59, 674.52pt x 806.01125pt>
+File: Figures/brick_types_parmec.png Graphic file (type png)
+<use Figures/brick_types_parmec.png>
+Package pdftex.def Info: Figures/brick_types_parmec.png  used on input line 36.
+
+(pdftex.def)             Requested size: 114.66689pt x 137.0201pt.
+<Figures/cracking_mechanism.jpg, id=61, 392.96812pt x 425.33907pt>
+File: Figures/cracking_mechanism.jpg Graphic file (type jpg)
+<use Figures/cracking_mechanism.jpg>
+Package pdftex.def Info: Figures/cracking_mechanism.jpg  used on input line 43.
+
+(pdftex.def)             Requested size: 137.5409pt x 148.8709pt.
+<Figures/Brick_Cracking.png, id=62, 152.82094pt x 213.04594pt>
+File: Figures/Brick_Cracking.png Graphic file (type png)
+<use Figures/Brick_Cracking.png>
+Package pdftex.def Info: Figures/Brick_Cracking.png  used on input line 50.
+(pdftex.def)             Requested size: 99.33241pt x 138.47821pt.
+<Figures/parmec_bricks.png, id=63, 1395.2125pt x 1241.63875pt>
+File: Figures/parmec_bricks.png Graphic file (type png)
+<use Figures/parmec_bricks.png>
+Package pdftex.def Info: Figures/parmec_bricks.png  used on input line 57.
+(pdftex.def)             Requested size: 167.41827pt x 148.99022pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 62--64
+
+ []
+
+[17 <./Figures/brick_types_parmec.png> <./Figures/cracking_mechanism.jpg> <./Fi
+gures/Brick_Cracking.PNG>]
+<Figures/MLA_rig.png, id=69, 432.61626pt x 394.47375pt>
+File: Figures/MLA_rig.png Graphic file (type png)
+<use Figures/MLA_rig.png>
+Package pdftex.def Info: Figures/MLA_rig.png  used on input line 67.
+(pdftex.def)             Requested size: 216.3076pt x 197.23639pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 72--74
+
+ []
+
+[18 <./Figures/parmec_bricks.png> <./Figures/MLA_rig.png>]
+<Figures/core_array.png, id=75, 218.31563pt x 271.0125pt>
+File: Figures/core_array.png Graphic file (type png)
+<use Figures/core_array.png>
+Package pdftex.def Info: Figures/core_array.png  used on input line 77.
+(pdftex.def)             Requested size: 109.15753pt x 135.5059pt.
+<Figures/orientations.jpeg, id=76, 1205.50375pt x 1164.35pt>
+File: Figures/orientations.jpeg Graphic file (type jpg)
+<use Figures/orientations.jpeg>
+Package pdftex.def Info: Figures/orientations.jpeg  used on input line 84.
+(pdftex.def)             Requested size: 120.55743pt x 116.44182pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 89--91
+
+ []
+
+<Figures/Distored_bricks.png, id=77, 1003.75pt x 772.8875pt>
+File: Figures/Distored_bricks.png Graphic file (type png)
+<use Figures/Distored_bricks.png>
+Package pdftex.def Info: Figures/Distored_bricks.png  used on input line 94.
+(pdftex.def)             Requested size: 200.74644pt x 154.57475pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 102--104
+
+ []
+
+<Figures/bore_displacement.png, id=78, 292.09125pt x 240.9pt>
+File: Figures/bore_displacement.png Graphic file (type png)
+<use Figures/bore_displacement.png>
+Package pdftex.def Info: Figures/bore_displacement.png  used on input line 107.
+
+(pdftex.def)             Requested size: 146.04526pt x 120.44969pt.
+[19 <./Figures/core_array.png> <./Figures/orientations.jpeg>]
+Underfull \hbox (badness 10000) in paragraph at lines 112--114
+
+ []
+
+<Figures/agr_output.png, id=83, 325.59537pt x 231.264pt>
+File: Figures/agr_output.png Graphic file (type png)
+<use Figures/agr_output.png>
+Package pdftex.def Info: Figures/agr_output.png  used on input line 117.
+(pdftex.def)             Requested size: 130.23584pt x 92.50395pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 122--124
+
+ []
+
+[20 <./Figures/Distored_bricks.png> <./Figures/bore_displacement.png> <./Figure
+s/agr_output.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 127--129
+
+ []
+
+<Figures/engineering_approach.png, id=90, 328.22626pt x 423.83344pt>
+File: Figures/engineering_approach.png Graphic file (type png)
+<use Figures/engineering_approach.png>
+Package pdftex.def Info: Figures/engineering_approach.png  used on input line 1
+35.
+(pdftex.def)             Requested size: 164.11272pt x 211.91618pt.
+<Figures/Statistical_analysis.png, id=91, 391.4625pt x 231.11343pt>
+File: Figures/Statistical_analysis.png Graphic file (type png)
+<use Figures/Statistical_analysis.png>
+Package pdftex.def Info: Figures/Statistical_analysis.png  used on input line 1
+42.
+(pdftex.def)             Requested size: 215.30502pt x 127.11278pt.
+) [21 <./Figures/engineering_approach.png>] [22 <./Figures/Statistical_analysis
+.png>]
+\openout2 = `chapter3.aux'.
+
+ (./chapter3.tex
+Chapter 3.
+
+Underfull \hbox (badness 10000) in paragraph at lines 4--6
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--15
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 16--19
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 20--23
+
+ []
+
+[23
+
+
+
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 24--27
+
+ []
+
+<Figures/boston.png, id=102, 291.33844pt x 179.16937pt>
+File: Figures/boston.png Graphic file (type png)
+<use Figures/boston.png>
+Package pdftex.def Info: Figures/boston.png  used on input line 30.
+(pdftex.def)             Requested size: 218.50328pt x 134.3767pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 39--42
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 47--50
+
+ []
+
+[24 <./Figures/boston.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 55--58
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 59--62
+
+ []
+
+<Figures/gradient_descent.png, id=110, 518.6878pt x 355.3275pt>
+File: Figures/gradient_descent.png Graphic file (type png)
+<use Figures/gradient_descent.png>
+Package pdftex.def Info: Figures/gradient_descent.png  used on input line 69.
+(pdftex.def)             Requested size: 207.47144pt x 142.12846pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 76--78
+
+ []
+
+[25 <./Figures/gradient_descent.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 79--82
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 83--86
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 87--90
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 91--94
+
+ []
+
+[26]
+<Figures/nn.png, id=119, 589.4522pt x 390.70969pt>
+File: Figures/nn.png Graphic file (type png)
+<use Figures/nn.png>
+Package pdftex.def Info: Figures/nn.png  used on input line 100.
+(pdftex.def)             Requested size: 353.67404pt x 234.42761pt.
+<Figures/cnn_feature.png, id=120, 475.7775pt x 310.15875pt>
+File: Figures/cnn_feature.png Graphic file (type png)
+<use Figures/cnn_feature.png>
+Package pdftex.def Info: Figures/cnn_feature.png  used on input line 107.
+(pdftex.def)             Requested size: 356.83223pt x 232.61848pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 114--116
+
+ []
+
+<Figures/cnn_arch.png, id=121, 911.405pt x 326.821pt>
+File: Figures/cnn_arch.png Graphic file (type png)
+<use Figures/cnn_arch.png>
+Package pdftex.def Info: Figures/cnn_arch.png  used on input line 119.
+(pdftex.def)             Requested size: 410.12846pt x 147.06808pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 126--128
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 129--132
+
+ []
+
+[27] [28 <./Figures/nn.png> <./Figures/cnn_feature.png>]
+<Figures/surrogate_model.png, id=129, 572.89032pt x 382.42876pt>
+File: Figures/surrogate_model.png Graphic file (type png)
+<use Figures/surrogate_model.png>
+Package pdftex.def Info: Figures/surrogate_model.png  used on input line 140.
+(pdftex.def)             Requested size: 372.3743pt x 248.57573pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 147--149
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 150--153
+
+ []
+
+<Figures/architecture.png, id=130, 734.745pt x 271.0125pt>
+File: Figures/architecture.png Graphic file (type png)
+<use Figures/architecture.png>
+Package pdftex.def Info: Figures/architecture.png  used on input line 156.
+(pdftex.def)             Requested size: 367.3716pt x 135.5059pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 161--164
+
+ []
+
+[29] [30 <./Figures/cnn_arch.png> <./Figures/surrogate_model.png>]) [31]
+[32 <./Figures/architecture.png>]
+\openout2 = `chapter4.aux'.
+
+ (./chapter4.tex
+Chapter 4.
+
+Underfull \hbox (badness 10000) in paragraph at lines 5--7
+
+ []
+
+[33
+
+
+
+
+]) [34]
+\openout2 = `chapter5.aux'.
+
+ (./chapter5.tex
+Chapter 5.
+) [35
+
+
+
+
+]
+\openout2 = `chapter6.aux'.
+
+ (./chapter6.tex
+Chapter 6.
+[36
+
+
+
+
+] [37]
+Underfull \hbox (badness 10000) in paragraph at lines 67--69
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 70--73
+
+ []
+
+<Figures/Training History.png, id=162, 425.33907pt x 319.94531pt>
+File: Figures/Training History.png Graphic file (type png)
+<use Figures/Training History.png>
+Package pdftex.def Info: Figures/Training History.png  used on input line 79.
+(pdftex.def)             Requested size: 233.9372pt x 175.97046pt.
+[38]
+Underfull \hbox (badness 10000) in paragraph at lines 86--88
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 89--92
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 93--96
+
+ []
+
+[39 <./Figures/Training History.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 97--100
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 101--104
+
+ []
+
+<Figures/architecture_final.png, id=170, 346.896pt x 177.7842pt>
+File: Figures/architecture_final.png Graphic file (type png)
+<use Figures/architecture_final.png>
+Package pdftex.def Info: Figures/architecture_final.png  used on input line 111
+.
+(pdftex.def)             Requested size: 416.2731pt x 213.33994pt.
+
+Overfull \hbox (3.70815pt too wide) in paragraph at lines 111--112
+ [][] 
+ []
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+<Figures/convo_proj2.png, id=171, 462.22687pt x 585.68813pt>
+File: Figures/convo_proj2.png Graphic file (type png)
+<use Figures/convo_proj2.png>
+Package pdftex.def Info: Figures/convo_proj2.png  used on input line 118.
+(pdftex.def)             Requested size: 369.782pt x 468.55113pt.
+
+LaTeX Warning: Float too large for page by 15.34732pt on input line 121.
+
+<Figures/convo_vis.png, id=172, 754.31813pt x 627.84563pt>
+File: Figures/convo_vis.png Graphic file (type png)
+<use Figures/convo_vis.png>
+Package pdftex.def Info: Figures/convo_vis.png  used on input line 125.
+(pdftex.def)             Requested size: 528.0191pt x 439.48894pt.
+
+Overfull \hbox (115.45415pt too wide) in paragraph at lines 125--126
+ [][] 
+ []
+
+[40]
+Underfull \hbox (badness 10000) in paragraph at lines 134--136
+
+ []
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+
+LaTeX Warning: Reference `dataset' on page 41 undefined on input line 160.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 164--166
+
+ []
+
+[41 <./Figures/architecture_final.png>] [42 <./Figures/convo_proj2.png>]
+[43 <./Figures/convo_vis.png>] [44]
+
+LaTeX Warning: Reference `data' on page 45 undefined on input line 174.
+
+
+LaTeX Warning: Reference `framework' on page 45 undefined on input line 174.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 174--176
+
+ []
+
+
+LaTeX Warning: Reference `fig:pos_distr' on page 45 undefined on input line 182
+.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 182--184
+
+ []
+
+[45]
+<Figures/core_regions.png, id=195, 328.97906pt x 341.77687pt>
+File: Figures/core_regions.png Graphic file (type png)
+<use Figures/core_regions.png>
+Package pdftex.def Info: Figures/core_regions.png  used on input line 190.
+(pdftex.def)             Requested size: 230.28377pt x 239.24217pt.
+
+
+LaTeX Warning: Reference `dataset' on page 46 undefined on input line 197.
+
+[46 <./Figures/core_regions.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 228--229
+
+ []
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 252--254
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 255--258
+
+ []
+
+[47]
+Underfull \hbox (badness 10000) in paragraph at lines 277--280
+
+ []
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[48]
+<Figures/region_compare2.png, id=206, 670.75594pt x 607.51968pt>
+File: Figures/region_compare2.png Graphic file (type png)
+<use Figures/region_compare2.png>
+Package pdftex.def Info: Figures/region_compare2.png  used on input line 306.
+(pdftex.def)             Requested size: 368.9169pt x 334.13686pt.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 313--316
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 317--320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 321--324
+
+ []
+
+[49]
+Underfull \hbox (badness 10000) in paragraph at lines 325--328
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 329--332
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 333--336
+
+ []
+
+<Figures/best_results_distribution_margins.png, id=211, 313.9228pt x 304.88907p
+t>
+File: Figures/best_results_distribution_margins.png Graphic file (type png)
+<use Figures/best_results_distribution_margins.png>
+Package pdftex.def Info: Figures/best_results_distribution_margins.png  used on
+ input line 341.
+(pdftex.def)             Requested size: 204.0474pt x 198.17554pt.
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+<Figures/best_results_analysis.png, id=212, 328.22626pt x 1103.62312pt>
+File: Figures/best_results_analysis.png Graphic file (type png)
+<use Figures/best_results_analysis.png>
+Package pdftex.def Info: Figures/best_results_analysis.png  used on input line 
+348.
+(pdftex.def)             Requested size: 154.26636pt x 518.70294pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 353--356
+
+ []
+
+[50]
+Underfull \hbox (badness 10000) in paragraph at lines 357--360
+
+ []
+
+[51]
+Underfull \hbox (badness 10000) in paragraph at lines 378--380
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 381--384
+
+ []
+
+[52]) [53] [54 <./Figures/region_compare2.png>] [55 <./Figures/best_results_dis
+tribution_margins.png>] [56 <./Figures/best_results_analysis.png>]
+\openout2 = `chapter7.aux'.
+
+
+(./chapter7.tex
+Chapter 7.
+[57
+
+
+
+
+]) [58]
+\openout2 = `chapter8.aux'.
+
+ (./chapter8.tex
+Chapter 8.
+) [59
+
+
+
+
+] (./report.bbl [60
+
+
+
+] [61] [62] [63]) [64] (./report.aux (./chapter1.aux)
+(./chapter2.aux) (./chapter3.aux) (./chapter4.aux) (./chapter5.aux)
+(./chapter6.aux) (./chapter7.aux) (./chapter8.aux))
+
+LaTeX Warning: There were undefined references.
+
+ ) 
+Here is how much of TeX's memory you used:
+ 5388 strings out of 480171
+ 86276 string characters out of 5894488
+ 367545 words of memory out of 5000000
+ 23167 multiletter control sequences out of 15000+600000
+ 502219 words of font info for 90 fonts, out of 8000000 for 9000
+ 59 hyphenation exceptions out of 8191
+ 55i,8n,62p,1370b,300s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texliv
+e/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/
+fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/
+type1/public/amsfonts/symbols/msbm10.pfb></usr/share/texlive/texmf-dist/fonts/t
+ype1/urw/courier/ucrr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/symb
+ol/usyr.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></u
+sr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texliv
+e/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fo
+nts/type1/urw/times/utmri8a.pfb>
+Output written on report.pdf (64 pages, 2135270 bytes).
+PDF statistics:
+ 309 PDF objects out of 1000 (max. 8388607)
+ 175 compressed objects within 2 object streams
+ 0 named destinations out of 1000 (max. 500000)
+ 146 words of extra memory for PDF output out of 10000 (max. 10000000)
+

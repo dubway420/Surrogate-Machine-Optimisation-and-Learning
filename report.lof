@@ -1,0 +1,37 @@
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {2.1}{\ignorespaces AGR Core Plan View}}{15}{}%
+\contentsline {figure}{\numberline {2.2}{\ignorespaces AGR Core Side View}}{16}{}%
+\contentsline {figure}{\numberline {2.3}{\ignorespaces AGR Core Brick Types}}{17}{}%
+\contentsline {figure}{\numberline {2.4}{\ignorespaces Brick Cracking Mechanism}}{17}{}%
+\contentsline {figure}{\numberline {2.5}{\ignorespaces Cracked AGR Brick}}{17}{}%
+\contentsline {figure}{\numberline {2.6}{\ignorespaces Visualisation of Parmec Model}}{18}{}%
+\contentsline {figure}{\numberline {2.7}{\ignorespaces Multi-Layer Array Rig}}{18}{}%
+\contentsline {figure}{\numberline {2.8}{\ignorespaces AGR Input Core Array}}{19}{}%
+\contentsline {figure}{\numberline {2.9}{\ignorespaces Brick Crack Orientations}}{19}{}%
+\contentsline {figure}{\numberline {2.10}{\ignorespaces Angle Between a Distorted and Baseline Brick Channel }}{20}{}%
+\contentsline {figure}{\numberline {2.11}{\ignorespaces Relative Displacement of Control Rod}}{20}{}%
+\contentsline {figure}{\numberline {2.12}{\ignorespaces AGR Output Core Array}}{20}{}%
+\contentsline {figure}{\numberline {2.13}{\ignorespaces Traditional Engineering Approach}}{21}{}%
+\contentsline {figure}{\numberline {2.14}{\ignorespaces Statistical Analysis}}{22}{}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {3.1}{\ignorespaces The Boston House Price Data-set (sample).}}{24}{}%
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Gradient Descent}}{25}{}%
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Neural Network: An example of a feed-forward network.}}{28}{}%
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Convolutional Neural Network: Feature Extraction.}}{28}{}%
+\contentsline {figure}{\numberline {3.5}{\ignorespaces Convolutional Neural Network: Architecture.}}{30}{}%
+\contentsline {figure}{\numberline {3.6}{\ignorespaces Modelling of Natural Phenomena}}{30}{}%
+\contentsline {figure}{\numberline {3.7}{\ignorespaces Four Possible Neural Network Architectures}}{32}{}%
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {6.1}{\ignorespaces Example of Model Training and Validation with Early Stopping and Model Saving}}{39}{}%
+\contentsline {figure}{\numberline {6.2}{\ignorespaces The Final Architecture of the Model}}{41}{}%
+\contentsline {figure}{\numberline {6.3}{\ignorespaces Convolution on a 2-dimensional Input Space Using a 3x3 Filter}}{42}{}%
+\contentsline {figure}{\numberline {6.4}{\ignorespaces Convolution on a Single Instance Encoded in a 3-dimensional Format Using an Example Multi Channel Filter}}{43}{}%
+\contentsline {figure}{\numberline {6.5}{\ignorespaces The Core Separated into Regions for the Purpose of Feature Selection}}{46}{}%
+\contentsline {figure}{\numberline {6.6}{\ignorespaces Visual Summary of the Regional Feature Extraction Experiment}}{54}{}%
+\contentsline {figure}{\numberline {6.7}{\ignorespaces Model Predictions against Ground Truth for the Test Set}}{55}{}%
+\contentsline {figure}{\numberline {6.8}{\ignorespaces Model Predictions against Ground Truth for the Test Set With Values Separated into Positives/Negatives by Three Different Thresholds}}{56}{}%
+\addvspace {10\p@ }
+\addvspace {10\p@ }

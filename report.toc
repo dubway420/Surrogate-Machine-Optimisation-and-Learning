@@ -1,0 +1,51 @@
+\contentsline {chapter}{Abstract}{7}{}%
+\contentsline {chapter}{Declaration}{8}{}%
+\contentsline {chapter}{Copyright}{9}{}%
+\contentsline {chapter}{Acknowledgements}{10}{}%
+\contentsline {chapter}{\numberline {1}Introduction}{11}{}%
+\contentsline {section}{\numberline {1.1}Outline}{11}{}%
+\contentsline {section}{\numberline {1.2}Research Objectives}{12}{}%
+\contentsline {section}{\numberline {1.3}Outcomes and Findings}{13}{}%
+\contentsline {section}{\numberline {1.4}Thesis Structure}{14}{}%
+\contentsline {chapter}{\numberline {2}Nuclear Engineering Background}{15}{}%
+\contentsline {section}{\numberline {2.1}Advanced Gas-cooled Reactors (AGRs)}{15}{}%
+\contentsline {section}{\numberline {2.2}Traditional Engineering Safety Assessments}{16}{}%
+\contentsline {section}{\numberline {2.3}Relevant Literature}{22}{}%
+\contentsline {chapter}{\numberline {3}Machine Learning Background}{23}{}%
+\contentsline {section}{\numberline {3.1}Supervised Learning}{23}{}%
+\contentsline {section}{\numberline {3.2}Neural Networks}{26}{}%
+\contentsline {section}{\numberline {3.3}Convolutional Neural Networks (CNN)}{27}{}%
+\contentsline {section}{\numberline {3.4}Surrogate Machine Learning Models}{27}{}%
+\contentsline {section}{\numberline {3.5}Relevant Literature}{29}{}%
+\contentsline {chapter}{\numberline {4}Surrogate Model Framework}{33}{}%
+\contentsline {section}{\numberline {4.1}Outline}{33}{}%
+\contentsline {section}{\numberline {4.2}Original Model Data Generation}{34}{}%
+\contentsline {chapter}{\numberline {5}Dataset Exploration and Analysis}{35}{}%
+\contentsline {chapter}{\numberline {6}Surrogate ML Model Development}{36}{}%
+\contentsline {section}{\numberline {6.1}Abstract}{36}{}%
+\contentsline {section}{\numberline {6.2}Research Highlights}{37}{}%
+\contentsline {section}{\numberline {6.3}Introduction and Background}{37}{}%
+\contentsline {section}{\numberline {6.4}Surrogate Model Development and Design}{38}{}%
+\contentsline {subsection}{\numberline {6.4.1}Traditional Methods}{38}{}%
+\contentsline {subsection}{\numberline {6.4.2}Neural Networks}{38}{}%
+\contentsline {subsection}{\numberline {6.4.3}General Hyper-Parameters}{39}{}%
+\contentsline {subsection}{\numberline {6.4.4}Neural Network Input Encoding}{41}{}%
+\contentsline {subsubsection}{DNN - 1D}{41}{}%
+\contentsline {subsubsection}{CNN - 2D}{44}{}%
+\contentsline {subsubsection}{CNN - 3D}{44}{}%
+\contentsline {subsection}{\numberline {6.4.5}Feature Selection}{45}{}%
+\contentsline {subsubsection}{Regional Selection}{45}{}%
+\contentsline {subsubsection}{Level Selection}{46}{}%
+\contentsline {section}{\numberline {6.5}Results}{47}{}%
+\contentsline {subsection}{\numberline {6.5.1}Traditional Methods}{47}{}%
+\contentsline {subsection}{\numberline {6.5.2}Input Encoding}{47}{}%
+\contentsline {subsection}{\numberline {6.5.3}Feature Selection}{47}{}%
+\contentsline {subsection}{\numberline {6.5.4}Analysis and Discussion}{49}{}%
+\contentsline {section}{\numberline {6.6}Conclusion}{52}{}%
+\contentsline {section}{\numberline {6.7}Additional Research Work}{53}{}%
+\contentsline {subsection}{\numberline {6.7.1}Transfer Learning}{53}{}%
+\contentsline {chapter}{\numberline {7}Methods to Improve Surrogate ML Models}{57}{}%
+\contentsline {section}{\numberline {7.1}Abstract}{57}{}%
+\contentsline {section}{\numberline {7.2}Research Highlights}{57}{}%
+\contentsline {chapter}{\numberline {8}Discussion and Conclusions}{59}{}%
+\contentsline {chapter}{Bibliography}{60}{}%

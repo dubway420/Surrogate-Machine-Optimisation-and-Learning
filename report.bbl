@@ -1,0 +1,267 @@
+\begin{thebibliography}{10}
+
+\bibitem{ahn2020deep}
+J.~Ahn and S.~J. Lee.
+\newblock Deep learning-based procedure compliance check system for nuclear
+  power plant emergency operation.
+\newblock {\em Nuclear Engineering and Design}, 370:110868, 2020.
+
+\bibitem{albawi2017understanding}
+S.~Albawi, T.~A. Mohammed, and S.~Al-Zawi.
+\newblock Understanding of a convolutional neural network.
+\newblock In {\em 2017 International Conference on Engineering and Technology
+  (ICET)}, pages 1--6. Ieee, 2017.
+
+\bibitem{awad2015support}
+M.~Awad and R.~Khanna.
+\newblock Support vector regression.
+\newblock In {\em Efficient learning machines}, pages 67--80. Springer, 2015.
+
+\bibitem{babu2016deep}
+G.~S. Babu, P.~Zhao, and X.-L. Li.
+\newblock Deep convolutional neural network based regression approach for
+  estimation of remaining useful life.
+\newblock In {\em International conference on database systems for advanced
+  applications}, pages 214--228. Springer, 2016.
+
+\bibitem{bishop2006pattern}
+C.~M. Bishop.
+\newblock {\em Pattern recognition and machine learning}.
+\newblock springer, 2006.
+
+\bibitem{bisong2019matplotlib}
+E.~Bisong.
+\newblock Matplotlib and seaborn.
+\newblock In {\em Building machine learning and deep learning models on google
+  cloud platform}, pages 151--165. Springer, 2019.
+
+\bibitem{bui2016using}
+H.~M. Bui, M.~Lech, E.~Cheng, K.~Neville, and I.~S. Burnett.
+\newblock Using grayscale images for object recognition with
+  convolutional-recursive neural network.
+\newblock In {\em 2016 IEEE Sixth International Conference on Communications
+  and Electronics (ICCE)}, pages 321--325. IEEE, 2016.
+
+\bibitem{dihoru2018neural}
+L.~Dihoru, M.~Dietz, T.~Horseman, P.~Kloukinas, O.~Oddbjornsson, E.~Voyagaki,
+  A.~J. Crewe, and C.~A. Taylor.
+\newblock Neural networks for displacement analysis in an advanced gas cooled
+  reactor core model.
+\newblock {\em Nuclear Engineering and Design}, 332:252--266, 2018.
+
+\bibitem{dihoru2014multi}
+L.~Dihoru, O.~Oddbjornsson, T.~Horseman, M.~Dietz, J.~Wilson, P.~Kloukinas,
+  E.~Voyagaki, A.~Crewe, and C.~Taylor.
+\newblock Multi-layer array rig work for seismic behaviour with cracked bricks.
+\newblock In {\em The 4th EDF Energy Nuclear Graphite Symposium. Engineering
+  Challenges Associated with the Life of Graphite Reactor Cores}, 2014.
+
+\bibitem{dozat2016incorporating}
+T.~Dozat.
+\newblock Incorporating nesterov momentum into adam.
+\newblock 2016.
+
+\bibitem{dwarampudi2019effects}
+M.~Dwarampudi and N.~Reddy.
+\newblock Effects of padding on lstms and cnns.
+\newblock {\em arXiv preprint arXiv:1903.07288}, 2019.
+
+\bibitem{fernandez2017nuclear}
+M.~G. Fernandez, A.~Tokuhiro, K.~Welter, and Q.~Wu.
+\newblock Nuclear energy system’s behavior and decision making using machine
+  learning.
+\newblock {\em Nuclear Engineering and Design}, 324:27--34, 2017.
+
+\bibitem{gomez2020status}
+M.~Gomez-Fernandez, K.~Higley, A.~Tokuhiro, K.~Welter, W.-K. Wong, and H.~Yang.
+\newblock Status of research and development of learning-based approaches in
+  nuclear science and engineering: A review.
+\newblock {\em Nuclear Engineering and Design}, 359:110479, 2020.
+
+\bibitem{gurney1997introduction}
+K.~Gurney.
+\newblock {\em An introduction to neural networks}.
+\newblock CRC press, 1997.
+
+\bibitem{hara2015analysis}
+K.~Hara, D.~Saito, and H.~Shouno.
+\newblock Analysis of function of rectified linear unit used in deep learning.
+\newblock In {\em 2015 international joint conference on neural networks
+  (IJCNN)}, pages 1--8. IEEE, 2015.
+
+\bibitem{harris2020array}
+C.~R. Harris, K.~J. Millman, S.~J. Van Der~Walt, R.~Gommers, P.~Virtanen,
+  D.~Cournapeau, E.~Wieser, J.~Taylor, S.~Berg, N.~J. Smith, et~al.
+\newblock Array programming with numpy.
+\newblock {\em Nature}, 585(7825):357--362, 2020.
+
+\bibitem{harrison1978hedonic}
+D.~Harrison~Jr and D.~L. Rubinfeld.
+\newblock Hedonic housing prices and the demand for clean air.
+\newblock 1978.
+
+\bibitem{hawkins2004problem}
+D.~M. Hawkins.
+\newblock The problem of overfitting.
+\newblock {\em Journal of chemical information and computer sciences},
+  44(1):1--12, 2004.
+
+\bibitem{hecht1992theory}
+R.~Hecht-Nielsen.
+\newblock Theory of the backpropagation neural network.
+\newblock In {\em Neural networks for perception}, pages 65--93. Elsevier,
+  1992.
+
+\bibitem{henderson1995job}
+R.~L. Henderson.
+\newblock Job scheduling under the portable batch system.
+\newblock In {\em Workshop on Job Scheduling Strategies for Parallel
+  Processing}, pages 279--294. Springer, 1995.
+
+\bibitem{huber1964robust}
+P.~J. Huber.
+\newblock Robust estimation of a location parameter: Annals mathematics
+  statistics, 35.
+\newblock 1964.
+
+\bibitem{javadi2003neural}
+A.~Javadi, T.~Tan, and M.~Zhang.
+\newblock Neural network for constitutive modelling in finite element analysis.
+\newblock {\em Computer Assisted Mechanics and Engineering Sciences},
+  10(4):523--530, 2003.
+
+\bibitem{Jones2018}
+H.~R. Jones.
+\newblock Surrogate machine optimisation and learning.
+\newblock \url{https://gitlab.cs.man.ac.uk/q59494hj/parmec_agr_ml_surrogate},
+  2018.
+
+\bibitem{huw_rhys_jones_2022_6967536}
+H.~R. Jones.
+\newblock {Surrogate Machine Learning for Parmec Advanced Gas-cooled Reactor
+  (AGR) Analysis}, Aug. 2022.
+
+\bibitem{jones2022surrogate}
+H.~R. Jones, T.~Mu, D.~Kudawoo, G.~Brown, P.~Martinuzzi, and N.~McLachlan.
+\newblock A surrogate machine learning model for advanced gas-cooled reactor
+  graphite core safety analysis.
+\newblock {\em Nuclear Engineering and Design}, 395:111842, 2022.
+
+\bibitem{kalman1992tanh}
+B.~L. Kalman and S.~C. Kwasny.
+\newblock Why tanh: choosing a sigmoidal function.
+\newblock In {\em [Proceedings 1992] IJCNN International Joint Conference on
+  Neural Networks}, volume~4, pages 578--581. IEEE, 1992.
+
+\bibitem{ketkar2017introduction}
+N.~Ketkar.
+\newblock Introduction to keras.
+\newblock In {\em Deep learning with Python}, pages 97--111. Springer, 2017.
+
+\bibitem{kim2019machine}
+S.~H. Kim and F.~Boukouvala.
+\newblock Machine learning-based surrogate modeling for data-driven
+  optimization: a comparison of subset selection for regression techniques.
+\newblock {\em Optimization Letters}, pages 1--22, 2019.
+
+\bibitem{wiki:xxx}
+T.~Koziara.
+\newblock Parmec documentation, 2019.
+\newblock [Online; accessed 19-November-2020].
+
+\bibitem{li2015depth}
+B.~Li, C.~Shen, Y.~Dai, A.~Van Den~Hengel, and M.~He.
+\newblock Depth and surface normal estimation from monocular images using
+  regression on deep features and hierarchical crfs.
+\newblock In {\em Proceedings of the IEEE conference on computer vision and
+  pattern recognition}, pages 1119--1127, 2015.
+
+\bibitem{liang2018deep}
+L.~Liang, M.~Liu, C.~Martin, and W.~Sun.
+\newblock A deep learning approach to estimate stress distribution: a fast and
+  accurate surrogate of finite-element analysis.
+\newblock {\em Journal of The Royal Society Interface}, 15(138):20170844, 2018.
+
+\bibitem{loh2014classification}
+W.-Y. Loh.
+\newblock Classification and regression tree methods.
+\newblock {\em Wiley StatsRef: Statistics Reference Online}, 2014.
+
+\bibitem{lutz2013learning}
+M.~Lutz.
+\newblock {\em Learning python: Powerful object-oriented programming}.
+\newblock " O'Reilly Media, Inc.", 2013.
+
+\bibitem{navada2011overview}
+A.~Navada, A.~N. Ansari, S.~Patil, and B.~A. Sonkamble.
+\newblock Overview of use of decision tree algorithms in machine learning.
+\newblock In {\em 2011 IEEE control and system graduate research colloquium},
+  pages 37--42. IEEE, 2011.
+
+\bibitem{nonbol1996description}
+E.~Nonb{\o}l.
+\newblock Description of the advanced gas cooled type of reactor (agr).
+\newblock Technical report, Nordisk Kernesikkerhedsforskning, 1996.
+
+\bibitem{oddbjornsson2017physical}
+O.~Oddbjornsson, P.~Kloukinas, L.~Dihoru, M.~Dietz, T.~Horseman, E.~Voyagaki,
+  A.~Crewe, C.~Taylor, and A.~Steer.
+\newblock Physical modelling and testing of an advanced gas cooled reactor core
+  model.
+\newblock In {\em 16th World Conference on Earthquake Engineering}, 2017.
+
+\bibitem{pedregosa2011scikit}
+F.~Pedregosa, G.~Varoquaux, A.~Gramfort, V.~Michel, B.~Thirion, O.~Grisel,
+  M.~Blondel, P.~Prettenhofer, R.~Weiss, V.~Dubourg, et~al.
+\newblock Scikit-learn: Machine learning in python.
+\newblock {\em the Journal of machine Learning research}, 12:2825--2830, 2011.
+
+\bibitem{refaeilzadeh2009cross}
+P.~Refaeilzadeh, L.~Tang, and H.~Liu.
+\newblock Cross-validation.
+\newblock {\em Encyclopedia of database systems}, 5:532--538, 2009.
+
+\bibitem{smola2004tutorial}
+A.~J. Smola and B.~Sch{\"o}lkopf.
+\newblock A tutorial on support vector regression.
+\newblock {\em Statistics and computing}, 14(3):199--222, 2004.
+
+\bibitem{srivastava2014dropout}
+N.~Srivastava, G.~Hinton, A.~Krizhevsky, I.~Sutskever, and R.~Salakhutdinov.
+\newblock Dropout: a simple way to prevent neural networks from overfitting.
+\newblock {\em The journal of machine learning research}, 15(1):1929--1958,
+  2014.
+
+\bibitem{voyagaki2018earthquake}
+E.~Voyagaki, P.~Kloukinas, M.~Dietz, L.~Dihoru, T.~Horseman, O.~Oddbjornsson,
+  A.~J. Crewe, C.~A. Taylor, and A.~Steer.
+\newblock Earthquake response of a multiblock nuclear reactor graphite core:
+  Experimental model vs simulations.
+\newblock {\em Earthquake Engineering \& Structural Dynamics},
+  47(13):2601--2626, 2018.
+
+\bibitem{xie2015beyond}
+Y.~Xie, F.~Xing, X.~Kong, H.~Su, and L.~Yang.
+\newblock Beyond classification: structured regression for robust cell
+  detection using convolutional neural network.
+\newblock In {\em International conference on medical image computing and
+  computer-assisted intervention}, pages 358--365. Springer, 2015.
+
+\bibitem{yao2007early}
+Y.~Yao, L.~Rosasco, and A.~Caponnetto.
+\newblock On early stopping in gradient descent learning.
+\newblock {\em Constructive Approximation}, 26(2):289--315, 2007.
+
+\bibitem{zeng2018machine}
+Y.~Zeng, J.~Liu, K.~Sun, and L.-w. Hu.
+\newblock Machine learning based system performance prediction model for
+  reactor control.
+\newblock {\em Annals of Nuclear Energy}, 113:270--278, 2018.
+
+\bibitem{zheng2015improving}
+H.~Zheng, Z.~Yang, W.~Liu, J.~Liang, and Y.~Li.
+\newblock Improving deep neural networks using softplus units.
+\newblock In {\em 2015 International Joint Conference on Neural Networks
+  (IJCNN)}, pages 1--4. IEEE, 2015.
+
+\end{thebibliography}

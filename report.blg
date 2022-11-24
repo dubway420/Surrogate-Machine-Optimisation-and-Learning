@@ -1,0 +1,60 @@
+This is BibTeX, Version 0.99d (TeX Live 2022/dev/Debian)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: report.aux
+A level-1 auxiliary file: chapter1.aux
+A level-1 auxiliary file: chapter2.aux
+A level-1 auxiliary file: chapter3.aux
+A level-1 auxiliary file: chapter4.aux
+A level-1 auxiliary file: chapter5.aux
+A level-1 auxiliary file: chapter6.aux
+A level-1 auxiliary file: chapter7.aux
+A level-1 auxiliary file: chapter8.aux
+The style file: abbrv.bst
+Database file #1: refs.bib
+Warning--entry type for "huw_rhys_jones_2022_6967536" isn't style-file defined
+--line 236 of file refs.bib
+Warning--empty journal in dozat2016incorporating
+Warning--empty journal in harrison1978hedonic
+Warning--empty journal in huber1964robust
+You've used 45 entries,
+            2118 wiz_defined-function locations,
+            761 strings with 12305 characters,
+and the built_in function-call counts, 17237 in all, are:
+= -- 1693
+> -- 905
+< -- 16
++ -- 364
+- -- 314
+* -- 1198
+:= -- 2825
+add.period$ -- 147
+call.type$ -- 45
+change.case$ -- 288
+chr.to.int$ -- 0
+cite$ -- 48
+duplicate$ -- 643
+empty$ -- 1287
+format.name$ -- 314
+if$ -- 3633
+int.to.chr$ -- 0
+int.to.str$ -- 45
+missing$ -- 44
+newline$ -- 227
+num.names$ -- 90
+pop$ -- 338
+preamble$ -- 1
+purify$ -- 245
+quote$ -- 0
+skip$ -- 455
+stack$ -- 0
+substring$ -- 1009
+swap$ -- 167
+text.length$ -- 16
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 174
+warning$ -- 3
+while$ -- 163
+width$ -- 47
+write$ -- 493
+(There were 4 warnings)
