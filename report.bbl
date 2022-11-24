@@ -12,6 +12,12 @@ S.~Albawi, T.~A. Mohammed, and S.~Al-Zawi.
 \newblock In {\em 2017 International Conference on Engineering and Technology
   (ICET)}, pages 1--6. Ieee, 2017.
 
+\bibitem{asteris2021predicting}
+P.~G. Asteris, A.~D. Skentou, A.~Bardhan, P.~Samui, and K.~Pilakoutas.
+\newblock Predicting concrete compressive strength using hybrid ensembling of
+  surrogate machine learning models.
+\newblock {\em Cement and Concrete Research}, 145:106449, 2021.
+
 \bibitem{awad2015support}
 M.~Awad and R.~Khanna.
 \newblock Support vector regression.
@@ -35,12 +41,30 @@ E.~Bisong.
 \newblock In {\em Building machine learning and deep learning models on google
   cloud platform}, pages 151--165. Springer, 2019.
 
+\bibitem{branco2017smogn}
+P.~Branco, L.~Torgo, and R.~P. Ribeiro.
+\newblock Smogn: a pre-processing approach for imbalanced regression.
+\newblock In {\em First international workshop on learning with imbalanced
+  domains: Theory and applications}, pages 36--50. PMLR, 2017.
+
 \bibitem{bui2016using}
 H.~M. Bui, M.~Lech, E.~Cheng, K.~Neville, and I.~S. Burnett.
 \newblock Using grayscale images for object recognition with
   convolutional-recursive neural network.
 \newblock In {\em 2016 IEEE Sixth International Conference on Communications
   and Electronics (ICCE)}, pages 321--325. IEEE, 2016.
+
+\bibitem{chai2014root}
+T.~Chai and R.~R. Draxler.
+\newblock Root mean square error (rmse) or mean absolute error (mae).
+\newblock {\em Geoscientific Model Development Discussions}, 7(1):1525--1534,
+  2014.
+
+\bibitem{deng2009imagenet}
+J.~Deng, W.~Dong, R.~Socher, L.-J. Li, K.~Li, and L.~Fei-Fei.
+\newblock Imagenet: A large-scale hierarchical image database.
+\newblock In {\em 2009 IEEE conference on computer vision and pattern
+  recognition}, pages 248--255. Ieee, 2009.
 
 \bibitem{dihoru2018neural}
 L.~Dihoru, M.~Dietz, T.~Horseman, P.~Kloukinas, O.~Oddbjornsson, E.~Voyagaki,
@@ -82,6 +106,11 @@ M.~Gomez-Fernandez, K.~Higley, A.~Tokuhiro, K.~Welter, W.-K. Wong, and H.~Yang.
 K.~Gurney.
 \newblock {\em An introduction to neural networks}.
 \newblock CRC press, 1997.
+
+\bibitem{hansen2015tiny}
+L.~Hansen.
+\newblock Tiny imagenet challenge submission.
+\newblock {\em CS 231N}, 2015.
 
 \bibitem{hara2015analysis}
 K.~Hara, D.~Saito, and H.~Shouno.
@@ -129,6 +158,11 @@ A.~Javadi, T.~Tan, and M.~Zhang.
 \newblock Neural network for constitutive modelling in finite element analysis.
 \newblock {\em Computer Assisted Mechanics and Engineering Sciences},
   10(4):523--530, 2003.
+
+\bibitem{johnson2019survey}
+J.~M. Johnson and T.~M. Khoshgoftaar.
+\newblock Survey on deep learning with class imbalance.
+\newblock {\em Journal of Big Data}, 6(1):1--54, 2019.
 
 \bibitem{Jones2018}
 H.~R. Jones.
@@ -203,6 +237,13 @@ E.~Nonb{\o}l.
 \newblock Description of the advanced gas cooled type of reactor (agr).
 \newblock Technical report, Nordisk Kernesikkerhedsforskning, 1996.
 
+\bibitem{nyshadham2019machine}
+C.~Nyshadham, M.~Rupp, B.~Bekker, A.~V. Shapeev, T.~Mueller, C.~W. Rosenbrock,
+  G.~Cs{\'a}nyi, D.~W. Wingate, and G.~L. Hart.
+\newblock Machine-learned multi-system surrogate models for materials
+  prediction.
+\newblock {\em npj Computational Materials}, 5(1):1--6, 2019.
+
 \bibitem{oddbjornsson2017physical}
 O.~Oddbjornsson, P.~Kloukinas, L.~Dihoru, M.~Dietz, T.~Horseman, E.~Voyagaki,
   A.~Crewe, C.~Taylor, and A.~Steer.
@@ -216,10 +257,34 @@ F.~Pedregosa, G.~Varoquaux, A.~Gramfort, V.~Michel, B.~Thirion, O.~Grisel,
 \newblock Scikit-learn: Machine learning in python.
 \newblock {\em the Journal of machine Learning research}, 12:2825--2830, 2011.
 
+\bibitem{perez2017effectiveness}
+L.~Perez and J.~Wang.
+\newblock The effectiveness of data augmentation in image classification using
+  deep learning.
+\newblock {\em arXiv preprint arXiv:1712.04621}, 2017.
+
 \bibitem{refaeilzadeh2009cross}
 P.~Refaeilzadeh, L.~Tang, and H.~Liu.
 \newblock Cross-validation.
 \newblock {\em Encyclopedia of database systems}, 5:532--538, 2009.
+
+\bibitem{ren2021survey}
+P.~Ren, Y.~Xiao, X.~Chang, P.-Y. Huang, Z.~Li, B.~B. Gupta, X.~Chen, and
+  X.~Wang.
+\newblock A survey of deep active learning.
+\newblock {\em ACM computing surveys (CSUR)}, 54(9):1--40, 2021.
+
+\bibitem{sarullo2019class}
+A.~Sarullo and T.~Mu.
+\newblock On class imbalance and background filtering in visual relationship
+  detection.
+\newblock In {\em 2019 International Joint Conference on Neural Networks
+  (IJCNN)}, pages 1--8. IEEE, 2019.
+
+\bibitem{shorten2019survey}
+C.~Shorten and T.~M. Khoshgoftaar.
+\newblock A survey on image data augmentation for deep learning.
+\newblock {\em Journal of Big Data}, 6(1):1--48, 2019.
 
 \bibitem{smola2004tutorial}
 A.~J. Smola and B.~Sch{\"o}lkopf.
@@ -232,6 +297,13 @@ N.~Srivastava, G.~Hinton, A.~Krizhevsky, I.~Sutskever, and R.~Salakhutdinov.
 \newblock {\em The journal of machine learning research}, 15(1):1929--1958,
   2014.
 
+\bibitem{torrey2010transfer}
+L.~Torrey and J.~Shavlik.
+\newblock Transfer learning.
+\newblock In {\em Handbook of research on machine learning applications and
+  trends: algorithms, methods, and techniques}, pages 242--264. IGI global,
+  2010.
+
 \bibitem{voyagaki2018earthquake}
 E.~Voyagaki, P.~Kloukinas, M.~Dietz, L.~Dihoru, T.~Horseman, O.~Oddbjornsson,
   A.~J. Crewe, C.~A. Taylor, and A.~Steer.
@@ -240,12 +312,24 @@ E.~Voyagaki, P.~Kloukinas, M.~Dietz, L.~Dihoru, T.~Horseman, O.~Oddbjornsson,
 \newblock {\em Earthquake Engineering \& Structural Dynamics},
   47(13):2601--2626, 2018.
 
+\bibitem{wallach1989mean}
+D.~Wallach and B.~Goffinet.
+\newblock Mean squared error of prediction as a criterion for evaluating and
+  comparing system models.
+\newblock {\em Ecological modelling}, 44(3-4):299--306, 1989.
+
 \bibitem{xie2015beyond}
 Y.~Xie, F.~Xing, X.~Kong, H.~Su, and L.~Yang.
 \newblock Beyond classification: structured regression for robust cell
   detection using convolutional neural network.
 \newblock In {\em International conference on medical image computing and
   computer-assisted intervention}, pages 358--365. Springer, 2015.
+
+\bibitem{yang2021delving}
+Y.~Yang, K.~Zha, Y.~Chen, H.~Wang, and D.~Katabi.
+\newblock Delving into deep imbalanced regression.
+\newblock In {\em International Conference on Machine Learning}, pages
+  11842--11851. PMLR, 2021.
 
 \bibitem{yao2007early}
 Y.~Yao, L.~Rosasco, and A.~Caponnetto.

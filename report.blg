@@ -16,45 +16,45 @@ Warning--entry type for "huw_rhys_jones_2022_6967536" isn't style-file defined
 Warning--empty journal in dozat2016incorporating
 Warning--empty journal in harrison1978hedonic
 Warning--empty journal in huber1964robust
-You've used 45 entries,
+You've used 59 entries,
             2118 wiz_defined-function locations,
-            761 strings with 12305 characters,
-and the built_in function-call counts, 17237 in all, are:
-= -- 1693
-> -- 905
-< -- 16
-+ -- 364
-- -- 314
-* -- 1198
-:= -- 2825
-add.period$ -- 147
-call.type$ -- 45
-change.case$ -- 288
+            838 strings with 14936 characters,
+and the built_in function-call counts, 22924 in all, are:
+= -- 2268
+> -- 1201
+< -- 21
++ -- 483
+- -- 416
+* -- 1609
+:= -- 3743
+add.period$ -- 194
+call.type$ -- 59
+change.case$ -- 381
 chr.to.int$ -- 0
-cite$ -- 48
-duplicate$ -- 643
-empty$ -- 1287
-format.name$ -- 314
-if$ -- 3633
+cite$ -- 62
+duplicate$ -- 854
+empty$ -- 1699
+format.name$ -- 416
+if$ -- 4836
 int.to.chr$ -- 0
-int.to.str$ -- 45
-missing$ -- 44
-newline$ -- 227
-num.names$ -- 90
-pop$ -- 338
+int.to.str$ -- 59
+missing$ -- 58
+newline$ -- 297
+num.names$ -- 118
+pop$ -- 432
 preamble$ -- 1
-purify$ -- 245
+purify$ -- 324
 quote$ -- 0
-skip$ -- 455
+skip$ -- 612
 stack$ -- 0
-substring$ -- 1009
-swap$ -- 167
-text.length$ -- 16
+substring$ -- 1369
+swap$ -- 228
+text.length$ -- 21
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 174
+type$ -- 230
 warning$ -- 3
-while$ -- 163
-width$ -- 47
-write$ -- 493
+while$ -- 219
+width$ -- 61
+write$ -- 650
 (There were 4 warnings)
