@@ -4,7 +4,6 @@ The top-level auxiliary file: report.aux
 A level-1 auxiliary file: chapter1.aux
 A level-1 auxiliary file: chapter2.aux
 A level-1 auxiliary file: chapter3.aux
-A level-1 auxiliary file: chapter4.aux
 A level-1 auxiliary file: chapter5.aux
 A level-1 auxiliary file: chapter6.aux
 A level-1 auxiliary file: chapter7.aux
@@ -16,45 +15,45 @@ Warning--entry type for "huw_rhys_jones_2022_6967536" isn't style-file defined
 Warning--empty journal in dozat2016incorporating
 Warning--empty journal in harrison1978hedonic
 Warning--empty journal in huber1964robust
-You've used 59 entries,
+You've used 58 entries,
             2118 wiz_defined-function locations,
-            838 strings with 14936 characters,
-and the built_in function-call counts, 22924 in all, are:
-= -- 2268
-> -- 1201
-< -- 21
-+ -- 483
-- -- 416
-* -- 1609
-:= -- 3743
-add.period$ -- 194
-call.type$ -- 59
-change.case$ -- 381
+            824 strings with 14306 characters,
+and the built_in function-call counts, 21308 in all, are:
+= -- 2104
+> -- 1067
+< -- 20
++ -- 430
+- -- 364
+* -- 1441
+:= -- 3484
+add.period$ -- 189
+call.type$ -- 58
+change.case$ -- 350
 chr.to.int$ -- 0
-cite$ -- 62
-duplicate$ -- 854
-empty$ -- 1699
-format.name$ -- 416
-if$ -- 4836
+cite$ -- 61
+duplicate$ -- 823
+empty$ -- 1628
+format.name$ -- 364
+if$ -- 4513
 int.to.chr$ -- 0
-int.to.str$ -- 59
-missing$ -- 58
-newline$ -- 297
-num.names$ -- 118
-pop$ -- 432
+int.to.str$ -- 58
+missing$ -- 61
+newline$ -- 292
+num.names$ -- 116
+pop$ -- 420
 preamble$ -- 1
-purify$ -- 324
+purify$ -- 298
 quote$ -- 0
-skip$ -- 612
+skip$ -- 581
 stack$ -- 0
-substring$ -- 1369
-swap$ -- 228
-text.length$ -- 21
+substring$ -- 1233
+swap$ -- 212
+text.length$ -- 20
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 230
+type$ -- 218
 warning$ -- 3
-while$ -- 219
-width$ -- 61
-write$ -- 650
+while$ -- 205
+width$ -- 60
+write$ -- 634
 (There were 4 warnings)

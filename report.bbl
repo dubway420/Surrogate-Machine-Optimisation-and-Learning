@@ -35,11 +35,11 @@ C.~M. Bishop.
 \newblock {\em Pattern recognition and machine learning}.
 \newblock springer, 2006.
 
-\bibitem{bisong2019matplotlib}
-E.~Bisong.
-\newblock Matplotlib and seaborn.
-\newblock In {\em Building machine learning and deep learning models on google
-  cloud platform}, pages 151--165. Springer, 2019.
+\bibitem{blum1982simple}
+L.~Blum, M.~Blum, and M.~Shub.
+\newblock {\em A simple secure pseudo-random number generator}.
+\newblock Electronics Research Laboratory, College of Engineering, University
+  of~…, 1982.
 
 \bibitem{branco2017smogn}
 P.~Branco, L.~Torgo, and R.~P. Ribeiro.
@@ -59,6 +59,11 @@ T.~Chai and R.~R. Draxler.
 \newblock Root mean square error (rmse) or mean absolute error (mae).
 \newblock {\em Geoscientific Model Development Discussions}, 7(1):1525--1534,
   2014.
+
+\bibitem{deitel2002python}
+H.~M. Deitel.
+\newblock {\em Python: how to program}.
+\newblock Prentice Hall Professional Technical Reference, 2002.
 
 \bibitem{deng2009imagenet}
 J.~Deng, W.~Dong, R.~Socher, L.-J. Li, K.~Li, and L.~Fei-Fei.
@@ -102,6 +107,11 @@ M.~Gomez-Fernandez, K.~Higley, A.~Tokuhiro, K.~Welter, W.-K. Wong, and H.~Yang.
   nuclear science and engineering: A review.
 \newblock {\em Nuclear Engineering and Design}, 359:110479, 2020.
 
+\bibitem{grundgeiger2018programming}
+D.~Grundgeiger.
+\newblock {\em Programming Visual Basic. NET}.
+\newblock O'Reilly, 2018.
+
 \bibitem{gurney1997introduction}
 K.~Gurney.
 \newblock {\em An introduction to neural networks}.
@@ -117,12 +127,6 @@ K.~Hara, D.~Saito, and H.~Shouno.
 \newblock Analysis of function of rectified linear unit used in deep learning.
 \newblock In {\em 2015 international joint conference on neural networks
   (IJCNN)}, pages 1--8. IEEE, 2015.
-
-\bibitem{harris2020array}
-C.~R. Harris, K.~J. Millman, S.~J. Van Der~Walt, R.~Gommers, P.~Virtanen,
-  D.~Cournapeau, E.~Wieser, J.~Taylor, S.~Berg, N.~J. Smith, et~al.
-\newblock Array programming with numpy.
-\newblock {\em Nature}, 585(7825):357--362, 2020.
 
 \bibitem{harrison1978hedonic}
 D.~Harrison~Jr and D.~L. Rubinfeld.
@@ -187,11 +191,6 @@ B.~L. Kalman and S.~C. Kwasny.
 \newblock In {\em [Proceedings 1992] IJCNN International Joint Conference on
   Neural Networks}, volume~4, pages 578--581. IEEE, 1992.
 
-\bibitem{ketkar2017introduction}
-N.~Ketkar.
-\newblock Introduction to keras.
-\newblock In {\em Deep learning with Python}, pages 97--111. Springer, 2017.
-
 \bibitem{kim2019machine}
 S.~H. Kim and F.~Boukouvala.
 \newblock Machine learning-based surrogate modeling for data-driven
@@ -221,16 +220,21 @@ W.-Y. Loh.
 \newblock Classification and regression tree methods.
 \newblock {\em Wiley StatsRef: Statistics Reference Online}, 2014.
 
-\bibitem{lutz2013learning}
-M.~Lutz.
-\newblock {\em Learning python: Powerful object-oriented programming}.
-\newblock " O'Reilly Media, Inc.", 2013.
+\bibitem{meyer1997object}
+B.~Meyer.
+\newblock {\em Object-oriented software construction}, volume~2.
+\newblock Prentice hall Englewood Cliffs, 1997.
 
 \bibitem{navada2011overview}
 A.~Navada, A.~N. Ansari, S.~Patil, and B.~A. Sonkamble.
 \newblock Overview of use of decision tree algorithms in machine learning.
 \newblock In {\em 2011 IEEE control and system graduate research colloquium},
   pages 37--42. IEEE, 2011.
+
+\bibitem{newham2005learning}
+C.~Newham.
+\newblock {\em Learning the bash shell: Unix shell programming}.
+\newblock " O'Reilly Media, Inc.", 2005.
 
 \bibitem{nonbol1996description}
 E.~Nonb{\o}l.
@@ -251,12 +255,6 @@ O.~Oddbjornsson, P.~Kloukinas, L.~Dihoru, M.~Dietz, T.~Horseman, E.~Voyagaki,
   model.
 \newblock In {\em 16th World Conference on Earthquake Engineering}, 2017.
 
-\bibitem{pedregosa2011scikit}
-F.~Pedregosa, G.~Varoquaux, A.~Gramfort, V.~Michel, B.~Thirion, O.~Grisel,
-  M.~Blondel, P.~Prettenhofer, R.~Weiss, V.~Dubourg, et~al.
-\newblock Scikit-learn: Machine learning in python.
-\newblock {\em the Journal of machine Learning research}, 12:2825--2830, 2011.
-
 \bibitem{perez2017effectiveness}
 L.~Perez and J.~Wang.
 \newblock The effectiveness of data augmentation in image classification using
@@ -267,12 +265,6 @@ L.~Perez and J.~Wang.
 P.~Refaeilzadeh, L.~Tang, and H.~Liu.
 \newblock Cross-validation.
 \newblock {\em Encyclopedia of database systems}, 5:532--538, 2009.
-
-\bibitem{ren2021survey}
-P.~Ren, Y.~Xiao, X.~Chang, P.-Y. Huang, Z.~Li, B.~B. Gupta, X.~Chen, and
-  X.~Wang.
-\newblock A survey of deep active learning.
-\newblock {\em ACM computing surveys (CSUR)}, 54(9):1--40, 2021.
 
 \bibitem{sarullo2019class}
 A.~Sarullo and T.~Mu.
