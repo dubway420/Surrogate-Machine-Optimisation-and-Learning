@@ -139,6 +139,11 @@ D.~M. Hawkins.
 \newblock {\em Journal of chemical information and computer sciences},
   44(1):1--12, 2004.
 
+\bibitem{he2015deep}
+K.~He, X.~Zhang, S.~Ren, and J.~Sun.
+\newblock Deep residual learning for image recognition. corr abs/1512.03385
+  (2015), 2015.
+
 \bibitem{hecht1992theory}
 R.~Hecht-Nielsen.
 \newblock Theory of the backpropagation neural network.
@@ -215,6 +220,13 @@ L.~Liang, M.~Liu, C.~Martin, and W.~Sun.
   accurate surrogate of finite-element analysis.
 \newblock {\em Journal of The Royal Society Interface}, 15(138):20170844, 2018.
 
+\bibitem{liao2016importance}
+Z.~Liao and G.~Carneiro.
+\newblock On the importance of normalisation layers in deep learning with
+  piecewise linear activation units.
+\newblock In {\em 2016 IEEE Winter Conference on Applications of Computer
+  Vision (WACV)}, pages 1--8. IEEE, 2016.
+
 \bibitem{loh2014classification}
 W.-Y. Loh.
 \newblock Classification and regression tree methods.
@@ -230,11 +242,6 @@ A.~Navada, A.~N. Ansari, S.~Patil, and B.~A. Sonkamble.
 \newblock Overview of use of decision tree algorithms in machine learning.
 \newblock In {\em 2011 IEEE control and system graduate research colloquium},
   pages 37--42. IEEE, 2011.
-
-\bibitem{newham2005learning}
-C.~Newham.
-\newblock {\em Learning the bash shell: Unix shell programming}.
-\newblock " O'Reilly Media, Inc.", 2005.
 
 \bibitem{nonbol1996description}
 E.~Nonb{\o}l.
@@ -266,6 +273,13 @@ P.~Refaeilzadeh, L.~Tang, and H.~Liu.
 \newblock Cross-validation.
 \newblock {\em Encyclopedia of database systems}, 5:532--538, 2009.
 
+\bibitem{russakovsky2015imagenet}
+O.~Russakovsky, J.~Deng, H.~Su, J.~Krause, S.~Satheesh, S.~Ma, Z.~Huang,
+  A.~Karpathy, A.~Khosla, M.~Bernstein, et~al.
+\newblock Imagenet large scale visual recognition challenge.
+\newblock {\em International journal of computer vision}, 115(3):211--252,
+  2015.
+
 \bibitem{sarullo2019class}
 A.~Sarullo and T.~Mu.
 \newblock On class imbalance and background filtering in visual relationship
@@ -273,10 +287,20 @@ A.~Sarullo and T.~Mu.
 \newblock In {\em 2019 International Joint Conference on Neural Networks
   (IJCNN)}, pages 1--8. IEEE, 2019.
 
+\bibitem{seger2018investigation}
+C.~Seger.
+\newblock An investigation of categorical variable encoding techniques in
+  machine learning: binary versus one-hot and feature hashing, 2018.
+
 \bibitem{shorten2019survey}
 C.~Shorten and T.~M. Khoshgoftaar.
 \newblock A survey on image data augmentation for deep learning.
 \newblock {\em Journal of Big Data}, 6(1):1--48, 2019.
+
+\bibitem{simonyan2014very}
+K.~Simonyan and A.~Zisserman.
+\newblock Very deep convolutional networks for large-scale image recognition.
+\newblock {\em arXiv preprint arXiv:1409.1556}, 2014.
 
 \bibitem{smola2004tutorial}
 A.~J. Smola and B.~Sch{\"o}lkopf.
@@ -288,6 +312,12 @@ N.~Srivastava, G.~Hinton, A.~Krizhevsky, I.~Sutskever, and R.~Salakhutdinov.
 \newblock Dropout: a simple way to prevent neural networks from overfitting.
 \newblock {\em The journal of machine learning research}, 15(1):1929--1958,
   2014.
+
+\bibitem{tan2018survey}
+C.~Tan, F.~Sun, T.~Kong, W.~Zhang, C.~Yang, and C.~Liu.
+\newblock A survey on deep transfer learning.
+\newblock In {\em International conference on artificial neural networks},
+  pages 270--279. Springer, 2018.
 
 \bibitem{torrey2010transfer}
 L.~Torrey and J.~Shavlik.

@@ -1,61 +1,70 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {2.1}{\ignorespaces AGR Core Plan View}}{19}{}%
-\contentsline {figure}{\numberline {2.2}{\ignorespaces AGR Core Side View}}{20}{}%
-\contentsline {figure}{\numberline {2.3}{\ignorespaces AGR Core Brick Types}}{21}{}%
-\contentsline {figure}{\numberline {2.4}{\ignorespaces Brick Cracking Mechanism}}{21}{}%
-\contentsline {figure}{\numberline {2.5}{\ignorespaces Cracked AGR Brick}}{21}{}%
-\contentsline {figure}{\numberline {2.6}{\ignorespaces Visualisation of Parmec Model}}{22}{}%
-\contentsline {figure}{\numberline {2.7}{\ignorespaces Multi-Layer Array Rig}}{22}{}%
-\contentsline {figure}{\numberline {2.8}{\ignorespaces AGR Input Core Array}}{23}{}%
-\contentsline {figure}{\numberline {2.9}{\ignorespaces Brick Crack Orientations}}{23}{}%
-\contentsline {figure}{\numberline {2.10}{\ignorespaces Angle Between a Distorted and Baseline Brick Channel }}{24}{}%
-\contentsline {figure}{\numberline {2.11}{\ignorespaces Relative Displacement of Control Rod}}{24}{}%
-\contentsline {figure}{\numberline {2.12}{\ignorespaces AGR Output Core Array}}{24}{}%
-\contentsline {figure}{\numberline {2.13}{\ignorespaces Traditional Engineering Approach}}{25}{}%
-\contentsline {figure}{\numberline {2.14}{\ignorespaces Statistical Analysis}}{26}{}%
+\contentsline {figure}{\numberline {2.1}{\ignorespaces AGR Core Plan View}}{18}{}%
+\contentsline {figure}{\numberline {2.2}{\ignorespaces AGR Core Side View}}{19}{}%
+\contentsline {figure}{\numberline {2.3}{\ignorespaces AGR Core Brick Types}}{20}{}%
+\contentsline {figure}{\numberline {2.4}{\ignorespaces Brick Cracking Mechanism}}{20}{}%
+\contentsline {figure}{\numberline {2.5}{\ignorespaces Cracked AGR Brick}}{20}{}%
+\contentsline {figure}{\numberline {2.6}{\ignorespaces Visualisation of Parmec Model}}{21}{}%
+\contentsline {figure}{\numberline {2.7}{\ignorespaces Multi-Layer Array Rig}}{21}{}%
+\contentsline {figure}{\numberline {2.8}{\ignorespaces AGR Input Core Array}}{22}{}%
+\contentsline {figure}{\numberline {2.9}{\ignorespaces Brick Crack Orientations}}{22}{}%
+\contentsline {figure}{\numberline {2.10}{\ignorespaces Angle Between a Distorted and Baseline Brick Channel }}{23}{}%
+\contentsline {figure}{\numberline {2.11}{\ignorespaces Relative Displacement of Control Rod}}{23}{}%
+\contentsline {figure}{\numberline {2.12}{\ignorespaces AGR Output Core Array}}{23}{}%
+\contentsline {figure}{\numberline {2.13}{\ignorespaces Traditional Engineering Approach}}{24}{}%
+\contentsline {figure}{\numberline {2.14}{\ignorespaces Statistical Analysis}}{25}{}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {3.1}{\ignorespaces The Boston House Price Data-set (sample).}}{28}{}%
-\contentsline {figure}{\numberline {3.2}{\ignorespaces Gradient Descent}}{29}{}%
-\contentsline {figure}{\numberline {3.3}{\ignorespaces Neural Network: An example of a feed-forward network.}}{32}{}%
-\contentsline {figure}{\numberline {3.4}{\ignorespaces Convolutional Neural Network: Feature Extraction.}}{32}{}%
-\contentsline {figure}{\numberline {3.5}{\ignorespaces Convolutional Neural Network: Architecture.}}{34}{}%
-\contentsline {figure}{\numberline {3.6}{\ignorespaces Modelling of Natural Phenomena}}{34}{}%
-\contentsline {figure}{\numberline {3.7}{\ignorespaces Four Possible Neural Network Architectures}}{36}{}%
+\contentsline {figure}{\numberline {3.1}{\ignorespaces The Boston House Price Data-set (sample).}}{27}{}%
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Gradient Descent}}{28}{}%
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Neural Network: An example of a feed-forward network.}}{31}{}%
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Convolutional Neural Network: Feature Extraction.}}{31}{}%
+\contentsline {figure}{\numberline {3.5}{\ignorespaces Convolutional Neural Network: Architecture.}}{33}{}%
+\contentsline {figure}{\numberline {3.6}{\ignorespaces Modelling of Natural Phenomena}}{33}{}%
+\contentsline {figure}{\numberline {3.7}{\ignorespaces Four Possible Neural Network Architectures}}{35}{}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Multi-channel Cascade}}{39}{}%
-\contentsline {figure}{\numberline {4.2}{\ignorespaces Fuel Brick Encoding Order}}{39}{}%
-\contentsline {figure}{\numberline {4.3}{\ignorespaces Interstitial Brick Encoding Order}}{41}{}%
-\contentsline {figure}{\numberline {4.4}{\ignorespaces History of Acceleration During a Severe Earthquake. Note the settling period before and after the earthquake proper. The true earthquake history includes an acceleration value every 100th of a second. This plot shows a sample every 10th of a second, which is the interval that the Parmec model outputs displacement data. Also shown is a vertical marker, indicating the selected time frame.}}{42}{}%
-\contentsline {figure}{\numberline {4.5}{\ignorespaces Time History: Maximum Channel Displacement in the West to East Direction for Sample Channels. Compare with the earthquake time history (Figure\nobreakspace {}4.4\hbox {}).}}{43}{}%
-\contentsline {figure}{\numberline {4.6}{\ignorespaces Time History: Maximum Channel Displacement in the South to North Direction for Sample Channels. Compare with the earthquake time history (Figure\nobreakspace {}4.4\hbox {}).}}{44}{}%
-\contentsline {figure}{\numberline {4.7}{\ignorespaces Comparing the Output of Three Cases Through Time: Sum of Channel Displacement in West-East Direction (mm). Three cases have been chosen at random from the data-set, corresponding to each of the three columns in this Figure. Each row corresponds to a time index of the earthquake (see the vertical markers in Figure\nobreakspace {}4.4\hbox {}). The time frame is listed, as well as the earthquake acceleration at that time. The images are a graphical representation of the displacement value for each interstitial channel. Note that values are in the range $ \pm 50 $ i.e. the overall movement of that channel may be up to 50 mm in the left or right direction.}}{46}{}%
-\contentsline {figure}{\numberline {4.8}{\ignorespaces Comparing the Output of Three Cases Through Time: Sum of Channel Displacement in South-North Direction (mm). Three cases have been chosen at random from the data-set, corresponding to each of the three columns in this Figure. Each row corresponds to a time index of the earthquake (see the vertical markers in Figure\nobreakspace {}4.4\hbox {}). The time frame is listed, as well as the earthquake acceleration at that time. The images are a graphical representation of the displacement value for each interstitial channel. Note that values are in the range $ \pm 30 $ i.e. the overall movement of that channel may be up to 30 mm in the south or north direction.}}{47}{}%
-\contentsline {figure}{\numberline {4.9}{\ignorespaces Comparing Output of Three Cases Through Time: Sum of Level Displacement in West-East Direction (mm). Three cases have been chosen at random from the data-set, corresponding to each of the three columns in this Figure. Each row corresponds to a time index of the earthquake (see the vertical markers in Figure\nobreakspace {}4.4\hbox {}). The time frame is listed. The images are a graphical representation of the displacement value for each interstitial level.}}{48}{}%
-\contentsline {figure}{\numberline {4.10}{\ignorespaces Comparing Output of Three Cases Through Time: Sum of Level Displacement in South-North Direction (mm). Three cases have been chosen at random from the data-set, corresponding to each of the three columns in this Figure. Each row corresponds to a time index of the earthquake (see the vertical markers in Figure\nobreakspace {}4.4\hbox {}). The time frame is listed. The images are a graphical representation of the displacement value for each interstitial level.}}{49}{}%
-\contentsline {figure}{\numberline {4.11}{\ignorespaces Histogram of Sum Displacement of All Instances: West-East directional displacement. This plot shows a histogram for results across the data-set. The results for each time frame are Gaussian in shape i.e. a symmetric bell curve around a mean value. However, there seems to be a smaller peak near the left tail.}}{49}{}%
-\contentsline {figure}{\numberline {4.12}{\ignorespaces Histogram of Sum Displacement of All Instances: South-North directional displacement. This plot is very similar to Figure\nobreakspace {}4.11\hbox {}. A Gaussian distribution can be seen similarly to the previous plot.}}{51}{}%
-\contentsline {figure}{\numberline {4.13}{\ignorespaces Channel Summation for Time Frame 48: For each channel, the Parmec Outputs in the west-east direction were summed.}}{51}{}%
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Multi-channel Cascade}}{38}{}%
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Fuel Brick Encoding Order}}{38}{}%
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Interstitial Brick Encoding Order}}{40}{}%
+\contentsline {figure}{\numberline {4.4}{\ignorespaces History of Acceleration During a Severe Earthquake}}{41}{}%
+\contentsline {figure}{\numberline {4.5}{\ignorespaces Time History: Maximum Channel Displacement in the West to East Direction for Sample Channels}}{43}{}%
+\contentsline {figure}{\numberline {4.6}{\ignorespaces Time History: Maximum Channel Displacement in the South to North Direction for Sample Channels }}{44}{}%
+\contentsline {figure}{\numberline {4.7}{\ignorespaces Comparing the Output of Three Cases Through Time: Sum of Channel Displacement in West-East Direction (mm) }}{45}{}%
+\contentsline {figure}{\numberline {4.8}{\ignorespaces Comparing the Output of Three Cases Through Time: Sum of Channel Displacement in South-North Direction (mm) }}{46}{}%
+\contentsline {figure}{\numberline {4.9}{\ignorespaces Comparing Output of Three Cases Through Time: Sum of Level Displacement in West-East Direction (mm) }}{47}{}%
+\contentsline {figure}{\numberline {4.10}{\ignorespaces Comparing Output of Three Cases Through Time: Sum of Level Displacement in South-North Direction (mm) }}{48}{}%
+\contentsline {figure}{\numberline {4.11}{\ignorespaces Histogram of Sum Displacement of All Instances: West-East directional displacement }}{50}{}%
+\contentsline {figure}{\numberline {4.12}{\ignorespaces Histogram of Sum Displacement of All Instances: South-North directional displacement }}{50}{}%
+\contentsline {figure}{\numberline {4.13}{\ignorespaces Channel Summation for Time Frame 48 }}{51}{}%
 \contentsline {figure}{\numberline {4.14}{\ignorespaces Correlation of Channel Results Against Each Other}}{52}{}%
 \contentsline {figure}{\numberline {4.15}{\ignorespaces Correlation of Bricks of the Central Channel (161) Results Against Each Other}}{53}{}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {5.1}{\ignorespaces Example of Model Training and Validation with Early Stopping and Model Saving}}{57}{}%
-\contentsline {figure}{\numberline {5.2}{\ignorespaces The Final Architecture of the Model}}{59}{}%
-\contentsline {figure}{\numberline {5.3}{\ignorespaces Convolution on a 2-dimensional Input Space Using a 3x3 Filter}}{60}{}%
-\contentsline {figure}{\numberline {5.4}{\ignorespaces Convolution on a Single Instance Encoded in a 3-dimensional Format Using an Example Multi Channel Filter}}{61}{}%
-\contentsline {figure}{\numberline {5.5}{\ignorespaces The Core Separated into Regions for the Purpose of Feature Selection}}{64}{}%
-\contentsline {figure}{\numberline {5.6}{\ignorespaces Visual Summary of the Regional Feature Extraction Experiment}}{72}{}%
-\contentsline {figure}{\numberline {5.7}{\ignorespaces Model Predictions against Ground Truth for the Test Set}}{73}{}%
-\contentsline {figure}{\numberline {5.8}{\ignorespaces Model Predictions against Ground Truth for the Test Set With Values Separated into Positives/Negatives by Three Different Thresholds}}{74}{}%
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Sensitivity Results Summary}}{60}{}%
+\contentsline {figure}{\numberline {5.2}{\ignorespaces Training History of Increment with a Data-set of 1000 Increments}}{61}{}%
+\contentsline {figure}{\numberline {5.3}{\ignorespaces Training History of Increment with a Data-set of 3000 Increments}}{62}{}%
+\contentsline {figure}{\numberline {5.4}{\ignorespaces Training History of Increment with a Data-set of 5000 Increments}}{63}{}%
+\contentsline {figure}{\numberline {5.5}{\ignorespaces Training History for Crack Orientation Model }}{64}{}%
+\contentsline {figure}{\numberline {5.6}{\ignorespaces Feature encoding appropriate for use in transfer learning. This image shows a single Parmec instance encoded in a planar configuration.}}{64}{}%
+\contentsline {figure}{\numberline {5.7}{\ignorespaces Results Dashboard for VGG19 Model with added Dropout Layer (30\%).}}{65}{}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {6.1}{\ignorespaces The Trade-off Between a Machine Learning Surrogate Model and the Original Model}}{77}{}%
-\contentsline {figure}{\numberline {6.2}{\ignorespaces An Example of Image Manipulation Techniques to Perform Data Augmentation}}{80}{}%
-\contentsline {figure}{\numberline {6.3}{\ignorespaces The results from the best performing model produced via the method described in a previous research work}}{82}{}%
-\contentsline {figure}{\numberline {6.4}{\ignorespaces An Example of Image Manipulation Techniques Applied to Parmec Data to Facilitate Data Augmentation}}{83}{}%
-\contentsline {figure}{\numberline {6.5}{\ignorespaces Loss Functions: Visual Comparison}}{87}{}%
-\contentsline {figure}{\numberline {6.6}{\ignorespaces Adjustment Factor as is Utilised by (6.1\hbox {})}}{88}{}%
-\contentsline {figure}{\numberline {6.7}{\ignorespaces Simplified Model Architecture Used to Compare Augmentation Approaches}}{91}{}%
-\contentsline {figure}{\numberline {6.8}{\ignorespaces Visual Summary and Comparison of the Performance of the Optimal Model Produced During E1.0 (\textbf {Left}) \& E2.4 (\textbf {Right})}}{95}{}%
-\contentsline {figure}{\numberline {6.9}{\ignorespaces Visual Summary of the Performance of the Optimal Model Produced During E4.1}}{97}{}%
-\contentsline {figure}{\numberline {6.10}{\ignorespaces Visual Summary and Comparison of the Performance of the Original Model M3 (\textbf {Left}) \& M3 After E5.3 (\textbf {Right})}}{100}{}%
+\contentsline {figure}{\numberline {6.1}{\ignorespaces The Position in the core from which the labels are representative of (\textbf {Bottom}); Distribution of \nobreakspace {}8300 values in the label set (\textbf {Top})}}{70}{}%
+\contentsline {figure}{\numberline {6.2}{\ignorespaces Example of Model Training and Validation with Early Stopping and Model Saving}}{71}{}%
+\contentsline {figure}{\numberline {6.3}{\ignorespaces The Final Architecture of the Model}}{73}{}%
+\contentsline {figure}{\numberline {6.4}{\ignorespaces Convolution on a 2-dimensional Input Space Using a 3x3 Filter}}{74}{}%
+\contentsline {figure}{\numberline {6.5}{\ignorespaces Convolution on a Single Instance Encoded in a 3-dimensional Format Using an Example Multi Channel Filter}}{75}{}%
+\contentsline {figure}{\numberline {6.6}{\ignorespaces The Core Separated into Regions for the Purpose of Feature Selection}}{78}{}%
+\contentsline {figure}{\numberline {6.7}{\ignorespaces Visual Summary of the Regional Feature Extraction Experiment}}{85}{}%
+\contentsline {figure}{\numberline {6.8}{\ignorespaces Model Predictions against Ground Truth for the Test Set}}{86}{}%
+\contentsline {figure}{\numberline {6.9}{\ignorespaces Model Predictions against Ground Truth for the Test Set With Values Separated into Positives/Negatives by Three Different Thresholds}}{87}{}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {7.1}{\ignorespaces The Trade-off Between a Machine Learning Surrogate Model and the Original Model}}{90}{}%
+\contentsline {figure}{\numberline {7.2}{\ignorespaces An Example of Image Manipulation Techniques to Perform Data Augmentation}}{93}{}%
+\contentsline {figure}{\numberline {7.3}{\ignorespaces The results from the best performing model produced via the method described in a previous research work}}{95}{}%
+\contentsline {figure}{\numberline {7.4}{\ignorespaces An Example of Image Manipulation Techniques Applied to Parmec Data to Facilitate Data Augmentation}}{96}{}%
+\contentsline {figure}{\numberline {7.5}{\ignorespaces Loss Functions: Visual Comparison}}{100}{}%
+\contentsline {figure}{\numberline {7.6}{\ignorespaces Adjustment Factor as is Utilised by (7.1\hbox {})}}{101}{}%
+\contentsline {figure}{\numberline {7.7}{\ignorespaces Simplified Model Architecture Used to Compare Augmentation Approaches}}{104}{}%
+\contentsline {figure}{\numberline {7.8}{\ignorespaces Visual Summary and Comparison of the Performance of the Optimal Model Produced During E1.0 (\textbf {Left}) \& E2.4 (\textbf {Right})}}{108}{}%
+\contentsline {figure}{\numberline {7.9}{\ignorespaces Visual Summary of the Performance of the Optimal Model Produced During E4.1}}{110}{}%
+\contentsline {figure}{\numberline {7.10}{\ignorespaces Visual Summary and Comparison of the Performance of the Original Model M3 (\textbf {Left}) \& M3 After E5.3 (\textbf {Right})}}{113}{}%
 \addvspace {10\p@ }

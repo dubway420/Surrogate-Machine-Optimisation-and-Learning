@@ -122,8 +122,6 @@ The outputs shown in Figures~\ref{fig:angles} \& \ref{fig:bore_clearance} are ca
 \noindent
 A single iteration of the aforementioned process, summarised in Figure~\ref{fig:traditional}, gives us very little information on its own. With multiple iterations of this process, each with a different randomised state of the input array (Figure~\ref{fig:core_array}), a stochastic  understanding of the problem space can be built. For example, with several hundred iterations, a histogram can be plotted, as shown in Figure~\ref{fig:statistical_analysis}. The frequency of results is then fitted to a statistical distribution, such as the Normal distribution. Using this distribution, it can be determined what percentage of results are above an acceptable threshold (for instance, half the bore radius shown in \ref{fig:bore_clearance}). Using these statistics, determinations can be made of the probability of certain serious events occurring and are used in safety decision making.\\
 
-
-
 \noindent
 Both of these engineering modelling methods mentioned in this subsection are expensive in terms of time, computation and/or materials. This expense represents a significant bottleneck to the process summarised in Figure~\ref{fig:traditional}.\\
 
@@ -143,6 +141,10 @@ There are also ongoing inspection results to determine the actual positions of c
 	\caption{Statistical Analysis}
 	\label{fig:statistical_analysis}
 \end{figure}
+
+\subsection{Transfer Learning and Existing ML Models} \label{transfer}
+
+Many organisations have produced highly optimised neural networks, often demonstrating their capabilities in public competitions such as ImageNet [\cite{russakovsky2015imagenet}]. The successful competitors often publish their model architectures along with the best performing weights. Models produced and published through this competition include VGG [\cite{simonyan2014very}] and ResNet [\cite{he2015deep}]. Although these models are optimised to perform image classification tasks, many researchers have found that the aforementioned models can be adapted to other areas of study in a process known as transfer learning [\cite{tan2018survey}].
 
 \section{Relevant Literature}
 

@@ -50,11 +50,38 @@ Much of what is contained in the introductory and background sections of the jou
 	
 	\item Regarding background information on the workings of machine learning methods, models and concepts is available in chapter~\ref{cha:ML}.
 	
-	\item The programmatic framework developed to create datasets and streamline machine learning model production is detailed in chapter~\ref{cha:framework}.
+	\item A discussion and exploration of the dataset is given in chapter~\ref{cha:dataset}, with the programmatic framework developed to create datasets and streamline machine learning model production detailed in section~\ref{framework}.
 	
-	\item Finally, a discussion and exploration of the dataset is given in chapter~\ref{cha:dataset}.
+	
 	
 \end{enumerate}
+
+\section{Data Selection and Focus} \label{data_selection}
+
+As explained in subsection~\ref{data:outputs}, each Parmec case contains approximately 6.8 million output parameters. For the purpose of this work, a process of narrowing down this large data space into a usable format was carried out. As this is a preliminary investigation into the application of surrogate models to this area of research, the data space will be simplified so as to provide a feasible demonstration.  
+\\
+
+\noindent
+Of the six output metrics, a single displacement metric was chosen (displacement translation along the horizontal axis in the direction of the applied earthquake acceleration) at a single time frame (time frame 48 - approximately 3.8 seconds into the simulated earthquake). Referring back to Figure~\ref{fig:earthquake}, it can be seen that the earthquake is well underway at this point. The data from later time-steps was found to have a greater level of homogeneity and less variation between instances.
+\\
+
+\noindent
+The output space was further narrowed to include data for just a single brick at a time i.e. a single label value for each instance. The selection of outputs allows the research problem to be expressed as single label regression (as opposed to multi label regression where we would attempt to predict multiple outputs per instance).
+\\
+
+\noindent
+The brick chosen was the one located at the upper most level at the centre of the core. This position of this brick is shown in the lower part of Figure~\ref{fig:pos_distr}. This brick is at a particularly important position from an engineering perspective. On average, the closer a channel is to the centre of the core, the higher its translational displacement (Figure~\ref{fig:composite}) relative to the surrounding structure. The upper level may also be considered of greater importance than those lower down, as it is the initial point of entry for a control rod.
+\\
+
+\noindent
+The distribution of horizontal displacement at time frame 48 for all ~8300 instances is shown as a histogram in the upper part of Figure~\ref{fig:pos_distr}. It can be seen that the labels take the form of a Gaussian distribution, but with the modal value to the left of the median and mode. The data also has a long tail on the right hand side i.e. there are a number of outliers on the upper end of the distribution.
+
+\begin{figure*}[p]
+	\centering
+	\includegraphics[scale=0.7]{Figures/position_distribution.png}
+	\caption{The Position in the core from which the labels are representative of (\textbf{Bottom}); Distribution of ~8300 values in the label set (\textbf{Top})}
+	\label{fig:pos_distr}
+\end{figure*}
 
 \section{Surrogate Model Development and Design} \label{method}
 
@@ -157,7 +184,7 @@ In each case, the number of input features is the same: 1988 (the number of fuel
 
 \subsubsection{DNN - 1D}
 
-A dense neural network with 1D encoding is employed. In this configuration, the data is encoded in the base format as mentioned in subsection~\ref{dataset} where each instance is input to the model as a vector. In the DNN, the output of each layer is fed into all nodes of the subsequent layer.
+A dense neural network with 1D encoding is employed. In this configuration, the data is encoded in the base format as mentioned in subsection~\ref{data:inputs} where each instance is input to the model as a vector. In the DNN, the output of each layer is fed into all nodes of the subsequent layer.
 
 \subsubsection{CNN - 2D}
 
@@ -194,7 +221,7 @@ Starting with the greater core region (i.e. the whole feature set) a model is tr
 
 \subsubsection{Level Selection} \label{level_selection}
 
-In addition to feature selection based on the core regions from, the feature set was also varied in size by varying the number of core levels (refer back to Figure~\ref{fig:schematic}). Recall from subsection~\ref{dataset} that the brick for which we are attempting to predict displacement values for is in the top layer. Similar to the experiment in the previous subsection, is can be conjectured that the lower levels of the core are less important than those near the top (closer to the point of interest). This again was determined experimentally. Starting with the lowest level (level 1), data for incrementally higher core levels was removed from the feature set, training and evaluating the model each time. 
+In addition to feature selection based on the core regions from, the feature set was also varied in size by varying the number of core levels (refer back to Figure~\ref{fig:schematic}). Recall from section~\ref{data_selection} that the brick for which we are attempting to predict displacement values for is in the top layer. Similar to the experiment in the previous subsection, is can be conjectured that the lower levels of the core are less important than those near the top (closer to the point of interest). This again was determined experimentally. Starting with the lowest level (level 1), data for incrementally higher core levels was removed from the feature set, training and evaluating the model each time. 
 
 
 
@@ -385,14 +412,6 @@ The main motivation behind this research was to increase the computational effic
 \noindent
 The best performing model was capable of making 95\% of test set predictions within a 20 percentage point margin of the ground truth. Although this result demonstrates progress towards the development of an efficient and accurate machine learning surrogate, the high standards within the nuclear safety field mean that it is unlikely to be at a stage were it could be commercially deployed. Nevertheless, machine learning techniques were identified as highly applicable to this particular problem. For example, Convolutional neural networks were identified as more effective than other techniques available. Additionally insights into optimal hyper-parameters and inputs were also garnered. These observations may guide and support further development and progress in this area.
 
-\section{Additional Research Work}
 
-This section covers work which was completed as part of the research for this chapter, but was not included in the journal article. It is presented here for reference and discussion.
-
-\subsection{Dataset Size Sensitivity}
-
-\subsection{Crack Orientation}
-
-\subsection{Transfer Learning}
 
     

@@ -1,18 +1,18 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2022.10.31)  27 NOV 2022 21:31
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022/Arch Linux) (preloaded format=pdflatex 2022.11.28)  29 NOV 2022 16:48
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
 **report.tex
 (./report.tex
 LaTeX2e <2021-11-15> patch level 1
-L3 programming layer <2022-01-21> (./muthesis.cls
+L3 programming layer <2022-04-10> (./muthesis.cls
 Document Class: muthesis 2017/09/06 MU Thesis Class
-(/usr/share/texlive/texmf-dist/tex/latex/setspace/setspace.sty
+(/usr/share/texmf-dist/tex/latex/setspace/setspace.sty
 Package: setspace 2011/12/19 v6.7a set line spacing
 )
-(/usr/share/texlive/texmf-dist/tex/latex/base/report.cls
+(/usr/share/texmf-dist/tex/latex/base/report.cls
 Document Class: report 2021/10/04 v1.4n Standard LaTeX document class
-(/usr/share/texlive/texmf-dist/tex/latex/base/size12.clo
+(/usr/share/texmf-dist/tex/latex/base/size12.clo
 File: size12.clo 2021/10/04 v1.4n Standard LaTeX file (size option)
 )
 \c@part=\count185
@@ -28,41 +28,41 @@ File: size12.clo 2021/10/04 v1.4n Standard LaTeX file (size option)
 \belowcaptionskip=\skip48
 \bibindent=\dimen138
 ))
-(/usr/share/texlive/texmf-dist/tex/latex/tools/verbatim.sty
+(/usr/share/texmf-dist/tex/latex/tools/verbatim.sty
 Package: verbatim 2020-07-07 v1.5u LaTeX2e package for verbatim enhancements
 \every@verbatim=\toks16
 \verbatim@line=\toks17
 \verbatim@in@stream=\read2
 )
-(/usr/share/texlive/texmf-dist/tex/latex/graphics/graphicx.sty
+(/usr/share/texmf-dist/tex/latex/graphics/graphicx.sty
 Package: graphicx 2021/09/16 v1.2d Enhanced LaTeX Graphics (DPC,SPQR)
 
-(/usr/share/texlive/texmf-dist/tex/latex/graphics/keyval.sty
+(/usr/share/texmf-dist/tex/latex/graphics/keyval.sty
 Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
 \KV@toks@=\toks18
 )
-(/usr/share/texlive/texmf-dist/tex/latex/graphics/graphics.sty
+(/usr/share/texmf-dist/tex/latex/graphics/graphics.sty
 Package: graphics 2021/03/04 v1.4d Standard LaTeX Graphics (DPC,SPQR)
 
-(/usr/share/texlive/texmf-dist/tex/latex/graphics/trig.sty
+(/usr/share/texmf-dist/tex/latex/graphics/trig.sty
 Package: trig 2021/08/11 v1.11 sin cos tan (DPC)
 )
-(/usr/share/texlive/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
+(/usr/share/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
 File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
 )
 Package graphics Info: Driver file: pdftex.def on input line 107.
 
-(/usr/share/texlive/texmf-dist/tex/latex/graphics-def/pdftex.def
+(/usr/share/texmf-dist/tex/latex/graphics-def/pdftex.def
 File: pdftex.def 2020/10/05 v1.2a Graphics/color driver for pdftex
 ))
 \Gin@req@height=\dimen139
 \Gin@req@width=\dimen140
 )
-(/usr/share/texlive/texmf-dist/tex/latex/url/url.sty
+(/usr/share/texmf-dist/tex/latex/url/url.sty
 \Urlmuskip=\muskip16
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
-(/usr/share/texlive/texmf-dist/tex/latex/listings/listings.sty
+(/usr/share/texmf-dist/tex/latex/listings/listings.sty
 \lst@mode=\count194
 \lst@gtempboxa=\box50
 \lst@token=\toks19
@@ -76,18 +76,18 @@ Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 \lst@lineno=\count199
 \lst@maxwidth=\dimen144
 
-(/usr/share/texlive/texmf-dist/tex/latex/listings/lstmisc.sty
+(/usr/share/texmf-dist/tex/latex/listings/lstmisc.sty
 File: lstmisc.sty 2020/03/24 1.8d (Carsten Heinz)
 \c@lstnumber=\count266
 \lst@skipnumbers=\count267
 \lst@framebox=\box51
 )
-(/usr/share/texlive/texmf-dist/tex/latex/listings/listings.cfg
+(/usr/share/texmf-dist/tex/latex/listings/listings.cfg
 File: listings.cfg 2020/03/24 1.8d listings configuration
 ))
 Package: listings 2020/03/24 1.8d (Carsten Heinz)
 
-(/usr/share/texlive/texmf-dist/tex/latex/pslatex/pslatex.sty
+(/usr/share/texmf-dist/tex/latex/pslatex/pslatex.sty
 Package: pslatex 2021/01/13 v1.3 pslatex emulation (DPC)
 LaTeX Font Info:    Redeclaring symbol font `operators' on input line 66.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
@@ -122,24 +122,24 @@ LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
 (Font)                  OT1/cmr/bx/it --> OT1/ptm/m/it on input line 76.
 )
-(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsmath.sty
+(/usr/share/texmf-dist/tex/latex/amsmath/amsmath.sty
 Package: amsmath 2021/10/15 v2.17l AMS math features
 \@mathmargin=\skip49
 
 For additional information on amsmath, use the `?' option.
-(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amstext.sty
+(/usr/share/texmf-dist/tex/latex/amsmath/amstext.sty
 Package: amstext 2021/08/26 v2.01 AMS text
 
-(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsgen.sty
+(/usr/share/texmf-dist/tex/latex/amsmath/amsgen.sty
 File: amsgen.sty 1999/11/30 v2.0 generic functions
 \@emptytoks=\toks20
 \ex@=\dimen145
 ))
-(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsbsy.sty
+(/usr/share/texmf-dist/tex/latex/amsmath/amsbsy.sty
 Package: amsbsy 1999/11/29 v1.2d Bold Symbols
 \pmbraise@=\dimen146
 )
-(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsopn.sty
+(/usr/share/texmf-dist/tex/latex/amsmath/amsopn.sty
 Package: amsopn 2021/08/26 v2.02 operator names
 )
 \inf@bad=\count268
@@ -180,10 +180,10 @@ LaTeX Font Info:    Redeclaring font encoding OMS on input line 744.
 LaTeX Info: Redefining \[ on input line 2938.
 LaTeX Info: Redefining \] on input line 2939.
 )
-(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/amssymb.sty
+(/usr/share/texmf-dist/tex/latex/amsfonts/amssymb.sty
 Package: amssymb 2013/01/14 v3.01 AMS font symbols
 
-(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/amsfonts.sty
+(/usr/share/texmf-dist/tex/latex/amsfonts/amsfonts.sty
 Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
 \symAMSa=\mathgroup6
 \symAMSb=\mathgroup7
@@ -191,7 +191,7 @@ LaTeX Font Info:    Redeclaring math symbol \hbar on input line 98.
 LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
 (Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
 ))
-(/usr/share/texlive/texmf-dist/tex/latex/enumitem/enumitem.sty
+(/usr/share/texmf-dist/tex/latex/enumitem/enumitem.sty
 Package: enumitem 2019/06/20 v3.9 Customized lists
 \labelindent=\skip52
 \enit@outerparindent=\dimen154
@@ -200,10 +200,10 @@ Package: enumitem 2019/06/20 v3.9 Customized lists
 \enit@count@id=\count280
 \enitdp@description=\count281
 )
-(/usr/share/texlive/texmf-dist/tex/latex/mathtools/mathtools.sty
-Package: mathtools 2021/02/02 v1.28 mathematical typesetting tools
+(/usr/share/texmf-dist/tex/latex/mathtools/mathtools.sty
+Package: mathtools 2022/02/07 v1.28a mathematical typesetting tools
 
-(/usr/share/texlive/texmf-dist/tex/latex/tools/calc.sty
+(/usr/share/texmf-dist/tex/latex/tools/calc.sty
 Package: calc 2017/05/25 v4.3 Infix arithmetic (KKT,FJ)
 \calc@Acount=\count282
 \calc@Bcount=\count283
@@ -216,7 +216,7 @@ LaTeX Info: Redefining \addtolength on input line 81.
 \calc@Ccount=\count284
 \calc@Cskip=\skip55
 )
-(/usr/share/texlive/texmf-dist/tex/latex/mathtools/mhsetup.sty
+(/usr/share/texmf-dist/tex/latex/mathtools/mhsetup.sty
 Package: mhsetup 2021/03/18 v1.4 programming setup (MH)
 )
 \g_MT_multlinerow_int=\count285
@@ -231,12 +231,12 @@ Package: mhsetup 2021/03/18 v1.4 programming setup (MH)
 \xmathstrut@box=\box55
 \xmathstrut@dim=\dimen164
 )
-(/usr/share/texlive/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
-File: l3backend-pdftex.def 2022-01-12 L3 backend support: PDF output (pdfTeX)
+(/usr/share/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
+File: l3backend-pdftex.def 2022-04-14 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count286
 \l__pdf_internal_box=\box56
-)
-(./report.aux (./chapter1.aux) (./chapter2.aux) (./chapter3.aux)
+) (./report.aux
+(./chapter1.aux) (./chapter2.aux) (./chapter3.aux) (./chapter4.aux)
 (./chapter5.aux) (./chapter6.aux) (./chapter7.aux) (./chapter8.aux))
 \openout1 = `report.aux'.
 
@@ -246,7 +246,7 @@ LaTeX Font Info:    Checking defaults for OMS/pzccm/m/n on input line 31.
 LaTeX Font Info:    Trying to load font information for OMS+pzccm on input line
  31.
 
-(/usr/share/texlive/texmf-dist/tex/latex/psnfss/omspzccm.fd
+(/usr/share/texmf-dist/tex/latex/psnfss/omspzccm.fd
 File: omspzccm.fd 2000/01/03 Fontinst v1.801 font definitions for OMS/pzccm.
 )
 LaTeX Font Info:    ... okay on input line 31.
@@ -261,7 +261,7 @@ LaTeX Font Info:    ... okay on input line 31.
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 31.
 LaTeX Font Info:    ... okay on input line 31.
 
-(/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+(/usr/share/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count287
 \scratchdimen=\dimen165
@@ -274,36 +274,35 @@ LaTeX Font Info:    ... okay on input line 31.
 \MPnumerator=\count291
 \makeMPintoPDFobject=\count292
 \everyMPtoPDFconversion=\toks27
-) (/usr/share/texlive/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
+) (/usr/share/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
 85.
 
-(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+(/usr/share/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
 \c@lstlisting=\count293
-
-[1
+ [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] (./report.toc
 LaTeX Font Info:    Trying to load font information for OT1+ptmcm on input line
  6.
 
-(/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1ptmcm.fd
+(/usr/share/texmf-dist/tex/latex/psnfss/ot1ptmcm.fd
 File: ot1ptmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OT1/ptmcm.
 )
 LaTeX Font Info:    Trying to load font information for OML+ptmcm on input line
  6.
 
-(/usr/share/texlive/texmf-dist/tex/latex/psnfss/omlptmcm.fd
+(/usr/share/texmf-dist/tex/latex/psnfss/omlptmcm.fd
 File: omlptmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OML/ptmcm.
 )
 LaTeX Font Info:    Trying to load font information for OMX+psycm on input line
  6.
 
-(/usr/share/texlive/texmf-dist/tex/latex/psnfss/omxpsycm.fd
+(/usr/share/texmf-dist/tex/latex/psnfss/omxpsycm.fd
 File: omxpsycm.fd 2000/01/03 Fontinst v1.801 font definitions for OMX/psycm.
 )
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
@@ -314,12 +313,12 @@ LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 6.
 LaTeX Font Info:    Trying to load font information for U+msa on input line 6.
 
-(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
+(/usr/share/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
 LaTeX Font Info:    Trying to load font information for U+msb on input line 6.
 
-(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
+(/usr/share/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) [2
 
@@ -327,28 +326,27 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 \tf@toc=\write3
 \openout3 = `report.toc'.
 
-
-(./word.count
+ (./word.count
 Underfull \hbox (badness 10000) in paragraph at lines 43--1
 
  []
 
-) [4] (./report.lot)
+) [4] (./report.lot [5
+
+])
 \tf@lot=\write4
 \openout4 = `report.lot'.
 
- [5
+ [6] (./report.lof [7
 
-] [6] (./report.lof [7
-
-] [8] [9])
+] [8])
 \tf@lof=\write5
 \openout5 = `report.lof'.
 
- [10] (./abstract.tex)
-[11
+ [9] (./abstract.tex)
+[10
 
-] [12
+] [11
 
 ]
 Overfull \hbox (1.14229pt too wide) in paragraph at lines 48--48
@@ -362,7 +360,7 @@ Overfull \hbox (22.88693pt too wide) in paragraph at lines 48--48
 ns (see $\OT1/pcr/m/n/12 http : / / www . library .
  []
 
-[13
+[12
 
 ]
 Underfull \hbox (badness 10000) in paragraph at lines 51--53
@@ -374,7 +372,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 54--59
 
  []
 
-[14
+[13
 
 ]
 \openout2 = `chapter1.aux'.
@@ -396,26 +394,26 @@ Underfull \hbox (badness 10000) in paragraph at lines 14--17
 
  []
 
-[15
+[14
 
 
-] [16] [17]) [18]
+] [15] [16]) [17]
 \openout2 = `chapter2.aux'.
 
  (./chapter2.tex
 Chapter 2.
-<Figures/AGR_plan.png, id=64, 224.33812pt x 232.61906pt>
+<Figures/AGR_plan.png, id=60, 224.33812pt x 232.61906pt>
 File: Figures/AGR_plan.png Graphic file (type png)
 <use Figures/AGR_plan.png>
 Package pdftex.def Info: Figures/AGR_plan.png  used on input line 10.
 (pdftex.def)             Requested size: 168.25317pt x 174.46385pt.
-[19
+[18
 
 
 
 
  <./Figures/AGR_plan.png>]
-<Figures/AGR_side.png, id=69, 163.3603pt x 197.23688pt>
+<Figures/AGR_side.png, id=64, 163.3603pt x 197.23688pt>
 File: Figures/AGR_side.png Graphic file (type png)
 <use Figures/AGR_side.png>
 Package pdftex.def Info: Figures/AGR_side.png  used on input line 20.
@@ -430,25 +428,25 @@ Underfull \hbox (badness 10000) in paragraph at lines 32--33
 
  []
 
-[20 <./Figures/AGR_side.png>]
-<Figures/brick_types_parmec.png, id=73, 674.52pt x 806.01125pt>
+[19 <./Figures/AGR_side.png>]
+<Figures/brick_types_parmec.png, id=69, 674.52pt x 806.01125pt>
 File: Figures/brick_types_parmec.png Graphic file (type png)
 <use Figures/brick_types_parmec.png>
 Package pdftex.def Info: Figures/brick_types_parmec.png  used on input line 36.
 
 (pdftex.def)             Requested size: 114.66689pt x 137.0201pt.
-<Figures/cracking_mechanism.jpg, id=75, 392.96812pt x 425.33907pt>
+<Figures/cracking_mechanism.jpg, id=71, 392.96812pt x 425.33907pt>
 File: Figures/cracking_mechanism.jpg Graphic file (type jpg)
 <use Figures/cracking_mechanism.jpg>
 Package pdftex.def Info: Figures/cracking_mechanism.jpg  used on input line 43.
 
 (pdftex.def)             Requested size: 137.5409pt x 148.8709pt.
-<Figures/Brick_Cracking.png, id=76, 152.82094pt x 213.04594pt>
+<Figures/Brick_Cracking.png, id=72, 152.82094pt x 213.04594pt>
 File: Figures/Brick_Cracking.png Graphic file (type png)
 <use Figures/Brick_Cracking.png>
 Package pdftex.def Info: Figures/Brick_Cracking.png  used on input line 50.
 (pdftex.def)             Requested size: 99.33241pt x 138.47821pt.
-<Figures/parmec_bricks.png, id=77, 1395.2125pt x 1241.63875pt>
+<Figures/parmec_bricks.png, id=73, 1395.2125pt x 1241.63875pt>
 File: Figures/parmec_bricks.png Graphic file (type png)
 <use Figures/parmec_bricks.png>
 Package pdftex.def Info: Figures/parmec_bricks.png  used on input line 57.
@@ -458,9 +456,9 @@ Underfull \hbox (badness 10000) in paragraph at lines 62--64
 
  []
 
-[21 <./Figures/brick_types_parmec.png> <./Figures/cracking_mechanism.jpg> <./Fi
+[20 <./Figures/brick_types_parmec.png> <./Figures/cracking_mechanism.jpg> <./Fi
 gures/Brick_Cracking.PNG>]
-<Figures/MLA_rig.png, id=83, 432.61626pt x 394.47375pt>
+<Figures/MLA_rig.png, id=79, 432.61626pt x 394.47375pt>
 File: Figures/MLA_rig.png Graphic file (type png)
 <use Figures/MLA_rig.png>
 Package pdftex.def Info: Figures/MLA_rig.png  used on input line 67.
@@ -470,13 +468,13 @@ Underfull \hbox (badness 10000) in paragraph at lines 72--74
 
  []
 
-[22 <./Figures/parmec_bricks.png> <./Figures/MLA_rig.png>]
-<Figures/core_array.png, id=89, 218.31563pt x 271.0125pt>
+[21 <./Figures/parmec_bricks.png> <./Figures/MLA_rig.png>]
+<Figures/core_array.png, id=85, 218.31563pt x 271.0125pt>
 File: Figures/core_array.png Graphic file (type png)
 <use Figures/core_array.png>
 Package pdftex.def Info: Figures/core_array.png  used on input line 77.
 (pdftex.def)             Requested size: 109.15753pt x 135.5059pt.
-<Figures/orientations.jpeg, id=90, 1205.50375pt x 1164.35pt>
+<Figures/orientations.jpeg, id=86, 1205.50375pt x 1164.35pt>
 File: Figures/orientations.jpeg Graphic file (type jpg)
 <use Figures/orientations.jpeg>
 Package pdftex.def Info: Figures/orientations.jpeg  used on input line 84.
@@ -486,7 +484,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 89--91
 
  []
 
-<Figures/Distored_bricks.png, id=91, 1003.75pt x 772.8875pt>
+<Figures/Distored_bricks.png, id=87, 1003.75pt x 772.8875pt>
 File: Figures/Distored_bricks.png Graphic file (type png)
 <use Figures/Distored_bricks.png>
 Package pdftex.def Info: Figures/Distored_bricks.png  used on input line 94.
@@ -496,18 +494,18 @@ Underfull \hbox (badness 10000) in paragraph at lines 102--104
 
  []
 
-<Figures/bore_displacement.png, id=92, 292.09125pt x 240.9pt>
+<Figures/bore_displacement.png, id=88, 292.09125pt x 240.9pt>
 File: Figures/bore_displacement.png Graphic file (type png)
 <use Figures/bore_displacement.png>
 Package pdftex.def Info: Figures/bore_displacement.png  used on input line 107.
 
 (pdftex.def)             Requested size: 146.04526pt x 120.44969pt.
-[23 <./Figures/core_array.png> <./Figures/orientations.jpeg>]
+[22 <./Figures/core_array.png> <./Figures/orientations.jpeg>]
 Underfull \hbox (badness 10000) in paragraph at lines 112--114
 
  []
 
-<Figures/agr_output.png, id=96, 325.59537pt x 231.264pt>
+<Figures/agr_output.png, id=92, 325.59537pt x 231.264pt>
 File: Figures/agr_output.png Graphic file (type png)
 <use Figures/agr_output.png>
 Package pdftex.def Info: Figures/agr_output.png  used on input line 117.
@@ -517,26 +515,26 @@ Underfull \hbox (badness 10000) in paragraph at lines 122--124
 
  []
 
-[24 <./Figures/Distored_bricks.png> <./Figures/bore_displacement.png> <./Figure
+[23 <./Figures/Distored_bricks.png> <./Figures/bore_displacement.png> <./Figure
 s/agr_output.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 127--129
+Underfull \hbox (badness 10000) in paragraph at lines 125--127
 
  []
 
-<Figures/engineering_approach.png, id=103, 328.22626pt x 423.83344pt>
+<Figures/engineering_approach.png, id=99, 328.22626pt x 423.83344pt>
 File: Figures/engineering_approach.png Graphic file (type png)
 <use Figures/engineering_approach.png>
 Package pdftex.def Info: Figures/engineering_approach.png  used on input line 1
-35.
+33.
 (pdftex.def)             Requested size: 164.11272pt x 211.91618pt.
-<Figures/Statistical_analysis.png, id=104, 391.4625pt x 231.11343pt>
+<Figures/Statistical_analysis.png, id=100, 391.4625pt x 231.11343pt>
 File: Figures/Statistical_analysis.png Graphic file (type png)
 <use Figures/Statistical_analysis.png>
 Package pdftex.def Info: Figures/Statistical_analysis.png  used on input line 1
-42.
+40.
 (pdftex.def)             Requested size: 215.30502pt x 127.11278pt.
-) [25 <./Figures/engineering_approach.png>] [26 <./Figures/Statistical_analysis
-.png>]
+[24 <./Figures/engineering_approach.png>]) [25 <./Figures/Statistical_analysis.
+png>]
 \openout2 = `chapter3.aux'.
 
  (./chapter3.tex
@@ -561,7 +559,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 20--23
 
  []
 
-[27
+[26
 
 
 
@@ -571,7 +569,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 24--27
 
  []
 
-<Figures/boston.png, id=116, 291.33844pt x 179.16937pt>
+<Figures/boston.png, id=112, 291.33844pt x 179.16937pt>
 File: Figures/boston.png Graphic file (type png)
 <use Figures/boston.png>
 Package pdftex.def Info: Figures/boston.png  used on input line 30.
@@ -586,7 +584,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 47--50
 
  []
 
-[28 <./Figures/boston.png>]
+[27 <./Figures/boston.png>]
 Underfull \hbox (badness 10000) in paragraph at lines 55--58
 
  []
@@ -596,7 +594,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 59--62
 
  []
 
-<Figures/gradient_descent.png, id=123, 518.6878pt x 355.3275pt>
+<Figures/gradient_descent.png, id=120, 518.6878pt x 355.3275pt>
 File: Figures/gradient_descent.png Graphic file (type png)
 <use Figures/gradient_descent.png>
 Package pdftex.def Info: Figures/gradient_descent.png  used on input line 69.
@@ -606,7 +604,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 76--78
 
  []
 
-[29 <./Figures/gradient_descent.png>]
+[28 <./Figures/gradient_descent.png>]
 Underfull \hbox (badness 10000) in paragraph at lines 79--82
 
  []
@@ -626,13 +624,13 @@ Underfull \hbox (badness 10000) in paragraph at lines 91--94
 
  []
 
-[30]
-<Figures/nn.png, id=131, 589.4522pt x 390.70969pt>
+[29]
+<Figures/nn.png, id=128, 589.4522pt x 390.70969pt>
 File: Figures/nn.png Graphic file (type png)
 <use Figures/nn.png>
 Package pdftex.def Info: Figures/nn.png  used on input line 100.
 (pdftex.def)             Requested size: 353.67404pt x 234.42761pt.
-<Figures/cnn_feature.png, id=132, 475.7775pt x 310.15875pt>
+<Figures/cnn_feature.png, id=129, 475.7775pt x 310.15875pt>
 File: Figures/cnn_feature.png Graphic file (type png)
 <use Figures/cnn_feature.png>
 Package pdftex.def Info: Figures/cnn_feature.png  used on input line 107.
@@ -642,7 +640,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 114--116
 
  []
 
-<Figures/cnn_arch.png, id=133, 911.405pt x 326.821pt>
+<Figures/cnn_arch.png, id=130, 911.405pt x 326.821pt>
 File: Figures/cnn_arch.png Graphic file (type png)
 <use Figures/cnn_arch.png>
 Package pdftex.def Info: Figures/cnn_arch.png  used on input line 119.
@@ -657,8 +655,8 @@ Underfull \hbox (badness 10000) in paragraph at lines 129--132
 
  []
 
-[31] [32 <./Figures/nn.png> <./Figures/cnn_feature.png>]
-<Figures/surrogate_model.png, id=142, 572.89032pt x 382.42876pt>
+[30] [31 <./Figures/nn.png> <./Figures/cnn_feature.png>]
+<Figures/surrogate_model.png, id=139, 572.89032pt x 382.42876pt>
 File: Figures/surrogate_model.png Graphic file (type png)
 <use Figures/surrogate_model.png>
 Package pdftex.def Info: Figures/surrogate_model.png  used on input line 140.
@@ -673,7 +671,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 150--153
 
  []
 
-<Figures/architecture.png, id=143, 734.745pt x 271.0125pt>
+<Figures/architecture.png, id=140, 734.745pt x 271.0125pt>
 File: Figures/architecture.png Graphic file (type png)
 <use Figures/architecture.png>
 Package pdftex.def Info: Figures/architecture.png  used on input line 156.
@@ -683,11 +681,11 @@ Underfull \hbox (badness 10000) in paragraph at lines 161--164
 
  []
 
-[33] [34 <./Figures/cnn_arch.png> <./Figures/surrogate_model.png>]) [35]
-[36 <./Figures/architecture.png>]
-\openout2 = `chapter5.aux'.
+[32] [33 <./Figures/cnn_arch.png> <./Figures/surrogate_model.png>]) [34]
+[35 <./Figures/architecture.png>]
+\openout2 = `chapter4.aux'.
 
- (./chapter5.tex
+ (./chapter4.tex
 Chapter 4.
 
 Underfull \hbox (badness 10000) in paragraph at lines 8--10
@@ -699,7 +697,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 11--14
 
  []
 
-[37
+[36
 
 
 
@@ -724,13 +722,13 @@ Underfull \hbox (badness 10000) in paragraph at lines 43--45
 
  []
 
-[38]
-<Figures/InputCascade.png, id=165, 477.785pt x 387.4475pt>
+[37]
+<Figures/InputCascade.png, id=162, 477.785pt x 387.4475pt>
 File: Figures/InputCascade.png Graphic file (type png)
 <use Figures/InputCascade.png>
 Package pdftex.def Info: Figures/InputCascade.png  used on input line 48.
 (pdftex.def)             Requested size: 215.00125pt x 174.34976pt.
-<Figures/fuel_channel_numbers.png, id=166, 750.805pt x 513.92pt>
+<Figures/fuel_channel_numbers.png, id=163, 750.805pt x 513.92pt>
 File: Figures/fuel_channel_numbers.png Graphic file (type png)
 <use Figures/fuel_channel_numbers.png>
 Package pdftex.def Info: Figures/fuel_channel_numbers.png  used on input line 5
@@ -741,7 +739,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 61--64
 
  []
 
-[39 <./Figures/InputCascade.png> <./Figures/fuel_channel_numbers.png>]
+[38 <./Figures/InputCascade.png> <./Figures/fuel_channel_numbers.png>]
 Underfull \hbox (badness 10000) in paragraph at lines 72--74
 
  []
@@ -756,7 +754,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 79--82
 
  []
 
-<Figures/inter_channel_numbers.png, id=173, 555.07375pt x 475.7775pt>
+<Figures/inter_channel_numbers.png, id=170, 555.07375pt x 475.7775pt>
 File: Figures/inter_channel_numbers.png Graphic file (type png)
 <use Figures/inter_channel_numbers.png>
 Package pdftex.def Info: Figures/inter_channel_numbers.png  used on input line 
@@ -765,16 +763,18 @@ Package pdftex.def Info: Figures/inter_channel_numbers.png  used on input line
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<Figures/earthquake.png, id=174, 642.4pt x 481.8pt>
-File: Figures/earthquake.png Graphic file (type png)
-<use Figures/earthquake.png>
-Package pdftex.def Info: Figures/earthquake.png  used on input line 140.
-(pdftex.def)             Requested size: 224.84337pt x 168.63252pt.
-[40] [41 <./Figures/inter_channel_numbers.png>]
+<Figures/earthquake_time_points.png, id=171, 477.28313pt x 377.15906pt>
+File: Figures/earthquake_time_points.png Graphic file (type png)
+<use Figures/earthquake_time_points.png>
+Package pdftex.def Info: Figures/earthquake_time_points.png  used on input line
+ 140.
+(pdftex.def)             Requested size: 405.69257pt x 320.58672pt.
+[39] [40 <./Figures/inter_channel_numbers.png>]
 Underfull \hbox (badness 10000) in paragraph at lines 156--159
 
  []
 
+[41 <./Figures/earthquake_time_points.png>]
 <Figures/time_history.png, id=182, 1003.75pt x 1003.75pt>
 File: Figures/time_history.png Graphic file (type png)
 <use Figures/time_history.png>
@@ -800,14 +800,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 174--178
 
  []
 
-[42 <./Figures/earthquake.png (PNG copy)>] [43 <./Figures/time_history.png (PNG
- copy)>] [44 <./Figures/time_history_y.png (PNG copy)>]
-<Figures/results1.png, id=194, 850.17625pt x 971.63pt>
+<Figures/results1.png, id=184, 850.17625pt x 971.63pt>
 File: Figures/results1.png Graphic file (type png)
 <use Figures/results1.png>
 Package pdftex.def Info: Figures/results1.png  used on input line 181.
 (pdftex.def)             Requested size: 382.57578pt x 437.22946pt.
-<Figures/results2.png, id=195, 842.14626pt x 973.6375pt>
+<Figures/results2.png, id=185, 842.14626pt x 973.6375pt>
 File: Figures/results2.png Graphic file (type png)
 <use Figures/results2.png>
 Package pdftex.def Info: Figures/results2.png  used on input line 188.
@@ -817,12 +815,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 193--196
 
  []
 
-<Figures/level_results1.png, id=196, 541.02126pt x 402.50375pt>
+<Figures/level_results1.png, id=186, 541.02126pt x 402.50375pt>
 File: Figures/level_results1.png Graphic file (type png)
 <use Figures/level_results1.png>
 Package pdftex.def Info: Figures/level_results1.png  used on input line 199.
 (pdftex.def)             Requested size: 324.61525pt x 241.5041pt.
-<Figures/level_results2.png, id=197, 542.025pt x 397.485pt>
+<Figures/level_results2.png, id=187, 542.025pt x 397.485pt>
 File: Figures/level_results2.png Graphic file (type png)
 <use Figures/level_results2.png>
 Package pdftex.def Info: Figures/level_results2.png  used on input line 206.
@@ -837,17 +835,20 @@ Underfull \hbox (badness 10000) in paragraph at lines 218--221
 
  []
 
-<Figures/histo1.png, id=198, 2409.0pt x 1204.5pt>
+[42] [43 <./Figures/time_history.png (PNG copy)>] [44 <./Figures/time_history_y
+.png (PNG copy)>] [45 <./Figures/results1.png>] [46 <./Figures/results2.png>]
+[47 <./Figures/level_results1.png>] [48 <./Figures/level_results2.png>]
+<Figures/histo1.png, id=214, 2409.0pt x 1204.5pt>
 File: Figures/histo1.png Graphic file (type png)
 <use Figures/histo1.png>
 Package pdftex.def Info: Figures/histo1.png  used on input line 225.
 (pdftex.def)             Requested size: 361.33441pt x 180.6672pt.
-<Figures/histo2.png, id=199, 642.4pt x 481.8pt>
+<Figures/histo2.png, id=215, 642.4pt x 481.8pt>
 File: Figures/histo2.png Graphic file (type png)
 <use Figures/histo2.png>
 Package pdftex.def Info: Figures/histo2.png  used on input line 232.
 (pdftex.def)             Requested size: 321.19922pt x 240.8994pt.
-<Figures/compositeLines.png, id=200, 258.9675pt x 258.21469pt>
+<Figures/compositeLines.png, id=216, 258.9675pt x 258.21469pt>
 File: Figures/compositeLines.png Graphic file (type png)
 <use Figures/compositeLines.png>
 Package pdftex.def Info: Figures/compositeLines.png  used on input line 239.
@@ -862,10 +863,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 248--250
 
  []
 
-[45] [46 <./Figures/results1.png>] [47 <./Figures/results2.png>] [48 <./Figures
-/level_results1.png>] [49 <./Figures/level_results2.png> <./Figures/histo1.png 
-(PNG copy)>]
-<Figures/channels_correlation.png, id=221, 642.4pt x 481.8pt>
+<Figures/channels_correlation.png, id=217, 642.4pt x 481.8pt>
 File: Figures/channels_correlation.png Graphic file (type png)
 <use Figures/channels_correlation.png>
 Package pdftex.def Info: Figures/channels_correlation.png  used on input line 2
@@ -879,7 +877,7 @@ Overfull \hbox (69.23387pt too wide) in paragraph at lines 253--254
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<Figures/central_channel_correlation.png, id=222, 642.4pt x 481.8pt>
+<Figures/central_channel_correlation.png, id=218, 642.4pt x 481.8pt>
 File: Figures/central_channel_correlation.png Graphic file (type png)
 <use Figures/central_channel_correlation.png>
 Package pdftex.def Info: Figures/central_channel_correlation.png  used on input
@@ -893,40 +891,124 @@ Overfull \hbox (69.23387pt too wide) in paragraph at lines 260--261
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-) [50] [51 <./Figures/histo2.png (PNG copy)> <./Figures/compositeLines.png>]
-[52 <./Figures/channels_correlation.png (PNG copy)>] [53 <./Figures/central_cha
-nnel_correlation.png (PNG copy)>]
-\openout2 = `chapter6.aux'.
+) [49] [50 <./Figures/histo1.png (PNG copy)> <./Figures/histo2.png (PNG copy)>]
+[51 <./Figures/compositeLines.png>] [52 <./Figures/channels_correlation.png (PN
+G copy)>] [53 <./Figures/central_channel_correlation.png (PNG copy)>]
+\openout2 = `chapter5.aux'.
 
- (./chapter6.tex
+
+(./chapter5.tex
 Chapter 5.
+
+Underfull \hbox (badness 10000) in paragraph at lines 8--9
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 10--11
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 12--14
+
+ []
+
 [54
 
 
 
 
-] [55]
-
-LaTeX Warning: Reference `cha:framework' on page 56 undefined on input line 53.
-
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 67--69
+]
+Underfull \hbox (badness 10000) in paragraph at lines 15--17
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 70--73
+Underfull \hbox (badness 10000) in paragraph at lines 18--19
 
  []
 
-<Figures/Training History.png, id=243, 425.33907pt x 319.94531pt>
-File: Figures/Training History.png Graphic file (type png)
-<use Figures/Training History.png>
-Package pdftex.def Info: Figures/Training History.png  used on input line 79.
-(pdftex.def)             Requested size: 233.9372pt x 175.97046pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 20--22
+
+ []
+
+<Figures/comparing_models_Sensitivity.png, id=239, 3161.8125pt x 2107.875pt>
+File: Figures/comparing_models_Sensitivity.png Graphic file (type png)
+<use Figures/comparing_models_Sensitivity.png>
+Package pdftex.def Info: Figures/comparing_models_Sensitivity.png  used on inpu
+t line 25.
+(pdftex.def)             Requested size: 442.65074pt x 295.1005pt.
+
+Overfull \hbox (30.08578pt too wide) in paragraph at lines 25--26
+ [][] 
+ []
+
+<Figures/TrainHistory_dataset_cases1000_C0_321_L0_13_0_321_0_13_48_1_allI0.png,
+ id=240, 572.1375pt x 419.5675pt>
+File: Figures/TrainHistory_dataset_cases1000_C0_321_L0_13_0_321_0_13_48_1_allI0
+.png Graphic file (type png)
+<use Figures/TrainHistory_dataset_cases1000_C0_321_L0_13_0_321_0_13_48_1_allI0.
+png>
+Package pdftex.def Info: Figures/TrainHistory_dataset_cases1000_C0_321_L0_13_0_
+321_0_13_48_1_allI0.png  used on input line 32.
+(pdftex.def)             Requested size: 429.10207pt x 314.67485pt.
+
+Overfull \hbox (16.53711pt too wide) in paragraph at lines 32--33
+ [][] 
+ []
+
+<Figures/TrainHistory_dataset_cases3000_C0_321_L0_13_0_321_0_13_48_1_allI0.png,
+ id=241, 570.13pt x 420.57124pt>
+File: Figures/TrainHistory_dataset_cases3000_C0_321_L0_13_0_321_0_13_48_1_allI0
+.png Graphic file (type png)
+<use Figures/TrainHistory_dataset_cases3000_C0_321_L0_13_0_321_0_13_48_1_allI0.
+png>
+Package pdftex.def Info: Figures/TrainHistory_dataset_cases3000_C0_321_L0_13_0_
+321_0_13_48_1_allI0.png  used on input line 39.
+(pdftex.def)             Requested size: 427.59645pt x 315.42766pt.
+
+Overfull \hbox (15.0315pt too wide) in paragraph at lines 39--40
+ [][] 
+ []
+
+<Figures/TrainHistory_dataset_cases5000_C0_321_L0_13_0_321_0_13_48_1_allI0.png,
+ id=242, 574.145pt x 421.575pt>
+File: Figures/TrainHistory_dataset_cases5000_C0_321_L0_13_0_321_0_13_48_1_allI0
+.png Graphic file (type png)
+<use Figures/TrainHistory_dataset_cases5000_C0_321_L0_13_0_321_0_13_48_1_allI0.
+png>
+Package pdftex.def Info: Figures/TrainHistory_dataset_cases5000_C0_321_L0_13_0_
+321_0_13_48_1_allI0.png  used on input line 46.
+(pdftex.def)             Requested size: 430.6077pt x 316.18047pt.
+
+Overfull \hbox (18.04274pt too wide) in paragraph at lines 46--47
+ [][] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 57--59
+
+ []
+
+[55]
+Underfull \hbox (badness 10000) in paragraph at lines 60--63
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 64--66
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 67--70
+
+ []
+
 [56]
-Underfull \hbox (badness 10000) in paragraph at lines 86--88
+Underfull \hbox (badness 10000) in paragraph at lines 87--88
 
  []
 
@@ -936,54 +1018,169 @@ Underfull \hbox (badness 10000) in paragraph at lines 89--92
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 93--96
+Underfull \hbox (badness 10000) in paragraph at lines 93--94
 
  []
 
-[57 <./Figures/Training History.png>]
+<Figures/train_history_ori.png, id=250, 565.11125pt x 419.5675pt>
+File: Figures/train_history_ori.png Graphic file (type png)
+<use Figures/train_history_ori.png>
+Package pdftex.def Info: Figures/train_history_ori.png  used on input line 99.
+(pdftex.def)             Requested size: 395.57516pt x 293.69524pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 107--109
+
+ []
+
+[57]
+Underfull \hbox (badness 10000) in paragraph at lines 110--113
+
+ []
+
+<Figures/vgg_encoding.png, id=254, 160.34906pt x 319.94531pt>
+File: Figures/vgg_encoding.png Graphic file (type png)
+<use Figures/vgg_encoding.png>
+Package pdftex.def Info: Figures/vgg_encoding.png  used on input line 116.
+(pdftex.def)             Requested size: 120.26149pt x 239.95839pt.
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[58]
+<Figures/transfer3.png, id=258, 656.9343pt x 583.2189pt>
+File: Figures/transfer3.png Graphic file (type png)
+<use Figures/transfer3.png>
+Package pdftex.def Info: Figures/transfer3.png  used on input line 149.
+(pdftex.def)             Requested size: 459.85088pt x 408.25046pt.
+
+Overfull \hbox (47.28592pt too wide) in paragraph at lines 149--150
+ [][] 
+ []
+
+) [59] [60 <./Figures/comparing_models_Sensitivity.png>] [61 <./Figures/TrainHi
+story_dataset_cases1000_C0_321_L0_13_0_321_0_13_48_1_allI0.png>] [62 <./Figures
+/TrainHistory_dataset_cases3000_C0_321_L0_13_0_321_0_13_48_1_allI0.png>]
+[63 <./Figures/TrainHistory_dataset_cases5000_C0_321_L0_13_0_321_0_13_48_1_allI
+0.png>] [64 <./Figures/train_history_ori.png> <./Figures/vgg_encoding.png>]
+[65 <./Figures/transfer3.png>]
+\openout2 = `chapter6.aux'.
+
+ (./chapter6.tex
+Chapter 6.
+[66
+
+
+
+
+] [67]
+Overfull \hbox (1.64551pt too wide) in paragraph at lines 53--54
+\OT1/ptm/m/n/12 gram-matic frame-work de-vel-oped to cre-ate datasets and strea
+m-line ma-chine learn-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 61--63
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 64--67
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 68--71
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 72--75
+
+ []
+
+[68]
+<Figures/position_distribution.png, id=297, 489.32813pt x 722.7pt>
+File: Figures/position_distribution.png Graphic file (type png)
+<use Figures/position_distribution.png>
+Package pdftex.def Info: Figures/position_distribution.png  used on input line 
+81.
+(pdftex.def)             Requested size: 342.52734pt x 505.88655pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 94--96
+
+ []
+
+
 Underfull \hbox (badness 10000) in paragraph at lines 97--100
 
  []
 
+<Figures/Training History.png, id=298, 425.33907pt x 319.94531pt>
+File: Figures/Training History.png Graphic file (type png)
+<use Figures/Training History.png>
+Package pdftex.def Info: Figures/Training History.png  used on input line 106.
+(pdftex.def)             Requested size: 233.9372pt x 175.97046pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 101--104
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 113--115
 
  []
 
-<Figures/architecture_final.png, id=251, 346.896pt x 177.7842pt>
+[69] [70 <./Figures/position_distribution.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 116--119
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 120--123
+
+ []
+
+[71 <./Figures/Training History.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 124--127
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 128--131
+
+ []
+
+<Figures/architecture_final.png, id=310, 346.896pt x 177.7842pt>
 File: Figures/architecture_final.png Graphic file (type png)
 <use Figures/architecture_final.png>
-Package pdftex.def Info: Figures/architecture_final.png  used on input line 111
+Package pdftex.def Info: Figures/architecture_final.png  used on input line 138
 .
 (pdftex.def)             Requested size: 416.2731pt x 213.33994pt.
 
-Overfull \hbox (3.70815pt too wide) in paragraph at lines 111--112
+Overfull \hbox (3.70815pt too wide) in paragraph at lines 138--139
  [][] 
  []
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<Figures/convo_proj2.png, id=252, 462.22687pt x 585.68813pt>
+<Figures/convo_proj2.png, id=311, 462.22687pt x 585.68813pt>
 File: Figures/convo_proj2.png Graphic file (type png)
 <use Figures/convo_proj2.png>
-Package pdftex.def Info: Figures/convo_proj2.png  used on input line 118.
+Package pdftex.def Info: Figures/convo_proj2.png  used on input line 145.
 (pdftex.def)             Requested size: 369.782pt x 468.55113pt.
 
-LaTeX Warning: Float too large for page by 15.34732pt on input line 121.
+LaTeX Warning: Float too large for page by 15.34732pt on input line 148.
 
-<Figures/convo_vis.png, id=253, 754.31813pt x 627.84563pt>
+<Figures/convo_vis.png, id=312, 754.31813pt x 627.84563pt>
 File: Figures/convo_vis.png Graphic file (type png)
 <use Figures/convo_vis.png>
-Package pdftex.def Info: Figures/convo_vis.png  used on input line 125.
+Package pdftex.def Info: Figures/convo_vis.png  used on input line 152.
 (pdftex.def)             Requested size: 528.0191pt x 439.48894pt.
 
-Overfull \hbox (115.45415pt too wide) in paragraph at lines 125--126
+Overfull \hbox (115.45415pt too wide) in paragraph at lines 152--153
  [][] 
  []
 
-[58]
-Underfull \hbox (badness 10000) in paragraph at lines 134--136
+[72]
+Underfull \hbox (badness 10000) in paragraph at lines 161--163
 
  []
 
@@ -991,44 +1188,29 @@ Underfull \hbox (badness 10000) in paragraph at lines 134--136
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 
-LaTeX Warning: Reference `dataset' on page 59 undefined on input line 160.
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 164--166
+Underfull \hbox (badness 10000) in paragraph at lines 191--193
 
  []
 
-[59 <./Figures/architecture_final.png>] [60 <./Figures/convo_proj2.png>]
-[61 <./Figures/convo_vis.png>] [62]
-
-LaTeX Warning: Reference `framework' on page 63 undefined on input line 174.
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 174--176
+[73 <./Figures/architecture_final.png>] [74 <./Figures/convo_proj2.png>]
+[75 <./Figures/convo_vis.png>] [76]
+Underfull \hbox (badness 10000) in paragraph at lines 201--203
 
  []
 
 
-LaTeX Warning: Reference `fig:pos_distr' on page 63 undefined on input line 182
-.
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 182--184
+Underfull \hbox (badness 10000) in paragraph at lines 209--211
 
  []
 
-[63]
-<Figures/core_regions.png, id=275, 328.97906pt x 341.77687pt>
+[77]
+<Figures/core_regions.png, id=334, 328.97906pt x 341.77687pt>
 File: Figures/core_regions.png Graphic file (type png)
 <use Figures/core_regions.png>
-Package pdftex.def Info: Figures/core_regions.png  used on input line 190.
+Package pdftex.def Info: Figures/core_regions.png  used on input line 217.
 (pdftex.def)             Requested size: 230.28377pt x 239.24217pt.
-
-
-LaTeX Warning: Reference `dataset' on page 64 undefined on input line 197.
-
-[64 <./Figures/core_regions.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 228--229
+ [78 <./Figures/core_regions.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 255--256
 
  []
 
@@ -1036,107 +1218,106 @@ Underfull \hbox (badness 10000) in paragraph at lines 228--229
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 252--254
+Underfull \hbox (badness 10000) in paragraph at lines 279--281
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 255--258
+Underfull \hbox (badness 10000) in paragraph at lines 282--285
 
  []
 
-[65]
-Underfull \hbox (badness 10000) in paragraph at lines 277--280
+[79]
+Underfull \hbox (badness 10000) in paragraph at lines 304--307
 
  []
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[66]
-<Figures/region_compare2.png, id=286, 670.75594pt x 607.51968pt>
+[80]
+<Figures/region_compare2.png, id=346, 670.75594pt x 607.51968pt>
 File: Figures/region_compare2.png Graphic file (type png)
 <use Figures/region_compare2.png>
-Package pdftex.def Info: Figures/region_compare2.png  used on input line 306.
+Package pdftex.def Info: Figures/region_compare2.png  used on input line 333.
 (pdftex.def)             Requested size: 368.9169pt x 334.13686pt.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 313--316
+Underfull \hbox (badness 10000) in paragraph at lines 340--343
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 317--320
+Underfull \hbox (badness 10000) in paragraph at lines 344--347
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 321--324
+Underfull \hbox (badness 10000) in paragraph at lines 348--351
 
  []
 
-[67]
-Underfull \hbox (badness 10000) in paragraph at lines 325--328
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 329--332
+[81]
+Underfull \hbox (badness 10000) in paragraph at lines 352--355
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 333--336
+Underfull \hbox (badness 10000) in paragraph at lines 356--359
 
  []
 
-<Figures/best_results_distribution_margins.png, id=291, 313.9228pt x 304.88907p
+
+Underfull \hbox (badness 10000) in paragraph at lines 360--363
+
+ []
+
+<Figures/best_results_distribution_margins.png, id=350, 313.9228pt x 304.88907p
 t>
 File: Figures/best_results_distribution_margins.png Graphic file (type png)
 <use Figures/best_results_distribution_margins.png>
 Package pdftex.def Info: Figures/best_results_distribution_margins.png  used on
- input line 341.
+ input line 368.
 (pdftex.def)             Requested size: 204.0474pt x 198.17554pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<Figures/best_results_analysis.png, id=292, 328.22626pt x 1103.62312pt>
+<Figures/best_results_analysis.png, id=351, 328.22626pt x 1103.62312pt>
 File: Figures/best_results_analysis.png Graphic file (type png)
 <use Figures/best_results_analysis.png>
 Package pdftex.def Info: Figures/best_results_analysis.png  used on input line 
-348.
+375.
 (pdftex.def)             Requested size: 154.26636pt x 518.70294pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 353--356
+Underfull \hbox (badness 10000) in paragraph at lines 380--383
 
  []
 
-[68]
-Underfull \hbox (badness 10000) in paragraph at lines 357--360
+[82]
+Underfull \hbox (badness 10000) in paragraph at lines 384--387
 
  []
 
-[69]
-Underfull \hbox (badness 10000) in paragraph at lines 378--380
+[83]
+Underfull \hbox (badness 10000) in paragraph at lines 405--407
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 381--384
+Underfull \hbox (badness 10000) in paragraph at lines 408--411
 
  []
 
-[70]) [71] [72 <./Figures/region_compare2.png>] [73 <./Figures/best_results_dis
-tribution_margins.png>] [74 <./Figures/best_results_analysis.png>]
+) [84] [85 <./Figures/region_compare2.png>] [86 <./Figures/best_results_distrib
+ution_margins.png>] [87 <./Figures/best_results_analysis.png>]
 \openout2 = `chapter7.aux'.
 
-
-(./chapter7.tex
-Chapter 6.
-[75
+ (./chapter7.tex
+Chapter 7.
+[88
 
 
 
@@ -1146,7 +1327,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 24--26
 
  []
 
-<Figures/MLS_vs_OM.png, id=320, 429.85594pt x 347.79938pt>
+<Figures/MLS_vs_OM.png, id=376, 429.85594pt x 347.79938pt>
 File: Figures/MLS_vs_OM.png Graphic file (type png)
 <use Figures/MLS_vs_OM.png>
 Package pdftex.def Info: Figures/MLS_vs_OM.png  used on input line 29.
@@ -1164,7 +1345,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 38--41
 
  []
 
-[76]
+[89]
 Underfull \hbox (badness 10000) in paragraph at lines 42--45
 
  []
@@ -1174,7 +1355,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 46--49
 
  []
 
-[77 <./Figures/MLS_vs_OM.png>]
+[90 <./Figures/MLS_vs_OM.png>]
 Underfull \hbox (badness 10000) in paragraph at lines 50--53
 
  []
@@ -1184,7 +1365,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 71--73
 
  []
 
-[78]
+[91]
 Underfull \hbox (badness 10000) in paragraph at lines 74--77
 
  []
@@ -1194,7 +1375,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 78--81
 
  []
 
-<Figures/data_augmentation2.png, id=330, 1531.7225pt x 760.8425pt>
+<Figures/data_augmentation2.png, id=387, 1531.7225pt x 760.8425pt>
 File: Figures/data_augmentation2.png Graphic file (type png)
 <use Figures/data_augmentation2.png>
 Package pdftex.def Info: Figures/data_augmentation2.png  used on input line 85.
@@ -1218,17 +1399,17 @@ Underfull \hbox (badness 10000) in paragraph at lines 102--104
 
  []
 
-[79]
+[92]
 Underfull \hbox (badness 10000) in paragraph at lines 105--108
 
  []
 
-[80 <./Figures/data_augmentation2.png>]
+[93 <./Figures/data_augmentation2.png>]
 Underfull \hbox (badness 10000) in paragraph at lines 109--112
 
  []
 
-<Figures/paper1_results_analysis.png, id=339, 424.58624pt x 1081.03876pt>
+<Figures/paper1_results_analysis.png, id=395, 424.58624pt x 1081.03876pt>
 File: Figures/paper1_results_analysis.png Graphic file (type png)
 <use Figures/paper1_results_analysis.png>
 Package pdftex.def Info: Figures/paper1_results_analysis.png  used on input lin
@@ -1252,8 +1433,8 @@ Underfull \hbox (badness 10000) in paragraph at lines 134--136
 
  []
 
-[81] [82 <./Figures/paper1_results_analysis.png>]
-<Figures/parmec_augmentation.png, id=347, 877.2775pt x 299.1175pt>
+[94] [95 <./Figures/paper1_results_analysis.png>]
+<Figures/parmec_augmentation.png, id=403, 877.2775pt x 299.1175pt>
 File: Figures/parmec_augmentation.png Graphic file (type png)
 <use Figures/parmec_augmentation.png>
 Package pdftex.def Info: Figures/parmec_augmentation.png  used on input line 14
@@ -1265,20 +1446,11 @@ Overfull \hbox (26.07272pt too wide) in paragraph at lines 146--147
  []
 
 
-LaTeX Warning: Reference `fig:cracked_3d' on page 83 undefined on input line 15
-1.
-
-
 Underfull \hbox (badness 10000) in paragraph at lines 151--153
 
  []
 
-[83 <./Figures/parmec_augmentation.png>]
-
-LaTeX Warning: Reference `fig:top_down' on page 84 undefined on input line 155.
-
-
-
+[96 <./Figures/parmec_augmentation.png>]
 Underfull \hbox (badness 10000) in paragraph at lines 154--157
 
  []
@@ -1293,7 +1465,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 162--165
 
  []
 
-[84]
+[97]
 Underfull \hbox (badness 10000) in paragraph at lines 173--176
 
  []
@@ -1308,7 +1480,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 195--198
 
  []
 
-[85]
+[98]
 Underfull \hbox (badness 10000) in paragraph at lines 199--202
 
  []
@@ -1324,7 +1496,7 @@ Overfull \hbox (1.50299pt too wide) in paragraph at lines 222--224
 ons made near the mode, quickly
  []
 
-<Figures/lossPlots.png, id=359, 642.4pt x 481.8pt>
+<Figures/lossPlots.png, id=415, 642.4pt x 481.8pt>
 File: Figures/lossPlots.png Graphic file (type png)
 <use Figures/lossPlots.png>
 Package pdftex.def Info: Figures/lossPlots.png  used on input line 228.
@@ -1332,7 +1504,7 @@ Package pdftex.def Info: Figures/lossPlots.png  used on input line 228.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<Figures/norm_distr.png, id=360, 551.05875pt x 436.63126pt>
+<Figures/norm_distr.png, id=416, 551.05875pt x 436.63126pt>
 File: Figures/norm_distr.png Graphic file (type png)
 <use Figures/norm_distr.png>
 Package pdftex.def Info: Figures/norm_distr.png  used on input line 235.
@@ -1345,7 +1517,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 242--244
 
  []
 
-[86] [87 <./Figures/lossPlots.png (PNG copy)>]
+[99] [100 <./Figures/lossPlots.png (PNG copy)>]
 Underfull \hbox (badness 10000) in paragraph at lines 275--277
 
  []
@@ -1358,7 +1530,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 300--303
 
  []
 
-[88 <./Figures/norm_distr.png>]
+[101 <./Figures/norm_distr.png>]
 Underfull \hbox (badness 10000) in paragraph at lines 304--307
 
  []
@@ -1368,8 +1540,8 @@ Underfull \hbox (badness 10000) in paragraph at lines 329--332
 
  []
 
-[89]
-<Figures/SimpleModelImproved2.png, id=375, 649.42625pt x 342.27875pt>
+[102]
+<Figures/SimpleModelImproved2.png, id=432, 649.42625pt x 342.27875pt>
 File: Figures/SimpleModelImproved2.png Graphic file (type png)
 <use Figures/SimpleModelImproved2.png>
 Package pdftex.def Info: Figures/SimpleModelImproved2.png  used on input line 3
@@ -1397,7 +1569,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 399--402
 
  []
 
-[90] [91 <./Figures/SimpleModelImproved2.png>]
+[103] [104 <./Figures/SimpleModelImproved2.png>]
 Underfull \hbox (badness 10000) in paragraph at lines 435--437
 
  []
@@ -1407,8 +1579,8 @@ Underfull \hbox (badness 10000) in paragraph at lines 438--441
 
  []
 
-[92] [93]
-<Figures/E1p0_vs_E2p4.png, id=390, 867.24pt x 1635.10875pt>
+[105] [106]
+<Figures/E1p0_vs_E2p4.png, id=447, 867.24pt x 1635.10875pt>
 File: Figures/E1p0_vs_E2p4.png Graphic file (type png)
 <use Figures/E1p0_vs_E2p4.png>
 Package pdftex.def Info: Figures/E1p0_vs_E2p4.png  used on input line 517.
@@ -1421,14 +1593,14 @@ Underfull \hbox (badness 10000) in paragraph at lines 524--526
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[94] [95 <./Figures/E1p0_vs_E2p4.png>]
+[107] [108 <./Figures/E1p0_vs_E2p4.png>]
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<Figures/E4p1optimal.png, id=398, 328.22626pt x 1198.4775pt>
+<Figures/E4p1optimal.png, id=455, 328.22626pt x 1198.4775pt>
 File: Figures/E4p1optimal.png Graphic file (type png)
 <use Figures/E4p1optimal.png>
 Package pdftex.def Info: Figures/E4p1optimal.png  used on input line 611.
@@ -1446,11 +1618,11 @@ Underfull \hbox (badness 10000) in paragraph at lines 621--624
 
  []
 
-[96] [97 <./Figures/E4p1optimal.png>] [98]
+[109] [110 <./Figures/E4p1optimal.png>] [111]
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<Figures/m3_transfer_compare.jpg, id=409, 803.0pt x 1606.0pt>
+<Figures/m3_transfer_compare.jpg, id=466, 803.0pt x 1606.0pt>
 File: Figures/m3_transfer_compare.jpg Graphic file (type jpg)
 <use Figures/m3_transfer_compare.jpg>
 Package pdftex.def Info: Figures/m3_transfer_compare.jpg  used on input line 69
@@ -1461,7 +1633,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 706--708
 
  []
 
-[99] [100 <./Figures/m3_transfer_compare.jpg>]
+[112] [113 <./Figures/m3_transfer_compare.jpg>]
 Underfull \hbox (badness 10000) in paragraph at lines 709--712
 
  []
@@ -1471,7 +1643,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 713--716
 
  []
 
-[101]
+[114]
 Underfull \hbox (badness 10000) in paragraph at lines 717--720
 
  []
@@ -1486,7 +1658,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 725--728
 
  []
 
-[102]
+[115]
 Underfull \hbox (badness 10000) in paragraph at lines 735--737
 
  []
@@ -1501,55 +1673,50 @@ Underfull \hbox (badness 10000) in paragraph at lines 742--745
 
  []
 
-[103]
+[116]
 Underfull \hbox (badness 10000) in paragraph at lines 746--749
 
  []
 
-) [104]
+) [117]
 \openout2 = `chapter8.aux'.
 
  (./chapter8.tex
-Chapter 7.
-) [105
+Chapter 8.
+) [118
 
 
 
 
-] (./report.bbl [106
+] (./report.bbl [119
 
 
 
-] [107] [108] [109] [110]) [111] (./report.aux
-(./chapter1.aux) (./chapter2.aux) (./chapter3.aux) (./chapter5.aux)
-(./chapter6.aux) (./chapter7.aux) (./chapter8.aux))
-
-LaTeX Warning: There were undefined references.
-
- ) 
+] [120] [121] [122] [123]) [124] (./report.aux
+(./chapter1.aux) (./chapter2.aux) (./chapter3.aux) (./chapter4.aux)
+(./chapter5.aux) (./chapter6.aux) (./chapter7.aux) (./chapter8.aux)) ) 
 Here is how much of TeX's memory you used:
- 6220 strings out of 480171
- 103362 string characters out of 5894488
- 385953 words of memory out of 5000000
- 23971 multiletter control sequences out of 15000+600000
+ 6346 strings out of 478238
+ 107459 string characters out of 5850455
+ 392177 words of memory out of 5000000
+ 24368 multiletter control sequences out of 15000+600000
  502219 words of font info for 90 fonts, out of 8000000 for 9000
- 59 hyphenation exceptions out of 8191
+ 1141 hyphenation exceptions out of 8191
  55i,10n,62p,1658b,304s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texliv
-e/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texm
-f-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist
-/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/
-type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/
-public/amsfonts/symbols/msbm10.pfb></usr/share/texlive/texmf-dist/fonts/type1/u
-rw/courier/ucrr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/symbol/usy
-r.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/sha
-re/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texm
-f-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/ty
-pe1/urw/times/utmri8a.pfb>
-Output written on report.pdf (111 pages, 6439478 bytes).
+{/usr/sha
+re/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texmf-dist/fonts/type1/pu
+blic/amsfonts/cm/cmex10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/
+cm/cmmi10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><
+/usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/tex
+mf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/share/texmf-dist/f
+onts/type1/urw/courier/ucrr8a.pfb></usr/share/texmf-dist/fonts/type1/urw/symbol
+/usyr.pfb></usr/share/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/t
+exmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texmf-dist/fonts/type1/u
+rw/times/utmr8a.pfb></usr/share/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on report.pdf (124 pages, 7002977 bytes).
 PDF statistics:
- 504 PDF objects out of 1000 (max. 8388607)
- 282 compressed objects within 3 object streams
+ 561 PDF objects out of 1000 (max. 8388607)
+ 310 compressed objects within 4 object streams
  0 named destinations out of 1000 (max. 500000)
- 271 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 311 words of extra memory for PDF output out of 10000 (max. 10000000)
 

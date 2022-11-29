@@ -1,9 +1,10 @@
-This is BibTeX, Version 0.99d (TeX Live 2022/dev/Debian)
+This is BibTeX, Version 0.99d (TeX Live 2022/Arch Linux)
 Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: report.aux
 A level-1 auxiliary file: chapter1.aux
 A level-1 auxiliary file: chapter2.aux
 A level-1 auxiliary file: chapter3.aux
+A level-1 auxiliary file: chapter4.aux
 A level-1 auxiliary file: chapter5.aux
 A level-1 auxiliary file: chapter6.aux
 A level-1 auxiliary file: chapter7.aux
@@ -15,45 +16,45 @@ Warning--entry type for "huw_rhys_jones_2022_6967536" isn't style-file defined
 Warning--empty journal in dozat2016incorporating
 Warning--empty journal in harrison1978hedonic
 Warning--empty journal in huber1964robust
-You've used 58 entries,
+You've used 63 entries,
             2118 wiz_defined-function locations,
-            824 strings with 14306 characters,
-and the built_in function-call counts, 21308 in all, are:
-= -- 2104
-> -- 1067
-< -- 20
-+ -- 430
-- -- 364
-* -- 1441
-:= -- 3484
-add.period$ -- 189
-call.type$ -- 58
-change.case$ -- 350
+            845 strings with 15399 characters,
+and the built_in function-call counts, 23416 in all, are:
+= -- 2304
+> -- 1207
+< -- 22
++ -- 487
+- -- 414
+* -- 1595
+:= -- 3828
+add.period$ -- 204
+call.type$ -- 63
+change.case$ -- 390
 chr.to.int$ -- 0
-cite$ -- 61
-duplicate$ -- 823
-empty$ -- 1628
-format.name$ -- 364
-if$ -- 4513
+cite$ -- 66
+duplicate$ -- 888
+empty$ -- 1770
+format.name$ -- 414
+if$ -- 4953
 int.to.chr$ -- 0
-int.to.str$ -- 58
-missing$ -- 61
-newline$ -- 292
-num.names$ -- 116
-pop$ -- 420
+int.to.str$ -- 63
+missing$ -- 63
+newline$ -- 315
+num.names$ -- 126
+pop$ -- 469
 preamble$ -- 1
-purify$ -- 298
+purify$ -- 332
 quote$ -- 0
-skip$ -- 581
+skip$ -- 638
 stack$ -- 0
-substring$ -- 1233
-swap$ -- 212
-text.length$ -- 20
+substring$ -- 1333
+swap$ -- 233
+text.length$ -- 22
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 218
+type$ -- 240
 warning$ -- 3
-while$ -- 205
-width$ -- 60
-write$ -- 634
+while$ -- 223
+width$ -- 65
+write$ -- 685
 (There were 4 warnings)
