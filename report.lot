@@ -4,26 +4,26 @@
 \addvspace {10\p@ }
 \contentsline {table}{\numberline {4.1}{\ignorespaces Summary of the Inputs and Outputs of the Parmec Engineering Model for AGR Graphite Core Seismic Analysis.}}{40}{}%
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {5.1}{\ignorespaces Summary of the test results from Experiment 3: Transfer Learning.}}{58}{}%
+\contentsline {table}{\numberline {5.1}{\ignorespaces Summary of the Test Results from Preliminary Transfer Learning Experiment}}{58}{}%
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {6.1}{\ignorespaces Summary of the Input Encoding Experiment}}{76}{}%
-\contentsline {table}{\numberline {6.2}{\ignorespaces Summary of the Test Results from the Traditional Methods Experiment (Subsection\nobreakspace {}6.5.1\hbox {})}}{79}{}%
-\contentsline {table}{\numberline {6.3}{\ignorespaces Summary of the Test Results from the Input Encoding Experiment (Subsection\nobreakspace {}6.5.4\hbox {})}}{80}{}%
-\contentsline {table}{\numberline {6.4}{\ignorespaces Summary of the Test Results from the Regional Feature Selection Experiment (Subsection\nobreakspace {}6.5.5\hbox {})}}{80}{}%
-\contentsline {table}{\numberline {6.5}{\ignorespaces Summary of the Test Results from the Level Feature Selection Experiment}}{81}{}%
+\contentsline {table}{\numberline {6.1}{\ignorespaces Summary of the Input Encoding Experiment}}{79}{}%
+\contentsline {table}{\numberline {6.2}{\ignorespaces Summary of the Test Results from the Traditional Methods Experiment (Subsection\nobreakspace {}\ref {traditional})}}{82}{}%
+\contentsline {table}{\numberline {6.3}{\ignorespaces Summary of the Test Results from the Input Encoding Experiment (Subsection\nobreakspace {}\ref {encoding_method})}}{83}{}%
+\contentsline {table}{\numberline {6.4}{\ignorespaces Summary of the Test Results from the Regional Feature Selection Experiment (Subsection\nobreakspace {}\ref {regional_selection})}}{83}{}%
+\contentsline {table}{\numberline {6.5}{\ignorespaces Summary of the Test Results from the Level Feature Selection Experiment}}{84}{}%
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {7.1}{\ignorespaces Performance of the Five Best Performing Models Produced Using the Method of chapter\nobreakspace {}6\hbox {}}}{100}{}%
-\contentsline {table}{\numberline {7.2}{\ignorespaces Summary of the Datasets Used in Experiments 1 \& 2 as described in subsection\nobreakspace {}7.6.1\hbox {}}}{102}{}%
-\contentsline {table}{\numberline {7.3}{\ignorespaces Summary of Experiment 1}}{102}{}%
-\contentsline {table}{\numberline {7.4}{\ignorespaces Summary of Experiment 2}}{103}{}%
-\contentsline {table}{\numberline {7.5}{\ignorespaces Summary of the Experiment 3}}{104}{}%
-\contentsline {table}{\numberline {7.6}{\ignorespaces Summary of the Experiment 4}}{105}{}%
-\contentsline {table}{\numberline {7.7}{\ignorespaces Summary of the Experiment 5}}{106}{}%
-\contentsline {table}{\numberline {7.8}{\ignorespaces Results Summary of Experiment 1}}{107}{}%
-\contentsline {table}{\numberline {7.9}{\ignorespaces Results Summary of Experiment 2}}{109}{}%
-\contentsline {table}{\numberline {7.10}{\ignorespaces Results Summary of Experiment 3}}{111}{}%
-\contentsline {table}{\numberline {7.11}{\ignorespaces Results Summary of Experiment 4}}{111}{}%
-\contentsline {table}{\numberline {7.12}{\ignorespaces Results Summary of Experiment 5.1}}{112}{}%
-\contentsline {table}{\numberline {7.13}{\ignorespaces Results Summary of Experiment 5.2}}{112}{}%
-\contentsline {table}{\numberline {7.14}{\ignorespaces Results Summary of Experiment 5.3}}{114}{}%
+\contentsline {table}{\numberline {7.1}{\ignorespaces Performance of the Five Best Performing Models Produced Using the Method of chapter\nobreakspace {}\ref {cha:surrogate}}}{103}{}%
+\contentsline {table}{\numberline {7.2}{\ignorespaces Summary of the Datasets Used in Experiments 1 \& 2 as described in subsection\nobreakspace {}\ref {augmentMethod}}}{105}{}%
+\contentsline {table}{\numberline {7.3}{\ignorespaces Summary of Experiment 1}}{105}{}%
+\contentsline {table}{\numberline {7.4}{\ignorespaces Summary of Experiment 2}}{106}{}%
+\contentsline {table}{\numberline {7.5}{\ignorespaces Summary of the Experiment 3}}{107}{}%
+\contentsline {table}{\numberline {7.6}{\ignorespaces Summary of the Experiment 4}}{108}{}%
+\contentsline {table}{\numberline {7.7}{\ignorespaces Summary of the Experiment 5}}{109}{}%
+\contentsline {table}{\numberline {7.8}{\ignorespaces Results Summary of Experiment 1}}{110}{}%
+\contentsline {table}{\numberline {7.9}{\ignorespaces Results Summary of Experiment 2}}{112}{}%
+\contentsline {table}{\numberline {7.10}{\ignorespaces Results Summary of Experiment 3}}{114}{}%
+\contentsline {table}{\numberline {7.11}{\ignorespaces Results Summary of Experiment 4}}{114}{}%
+\contentsline {table}{\numberline {7.12}{\ignorespaces Results Summary of Experiment 5.1}}{115}{}%
+\contentsline {table}{\numberline {7.13}{\ignorespaces Results Summary of Experiment 5.2}}{115}{}%
+\contentsline {table}{\numberline {7.14}{\ignorespaces Results Summary of Experiment 5.3}}{117}{}%
 \addvspace {10\p@ }

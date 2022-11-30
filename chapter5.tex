@@ -114,7 +114,7 @@ To suit the purpose of this study, the existing models had to be adapted. Previo
 \begin{figure}[h]
 	\centering
 	\includegraphics[scale=0.75]{Figures/vgg_encoding.png}
-	\caption{Feature encoding appropriate for use in transfer learning. This image shows a single Parmec instance encoded in a planar configuration.}
+	\caption{Feature encoding appropriate for use in transfer learning} {This image shows a single Parmec instance encoded in a planar configuration.}
 	\label{fig:transfer_encoding}
 \end{figure}
 
@@ -156,3 +156,26 @@ Over all, the transfer learning models produced inferior results to those of an 
 
 \section{Whole Core Experiment}
 
+As mentioned in subsection~\label{data:outputs}, the output of Parmec is multi-dimensional, with 6 directional/rotational outputs for all 4173 interstitial bricks, with each of these values output at all 271 time frames during the earthquake. In this experiment, a single time frame was selected (frame 48) and one output metric (displacement in the West-East direction). The rationale for selecting these outputs starts by examining and comparing Figures~\ref{fig:results1} \& \ref{fig:results2}, as well as Figures~ref{fig:histo1} \& ref{fig:histo1}. Displacement in the South-North direction was discarded as limited variability can be seen looking at individual cases and at the distribution of the dataset as a whole. Looking at individual cases of displacement in the West-East direction, it can be seen that there is variability between cases (top row of Figure~\ref{fig:results1}). Also, there are a reduced number of outliers (Cyan in Figure~\ref{fig:histo1}) compared to outputs for the other time frames. 
+\\
+
+\noindent
+With our selection of output data, a machine learning model was trained for 200 epochs to predict displacement in the West-East direction at frame 48 for all 4173 interstitial bricks. A visualisation of the test set predictions for a single instance can be seen in Figures~\ref{fig:preds_layer_7} \& \ref{fig:preds_layer_10}. These figures visualise the predictions of the model at the half way point of training and after the final epoch, comparing each to the ground truth.
+\\
+
+\begin{figure*}[p]
+	\centering
+	\includegraphics[scale=0.45]{Figures/preds_layer_7.png}
+	\caption{Direct comparison of model predictions against ground truth labels for core level 7} {This comparison is made for predictions on the test data-set and at two points during the training process. Each column represents a different example case from the testing data-set. The top row represents the ground truth labels with the two subsequent rows showing the predictions of the model at epoch 100 and 200 (final epoch). }
+	\label{fig:preds_layer_7}
+\end{figure*}
+
+\begin{figure*}[p]
+	\centering
+	\includegraphics[scale=0.45]{Figures/preds_layer_10.png}
+	\caption{Direct comparison of model predictions against ground truth labels for core level 10} {This comparison is made for predictions on the test data-set and at two points during the training process. Each column represents a different example case from the testing data-set. The top row represents the ground truth labels with the two subsequent rows showing the predictions of the model at epoch 100 and 200 (final epoch). }
+	\label{fig:preds_layer_10}
+\end{figure*}
+
+\noindent
+It can be seen that the model makes similar predictions for all three cases i.e. there is limited variability between the predictions. This suggests the model has a high level of bias and is not able to generalise well. The explanation for this can likely be found in the discussion within subsection \ref{correlation}, where it was revealed that the outputs for disparate regions of the core do not correlate well with each other. Therefore, this result suggests that the development of a machine learning model with the intention of predicting the displacement of all 4173 bricks may be highly complex and take considerable effort in model optimisation. Therefore, the development of a model with a narrower output prediction scope first may be a more reasonable short term goal.
