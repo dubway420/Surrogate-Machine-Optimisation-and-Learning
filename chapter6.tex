@@ -58,19 +58,19 @@ Much of what is contained in the introductory and background sections of the jou
 
 \section{Data Selection and Focus} \label{data_selection}
 
-As explained in subsection~\ref{data:outputs}, each Parmec case contains approximately 6.8 million output parameters. For the purpose of this work, a process of narrowing down this large data space into a usable format was carried out. As this is a preliminary investigation into the application of surrogate models to this area of research, the data space will be simplified so as to provide a feasible demonstration.  
+As explained in subsection~\ref{data:outputs}, each Parmec case contains approximately 6.8 million output parameters. For the purpose of this work,  this large data space was narrowed down into a usable format. The process of data selection was informed by the preliminary experiments reported in Chapter~\ref{cha:preliminary} and the data visualisation process from section~\ref{data:visualisation} .  
 \\
 
 \noindent
-Of the six output metrics, a single displacement metric was chosen (displacement translation along the horizontal axis in the direction of the applied earthquake acceleration) at a single time frame (time frame 48 - approximately 3.8 seconds into the simulated earthquake). Referring back to Figure~\ref{fig:earthquake}, it can be seen that the earthquake is well underway at this point. The data from later time-steps was found to have a greater level of homogeneity and less variation between instances.
+Of the six output metrics, a single displacement metric was chosen (displacement translation along the horizontal axis in the direction of the applied earthquake acceleration) at a single time frame (time frame 48 - approximately 3.8 seconds into the simulated earthquake). The justification for this selection is made at the start of section~\ref{prelim:whole} and can be summarised by examining Figure~\ref{fig:earthquake}. It can be seen that the earthquake is well underway at this point and the data from later time-steps was found to have a greater level of homogeneity and less variation between instances.
 \\
 
 \noindent
-The output space was further narrowed to include data for just a single brick at a time i.e. a single label value for each instance. The selection of outputs allows the research problem to be expressed as single label regression (as opposed to multi label regression where we would attempt to predict multiple outputs per instance).
+The output space was further narrowed to include data for just a single brick at a time i.e. a single label value for each instance. The selection of outputs allows the research problem to be expressed as single label regression (as opposed to multi label regression where we would attempt to predict multiple outputs per instance). The decision to focus on only a single brick and not outputs for the whole go was again made based on the findings of the preliminary experiment detailed in section~\ref{prelim:whole} where unsatisfactory results were achieved from training a model to predict outputs for all interstitial bricks. It was also discussed in subsection~\ref{correlation} that outputs for interstitial bricks poorly correlate with each other, particularly when the bricks are from geographically remote parts of the core.
 \\
 
 \noindent
-The brick chosen was the one located at the upper most level at the centre of the core. This position of this brick is shown in the lower part of Figure~\ref{fig:pos_distr}. This brick is at a particularly important position from an engineering perspective. On average, the closer a channel is to the centre of the core, the higher its translational displacement (Figure~\ref{fig:composite}) relative to the surrounding structure. The upper level may also be considered of greater importance than those lower down, as it is the initial point of entry for a control rod.
+The brick chosen was the one located at the upper most level at the centre of the core. This position of this brick is shown in the lower part of Figure~\ref{fig:pos_distr}. This brick is at a particularly important position from an engineering perspective. On average, the closer a channel is to the centre of the core, the higher its translational displacement relative to the surrounding structure (see Figure~\ref{fig:composite} from subsection~\ref{data:entire}). The upper level may also be considered of greater importance than those lower down, as it is the initial point of entry for a control rod.
 \\
 
 \noindent
