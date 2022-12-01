@@ -1,9 +1,9 @@
-\chapter{Dataset Framework, Exploration and Analysis}
+\chapter{Dataset, Framework, Exploration and Analysis}
 \label{cha:dataset}
 
-This chapter has two purposes: firstly, to detail a programmatic framework developed in order to generate data and to engineer it for machine learning model purposes; and secondly, to explore the data space using visualisation and statistical techniques.
+This chapter has two purposes. Firstly, we detail a programmatic framework developed in order to generate data and to engineer it for machine learning model purposes. We also discuss the nature of the data itself, including the dimensionality of the inputs \& outputs. Secondly, we explore the data space using visualisation and statistical techniques.
 
-\section{Framework} \label{framework}
+\section{Framework and Dataset} \label{framework}
 
 This section details the programmatic framework \cite{Jones2018} developed during this PhD. This framework was produced in order to streamline the development and optimisation of surrogate machine learning model for this project. The framework is provided free and open source with the intention that other researchers will adapt and use it for their own surrogate machine learning purposes. Using this repository, the accompanying dataset \cite{huw_rhys_jones_2022_6967536} and the attached guide, the method and results presented in this thesis can be reproduced by anyone.
 \\
@@ -11,6 +11,9 @@ This section details the programmatic framework \cite{Jones2018} developed durin
 \noindent
 The framework is developed so as to be useable on a portable batch system (PBS) as is commonly implemented on university cluster computing systems. These systems allow job queuing and parallel processing of experiments \cite{henderson1995job}. If a PBS system is not available, the framework is functional on any other standard computer.
 \\
+
+\noindent
+Through exploring the function of this framework, we shall also discuss the nature of the dataset. This includes the input features and the output labels.
 
 \noindent
 The framework has three principal functions:

@@ -1,7 +1,7 @@
 \chapter{Machine Learning Background}
 \label{cha:ML}
 
-This chapter gives an introduction and explanation of several machine learning techniques and the theory behind them. The areas to be explored include: supervised learning, neural networks, convolutional neural networks and surrogate machine learning models. These methods require a data-set to perform meaningful analysis. This data-set will consist of many individual examples (or instances), e.g. an image, sound clip etc. whereas in the case of this research, an instance may be a single Parmec case.
+This chapter gives an introduction and explanation of several machine learning techniques and the theory behind them. The areas to be explored include: supervised learning, neural networks, convolutional neural networks, surrogate machine learning models and transfer learning. 
 \\
 
 \noindent
@@ -14,7 +14,7 @@ What defines supervised learning is the use of a data-set which has two parts: i
 \\
 
 \noindent
-Supervised learning can be split into regression and classification. This section will focus on regression as it is more relevant to the work discussed in this paper. Regression concerns the prediction of a continuous variable through a mathematical combination of input variables. This contrasts with classification, which attempts to predict if a given sample belongs to a certain category or not.
+Supervised learning can be split into regression and classification. This section will focus on regression as it is more relevant to the work discussed in this thesis. Regression concerns the prediction of a continuous variables through a mathematical combination of input variables. This contrasts with classification, which attempts to predict which of a predefined set of categories a given sample belongs to.
 \\
 
 \noindent
@@ -37,7 +37,7 @@ In supervised learning practice, a model is trained to predict the target variab
 \end{equation}
 
 \noindent
-The features can be seen as a matrix X of real numbers with dimensions n by f (number of instances by number of features - (\ref{feature_matrix})). To generate a vector containing predicted target values ($\hat{y}$) from a feature matrix, the model performs the matrix operation as shown in (\ref{supervised_model}). The weights vector, w, as well as the bias value, b, are optimised through a process of training known as gradient descent. 
+The features can be seen as a matrix X of real numbers with dimensions n by f: number of instances by number of features - (\ref{feature_matrix}). To generate a vector containing predicted target values ($\hat{y}$) from a feature matrix, the model performs the matrix operation as shown in (\ref{supervised_model}). The weights vector, w, as well as the bias value, b, are optimised through a process of training known as gradient descent. 
 \\
 
 \begin{equation} \label{supervised_model}
@@ -61,7 +61,7 @@ Various loss functions are available, with common examples being the mean square
 \\
 
 \noindent
-The regression method described here is linear regression. Alternative ML approaches to regression include Support Vector Regression (SVR) \cite{awad2015support} and Decision Tree Regression \cite{loh2014classification}.
+The regression method described here is linear regression optimised through stochastic gradient descent. Alternative ML approaches to regression include Support Vector Regression (SVR) \cite{awad2015support} and Decision Tree Regression \cite{loh2014classification}.
 
 
 \begin{figure}[ht]
@@ -73,11 +73,11 @@ The regression method described here is linear regression. Alternative ML approa
 
 \section{Neural Networks} \label{NN}
 
-Neural networks can be seen as a multi-layer stacking of the type of operation described in section~\ref{supervised}. The point at which each of these operations occurs is usually referred to as a neuron or node. Neurons are placed in parallel or sequence (Figure~\ref{fig:neural_network}) to form the model architecture.  Various arrangements of these nodes may be employed, with varying depth and width of the network. 
+Neural networks can be seen as a multi-layer stacking of the type of operation described in section~\ref{supervised}. The point at which each of these operations occurs is usually referred to as a neuron or node. Neurons are placed in parallel or sequence (Figure~\ref{fig:neural_network}) to form the model architecture. Various arrangements of these nodes may be employed, with varying depth and width of the network. 
 \\
 
 \noindent
-Differing neural network architectures with varying hyper-parameters \cite{gurney1997introduction} can be employed in the design of a machine learning surrogate model. The architecture of a neural network consists of nodes at which a mathematical operation is performed. The nodal output is passed through an activation function which transforms it in a non-linear manner. Commonly employed activation functions include the rectified linear unit (ReLu) \cite{hara2015analysis} and the Softplus function \cite{zheng2015improving}. 
+Differing neural network architectures with varying hyper-parameters \cite{gurney1997introduction} can be employed in the design of a machine learning model. The architecture of a neural network consists of nodes at which a mathematical operation is performed. The nodal output is passed through an activation function which transforms it in a non-linear manner. Commonly employed activation functions include the rectified linear unit (ReLu) \cite{hara2015analysis} and the Softplus function \cite{zheng2015improving}. 
 \\
 
 \noindent
@@ -93,7 +93,7 @@ A common problem encountered during the training of neural networks is that of o
 \\
 
 \noindent
-Several configurations of neural networks are available. A common choice is the fully connected or dense neural network (DNN): i.e. the output of every node in a layer feeds into every node in the subsequent layer, leading to a 'dense' architecture. This configuration was employed in the aforementioned research papers. An alternative configuration is the convolutional neural network (CNN) discussed in the following chapter. 
+Several configurations of neural networks are available. A common choice is the fully connected or dense neural network (DNN): i.e. the output of every node in a layer feeds into every node in the subsequent layer, leading to a 'dense' architecture. An alternative configuration is the convolutional neural network (CNN) discussed in the following chapter. 
 
 \begin{figure*}[p]
 	\centering
@@ -111,7 +111,7 @@ Several configurations of neural networks are available. A common choice is the 
 
 \section{Convolutional Neural Networks (CNN)} \label{convolution}
 
-Convolutional neural networks (CNNs) attempt to capture local signals in data by use of a sliding window which passes over the input space. The application of CNNs may be effective in our work as there are similarities between the data format for AGR graphite core analysis and image recognition, with the presence and identification of local arrangements important in both areas. CNNs have been utilised in several areas of image analysis, including cell detection in medicine \cite{xie2015beyond} and depth estimation in photographs \cite{li2015depth}. Within the engineering field, they have been employed to predict remaining useful life of components \cite{babu2016deep}.
+Convolutional neural networks (CNNs) attempt to capture local signals in data by use of a sliding window which passes over the input space. CNNs have been utilised in several areas of image analysis, including cell detection in medicine \cite{xie2015beyond} and depth estimation in photographs \cite{li2015depth}. Within the engineering field, they have been employed to predict remaining useful life of components \cite{babu2016deep}. The application of CNNs may be effective in the research problem discussed in this thesis as there are similarities between the data format for AGR graphite core analysis and image recognition, with the presence and identification of local arrangements important in both areas.
 \\
 
 \begin{figure*}[p]
@@ -123,7 +123,7 @@ Convolutional neural networks (CNNs) attempt to capture local signals in data by
 
 \section{Surrogate Machine Learning Models} \label{Surrogate}
 
-For any given natural phenomena, it is possible to develop a physical model that mathematically describes it and can approximate its behaviour. Such phenomena range from a simple decaying wave (Figure~\ref{fig:surrogate}) to highly complex models such as that of turbulent fluid movement. Such models are unlikely to ever be a perfect representation of the natural phenomena, as there may be too many variables and factors to ever account for them all, hence there will always be some disparity. However, the model is likely to be accurate enough as to provide data that is of practical use.
+For any given natural phenomena, it is possible to develop a physical model that mathematically describes it and can approximate its behaviour. Such phenomena range from a simple decaying wave (Figure~\ref{fig:surrogate}) to highly complex models such as that of turbulent fluid movement. Such models are unlikely to ever be a perfect representation of the natural phenomena, as there may be too many variables and factors to ever account for them all, hence there will always be some disparity. However, it may be possible to produce a model that is accurate enough so as to provide data that is of practical use.
 \\
 
 \noindent
@@ -132,8 +132,7 @@ From  data generated by such mathematical models, it is possible to train machin
 
 \noindent
 What is the motivation for doing this? Given a mathematical model of a phenomena, why develop and use a surrogate model using machine learning which provides inferior results? It is difficult to see why given the simple example of Figure~\ref{fig:surrogate}. However, in a real world case, such as nuclear reactor core safety, such a model may be highly complex, involving thousands of parameters and requiring significant computational expense. A machine learning model on the other hand, once trained, is computationally cheap to use, being just a series of matrix operations. The production of such a machine learning surrogate can also be seen as an exploration of the data space i.e. it is likely through the process of model training and refinement that insights into relationships between variables will be discovered. It may also be possible to develop machine learning tools so as to work in symbiosis with traditional mathematical models, with one informing the direction and focus of the other.
-
-
+\\
 
 \begin{figure*}[p]
 	\centering
@@ -141,6 +140,19 @@ What is the motivation for doing this? Given a mathematical model of a phenomena
 	\caption{Modelling of Natural Phenomena} {A decaying wave (blue). A mathematical model may be developed which approximates its behaviour (orange). It may be possible to build a surrogate model (grey) which is an approximation built upon an approximation.}
 	\label{fig:surrogate}
 \end{figure*}
+
+\begin{figure*}[h]
+	\centering
+	\includegraphics[scale=0.65]{Figures/MLS_vs_OM.png}
+	\caption{The Trade-off Between a Machine Learning Surrogate Model and the Original Model} {Once trained on data from the original model, the production of new data is likely to be significantly more efficient in terms of computation and time. However, as the machine learning model is produced using data from the original model, there will be some inevitable reduction in accuracy.}
+	\label{fig:surrogate_vs_model}
+\end{figure*}
+
+\noindent With each layer of approximation, there is of course an added margin of inaccuracy. Therefore, the development of a machine learning surrogate model is a trade-off between computational expense/time and accuracy (Figure~\ref{fig:surrogate_vs_model}).
+
+\subsection{Transfer Learning and Existing ML Models} \label{transfer}
+
+Many organisations have produced highly optimised neural networks, often demonstrating their capabilities in public competitions such as ImageNet \cite{russakovsky2015imagenet}. The successful competitors often publish their model architectures along with the best performing weights. Models produced and published through this competition include VGG \cite{simonyan2014very} and ResNet \cite{he2015deep}. Although these models are optimised to perform image classification tasks, many researchers have found that the aforementioned models can be adapted to other areas of study in a process known as transfer learning \cite{tan2018survey}.
 
 \section{Relevant Literature}
 
@@ -163,4 +175,4 @@ Academic works which apply machine learning to the production of engineering sur
 \\
 
 \noindent
-A particularly relevant existing work to this research paper is \cite{dihoru2018neural} which concerns both AGR graphite and machine learning. These researchers use data from a physical model of an AGR reactor which simulates an earthquake to train a feed-forward neural network (see Figure~\ref{fig:neural_network}) with 3 layers. The data generated by five configurations of the physical model (one intact, four with random distributions of cracks) are used to generate values for displacement in the top layer of the core. A neural network is then trained on this data, with displacements in the central channel being used to predict displacements in a select number of surrounding channels. The researchers achieve reasonably good agreement between model prediction and the ground truth data from their physical model, although there is some breakdown at the extremes. The scope of this model is somewhat limited, however, in that the model can only predict displacements from displacements at other locations. Superior model performance may also be achieved with a more complex neural network.  
+A particularly relevant existing work to the PhD project discussed in this thesis is \cite{dihoru2018neural} which concerns both AGR graphite and machine learning. These researchers use data from a physical model of an AGR reactor which simulates an earthquake to train a feed-forward neural network (see Figure~\ref{fig:neural_network}) with 3 layers. The data generated by five configurations of the physical model (one intact, four with random distributions of cracks) are used to generate values for displacement in the top layer of the core. A neural network is then trained on this data, with displacements in the central channel being used to predict displacements in a select number of surrounding channels. The researchers achieve reasonably good agreement between model prediction and the ground truth data from their physical model, although there is some breakdown at the extremes. The scope of this model is somewhat limited, however, in that the model can only predict displacements from displacements at other locations. Superior model performance may also be achieved with a more complex neural network.  

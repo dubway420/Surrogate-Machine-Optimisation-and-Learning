@@ -24,13 +24,6 @@ There were three main highlights to this research article:
 A machine learning surrogate (MLS) is a model which aims to explain natural or mathematical phenomena which can already be explained using an existing model. Using data from the original model, machine learning techniques are used to produce an optimised MLS model. The advantages of an MLS include increased computational efficiency when generating model outputs, with the trade-off being reduced accuracy. Once developed and trained, machine learning models (including an MLS) can produce new data instances almost instantly using a standard computer, whereas generating the same information using the original model and equivalent hardware may require hours or days of computational effort. The reduction in accuracy between an MLS and an original model must be quantified on a case-by-case basis and assessed on whether it is acceptable for practical use.
 \\
 
-\begin{figure*}[h]
-	\centering
-	\includegraphics[scale=0.65]{Figures/MLS_vs_OM.png}
-	\caption{The Trade-off Between a Machine Learning Surrogate Model and the Original Model} {Once trained on data from the original model, the production of new data is likely to be significantly more efficient in terms of computation and time. However, as the machine learning model is produced using data from the original model, there will be some inevitable reduction in accuracy.}
-	\label{fig:surrogate_vs_model}
-\end{figure*}
-
 \noindent
 Previous research works have dealt with the production of MLS in areas such as material properties prediction \cite{nyshadham2019machine} and \cite{asteris2021predicting}, with a recent work focusing on seismic analysis for nuclear graphite cores (see chapter~\ref{cha:surrogate}). It is the MLS model from this latest research work that will be focused on in this paper. In the aforementioned works, a strong focus on neural networks \cite{gurney1997introduction} is seen, including convolutional neural networks (CNNs).
 \\

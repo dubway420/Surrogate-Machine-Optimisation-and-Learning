@@ -1,7 +1,34 @@
 \chapter{Discussion and Conclusions}
 
+\section{Outcomes and Findings}
+
+The key outcomes of this research project are as follows.
+
+\begin{enumerate}
+	\item \textbf{Identification of Effective ML techniques}
+	Through development and optimisation of SMLMs for the research problem discussed in this thesis, we identified several techniques that were  highly effective in terms of model performance. Early in the development process, convolutional neural networks (CNNs) were identified as performing better than fully dense neural networks (DNNs). An unconventional alternating arrangement of activation functions was found to produce optimal model performance. Many other model parameters were optimised during the model development process which are detailed throughout this thesis.
+	
+	
+	\item \textbf{Data Insights Through Visualisation} Through visualisation and analysis of the dataset we were able to better guide the direction of the research. This included selection of model inputs, outputs and the type of machine learning model to use.
+	
+	
+	\item \textbf{SML Development Framework}  To aid in the development, optimisation and evaluation of SMLMs, a programmatic framework was developed. This framework streamlined the production of training data, data engineering, model parameter selection, training, optimisation and evaluation. The framework was produced using the programming language Python and using the Keras library. It is provided in an open source online repository with the intention that other researchers can adapt it to their own SMLM development work.
+	
+	\item \textbf{Data Insights Through ML Model Optimisation}
+	The process of SMLM optimisation not only enhanced model performance, but helped identify relationships and insights about the data itself. For example, the process of feature selection (identifying selected inputs which provide the best model performance), it was discovered that only including inputs representing the top three levels of the AGR core was optimal in output accuracy. This suggests that inputs concerning the lower levels of the core are irrelevant to the prediction of the output.  
+	
+	\item \textbf{Adaption of Existing ML techniques to SMLMs}
+	To improve model performance and compensate for a lack of training data, several existing machine learning techniques were adapted from other research to serve the purpose of this project. For example, data augmentation, a technique widely used in image classification, was adapted to the regression problem discussed here. A bespoke machine learning loss function was also developed to better fit the data distribution. 
+	
+	
+\end{enumerate}
+
 \section{Discussion}
 
-\section{Conclusions}
-
 \section{Further Work}
+
+% Reinvestigate full core
+
+% Reinvestigate transfer learning from VGG
+
+% Active learning - both instance generation and model development

@@ -3,7 +3,7 @@
 
 \section{Advanced Gas-cooled Reactors (AGRs)} \label{AGR}
 
-The UK nuclear power sector is dominated by the advanced gas-cooled reactor  (AGR) \cite{nonbol1996description}. There are 14 AGR reactors spread across 7 UK power stations . This design differs from most reactors around the world in that it consists of a graphite core cooled by carbon dioxide gas (as opposed to the common water cooled reactor). The international novelty of this design means that all safety analysis has to be performed domestically, leading to a significant requirement for computation.
+The UK nuclear power sector is dominated by the advanced gas-cooled reactor  (AGR) \cite{nonbol1996description}. There are 14 AGR reactors spread across 7 UK power stations. This design differs from most reactors around the world in that it consists of a graphite core cooled by carbon dioxide gas (as opposed to the almost ubiquitous water cooled reactor). The international novelty of this design means that all safety analysis has to be performed domestically, leading to a significant requirement for computation.
 
 \begin{figure}[ht!]
 	\centering
@@ -13,7 +13,7 @@ The UK nuclear power sector is dominated by the advanced gas-cooled reactor  (AG
 \end{figure}
 
 \noindent
-The AGR consists of several thousand stacked graphite bricks assembled in an interlocking 3-dimensional assembly (shown in Figure~\ref{fig:schematic} and \ref{fig:side}). There are two principal brick types shown in Figure~\ref{fig:bricks}: (1) large bore bricks for the insertion of fuel assemblies and (2) interstitial bricks which provide structural support, some of which have a small bore to allow the insertion of a control rod. The bricks are linked and held in position by rectangular graphite keys. An individual stack of bricks the height of the core is known as a channel, with types of channel dictated by the type of brick i.e. fuel, control rod, filler, peripheral (fuel channels near the edge of the core) and reflector (the shape of fuel bricks but contain no fuel and are solid) channels. 
+The AGR consists of several thousand stacked graphite bricks assembled in an interlocking 3-dimensional assembly (shown in Figure~\ref{fig:schematic} and \ref{fig:side}). There are two principal brick types shown in Figure~\ref{fig:bricks}: (1) large bore bricks for the insertion of fuel assemblies and (2) interstitial bricks which provide structural support, some of which have a small bore to allow the insertion of a control rod. The bricks are linked and held in position by rectangular graphite keys. An individual stack of bricks the height of the core is known as a channel, with types of channel dictated by the type of brick i.e. fuel channels and interstitial channels.
 
 \begin{figure}[ht!]
 	\centering
@@ -23,10 +23,10 @@ The AGR consists of several thousand stacked graphite bricks assembled in an int
 \end{figure}
 
 \noindent
-The primary safety concern with the AGR is the cracking of the fuel bricks. Given enough cracks, the ability to insert fuel or control rods could be impeded. The mechanism by which the cracks occur is well understood. The intense heat and radiation cause a reduction in the mass and volume of the bricks, resulting in a stress differential, which leads to a concentration of stress and cracking at the root of the keyways (Figure \ref{fig:cracking}). \\ 
+The primary safety concern with the AGR is the cracking of the fuel bricks. Given enough cracks, the ability to insert fuel or control rods could be impeded. The mechanism by which the cracks occur is well understood. The intense heat and radiation cause a radio-catalytic reaction between the graphite and $CO_2$, which in turn causes a reduction in the mass and volume of the bricks. The reduced volume causes a stress differential, which leads to a concentration of stress and cracking at the root of the keyways (Figure \ref{fig:cracking}). \\ 
 
 \noindent
-The growth of these cracks ultimately results in the splitting of the brick into two halves (see Figure \ref{fig:cracked}). At any given time, it is difficult to ascertain which bricks are exhibiting cracks due to inaccessible nature of the core internals. Forecasting the location of cracks as a function of time is an area of ongoing research. Future inspection regimes may yield better information about where cracks are occurring.
+The growth of these cracks ultimately results in the splitting of the brick into two halves (see Figure \ref{fig:cracked}). At any given time, it is difficult to ascertain which bricks are exhibiting cracks due to inaccessible nature of the core internals. Forecasting the location of cracks as a function of time is an area of ongoing research. 
 
 \section{Traditional Engineering Safety Assessments} \label{Engineering}
 The UK Office for Nuclear Regulation (ONR) stipulates that the AGR operator (EDF Energy) must demonstrate that the ability to control the reactor (i.e. insert control rods) will not be threatened under any circumstance i.e an earthquake or other serious event.\\
@@ -70,12 +70,12 @@ The traditional approach used to ensure the safe condition of the AGR involves p
 \end{figure}
 
 \noindent
-As mentioned at the end of section~\ref{AGR}, it is difficult to ascertain where the cracks are (or where they will occur). In lieu of actual crack positions, the traditional approach is to generate a random distribution of cracks, represented by a 3-dimensional array as shown in Figure~\ref{fig:core_array}. This array constitutes the structure of the AGR core, with the position of each element corresponding to a spatial position of a brick. This array has an integer data-type: -1 is an intact brick, 0 represents a reflector brick and 1~-~4 representing crack orientations - see Figure~\ref{fig:orientations}. \\
+As mentioned at the end of section~\ref{AGR}, it is difficult to ascertain where the cracks are (or where they will occur). In lieu of actual crack positions, the traditional approach is to generate a random distribution of cracks, represented by a 3-dimensional tensor as shown in Figure~\ref{fig:core_array}. This tensor constitutes the structure of the AGR core, with the position of each element corresponding to a spatial position of a brick. This tensor has an integer data-type: -1 is an intact brick, 0 represents an empty position (corners) and 1~-~4 represents cracked bricks in one of four orientations - see Figure~\ref{fig:orientations}. \\
 
 \begin{figure}[ht!]
 	\centering
-	\includegraphics[scale=0.5]{Figures/core_array.png}
-	\caption{AGR Input Core Array}
+	\includegraphics[scale=0.5]{Figures/cracked_core_array.png}
+	\caption{AGR Input Core Tensor}
 	\label{fig:core_array}
 \end{figure}
 
@@ -87,7 +87,7 @@ As mentioned at the end of section~\ref{AGR}, it is difficult to ascertain where
 \end{figure}
 
 \noindent
-The example array shown in Figure~\ref{fig:core_array} can be generated quickly and with low computational cost using industry standard tools (usually less than 1 minute per instance). These arrays can be used as input configurations to engineering models such as those shown in Figure~\ref{fig:FEA}~or~Figure~\ref{fig:ENG}. \\
+An input tensor such as the example shown in Figure~\ref{fig:core_array} can be generated quickly and with low computational cost using industry standard tools (usually less than 1 minute per instance). These tensors can be used as input configurations to engineering models such as those shown in Figure~\ref{fig:FEA}~or~Figure~\ref{fig:ENG}. \\
 
 \begin{figure}[ht!]
 	\centering
@@ -100,7 +100,7 @@ The example array shown in Figure~\ref{fig:core_array} can be generated quickly 
 % Statistical Analysis
 
 \noindent
-The models are able to calculate the position of the bricks following an earthquake (Figure~\ref{fig:angles}) with the presence of cracked bricks influencing how the they move. Angular or translational movement of the bricks acts to effectively reduce the clearance between the fuel or control rod and the surrounding bore wall. Figure~\ref{fig:bore_clearance} illustrates an example involving a control rod channel: the relative displacement of the control rod insertion point can be calculated as a function of the movement of the bricks. The path of the control rod must not be obstructed, and so the relative displacement must be less than the bore radius. \\
+The models are able to calculate the position of the bricks following an earthquake (Figure~\ref{fig:angles}) with the presence of cracked bricks influencing how the they move. Angular or translational movement of the bricks acts to effectively reduce the clearance between the fuel or control rod and the surrounding bore wall. Figure~\ref{fig:bore_clearance} illustrates an example involving an interstitial channel containing a control rod: the relative displacement of the control rod insertion point can be calculated as a function of the movement of the bricks. The path of the control rod must not be obstructed, and so the relative displacement must be less than the bore radius. \\
 
 \begin{figure}[ht!]
 	\centering
@@ -110,23 +110,15 @@ The models are able to calculate the position of the bricks following an earthqu
 \end{figure}
 
 \noindent
-The outputs shown in Figures~\ref{fig:angles} \& \ref{fig:bore_clearance} are calculated for every vertical channel. This may include all control rod and/or fuel channels and so can be represented by a 2D array as shown in Figure~\ref{fig:output_array}.\\
-
-\begin{figure}[ht!]
-	\centering
-	\includegraphics[scale=0.4]{Figures/agr_output.png}
-	\caption{AGR Output Core Array}
-	\label{fig:output_array}
-\end{figure}
+The outputs shown in Figures~\ref{fig:angles} \& \ref{fig:bore_clearance} are calculated for every interstitial brick of which there are 4173 in the Parmec model. Further complexity comes from the fact that the bricks move in and rotate around all three cardinal directions. There is also the time history of the earthquake to consider, with outputs generated at each time frame. 
+\\
 
 \noindent
-A single iteration of the aforementioned process, summarised in Figure~\ref{fig:traditional}, gives us very little information on its own. With multiple iterations of this process, each with a different randomised state of the input array (Figure~\ref{fig:core_array}), a stochastic  understanding of the problem space can be built. For example, with several hundred iterations, a histogram can be plotted, as shown in Figure~\ref{fig:statistical_analysis}. The frequency of results is then fitted to a statistical distribution, such as the Normal distribution. Using this distribution, it can be determined what percentage of results are above an acceptable threshold (for instance, half the bore radius shown in \ref{fig:bore_clearance}). Using these statistics, determinations can be made of the probability of certain serious events occurring and are used in safety decision making.\\
+A single iteration of the aforementioned process, summarised in Figure~\ref{fig:traditional}, gives us very little information on its own. With multiple iterations of this process, each with a different randomised state of the input tensor (Figure~\ref{fig:core_array}), a stochastic  understanding of the problem space can be built. For example, with several hundred iterations, a histogram can be plotted, as shown in Figure~\ref{fig:statistical_analysis}. The frequency of results is then fitted to a statistical distribution, such as the Normal distribution. Using this distribution, it can be determined what percentage of results are above an acceptable threshold (for instance, half the bore radius shown in \ref{fig:bore_clearance}). Using these statistics, determinations can be made of the probability of certain serious events occurring and are used in safety decision making.\\
 
 \noindent
-Both of these engineering modelling methods mentioned in this subsection are expensive in terms of time, computation and/or materials. This expense represents a significant bottleneck to the process summarised in Figure~\ref{fig:traditional}.\\
+Both of the engineering modelling methods mentioned in this subsection are expensive in terms of time, computation and/or materials. This expense represents a significant bottleneck to the process summarised in Figure~\ref{fig:traditional}.\\
 
-\noindent
-There are also ongoing inspection results to determine the actual positions of cracks. During any inspection interval it is only possible to examine a small number of bricks for cracks. Further, the inspection schedule is infrequent (once every 1 - 3 years) and it is difficult to forecast where new cracks will occur. In the future, improved inspection techniques and better understanding of the process that leads to cracking will yield better information about where and when cracks will occur.
 
 \begin{figure}[b!]
 	\centering
@@ -142,10 +134,18 @@ There are also ongoing inspection results to determine the actual positions of c
 	\label{fig:statistical_analysis}
 \end{figure}
 
-\subsection{Transfer Learning and Existing ML Models} \label{transfer}
 
-Many organisations have produced highly optimised neural networks, often demonstrating their capabilities in public competitions such as ImageNet [\cite{russakovsky2015imagenet}]. The successful competitors often publish their model architectures along with the best performing weights. Models produced and published through this competition include VGG [\cite{simonyan2014very}] and ResNet [\cite{he2015deep}]. Although these models are optimised to perform image classification tasks, many researchers have found that the aforementioned models can be adapted to other areas of study in a process known as transfer learning [\cite{tan2018survey}].
 
-\section{Relevant Literature}
+\section{Relevant Literature} \label{engineering:literature}
 
-The AGR reactor and its response to seismic activity is well studied in academic literature. In \cite{voyagaki2018earthquake}, both a computational and experimental examination of the AGR reactor is made. This paper discusses various seismic configurations, all involving an intact core i.e. without cracked bricks. The authors note that without cracking, an obstruction of a control rod channel during a seismic event is not possible due to the design of the core. Elsewhere, \cite{oddbjornsson2017physical} looks at the effects of cracking in a physical AGR experiment at the University of Bristol. The results of this work help validate computational studies. A noteworthy finding is that displacements tend to be greater near the centre of the core.
+Calculations to ascertain the effects on the power plant following a severe earthquake were examined as early as the 1980s \cite{ahmed1986seismic} and 1990s \cite{allen1990seismic}. These works led to the more recent and detailed treatments of the problem, including \cite{kralj2007seismic} which uses a finite element analysis (FEA) model \cite{zienkiewicz2005finite} to simulate the behaviour of the core during an earthquake and generate a 3D output contour plot. \\
+
+\noindent
+The AGR reactor and its response to seismic activity is well studied in academic literature. In \cite{voyagaki2018earthquake}, both a computational and experimental examination of the AGR reactor is made. This paper discusses various seismic configurations, all involving an intact core i.e. without cracked bricks. The authors note that without cracking, an obstruction of a control rod channel during a seismic event is not possible due to the design of the core. \\
+
+\noindent
+A physical model representing the AGR core which includes randomly placed cracked bricks is described in \cite{dihoru2017development}. Elsewhere, \cite{oddbjornsson2017physical} looks at the effects of cracking in a physical AGR experiment at the University of Bristol. The results of these works help validate computational studies.\\ 
+
+\noindent
+These papers set the theoretical groundwork for this field, establish the methodology and make it clear that the response of the core is a function of input factors such as earthquake severity/direction. They also state some interesting results which may inform data/feature extraction, such as the most onerous results being near the upper and centre of the core.
+

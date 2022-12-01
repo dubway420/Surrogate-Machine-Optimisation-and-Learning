@@ -1,5 +1,10 @@
 \begin{thebibliography}{10}
 
+\bibitem{ahmed1986seismic}
+K.~Ahmed, J.~Parker, and D.~Proffitt.
+\newblock Seismic response of the advanced gas cooled reactor core.
+\newblock {\em Nuclear Engineering and Design}, 94(1):67--92, 1986.
+
 \bibitem{ahn2020deep}
 J.~Ahn and S.~J. Lee.
 \newblock Deep learning-based procedure compliance check system for nuclear
@@ -11,6 +16,12 @@ S.~Albawi, T.~A. Mohammed, and S.~Al-Zawi.
 \newblock Understanding of a convolutional neural network.
 \newblock In {\em 2017 International Conference on Engineering and Technology
   (ICET)}, pages 1--6. Ieee, 2017.
+
+\bibitem{allen1990seismic}
+C.~Allen.
+\newblock Seismic design of the heysham 2 advanced gas cooled reactor nuclear
+  power station.
+\newblock Technical report, 1990.
 
 \bibitem{asteris2021predicting}
 P.~G. Asteris, A.~D. Skentou, A.~Bardhan, P.~Samui, and K.~Pilakoutas.
@@ -84,6 +95,13 @@ L.~Dihoru, O.~Oddbjornsson, T.~Horseman, M.~Dietz, J.~Wilson, P.~Kloukinas,
 \newblock Multi-layer array rig work for seismic behaviour with cracked bricks.
 \newblock In {\em The 4th EDF Energy Nuclear Graphite Symposium. Engineering
   Challenges Associated with the Life of Graphite Reactor Cores}, 2014.
+
+\bibitem{dihoru2017development}
+L.~Dihoru, O.~Oddbjornsson, P.~Kloukinas, M.~Dietz, T.~Horseman, E.~Voyagaki,
+  A.~J. Crewe, C.~A. Taylor, and A.~G. Steer.
+\newblock The development of a physical model of an advanced gas cooled reactor
+  core: Outline of the feasibility study.
+\newblock {\em Nuclear Engineering and Design}, 323:269--279, 2017.
 
 \bibitem{dozat2016incorporating}
 T.~Dozat.
@@ -206,6 +224,11 @@ S.~H. Kim and F.~Boukouvala.
 T.~Koziara.
 \newblock Parmec documentation, 2019.
 \newblock [Online; accessed 19-November-2020].
+
+\bibitem{kralj2007seismic}
+B.~Kralj, S.~Humphreys, and B.~Duncan.
+\newblock Seismic modelling of an agr nuclear reactor core.
+\newblock {\em SPECIAL PUBLICATION-ROYAL SOCIETY OF CHEMISTRY}, 309:193, 2007.
 
 \bibitem{li2015depth}
 B.~Li, C.~Shen, Y.~Dai, A.~Van Den~Hengel, and M.~He.
@@ -369,5 +392,10 @@ H.~Zheng, Z.~Yang, W.~Liu, J.~Liang, and Y.~Li.
 \newblock Improving deep neural networks using softplus units.
 \newblock In {\em 2015 International Joint Conference on Neural Networks
   (IJCNN)}, pages 1--4. IEEE, 2015.
+
+\bibitem{zienkiewicz2005finite}
+O.~C. Zienkiewicz, R.~L. Taylor, and J.~Z. Zhu.
+\newblock {\em The finite element method: its basis and fundamentals}.
+\newblock Elsevier, 2005.
 
 \end{thebibliography}
