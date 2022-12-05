@@ -2,18 +2,18 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {4.1}{\ignorespaces Summary of the Inputs and Outputs of the Parmec Engineering Model for AGR Graphite Core Seismic Analysis.}}{40}{}%
+\contentsline {table}{\numberline {4.1}{\ignorespaces Summary of the Inputs and Outputs of the Parmec Engineering Model for AGR Graphite Core Seismic Analysis.}}{41}{}%
 \addvspace {10\p@ }
 \contentsline {table}{\numberline {5.1}{\ignorespaces Summary of the Test Results from Preliminary Transfer Learning Experiment}}{58}{}%
 \addvspace {10\p@ }
 \contentsline {table}{\numberline {6.1}{\ignorespaces Summary of the Input Encoding Experiment}}{79}{}%
-\contentsline {table}{\numberline {6.2}{\ignorespaces Summary of the Test Results from the Traditional Methods Experiment (Subsection\nobreakspace {}\ref {traditional})}}{82}{}%
-\contentsline {table}{\numberline {6.3}{\ignorespaces Summary of the Test Results from the Input Encoding Experiment (Subsection\nobreakspace {}\ref {encoding_method})}}{83}{}%
-\contentsline {table}{\numberline {6.4}{\ignorespaces Summary of the Test Results from the Regional Feature Selection Experiment (Subsection\nobreakspace {}\ref {regional_selection})}}{83}{}%
+\contentsline {table}{\numberline {6.2}{\ignorespaces Summary of the Test Results from the Traditional Methods Experiment (Subsection\nobreakspace {}6.5.1\hbox {})}}{82}{}%
+\contentsline {table}{\numberline {6.3}{\ignorespaces Summary of the Test Results from the Input Encoding Experiment (Subsection\nobreakspace {}6.5.4\hbox {})}}{83}{}%
+\contentsline {table}{\numberline {6.4}{\ignorespaces Summary of the Test Results from the Regional Feature Selection Experiment (Subsection\nobreakspace {}6.5.5\hbox {})}}{83}{}%
 \contentsline {table}{\numberline {6.5}{\ignorespaces Summary of the Test Results from the Level Feature Selection Experiment}}{84}{}%
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {7.1}{\ignorespaces Performance of the Five Best Performing Models Produced Using the Method of chapter\nobreakspace {}\ref {cha:surrogate}}}{103}{}%
-\contentsline {table}{\numberline {7.2}{\ignorespaces Summary of the Datasets Used in Experiments 1 \& 2 as described in subsection\nobreakspace {}\ref {augmentMethod}}}{104}{}%
+\contentsline {table}{\numberline {7.1}{\ignorespaces Performance of the Five Best Performing Models Produced Using the Method of chapter\nobreakspace {}6\hbox {}}}{103}{}%
+\contentsline {table}{\numberline {7.2}{\ignorespaces Summary of the Datasets Used in Experiments 1 \& 2 as described in subsection\nobreakspace {}7.6.1\hbox {}}}{104}{}%
 \contentsline {table}{\numberline {7.3}{\ignorespaces Summary of Experiment 1}}{105}{}%
 \contentsline {table}{\numberline {7.4}{\ignorespaces Summary of Experiment 2}}{105}{}%
 \contentsline {table}{\numberline {7.5}{\ignorespaces Summary of the Experiment 3}}{107}{}%

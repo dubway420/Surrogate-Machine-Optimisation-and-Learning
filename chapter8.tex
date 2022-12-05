@@ -1,6 +1,6 @@
 \chapter{Discussion and Conclusions}
 
-\section{Outcomes and Findings}
+\section{Summary of Findings}
 
 The key outcomes of this research project are as follows.
 
@@ -25,9 +25,111 @@ The key outcomes of this research project are as follows.
 
 \section{Discussion}
 
+In this thesis we have looked at the development of a machine learning model to surrogate a traditional engineering  model used within the UK nuclear industry.   A range of techniques and approaches have been employed to this end, including data engineering, visualisation, feature selection, convolutional neural networks, regularisation, data augmentation, use of custom loss functions and transfer learning. \\
+
+\noindent We began by looking at the technical details of the advanced gas-cooled reactor and its safety issues. It was noted how the UK's nuclear reactor design is unique from an international perspective meaning that research concerning its safety must be performed domestically and there is no international research to benefit from or collaborate. With an ageing fleet of UK reactors, this means that there is pressure on researchers in this field to make the process more efficient. \\
+
+\noindent
+The technical details of the advanced gas-cooled reactor are outlined. This includes the two types of graphite brick within the core: the large bore fuel bricks and the smaller interstitial bricks which allow the insertion of control rods. \\
+
+\noindent
+ We discussed that the main safety concern with the advanced gas-cooled reactor is the cracking of the graphite fuel bricks within the core structure. The pathways in which this cracking could cause safety problems are discussed, namely, the obstruction of control entry during a severe earthquake. \\
+ 
+ \noindent
+ The use of traditional engineering models such as Parmec was detailed. Models such as these allow the response of the reactor internals to be modelled during a severe earthquake. These responses include the movements of bricks within the core, which in turn can be used to calculate margins of safety. \\
+ 
+ \noindent We discussed the implications of uncertainly regarding the locations of cracked bricks within the advanced gas-reactor core. These uncertainies mean that we must treat the problem stochastically, repeating the process multiple times to build up a statistical picture of possible outcomes. \\
+ 
+ \noindent
+Next, we looked at the advantages and disadvantages of models such as Parmec. The advantages include accuracy and certainty owing to the deterministic nature of individual calculations using engineering models. The disadvantages include high cost in terms of computational effort required to perform these calculations. Coupled with the intensity and urgency of these calculations for safety reasons, this disadvantage is considerable, hence the motivation to use machine learning. \\
+
+\noindent
+A discussion of publications in the field of seismic analysis of the AGR reactor is provided, detailing computational and physical models used to produce safety related data. The analysis of these publications allowed familiarity with the research field and guided further research. For example, several research publications highlighted how the central regions of the core carried the highest significance in terms of severity of earthquake response.\\
+
+\noindent
+The background and theoretical basis of several machine learning techniques used throughout this thesis is explored. This includes the fundamental foundation of the training of a machine learning model through stochastic gradient descent, as well as the workings of dense neural networks, convolutional neural networks and transfer learning. We also look at the motivation and theory behind surrogate machine learning models such as the one we wish to produce in this thesis. whilst the development and optimisation of machine learning models is resource intensive in terms of human effort, expertise and computation required, once trained they are very cheap and fast to use. Inference of results, which might have taken hours or days with a traditional engineering model may take seconds using a machine learning model.  We also discuss several previous studies in the field of surrogate machine learning model development. Although few of them discuss models produced for nuclear safety or seismic analysis, with even fewer of them discussing nuclear graphite, several usefule insights were gathered. These include machine learning model architectures and other parameters which may prove effective.\\
+
+\noindent
+A dataset totalling around 8300 instances of Parmec inputs and outputs was generated. A programmatic framework was developed to streamline the production of this data. The framework was also expanded to make data engineering an efficient and user friendly experience. This includes the extraction of relevant inputs and outputs from the Parmec model instances and the creation of training and testing data for  machine learning model development. The framework was designed to be modular with the intention that future researchers can adapt it to their own surrogate machine learning work. To this end the framework was provided free and open source.\\
+
+\noindent
+We then explored this dataset using the aforementioned framework in a number of different ways. This included a mathematical analysis of the dimensionality of the inputs and outputs and how they could be expressed in different ways. Several visualisations are also provided which look at the data in various ways and make statistical comparisons. Through the visual exploration of the dataset using the framework, we gather several insights into its fundamental nature, including relationships and correlations between various inputs \& outputs. These insights guided further analysis and the direction of machine learning experiments. \\
+
+\noindent
+Following the generation, description and exploration of the dataset, several preliminary machine learning experiments. These include the testing of many ideas generated during the dataset exploration. Many of these experiments include negative results, however, they can be used to discount avenues of research which are not worth exploring or focusing on at this time.\\
+
+\noindent
+ An early concern during the PhD project was over the size of the dataset and the ability to generate a sufficiently large dataset.  As the main motivation behind this PhD thesis was to compensate for the huge scope of the data space. With the generation of data being computationally expensive, a reasonable concern was that we did not have enough data. An experiment was designed to test the sensitivity of surrogate model effectiveness to dataset size. It was found that diminishing returns were achieved when a training set of around 5000 samples were used to train the model. With a training set of about 6000 samples in size, it was considered that the dataset was sufficient in size to continue with further research.  \\
+ 
+ \noindent
+ It was mentioned above that the main safety concern with the advanced gas-cooled reactor concerns the cracking of the bricks. The traditional engineering software Parmec models these cracks as being in one of four directional orientations. An early query was whether or not these orientations had any relevance to the earthquake response of the reactor. This query was tested through experiment that involved training two machine learning models in parallel: one including the encoding of the orientations and one model excluding this information. A surprising result was that both models performed largely the same, suggesting that orientation of cracked bricks is irrelevant and allowing us to discard this information in further research. \\
+ 
+ \noindent 
+ It was observed that some studies performed in the field of surrogate machine learning had exploited the concept of transfer learning. This is where a model produced for a specific purpose is adapted to a parallel function. A common example is models developed for image classification and trained on large image datasets being adapted to the classification of other objects. Two well established image classification models were adapted through the addition of extra layers to make them suitable for our research purposes. Although the results were ultimately found to be a model designed specifically for this tasks, reasonably good results were achieved. This is in itself an interesting result, as the transfer performed in this case was very ambitious - from an image classification problem to a nuclear reactor safety analysis.
+ \\
+  
+ \noindent 
+ We observed during the data analysis phase of the project that the outputs from the Parmec are highly multidimensional and contain a huge number of variables. It was also noted that the outputs poorly correlate with each other and hence the development of a single machine learning model which can surrogate them all would be ambitious. It was decided to test the limits of this ambition experimentally through the training of a machine learning model. A surrogate machine learning model was designed to predict the displacement in one direction of all 4173 interstitial bricks within the core at a single time frame out of 271. Note that this model, whilst ambitious, represents only a small fraction of the total outputs of the Parmec model. The results of this experiment were fairly poor, with the optimised being biased and unable to generalise well. This is largely to be expected given the challenges mentioned above and meant that we focused our research on a smaller section of the model outputs. \\
+ 
+ \noindent With the aforementioned preliminary studies complete, a picture was starting to develop of how a satisfactory surrogate machine learning model may be developed. It was decided to focus on producing a surrogate machine learning model that predicts outputs for a single brick at a single time frame. The brick selected was a brick at the centre of the core on the top level. This decision was informed by research publications, preliminary experimentation and data analysis/visualisation.  \\
+ 
+ \noindent
+ An experimental process of refining the architecture and parameters of a surrogate machine learning model was performed. This again was informed by research study and previous preliminary experiments. \\
+ 
+ \noindent
+ The first phase of experimental investigation was into the use of traditional or so called 'shallow' machine learning methods. This included the use of simple linear regression, support vector machines and decision tree regression. Each of these methods was found to provide underwhelming performance. This is perhaps owing to the simplicity of these methods, the complexity of the data space and the inability of these models to represent deep relationships within the data. Nevertheless, it was important to discount these methods experimentally. \\
+ 
+ \noindent It was thereon decided to investigate the use of neural networks as these models can capture non-linear complexities within the data. We started with dense of 'fully connected' neural networks as these had been heavily used in past research in the field of surrogate machine learning model development. \\ 
+ 
+ \noindent
+ A key area of investigation at this stage was into the effectiveness of various arrangements and encodings of the input features to the machine learning model. This included encoding the inputs in one, two or three dimensional arrangements. It was found that a three dimensional encoding provided the highest model performance. In this format, the true physical relationship of the inputs is retained i.e. the inputs for the bricks reflect their actual locations within the core. \\
+ 
+ \noindent
+ An advantage of the three dimensional encoding of input features is that it allowed the use of convolutional neural networks. This type of neural network allows the identification and exploitation of localised patterns within the data. With the theoretical understanding that localised cracking patterns within the core of the advanced gas-cooled reactor are likely to be correlated with particularly onerous responses, this result is perhaps to be expected. Outside of the effort to optimise a surrogate machine learning model for practical purposes, this finding reveals information about the underlying nature of the dataset itself.  \\
+ 
+ \noindent 
+ An exhaustive process of neural network architecture and parameter selection was undertaken via a method of directed trial and error. Beginning with architectures and parameters found to be effective in other research works, parts of the model were adjusted, added or subtracted. After each change, the model was trained from fresh initialised weights, followed by evaluation against the testing dataset. Through this process, a refined yet relatively complex model was produced. \\
+   
+ \noindent
+ Apart from model architecture, several other parameters and metrics that were found to be optimal in the development of machine learning surrogate model for this problem included certain arrangements of activation functions. An alternating arrangement of layers using tanh and softplus activation functions was found to perform best. In addition, using a Huber loss function for model backpropagation during training was found to be optimal.  
+ 
+ \noindent
+ Another key finding from this phase of the research was the effectiveness of feature selection. This is a process of reducing the scope of the input features provided to the model during training. The theory behind this process is that excluding  irrelevant inputs from the training dataset of a machine learning model will enhance performance by allowing it to focus on the more relevant areas of the data.\\
+ 
+ \noindent
+ The first phase of the feature selection experiment saw the inputs separated by core level and then incrementally excluded, starting with the lowest. An interesting finding was that including inputs for only the top three levels of the advanced gas-cooled reactor (hence discarding inputs for the lower four levels)  produced the most optimal model performance. This result was largely expected as these three levels are closely located to the brick we were predicting outputs for. \\
+ 
+ \noindent A second phase of the feature selection experiment saw the inputs radially segregated from a top down perspective. An unexpected outcome from this experiment was that peak performance was seen when including results for all radial regions of the core i.e. not excluding any of the radial geographic regions. It was expected that including data for only the central most regions would yield the optimal results as these are closest to the interstitial brick we are making predictions for. \\
+ 
+ \noindent
+ The results of the feature selection experiments not only allowed enhanced optimisation of surrogate machine learning models going forward, they also again exposed insights into the underlying nature of the data space that may be interesting from a wider safety analysis perspective. For example, inspections or further research may be guided by this finding to focus their attention to certain regions of the core. \\
+ 
+ \noindent 
+At this stage in the research considerable progress had been made in the development of a machine learning model for the original objective of this research. Several key techniques and effective methods highly suited to this problem  had been identified. However, the results and accuracy of the machine learning model were found to not be of a high enough level to be suitable for practical use. It was noted during the discussion of surrogate machine learning model theory that there is a trade-off between accuracy and  computational efficiency when it comes to the production of these models. The model produced certainly required less computational cost than its traditional engineering counterpart, but it was not yet clear if the trade-off in terms of accuracy was comparable. Therefore, a number of methods were investigated with the intension of improving the accuracy of the model.\\
+
+\noindent
+Going back to the preliminary phase of experimental research, it was noted that although diminishing returns were seen with increasing data size, performance does improve still improve as the dataset increases in size. It was judged at the time that perhaps an order of magnitude scale increase in the size of the training dataset may yield a significant improvement in model  performance.  Using Parmec to generate this much data however was impractical as it would likely take longer than the remaining duration of the project. \\
+
+\noindent Instead of using Parmec to expensively generate large amounts of model outputs, we investigated alternative ways to increase the size of the dataset. During research into the design of the advanced gas-cooled reactor, it was noted that the reactor exhibits symmetry around its vertical and horizontal axis, as observed from above. Through data visualisation of the dataset, we also observed that the Parmec outputs also exhibited similar symmetry. This was noted to be practically similar to how images used in image classification also exhibit symmetry.\\
+
+\noindent In image classification, the symmetry of images is often exploited in a process known as data augmentation.  This method was adapted to allow the augmentation of Parmec  data training examples by mirroring and rotating inputs and outputs and outputs. By using this method, the size of the dataset was effectively increased by a factor of 8. The veracity of this approach was demonstrated through machine learning model experimentation. It was shown that even a relatively simple machine learning model trained on the augmented dataset outputs a far more complex machine learning model training on the unaugmented set. \\ 
+
+\noindent  
+It was noticed through visualisation of the performance of the model produced thus far that prediction was less accurate at the extremes i.e. at the higher and lower ends of the data spectrum. In particular, outputs at the higher end of the dataset are under predicted, and outputs at the lower end of the dataset are over predicted. Going back to our visualisation of the dataset, we can see an explanation. It was observed that the outputs values are highly concentrated around a central value, effectively meaning that the dataset is biased. This is turn causes model bias in the way it makes predictions: lower values are pulled up towards this central median value and similarly higher values are pulled down towards it.  \\
+
+\noindent
+How best to compensate for the bias in the output data? A process of data augmentation similar to that which was discussed above was considered, where rarefactions in the data space could be more heavily represented in the training set. After reviewing literature on the subject, it was noted that a more efficient solution might be to develop a custom loss function specially designed to suit the data for this research problem. Specifically, this loss function would penalise predictions made near the centre of of the data continuum, making the model more likely to make optimise for predictions at the extremes where training data is scarce. \\
+
+\noindent
+It was noted during the data analysis and visualisation phase that the output data is distributed in a fairly symmetric bell curve   
+ 
+ \section{Limitations}
+
 \section{Further Work}
 
 % Reinvestigate full core
+
+% Time history prediction.
 
 % Reinvestigate transfer learning from VGG
 

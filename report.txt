@@ -1,0 +1,3737 @@
+SURROGATE MACHINE LEARNING
+MODEL DEVELOPMENT FOR THE
+UK NUCLEAR INDUSTRY
+
+A THESIS SUBMITTED TO T HE U NIVERSITY OF M ANCHESTER
+FOR THE DEGREE OF D OCTOR OF P HILOSOPHY
+IN THE FACULTY OF S CIENCE AND E NGINEERING
+
+2022
+
+Student id: 10433506
+
+Department of Computer Science
+
+Contents
+Abstract
+
+10
+
+Declaration
+
+11
+
+Copyright
+
+12
+
+Acknowledgements
+
+13
+
+1
+
+Introduction
+1.1 Outline . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+1.2 Research Objectives . . . . . . . . . . . . . . . . . . . . . . . . . . .
+1.3 Thesis Structure . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+14
+14
+15
+16
+
+2
+
+Nuclear Engineering Background
+2.1 Advanced Gas-cooled Reactors (AGRs) . . . . . . . . . . . . . . . .
+2.2 Traditional Engineering Safety Assessments . . . . . . . . . . . . . .
+2.3 Relevant Literature . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+17
+17
+18
+23
+
+3
+
+Machine Learning Background
+3.1 Supervised Learning . . . . . . . . . . . . . . . . . . . . . . . . . .
+3.2 Neural Networks . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+3.3 Convolutional Neural Networks (CNN) . . . . . . . . . . . . . . . .
+3.4 Surrogate Machine Learning Models . . . . . . . . . . . . . . . . . .
+3.5 Transfer Learning and Existing ML Models . . . . . . . . . . . . . .
+3.6 Relevant Literature . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+25
+25
+28
+29
+29
+31
+31
+
+4
+
+Dataset, Framework, Exploration and Analysis
+4.1 Framework and Dataset . . . . . . . . . . . . . . . . . . . . . . . . .
+4.1.1 Parmec Data Generation . . . . . . . . . . . . . . . . . . . .
+
+36
+36
+37
+
+2
+
+4.1.2 Model Inputs (Features) . . . . . . . . . . . . . . . . . . . .
+4.1.3 Model Outputs (Labels) . . . . . . . . . . . . . . . . . . . .
+Dataset Exploration and Analysis . . . . . . . . . . . . . . . . . . . .
+4.2.1 Time History: Example Cases . . . . . . . . . . . . . . . . .
+4.2.2 Entire Dataset . . . . . . . . . . . . . . . . . . . . . . . . . .
+4.2.3 Output Correlation Analysis . . . . . . . . . . . . . . . . . .
+
+38
+39
+41
+41
+45
+45
+
+5
+
+Preliminary Machine Learning Experiments
+5.1 Dataset Size Sensitivity . . . . . . . . . . . . . . . . . . . . . . . . .
+5.2 Crack Orientation . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+5.3 Transfer Learning . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+5.4 Whole Core Experiment . . . . . . . . . . . . . . . . . . . . . . . .
+
+54
+54
+56
+58
+59
+
+6
+
+Surrogate ML Model Development
+6.1 Abstract . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+6.2 Research Highlights . . . . . . . . . . . . . . . . . . . . . . . . . . .
+6.3 Introduction and Background . . . . . . . . . . . . . . . . . . . . . .
+6.4 Data Selection and Focus . . . . . . . . . . . . . . . . . . . . . . . .
+6.5 Surrogate Model Development and Design . . . . . . . . . . . . . . .
+6.5.1 Traditional Methods . . . . . . . . . . . . . . . . . . . . . .
+6.5.2 Neural Networks . . . . . . . . . . . . . . . . . . . . . . . .
+6.5.3 General Hyper-Parameters . . . . . . . . . . . . . . . . . . .
+6.5.4 Neural Network Input Encoding . . . . . . . . . . . . . . . .
+6.5.5 Feature Selection . . . . . . . . . . . . . . . . . . . . . . . .
+6.6 Results . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+6.6.1 Traditional Methods . . . . . . . . . . . . . . . . . . . . . .
+6.6.2 Input Encoding . . . . . . . . . . . . . . . . . . . . . . . . .
+6.6.3 Feature Selection . . . . . . . . . . . . . . . . . . . . . . . .
+6.6.4 Analysis and Discussion . . . . . . . . . . . . . . . . . . . .
+6.7 Conclusion . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+69
+69
+70
+70
+71
+72
+72
+72
+74
+76
+80
+82
+82
+82
+82
+84
+87
+
+7
+
+Methods to Improve Surrogate ML Models
+7.1 Abstract . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+7.2 Research Highlights . . . . . . . . . . . . . . . . . . . . . . . . . . .
+7.3 Introduction . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+7.4 Background . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+91
+91
+91
+92
+94
+
+4.2
+
+3
+
+7.4.1 Advanced Gas-cooled Reactors and the Parmec Model . . . .
+7.4.2 Previous Machine Learning Surrogate Model of Parmec . . .
+7.4.3 Data Augmentation . . . . . . . . . . . . . . . . . . . . . . .
+7.4.4 Custom Loss Function . . . . . . . . . . . . . . . . . . . . .
+7.4.5 Transfer Learning . . . . . . . . . . . . . . . . . . . . . . . .
+Preparation . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+7.5.1 Image Manipulation Techniques . . . . . . . . . . . . . . . .
+7.5.2 Weighted Loss Function . . . . . . . . . . . . . . . . . . . .
+7.5.3 Pre-Trained Model Transfer . . . . . . . . . . . . . . . . . .
+Experimental Evaluation Process . . . . . . . . . . . . . . . . . . . .
+7.6.1 Augmentation . . . . . . . . . . . . . . . . . . . . . . . . . .
+7.6.2 Custom Loss Function . . . . . . . . . . . . . . . . . . . . .
+7.6.3 Transfer Learning . . . . . . . . . . . . . . . . . . . . . . . .
+Results . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+7.7.1 Augmentation . . . . . . . . . . . . . . . . . . . . . . . . . .
+7.7.2 Custom Loss Function . . . . . . . . . . . . . . . . . . . . .
+7.7.3 Transfer Learning . . . . . . . . . . . . . . . . . . . . . . . .
+7.7.4 Analysis and Discussion . . . . . . . . . . . . . . . . . . . .
+Conclusion . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+94
+94
+94
+96
+98
+98
+98
+101
+102
+104
+104
+106
+108
+109
+109
+111
+113
+114
+118
+
+Discussion and Conclusions
+8.1 Summary of Findings . . . . . . . . . . . . . . . . . . . . . . . . . .
+8.2 Discussion . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+8.3 Limitations . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+8.4 Further Work . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+120
+120
+121
+128
+128
+
+7.5
+
+7.6
+
+7.7
+
+7.8
+8
+
+Bibliography
+
+129
+
+Word Count:
+
+4
+
+List of Tables
+4.1
+
+5.1
+
+6.1
+6.2
+6.3
+6.4
+6.5
+
+Summary of the Inputs and Outputs of the Parmec Engineering Model
+for AGR Graphite Core Seismic Analysis. . . . . . . . . . . . . . . .
+
+41
+
+Summary of the Test Results from Preliminary Transfer Learning Experiment . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+58
+
+Summary of the Input Encoding Experiment . . . . . . . . . . . . . .
+Summary of the Test Results from the Traditional Methods Experiment
+(Subsection 6.5.1) . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Summary of the Test Results from the Input Encoding Experiment
+(Subsection 6.5.4) . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Summary of the Test Results from the Regional Feature Selection Experiment (Subsection 6.5.5) . . . . . . . . . . . . . . . . . . . . . . .
+Summary of the Test Results from the Level Feature Selection Experiment . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+Performance of the Five Best Performing Models Produced Using the
+Method of chapter 6 . . . . . . . . . . . . . . . . . . . . . . . . . . .
+7.2 Summary of the Datasets Used in Experiments 1 & 2 as described in
+subsection 7.6.1 . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+7.3 Summary of Experiment 1 . . . . . . . . . . . . . . . . . . . . . . .
+7.4 Summary of Experiment 2 . . . . . . . . . . . . . . . . . . . . . . .
+7.5 Summary of the Experiment 3 . . . . . . . . . . . . . . . . . . . . .
+7.6 Summary of the Experiment 4 . . . . . . . . . . . . . . . . . . . . .
+7.7 Summary of the Experiment 5 . . . . . . . . . . . . . . . . . . . . .
+7.8 Results Summary of Experiment 1 . . . . . . . . . . . . . . . . . . .
+7.9 Results Summary of Experiment 2 . . . . . . . . . . . . . . . . . . .
+7.10 Results Summary of Experiment 3 . . . . . . . . . . . . . . . . . . .
+7.11 Results Summary of Experiment 4 . . . . . . . . . . . . . . . . . . .
+
+79
+82
+83
+83
+84
+
+7.1
+
+5
+
+103
+104
+105
+105
+107
+107
+108
+109
+111
+113
+113
+
+7.12 Results Summary of Experiment 5.1 . . . . . . . . . . . . . . . . . . 114
+7.13 Results Summary of Experiment 5.2 . . . . . . . . . . . . . . . . . . 116
+7.14 Results Summary of Experiment 5.3 . . . . . . . . . . . . . . . . . . 116
+
+6
+
+List of Figures
+2.1 AGR Core Plan View . . . . . . . . . . . . . . . . . . . . . . . . . .
+2.2 AGR Core Side View . . . . . . . . . . . . . . . . . . . . . . . . . .
+2.3 AGR Core Brick Types . . . . . . . . . . . . . . . . . . . . . . . . .
+2.4 Brick Cracking Mechanism . . . . . . . . . . . . . . . . . . . . . . .
+2.5 Cracked AGR Brick . . . . . . . . . . . . . . . . . . . . . . . . . . .
+2.6 Visualisation of Parmec Model . . . . . . . . . . . . . . . . . . . . .
+2.7 Multi-Layer Array Rig . . . . . . . . . . . . . . . . . . . . . . . . .
+2.8 AGR Input Core Tensor . . . . . . . . . . . . . . . . . . . . . . . . .
+2.9 Brick Crack Orientations . . . . . . . . . . . . . . . . . . . . . . . .
+2.10 Angle Between a Distorted and Baseline Brick Channel . . . . . . .
+2.11 Relative Displacement of Control Rod . . . . . . . . . . . . . . . . .
+2.12 Traditional Engineering Approach . . . . . . . . . . . . . . . . . . .
+2.13 Statistical Analysis . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+17
+18
+19
+19
+19
+20
+20
+21
+21
+22
+22
+23
+24
+
+3.1
+3.2
+3.3
+3.4
+3.5
+3.6
+3.7
+
+26
+27
+30
+30
+32
+32
+
+3.8
+
+The Boston House Price Data-set (sample). . . . . . . . . . . . . . .
+Gradient Descent . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Neural Network: An example of a feed-forward network. . . . . . . .
+Convolutional Neural Network: Feature Extraction. . . . . . . . . . .
+Convolutional Neural Network: Architecture. . . . . . . . . . . . . .
+Modelling of Natural Phenomena . . . . . . . . . . . . . . . . . . . .
+The Trade-off Between a Machine Learning Surrogate Model and the
+Original Model . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Four Possible Neural Network Architectures . . . . . . . . . . . . . .
+
+4.1
+4.2
+4.3
+4.4
+
+Multi-channel Cascade . . . . . . . . . . . . . . . . . . . . . . . . .
+Fuel Brick Encoding Order . . . . . . . . . . . . . . . . . . . . . . .
+Interstitial Brick Encoding Order . . . . . . . . . . . . . . . . . . . .
+History of Acceleration During a Severe Earthquake . . . . . . . . . .
+
+38
+39
+40
+42
+
+7
+
+33
+35
+
+4.5
+
+Time History: Maximum Channel Displacement in the West to East
+Direction for Sample Channels . . . . . . . . . . . . . . . . . . . . .
+4.6 Time History: Maximum Channel Displacement in the South to North
+Direction for Sample Channels . . . . . . . . . . . . . . . . . . . . .
+4.7 Comparing the Output of Three Cases Through Time: Sum of Channel
+Displacement in West-East Direction (mm) . . . . . . . . . . . . . .
+4.8 Comparing the Output of Three Cases Through Time: Sum of Channel
+Displacement in South-North Direction (mm) . . . . . . . . . . . . .
+4.9 Comparing Output of Three Cases Through Time: Sum of Level Displacement in West-East Direction (mm) . . . . . . . . . . . . . . . .
+4.10 Comparing Output of Three Cases Through Time: Sum of Level Displacement in South-North Direction (mm) . . . . . . . . . . . . . . .
+4.11 Histogram of Sum Displacement of All Instances: West-East directional displacement . . . . . . . . . . . . . . . . . . . . . . . . . . .
+4.12 Histogram of Sum Displacement of All Instances: South-North directional displacement . . . . . . . . . . . . . . . . . . . . . . . . . . .
+4.13 Channel Summation for Time Frame 48 . . . . . . . . . . . . . . . .
+4.14 Correlation of Channel Results Against Each Other . . . . . . . . . .
+4.15 Correlation of Bricks of the Central Channel (161) Results Against
+Each Other . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+5.1
+5.2
+5.3
+5.4
+5.5
+5.6
+5.7
+5.8
+5.9
+
+6.1
+
+43
+44
+46
+47
+48
+49
+49
+51
+51
+52
+53
+
+Sensitivity Results Summary . . . . . . . . . . . . . . . . . . . . . . 61
+Training History of Increment with a Dataset of 1000 Increments . . . 62
+Training History of Increment with a Dataset of 3000 Increments . . . 63
+Training History of Increment with a Dataset of 5000 Increments . . . 64
+Training History for Crack Orientation Model . . . . . . . . . . . . . 65
+Feature encoding appropriate for use in transfer learning . . . . . . . 65
+Results Dashboard for VGG19 Model with added Dropout Layer (30%). 66
+Direct comparison of model predictions against ground truth labels for
+core level 7 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 67
+Direct comparison of model predictions against ground truth labels for
+core level 10 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 68
+The Position in the core from which the labels are representative of
+(Bottom); Distribution of 8300 values in the label set (Top) . . . . .
+
+8
+
+73
+
+6.2
+6.3
+6.4
+6.5
+6.6
+6.7
+6.8
+6.9
+
+7.1
+7.2
+7.3
+7.4
+7.5
+7.6
+7.7
+7.8
+7.9
+
+Example of Model Training and Validation with Early Stopping and
+Model Saving . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+The Final Architecture of the Model . . . . . . . . . . . . . . . . . .
+Convolution on a 2-dimensional Input Space Using a 3x3 Filter . . . .
+Convolution on a Single Instance Encoded in a 3-dimensional Format
+Using an Example Multi Channel Filter . . . . . . . . . . . . . . . .
+The Core Separated into Regions for the Purpose of Feature Selection
+Visual Summary of the Regional Feature Extraction Experiment . . .
+Model Predictions against Ground Truth for the Test Set . . . . . . .
+Model Predictions against Ground Truth for the Test Set With Values
+Separated into Positives/Negatives by Three Different Thresholds . .
+An Example of Image Manipulation Techniques to Perform Data Augmentation . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+The results from the best performing model produced via the method
+described in a previous research work . . . . . . . . . . . . . . . . .
+An Example of Image Manipulation Techniques Applied to Parmec
+Data to Facilitate Data Augmentation . . . . . . . . . . . . . . . . .
+Loss Functions: Visual Comparison . . . . . . . . . . . . . . . . . .
+Adjustment Factor as is Utilised by (7.1) . . . . . . . . . . . . . . . .
+Simplified Model Architecture Used to Compare Augmentation Approaches . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Visual Summary and Comparison of the Performance of the Optimal
+Model Produced During E1.0 (Left) & E2.4 (Right) . . . . . . . . .
+Visual Summary of the Performance of the Optimal Model Produced
+During E4.1 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Visual Summary and Comparison of the Performance of the Original
+Model M3 (Left) & M3 After E5.3 (Right) . . . . . . . . . . . . . .
+
+9
+
+74
+76
+77
+78
+81
+88
+89
+90
+
+95
+97
+99
+102
+103
+106
+110
+112
+115
+
+Abstract
+This thesis details the development of machine learning techniques for the benefit of
+safety analysis in the UK nuclear energy sector. The objective of this research was to
+develop machine learning models which can perform the same functionality as existing
+industry standard models but with reduced computational intensity.
+The UK nuclear industry is dominated by the advanced-gas cooled reactor (AGR), a
+design which differs considerably to most reactors elsewhere in the world. As a result
+of its novelty, there is a lack of international research to draw on concerning operation and safety. The situation is further complicated by the complexity of AGR safety
+analysis, involving thousands of different components in various scenarios and configurations. Therefore, AGR safety analysis and research is computationally intensive
+whilst being highly time sensitive.
+A key research objective was the production of surrogate machine learning models
+(SMLM). These models are produced with the intention of retaining the functionality of an existing model i.e. it produces similar outputs from the same inputs whilst
+reducing computational cost.
+Through the development of SMLMs for this research work, two articles were written
+and published in peer-reviewed academic journals. The first details the generation and
+preparation of data, as well as the process of developing an SMLM for our purpose.
+The second article details improvements to the method outlined in the first article.
+
+10
+
+Declaration
+No portion of the work referred to in this thesis has been
+submitted in support of an application for another degree or
+qualification of this or any other university or other institute
+of learning.
+
+11
+
+Copyright
+i. The author of this thesis (including any appendices and/or schedules to this thesis) owns certain copyright or related rights in it (the “Copyright”) and s/he has
+given The University of Manchester certain rights to use such Copyright, including for administrative purposes.
+ii. Copies of this thesis, either in full or in extracts and whether in hard or electronic
+copy, may be made only in accordance with the Copyright, Designs and Patents
+Act 1988 (as amended) and regulations issued under it or, where appropriate,
+in accordance with licensing agreements which the University has from time to
+time. This page must form part of any such copies made.
+iii. The ownership of certain Copyright, patents, designs, trade marks and other intellectual property (the “Intellectual Property”) and any reproductions of copyright works in the thesis, for example graphs and tables (“Reproductions”), which
+may be described in this thesis, may not be owned by the author and may be
+owned by third parties. Such Intellectual Property and Reproductions cannot
+and must not be made available for use without the prior written permission of
+the owner(s) of the relevant Intellectual Property and/or Reproductions.
+iv. Further information on the conditions under which disclosure, publication and
+commercialisation of this thesis, the Copyright and any Intellectual Property
+and/or Reproductions described in it may take place is available in the University IP Policy (see http://documents.manchester.ac.uk/DocuInfo.aspx?
+DocID=24420), in any relevant Thesis restriction declarations deposited in the
+University Library, The University Library’s regulations (see http://www.library.
+manchester.ac.uk/about/regulations/) and in The University’s policy on
+presentation of Theses
+
+12
+
+Acknowledgements
+I would like to thank my supervisor, Tingting Mu, who spent many patient hours
+with me throughout my journey towards becoming a researcher. I’d also like to thank
+many other members of the faculty for their help and support over the past four years,
+including Professor Gavin Brown, Professor Bijan Parsia, Dr Danny Wood, Charlie
+Reynolds, Dr Andrew Webb, Dr Alessio Sarullo and Dr Mike Phuycharoen.
+I’d also like to acknowledge the assistance given by Research IT and the use of the
+Computational Shared Facility at The University of Manchester.
+Finally I’d like to thank my mother Tula Jones and my late father Tudor Jones for their
+love and unending support, not only during my PhD but my whole life.
+
+13
+
+Chapter 1
+Introduction
+1.1
+
+Outline
+
+The overarching motivation behind this thesis is to develop machine learning (ML)
+techniques for the benefit of safety analysis in the UK nuclear energy sector. The objective of this research was to develop machine learning models which can perform
+the same functionality as existing industry standard models but with reduced computational intensity.
+The UK nuclear industry is dominated by the advanced-gas cooled reactor (AGR), a design which uses graphite as a structural component and carbon dioxide gas as a coolant.
+The AGR differs in design to most reactors elsewhere in the world, meaning there is a
+lack of international research to draw on concerning operation and safety. Instead, all
+analysis must be preformed domestically, meaning that research in this field is intensive. The situation is further complicated by the complexity of AGR safety analysis,
+involving thousands of different components in various scenarios and configurations.
+The combination of these factors means that those responsible for demonstrating the
+safety of AGR reactors face challenges in terms of computational requirements whilst
+having a time sensitive task.
+The research question to be answered in this thesis concerns whether the difficulties
+faced within the UK nuclear industry can be alleviated through the use of machine
+learning techniques. To this end, a key research objective is the production of surrogate machine learning models (SMLMs). SMLMs are produced with the intention of
+retaining the functionality of an existing model i.e. it produces similar outputs from
+14
+
+CHAPTER 1. INTRODUCTION
+
+15
+
+the same inputs. The intended advantage of SMLMs over the models they surrogate is
+low computational cost, hence fast inference of outputs from inputs. Compared to the
+original models, which may take many hours or even days to complete their analysis,
+SMLMs once trained can produce outputs in seconds using the same computational
+hardware.
+Through the development of SMLMs for this research work, two articles were written and published in peer-reviewed academic journals. The first article, presented in
+the journal of Nuclear Engineering and Design, details the generation and preparation
+of data, as well as the process of developing an SMLM for our purpose [36]. This
+article highlights how some methods were found to be highly effective, such as convolutional neural networks and regularisation. It was noted that through a process of
+feature selection, not only can performance of the model be improved, but insights into
+the underlying nature of the data space can be observed. The second article, presented
+in IEEE Access, details improvements to the method outlined in the first article. Three
+methods were exploited: data augmentation, custom loss functions and transfer learning. Each of these methods have seen previous exploitation within the field of machine
+learning, however, we implement them here in a novel way.
+
+1.2
+
+Research Objectives
+
+The key objectives of this research project are as follows.
+1. Development and Optmisation of SMLMs The overarching objective is to
+produce a machine learning model which surrogates the function of an existing standard engineering model. The aim is to reduce computational intensity
+whilst retaining a high level of accuracy/functionality.
+2. Data Visualisation Tools With the data space for this research area being highly
+complex and multi-dimensional, a secondary objective is to explore the data
+through visualisation techniques. To this end, bespoke computational tools will
+need to be produced. The benefit of data visualisation for this research task is two
+fold: 1) It will help inform the process of machine learning model development
+and optimisation 2) Insights into the data space will be informative to a wider
+engineering audience.
+
+CHAPTER 1. INTRODUCTION
+
+16
+
+3. Data Insights Through ML Through the process of development and optimisation of SMLMs, insights into the underlying nature of the data space itself.
+These insights will benefit the development of SMLMs but also have value in
+and of itself. For example, relationships between parts of the data may yield
+insights which are useful from a wider engineering or safety perspective.
+
+1.3
+
+Thesis Structure
+
+The content of this thesis is presented as follows:
+1. Nuclear Engineering Background Technical information concerning the AGR,
+traditional engineering calculations, existing modelling techniques.
+2. Machine Learning Background Details of machine learning techniques and
+how they work. Differences between various methods.
+3. Dataset Framework, Exploration and Analysis Details of the programmatic
+dataset framework, as well as an exploration of the dataset using visualisation
+techniques and statistical methods.
+4. Preliminary Machine Learning Experiments Initial experiments performed
+with the intention of exploring the problem space and testing ideas.
+5. Development and Analysis of a Surrogate Machine Learning Model This
+chapter is based on a published research paper. It covers the development and
+optimisation of a surrogate machine learning model.
+6. Methods to Improve Surrogate Machine Learning Model Performance This
+chapter is based on another published work titled ”Data-driven Approaches to
+Surrogate Machine Learning Model Development”. It covers the adaption of
+existing machine learning methods to the research topic at hand.
+
+Chapter 2
+Nuclear Engineering Background
+2.1
+
+Advanced Gas-cooled Reactors (AGRs)
+
+The UK nuclear power sector is dominated by the advanced gas-cooled reactor (AGR)
+[47]. There are 14 AGR reactors spread across 7 UK power stations. This design
+differs from most reactors around the world in that it consists of a graphite core cooled
+by carbon dioxide gas (as opposed to the almost ubiquitous water cooled reactor). The
+international novelty of this design means that all safety analysis has to be performed
+domestically, leading to a significant requirement for computation.
+
+Figure 2.1: AGR Core Plan View
+The AGR consists of several thousand stacked graphite bricks assembled in an interlocking 3-dimensional assembly (shown in Figure 2.1 and 2.2). There are two principal
+
+17
+
+CHAPTER 2. NUCLEAR ENGINEERING BACKGROUND
+
+18
+
+brick types shown in Figure 2.3: (1) large bore bricks for the insertion of fuel assemblies and (2) interstitial bricks which provide structural support, some of which have
+a small bore to allow the insertion of a control rod. The bricks are linked and held in
+position by rectangular graphite keys. An individual stack of bricks the height of the
+core is known as a channel, with types of channel dictated by the type of brick i.e. fuel
+channels and interstitial channels.
+
+Figure 2.2: AGR Core Side View
+The primary safety concern with the AGR is the cracking of the fuel bricks. Given
+enough cracks, the ability to insert fuel or control rods could be impeded. The mechanism by which the cracks occur is well understood. The intense heat and radiation
+cause a radio-catalytic reaction between the graphite and CO2 , which in turn causes a
+reduction in the mass and volume of the bricks. The reduced volume causes a stress
+differential, which leads to a concentration of stress and cracking at the root of the
+keyways (Figure 2.4).
+The growth of these cracks ultimately results in the splitting of the brick into two
+halves (see Figure 2.5). At any given time, it is difficult to ascertain which bricks
+are exhibiting cracks due to inaccessible nature of the core internals. Forecasting the
+location of cracks as a function of time is an area of ongoing research.
+
+2.2
+
+Traditional Engineering Safety Assessments
+
+The UK Office for Nuclear Regulation (ONR) stipulates that the AGR operator (EDF
+Energy) must demonstrate that the ability to control the reactor (i.e. insert control rods)
+will not be threatened under any circumstance i.e an earthquake or other serious event.
+
+CHAPTER 2. NUCLEAR ENGINEERING BACKGROUND
+
+19
+
+Figure 2.3: AGR Core Brick Types
+
+Figure 2.4: Brick Cracking Mechanism
+
+Figure 2.5: Cracked AGR Brick
+The traditional approach used to ensure the safe condition of the AGR involves production and analysis of complex engineering models, which are deterministic and rely
+
+CHAPTER 2. NUCLEAR ENGINEERING BACKGROUND
+
+20
+
+on physical relationships. Examples include the computational model Parmec [39] and
+the physical Multi-Layer Array (MLA) model [16] at the University of Bristol (Figures
+2.6 & 2.7, respectively). Both of these models are configured to to simulate a once in
+10,000 year earthquake.
+As mentioned at the end of section 2.1, it is difficult to ascertain where the cracks are
+(or where they will occur). In lieu of actual crack positions, the traditional approach
+is to generate a random distribution of cracks, represented by a 3-dimensional tensor
+as shown in Figure 2.8. This tensor constitutes the structure of the AGR core, with the
+position of each element corresponding to a spatial position of a brick. This tensor has
+an integer data-type: -1 is an intact brick, 0 represents an empty position (corners) and
+
+Figure 2.6: Visualisation of Parmec Model
+
+Figure 2.7: Multi-Layer Array Rig
+
+CHAPTER 2. NUCLEAR ENGINEERING BACKGROUND
+
+21
+
+1 - 4 represents cracked bricks in one of four orientations - see Figure 2.9.
+
+Figure 2.8: AGR Input Core Tensor
+
+Figure 2.9: Brick Crack Orientations
+An input tensor such as the example shown in Figure 2.8 can be generated quickly and
+with low computational cost using industry standard tools (usually less than 1 minute
+per instance). These tensors can be used as input configurations to engineering models
+such as those shown in Figure 2.6 or Figure 2.7.
+The models are able to calculate the position of the bricks following an earthquake
+(Figure 2.10) with the presence of cracked bricks influencing how the they move. Angular or translational movement of the bricks acts to effectively reduce the clearance
+between the fuel or control rod and the surrounding bore wall. Figure 2.11 illustrates
+an example involving an interstitial channel containing a control rod: the relative displacement of the control rod insertion point can be calculated as a function of the
+
+CHAPTER 2. NUCLEAR ENGINEERING BACKGROUND
+
+22
+
+Figure 2.10: Angle Between a Distorted and Baseline Brick Channel
+movement of the bricks. The path of the control rod must not be obstructed, and so the
+relative displacement must be less than the bore radius.
+
+Figure 2.11: Relative Displacement of Control Rod
+The outputs shown in Figures 2.10 & 2.11 are calculated for every interstitial brick of
+which there are 4173 in the Parmec model. Further complexity comes from the fact
+that the bricks move in and rotate around all three cardinal directions. There is also the
+time history of the earthquake to consider, with outputs generated at each time frame.
+A single iteration of the aforementioned process, summarised in Figure 2.12, gives us
+very little information on its own. With multiple iterations of this process, each with a
+different randomised state of the input tensor (Figure 2.8), a stochastic understanding
+of the problem space can be built. For example, with several hundred iterations, a histogram can be plotted, as shown in Figure 2.13. The frequency of results is then fitted
+to a statistical distribution, such as the Normal distribution. Using this distribution, it
+can be determined what percentage of results are above an acceptable threshold (for
+
+CHAPTER 2. NUCLEAR ENGINEERING BACKGROUND
+
+23
+
+instance, half the bore radius shown in 2.11). Using these statistics, determinations can
+be made of the probability of certain serious events occurring and are used in safety
+decision making.
+Both of the engineering modelling methods mentioned in this subsection are expensive
+in terms of time, computation and/or materials. This expense represents a significant
+bottleneck to the process summarised in Figure 2.12.
+
+2.3
+
+Relevant Literature
+
+Calculations to ascertain the effects on the power plant following a severe earthquake
+were examined as early as the 1980s [1] and 1990s [4]. These works led to the more recent and detailed treatments of the problem, including [40] which uses a finite element
+analysis (FEA) model [68] to simulate the behaviour of the core during an earthquake
+and generate a 3D output contour plot.
+The AGR reactor and its response to seismic activity is well studied in academic literature. In [61], both a computational and experimental examination of the AGR reactor
+is made. This paper discusses various seismic configurations, all involving an intact
+core i.e. without cracked bricks. The authors note that without cracking, an obstruction
+
+Figure 2.12: Traditional Engineering Approach
+
+CHAPTER 2. NUCLEAR ENGINEERING BACKGROUND
+
+24
+
+Figure 2.13: Statistical Analysis
+of a control rod channel during a seismic event is not possible due to the design of the
+core.
+A physical model representing the AGR core which includes randomly placed cracked
+bricks is described in [17]. Elsewhere, [49] looks at the effects of cracking in a physical
+AGR experiment at the University of Bristol. The results of these works help validate
+computational studies.
+These papers set the theoretical groundwork for this field, establish the methodology
+and make it clear that the response of the core is a function of input factors such
+as earthquake severity/direction. They also state some interesting results which may
+inform data/feature extraction, such as the most onerous results being near the upper
+and centre of the core.
+
+Chapter 3
+Machine Learning Background
+This chapter gives an introduction and explanation of several machine learning techniques and the theory behind them. The areas to be explored include: supervised
+learning, neural networks, convolutional neural networks, surrogate machine learning
+models and transfer learning.
+For a more detailed explanation of the theory and workings of machine learning, see
+[8].
+
+3.1
+
+Supervised Learning
+
+What defines supervised learning is the use of a data-set which has two parts: inputs
+(features) and outputs (labels, also known as ground truth or targets). The objective of
+supervised learning is to develop a model which can predict the labels using features
+which it has not seen before.
+Supervised learning can be split into regression and classification. This section will focus on regression as it is more relevant to the work discussed in this thesis. Regression
+concerns the prediction of a continuous variables through a mathematical combination
+of input variables. This contrasts with classification, which attempts to predict which
+of a predefined set of categories a given sample belongs to.
+Consider Figure 3.1 which shows 10 instances of the Boston house price data-set [26]
+each representing houses in a metropolitan area. This table shows three features (highlighted in blue): RM (average number of rooms per dwelling), LSTAT (percentage of
+25
+
+CHAPTER 3. MACHINE LEARNING BACKGROUND
+
+26
+
+lower status residents) and PTRATIO (ratio of the pupils to teachers). In the final column, we see our target variable (green), which in this case represents median house
+price.
+In supervised learning practice, a model is trained to predict the target variable from
+values of the features: so in this case, the model would predict house prices based on
+the number of rooms, percentage of lower status residents and pupil-teacher ratio.
+
+Figure 3.1: The Boston House Price Data-set (sample).
+
+X ⊆ Rn× f
+
+(3.1)
+
+The features can be seen as a matrix X of real numbers with dimensions n by f: number
+of instances by number of features - (3.1). To generate a vector containing predicted
+target values (ŷ) from a feature matrix, the model performs the matrix operation as
+shown in (3.2). The weights vector, w, as well as the bias value, b, are optimised
+through a process of training known as gradient descent.
+
+X × w + b = ŷ
+
+(3.2)
+
+To perform gradient descent, a difference metric is calculated between the predicted
+values, ŷ and the true target values, y (e.g. the final column of Figure 3.1). There are
+many loss functions that can be used to calculate this metric, with a common one being
+the mean-squared-error (MSE) equation as shown in (3.3).
+
+CHAPTER 3. MACHINE LEARNING BACKGROUND
+
+27
+
+1 n
+∑ [(xi × w + b) − yi]2
+n i=1
+
+(3.3)
+
+MSE =
+
+In (3.3), we see the square difference calculated on an instance-by-instance basis (i)
+between the prediction (left) and true label (right). The mean value is then used to
+update the weights by taking its derivative of the MSE with respect to each weight.
+Theoretically, there is a minimum value of MSE for each weight (j), though this value
+cannot be calculated explicitly. Instead, the loss is minimised through a process of iteratively adjusting the weights by the derivative of the MSE (Figure 3.2). This process
+is repeated for the entire data-set multiple times, with each iteration being called an
+epoch. The training process will be continued for a user defined number of epochs,
+until a specified loss is reached, or until model convergence has been reached i.e there
+is no further improvement in model performance.
+Various loss functions are available, with common examples being the mean squared
+error (MSE) already mentioned, as well as mean absolute error (MAE) and the Huber
+loss [31]. At the end of training, another loss value can be calculated using the test
+set to evaluate the overall general performance of a given model and compare different
+approaches.
+The regression method described here is linear regression optimised through stochastic
+gradient descent. Alternative ML approaches to regression include Support Vector
+Regression (SVR) [6] and Decision Tree Regression [44].
+
+Figure 3.2: Gradient Descent
+
+CHAPTER 3. MACHINE LEARNING BACKGROUND
+
+3.2
+
+28
+
+Neural Networks
+
+Neural networks can be seen as a multi-layer stacking of the type of operation described in section 3.1. The point at which each of these operations occurs is usually
+referred to as a neuron or node. Neurons are placed in parallel or sequence (Figure 3.3)
+to form the model architecture. Various arrangements of these nodes may be employed,
+with varying depth and width of the network.
+Differing neural network architectures with varying hyper-parameters [23] can be employed in the design of a machine learning model. The architecture of a neural network
+consists of nodes at which a mathematical operation is performed. The nodal output
+is passed through an activation function which transforms it in a non-linear manner.
+Commonly employed activation functions include the rectified linear unit (ReLu) [25]
+and the Softplus function [67].
+The design of a neural network usually features multiple cascading layers, with the
+output of the previous layer feeding through as input to the subsequent layer. The network is trained through application of the back-propagation algorithm [29] which uses
+the loss function to adjust the weights throughout the network. The back-propagation
+algorithm utilises a learning rate, a user defined value that determines how quickly the
+model weights are adjusted. A learning rate value must be chosen so as not be too
+high or low: either extreme will prevent an optimal solution from being attained. The
+learning rate may be adjusted during training.
+At the start of neural network training - prior to the back-propagation process - the
+trainable parameters of the model are initialised with random values. Repeating the
+initialisation and training process several times, a different set of optimised weights
+will be produced each time, despite using the same training data. To account for this
+stochastic nature of the training process, machine learning experiments are normally
+repeated several times.
+A common problem encountered during the training of neural networks is that of overfitting [27]. This phenomenon is encountered when a model fits so closely to a training
+dataset that it does not perform well on new data that it has not encountered during
+training i.e. the model does not generalise well. A significantly lower training loss
+relative to the test loss indicates overfitting, whereas a similar value for the two loss
+
+CHAPTER 3. MACHINE LEARNING BACKGROUND
+
+29
+
+values indicates good general performance of the model. To avoid overfitting, several
+regularisation techniques are employed. These include adding a term to loss function
+that penalises large weights and randomised dropout of model layers [58].
+Several configurations of neural networks are available. A common choice is the fully
+connected or dense neural network (DNN): i.e. the output of every node in a layer
+feeds into every node in the subsequent layer, leading to a ’dense’ architecture. An
+alternative configuration is the convolutional neural network (CNN) discussed in the
+following chapter.
+
+3.3
+
+Convolutional Neural Networks (CNN)
+
+Convolutional neural networks (CNNs) attempt to capture local signals in data by use
+of a sliding window which passes over the input space. CNNs have been utilised in
+several areas of image analysis, including cell detection in medicine [63] and depth estimation in photographs [41]. Within the engineering field, they have been employed
+to predict remaining useful life of components [7]. The application of CNNs may be
+effective in the research problem discussed in this thesis as there are similarities between the data format for AGR graphite core analysis and image recognition, with the
+presence and identification of local arrangements important in both areas.
+
+3.4
+
+Surrogate Machine Learning Models
+
+For any given natural phenomena, it is possible to develop a physical model that mathematically describes it and can approximate its behaviour. Such phenomena range from
+a simple decaying wave (Figure 3.6) to highly complex models such as that of turbulent fluid movement. Such models are unlikely to ever be a perfect representation of
+the natural phenomena, as there may be too many variables and factors to ever account
+for them all, hence there will always be some disparity. However, it may be possible to
+produce a model that is accurate enough so as to provide data that is of practical use.
+From data generated by such mathematical models, it is possible to train machine
+learning models to produce equivalent outputs from the same inputs. This will effectively be an additional layer of approximation on top of an already approximate model.
+
+CHAPTER 3. MACHINE LEARNING BACKGROUND
+
+30
+
+Figure 3.3: Neural Network: An example of a feed-forward network.
+From left to right: input layer accepting 8 features; first ’hidden’ layer with 10 nodes,
+each fully connected to every node in the previous layer; second ’hidden’ layer this
+time with only 8 nodes, again is fully connected to accept the output of each node
+from the previous layer; a single output node which is fully connected to each node
+from the previous layer.
+
+Figure 3.4: Convolutional Neural Network: Feature Extraction.
+
+CHAPTER 3. MACHINE LEARNING BACKGROUND
+
+31
+
+What is the motivation for doing this? Given a mathematical model of a phenomena,
+why develop and use a surrogate model using machine learning which provides inferior results? It is difficult to see why given the simple example of Figure 3.6. However,
+in a real world case, such as nuclear reactor core safety, such a model may be highly
+complex, involving thousands of parameters and requiring significant computational
+expense. A machine learning model on the other hand, once trained, is computationally cheap to use, being just a series of matrix operations. The production of such a
+machine learning surrogate can also be seen as an exploration of the data space i.e. it is
+likely through the process of model training and refinement that insights into relationships between variables will be discovered. It may also be possible to develop machine
+learning tools so as to work in symbiosis with traditional mathematical models, with
+one informing the direction and focus of the other.
+With each layer of approximation, there is of course an added margin of inaccuracy.
+Therefore, the development of a machine learning surrogate model is a trade-off between computational expense/time and accuracy (Figure 3.7).
+
+3.5
+
+Transfer Learning and Existing ML Models
+
+Many organisations have produced highly optimised neural networks, often demonstrating their capabilities in public competitions such as ImageNet [52]. The successful competitors often publish their model architectures along with the best performing
+weights. Models produced and published through this competition include VGG [56]
+and ResNet [28]. Although these models are optimised to perform image classification
+tasks, many researchers have found that the aforementioned models can be adapted to
+other areas of study in a process known as transfer learning [59].
+
+3.6
+
+Relevant Literature
+
+An overview of machine learning techniques and their application to nuclear engineering is given in a recent paper [21]. This review details a range of machine learning approaches, including decision trees, nearest-neighbour, support vector machines, naive
+bayes, as well as Convolutional and recurrent neural networks. It then goes on to outline how these techniques have been applied in nuclear engineering fields such as plant
+
+CHAPTER 3. MACHINE LEARNING BACKGROUND
+
+32
+
+Figure 3.5: Convolutional Neural Network: Architecture.
+
+Figure 3.6: Modelling of Natural Phenomena
+A decaying wave (blue). A mathematical model may be developed which
+approximates its behaviour (orange). It may be possible to build a surrogate model
+(grey) which is an approximation built upon an approximation.
+
+CHAPTER 3. MACHINE LEARNING BACKGROUND
+
+33
+
+Figure 3.7: The Trade-off Between a Machine Learning Surrogate Model and the Original Model
+Once trained on data from the original model, the production of new data is likely to
+be significantly more efficient in terms of computation and time. However, as the
+machine learning model is produced using data from the original model, there will be
+some inevitable reduction in accuracy.
+health, radiation protection and optimisation. Although this paper does not reference
+the AGR or graphite, it does provide a useful introduction to the field.
+The same authors produced an earlier paper in which they use a neural network to predict the response of a light water reactor to various operational and accident conditions
+[20]. The motivations for this work include an ability to make rapid safety decisions
+(i.e. greater computational efficiency) as well as providing insight into safety issues.
+This research highlights various neural network architectures as shown in Figure 3.8.
+Academic works which apply machine learning to the production of engineering surrogates can be found as far back as 2003, where [32] developed a symbiotic approach
+combine finite element models and neural network architecture. A more recent treatment of this topic can be found in [38] where the authors employ several approaches.
+These include an adaptive sampling method, where instances are generated and included in the training set based on their importance: i.e. selecting samples within the
+problem space that maximise useful information and excluding those which contain
+
+CHAPTER 3. MACHINE LEARNING BACKGROUND
+
+34
+
+redundancy. Another relevant work is [66] which uses a machine learning model to
+predict subsequent molten reactor core behaviour based on a time history. To train the
+ML model used in this work, the researchers generate data using a traditional engineering model (equivalent to that described in section 2.2) to build a surrogate model
+(as described in section 3.4).
+A particularly relevant existing work to the PhD project discussed in this thesis is [15]
+which concerns both AGR graphite and machine learning. These researchers use data
+from a physical model of an AGR reactor which simulates an earthquake to train a
+feed-forward neural network (see Figure 3.3) with 3 layers. The data generated by
+five configurations of the physical model (one intact, four with random distributions
+of cracks) are used to generate values for displacement in the top layer of the core.
+A neural network is then trained on this data, with displacements in the central channel being used to predict displacements in a select number of surrounding channels.
+The researchers achieve reasonably good agreement between model prediction and the
+ground truth data from their physical model, although there is some breakdown at the
+extremes. The scope of this model is somewhat limited, however, in that the model
+can only predict displacements from displacements at other locations. Superior model
+performance may also be achieved with a more complex neural network.
+
+CHAPTER 3. MACHINE LEARNING BACKGROUND
+
+35
+
+Figure 3.8: Four Possible Neural Network Architectures
+Input on the left, output on the right. (a): a narrowing structure where layers decrease
+in size towards the output layer and the output vector is smaller than the input vector;
+(b): the inverse of a. with the layers increasing in size towards the output layer; (c):
+An architecture combining both of the previous approaches, with the structure
+compressing the input and then expanding it before the output layer; (d): A parallel
+structure where the layers remain of roughly similar size across the network. This
+Figure is a reproduction of Fig. 4 from [20].
+
+Chapter 4
+Dataset, Framework, Exploration and
+Analysis
+This chapter has two purposes. Firstly, we detail a programmatic framework developed
+in order to generate data and to engineer it for machine learning model purposes. We
+also discuss the nature of the data itself, including the dimensionality of the inputs
+& outputs. Secondly, we explore the data space using visualisation and statistical
+techniques.
+
+4.1
+
+Framework and Dataset
+
+This section details the programmatic framework [34] developed during this PhD. This
+framework was produced in order to streamline the development and optimisation of
+surrogate machine learning model for this project. The framework is provided free and
+open source with the intention that other researchers will adapt and use it for their own
+surrogate machine learning purposes. Using this repository, the accompanying dataset
+[35] and the attached guide, the method and results presented in this thesis can be reproduced by anyone.
+The framework is developed so as to be useable on a portable batch system (PBS) as
+is commonly implemented on university cluster computing systems. These systems
+allow job queuing and parallel processing of experiments [30]. If a PBS system is not
+available, the framework is functional on any other standard computer.
+Through exploring the function of this framework, we shall also discuss the nature of
+36
+
+CHAPTER 4. DATASET, FRAMEWORK, EXPLORATION AND ANALYSIS
+
+37
+
+the dataset. This includes the input features and the output labels.
+The framework has three principal functions:
+1. The creation of Parmec data
+2. The extraction of relevant data from Parmec data cases
+3. The translation and engineering of the aforementioned data in datasets useable
+as machine learning training data
+
+4.1.1
+
+Parmec Data Generation
+
+The Parmec case generation tool allows batch generation of instances, each traceable
+to a pseudo-random number seed [9]. This allows a creation of a large and reproducible
+dataset. Should the dataset be lost/corrupted or need to be temporarily deleted, it can
+be exactly reproduced using the original seeds.
+This tool was developed by adapting an industry standard Microsoft Excel sheet with
+extensive changes using the Visual Basic .NET framework [22]. Using this tool, the
+user can batch generate Parmec configuration files.
+For ease of use and interaction by the user, the framework converts each Parmec case
+into a data object, making use the object oriented programming (OOP) paradigm [45]
+with the Python language [13]. The Parmec class has interface methods which allow
+simple access and parsing of the information about that case. An additional layer of
+abstraction is provided by the creation of additional classes which aggregate all of the
+Parmec case objects in a batch of cases. This allows then generation of datasets for use
+in visual analysis or machine learning.
+Using the aforementioned tool, 8300 Parmec examples were generated to form the base
+dataset. Approximately 75% of the dataset was randomly partitioned to become the
+training set (N) with around 6300 instances, with the remaining 25% (2000 samples)
+forming the test set (Nt ). The full list of inputs and outputs to the Parmec model are
+summarised in Table 4.1.
+
+CHAPTER 4. DATASET, FRAMEWORK, EXPLORATION AND ANALYSIS
+
+38
+
+Figure 4.1: Multi-channel Cascade
+
+4.1.2
+
+Model Inputs (Features)
+
+Fuel bricks are stacked in a multi-level structure as mentioned in section 2.1. There
+are 7 levels (l = 7), each with 284 bricks (f = 284), hence there are 1988 fuel bricks in
+the reactor in total (r = 1988). The input configuration files for a single Parmec case
+contain a integer representation of the cracking status of each brick in the core as visualised in Figure 4.1. In the aforementioned figure, an uncracked brick is represented
+by a -1, with cracked bricks represented by an integer 1 - 4, with this number giving
+the orientation (see Figure 2.9). Note that each core level has 18 rows and columns
+(d = 18) but not every element represents a fuel brick - corner positions are padded
+with zeros.
+The inputs for the Parmec model also serve as the input features to a machine learning model. The 3-dimensional input structure from Figure 4.1 is unraveled into a 1dimensional vector of length 1988. The cracking status of all fuel bricks are encoded
+according to their level (bottom to top) then by their position as shown in Figure 4.2.
+Note that at this point we are discarding the empty positions (zeros used to pad the
+corners). We are also discarding the orientation of the crack and only encoding a fuel
+brick as uncracked (-1) or cracked (1).
+With 6300 training samples and 1988 input elements (cracked or uncracked AGR fuel
+bricks) this gives a matrix of dimensions N by BF (6300 x 1988), hence our feature
+matrix is defined as X = {−1, 1}N×BF . This matrix serves as the base input features to
+
+CHAPTER 4. DATASET, FRAMEWORK, EXPLORATION AND ANALYSIS
+
+39
+
+Figure 4.2: Fuel Brick Encoding Order
+the machine learning models described in the following sections.
+The aforementioned data framework which includes the Parmec case class allows the
+user to access input information about a particular case. For example, should the user
+want to get the number of cracks in a particular level of the core. Used in aggregate
+across all cases within the dataset, the above input feature matrix as described in the
+previous paragraph can be efficiently obtained.
+
+4.1.3
+
+Model Outputs (Labels)
+
+Recall from subsection 2.2 that the Parmec model is used to simulate an earthquake
+(Figure 4.4). This includes a settle down period before and after the earthquake proper.
+For 271 regular time intervals (TI) throughout the earthquake simulation, the model
+outputs a data-file. This file contains translation and rotation data for all bricks within
+the reactor core.
+There are 4173 interstitial bricks (henceforth referred to by the notation BI), the behaviour of which we are interested in during the earthquake time history. Like the fuel
+bricks discussed in the previous subsection, the interstitial bricks are stacked into channels. As the interstitials are shorter than their fuel equivalent, an interstitial channel is
+made of a stack of 13 bricks. Similar to the encoding process for fuel bricks, interstitials are encoded in order of their level and then by the order as given in Figure 4.3.
+
+CHAPTER 4. DATASET, FRAMEWORK, EXPLORATION AND ANALYSIS
+
+40
+
+Figure 4.3: Interstitial Brick Encoding Order
+For each interstitial brick, Parmec calculates 6 output metrics (OM) representing displacement in and rotation about all three Cartesian directions. With the 271 time intervals mentioned above, this results in nearly 6.8 million outputs per Parmec case.
+Therefore, each Parmec case has an output as can be represented by (4.1) with each
+value being normalised element-wise across the entire dataset.
+
+Yi = {0, 1}BI × T I × OM
+
+(4.1)
+
+The large amount of output data generated by Parmec is not in a format readily accessible or interpretable by human users or by other computer analysis. Therefore, the
+Parmec class object was extended to analyse this data and produce useable outputs.
+Again, this data is accessible via interactive Parmec object method calls and can be
+used in aggregate across the entire dataset.
+It is expected that part of the output tensor from Parmec will become the output labels
+of surrogate machine learning model i.e. a SMLM will be developed to predict part of
+the Parmec output tensor. It is unlikely that a single SMLM will be able to accurately
+predict all of the ouputs from 4.1. Therefore, we will have to narrow the output scope
+of the model, at least in the short term. We can do this in several ways: 1) We have
+already explored some research work published in the field of AGR seismic safety
+analysis (see section 2.3), 2) By making a visual and statistical analysis of the data (see
+section 4.2) and 3) through machine learning experimentation such as in section 5.4.
+
+CHAPTER 4. DATASET, FRAMEWORK, EXPLORATION AND ANALYSIS
+Inputs
+
+Outputs
+
+Cracking Status
+1988 Fuel Bricks:
+7 levels
+284 fuel bricks per level
+
+Brick Displacement
+4173 Interstitial Bricks:
+13 levels
+321 bricks per level
+
+41
+
+Output Metrics
+6 per interstitial brick:
+3 translational
+3 rotational
+Earthquake Acceleration
+1400 time points:
+14 seconds
+100 time points per second
+
+Output Frequency
+271 output points:
+once per 0.05 seconds
+
+Fuel brick cracking
+status is constant
+throughout earthquake
+
+Output for all
+4173 interstitial bricks
+and 6 output metrics
+per time point
+
+Table 4.1: Summary of the Inputs and Outputs of the Parmec Engineering Model for
+AGR Graphite Core Seismic Analysis.
+
+4.2
+
+Dataset Exploration and Analysis
+
+To help choose a direction for research, a visual inspection of the dataset has been
+made. As mentioned in the previous section, the data produced by the Parmec model is
+multidimensional. Therefore, visual analysis will be made from multiple perspectives.
+The visualisations have been made possible through the framework that was detailed
+in the previous section.
+
+4.2.1
+
+Time History: Example Cases
+
+For a chosen Parmec case, Figures 4.5 and 4.6 show the displacement time history for
+selected channels in two directions. It can be seen that the oscillations in displacement
+largely follow those of the earthquake acceleration pattern (Figure 4.4). As expected,
+there is no displacement during the preliminary settle down period up to about 2.5
+seconds. Channels near the centre of the core see higher amplitudes, with some of the
+
+CHAPTER 4. DATASET, FRAMEWORK, EXPLORATION AND ANALYSIS
+
+42
+
+Figure 4.4: History of Acceleration During a Severe Earthquake
+Note the settling period before and after the earthquake proper. The true earthquake
+history includes an acceleration value every 100th of a second. This plot shows a
+sample every 10th of a second, which is the interval that the Parmec model outputs
+displacement data. Note that four time frames are highlighted - these frames are made
+reference to in the analysis in this chapter.
+most central channels also continuing to move after the earthquake has ended at around
+8 seconds.
+Selecting four time frames from the earthquake time history, it is possible to visualise
+the displacement in the reactor core at these points. The time frames chosen can be
+seen in Figure 4.4 with vertical indicators and were chosen as they represent the peaks
+of earthquake acceleration.
+A top down view of channel displacements can be seen in Figures 4.7 and 4.8, where
+displacements in the west-east and south-north direction can be seen, respectively. For
+west-east displacement (Figure 4.7), note that those channels near the edge of the core
+
+CHAPTER 4. DATASET, FRAMEWORK, EXPLORATION AND ANALYSIS
+
+43
+
+Figure 4.5: Time History: Maximum Channel Displacement in the West to East Direction for Sample Channels
+Compare with the earthquake time history (Figure 4.4).
+
+CHAPTER 4. DATASET, FRAMEWORK, EXPLORATION AND ANALYSIS
+
+44
+
+Figure 4.6: Time History: Maximum Channel Displacement in the South to North
+Direction for Sample Channels
+Compare with the earthquake time history (Figure 4.4).
+
+CHAPTER 4. DATASET, FRAMEWORK, EXPLORATION AND ANALYSIS
+
+45
+
+tend to displace in the opposite direction to those in the centre. For frames 65 and 68,
+there seems to be little diversity in the distribution of displacement values, whereas for
+frames 48 and 55 there is more variation, at least for the more central channels. For
+south-north displacements (Figure 4.8) the displacements for each case are a variation
+on a similar pattern in each time frame.
+For an alternative view on the previously illustrated example cases, the sum of levelby-level displacement can be seen in Figures 4.9 and 4.10. Similar to the top down
+view equivalent, Figure 4.9 (west-east displacement) shows little variation across the
+three sample cases for frames 65 and 68, with slightly more variation on a similar pattern seen in frames 48 and 55.
+
+4.2.2
+
+Entire Dataset
+
+Several visualisations were generated based on the entire dataset of approximately
+8300 samples. For the time frames highlighted in the previous section, Figures 4.11
+and 4.12 show histograms of all Parmec displacements outputs across all dataset samples. Note that for both displacement directions, the distribution of output values at
+each time frame fits around a central median value.
+For a single time frame (48) Figure 4.13 shows a channel by channel summation of the
+Parmec results across the entire dataset. This allows us to make comparisons between
+core regions. The outer channels tend to have negative (eastward) displacement, indicated in blue. As we move closer to the centre of the core, the displacement moves
+towards zero, indicated in white. Moving further towards the centre of the core, the
+displacement becomes increasingly positive (westward), indicated in red. The displacement values have strong radial symmetry about the centre. The uniform structure
+of the Parmec outputs in the aforementioned figure are interesting when considering
+that the input crack patterns are randomly generated.
+
+4.2.3
+
+Output Correlation Analysis
+
+A natural question at this point would be: how do the individual label values from 4.1
+correlate with each other? For example, do the results for central channels increase
+
+CHAPTER 4. DATASET, FRAMEWORK, EXPLORATION AND ANALYSIS
+
+46
+
+Figure 4.7: Comparing the Output of Three Cases Through Time: Sum of Channel
+Displacement in West-East Direction (mm)
+Three cases have been chosen at random from the dataset, corresponding to each of
+the three columns in this Figure. Each row corresponds to a time index of the
+earthquake (see the vertical markers in Figure 4.4). The time frame is listed, as well
+as the earthquake acceleration at that time. The images are a graphical representation
+of the displacement value for each interstitial channel. Note that values are in the
+range ±50 i.e. the overall movement of that channel may be up to 50 mm in the left or
+right direction.
+
+CHAPTER 4. DATASET, FRAMEWORK, EXPLORATION AND ANALYSIS
+
+47
+
+Figure 4.8: Comparing the Output of Three Cases Through Time: Sum of Channel
+Displacement in South-North Direction (mm)
+Three cases have been chosen at random from the dataset, corresponding to each of
+the three columns in this Figure. Each row corresponds to a time index of the
+earthquake (see the vertical markers in Figure 4.4). The time frame is listed, as well
+as the earthquake acceleration at that time. The images are a graphical representation
+of the displacement value for each interstitial channel. Note that values are in the
+range ±30 i.e. the overall movement of that channel may be up to 30 mm in the south
+or north direction.
+
+CHAPTER 4. DATASET, FRAMEWORK, EXPLORATION AND ANALYSIS
+
+48
+
+Figure 4.9: Comparing Output of Three Cases Through Time: Sum of Level Displacement in West-East Direction (mm)
+Three cases have been chosen at random from the dataset, corresponding to each of
+the three columns in this Figure. Each row corresponds to a time index of the
+earthquake (see the vertical markers in Figure 4.4). The time frame is listed. The
+images are a graphical representation of the displacement value for each interstitial
+level.
+
+CHAPTER 4. DATASET, FRAMEWORK, EXPLORATION AND ANALYSIS
+
+49
+
+Figure 4.10: Comparing Output of Three Cases Through Time: Sum of Level Displacement in South-North Direction (mm)
+Three cases have been chosen at random from the dataset, corresponding to each of
+the three columns in this Figure. Each row corresponds to a time index of the
+earthquake (see the vertical markers in Figure 4.4). The time frame is listed. The
+images are a graphical representation of the displacement value for each interstitial
+level.
+
+Figure 4.11: Histogram of Sum Displacement of All Instances: West-East directional
+displacement
+This plot shows a histogram for results across the dataset. The results for each time
+frame are Gaussian in shape i.e. a symmetric bell curve around a mean value.
+However, there seems to be a smaller peak near the left tail.
+
+CHAPTER 4. DATASET, FRAMEWORK, EXPLORATION AND ANALYSIS
+
+50
+
+when those for outer channels increase? Or is the opposite the case, or neither?
+Consider again Figure 4.3 which numbers each of the interstitial channels. Note that
+channels are numbered in rows from left to right and hence numerically close channels
+are not always physically close - e.g. 75 and 76, which are on opposite ends of the
+core. Using the numbers from Figure 4.3, consider Figure 4.14. It appears that channels which are physically close correlate strongly, with this tendency breaking down
+the further a two channels are away from each other. This would suggest it may be
+difficult to train a model capable of making accurate predictions across the whole core.
+Looking closely at only the correlations between results for the central interstitial channel (number 161 - see Figure 4.3), we can again see a stronger correlation the closer
+two bricks are physically located (Figure 4.15).
+
+CHAPTER 4. DATASET, FRAMEWORK, EXPLORATION AND ANALYSIS
+
+51
+
+Figure 4.12: Histogram of Sum Displacement of All Instances: South-North directional displacement
+This plot is very similar to Figure 4.11. A Gaussian distribution can be seen similarly
+to the previous plot.
+
+Figure 4.13: Channel Summation for Time Frame 48
+For each channel, the Parmec Outputs in the west-east direction were summed.
+
+CHAPTER 4. DATASET, FRAMEWORK, EXPLORATION AND ANALYSIS
+
+Figure 4.14: Correlation of Channel Results Against Each Other
+
+52
+
+CHAPTER 4. DATASET, FRAMEWORK, EXPLORATION AND ANALYSIS
+
+53
+
+Figure 4.15: Correlation of Bricks of the Central Channel (161) Results Against Each
+Other
+
+Chapter 5
+Preliminary Machine Learning
+Experiments
+This chapter covers work which was completed as part of research for this PhD project,
+but were not included as part of a journal article. They include preliminary experiments, negative results and other exploratory research.
+
+5.1
+
+Dataset Size Sensitivity
+
+The motivation for this experiment was not to investigate the effectiveness of a particular method or approach, but rather to determine the sensitivity of model performance
+to dataset size.
+From the larger dataset, 6000 cases were randomly chosen. This set was split into 6
+segments of equal size. The experimental procedure involved incrementally adding
+the segments to dataset used to train the model. After the adding of of each increment
+to the training dataset, the model was reinitialised with random starting weights so
+training could begin afresh. This process was repeated four times to account for the
+stochastic nature of the model initialisation process.
+At each stage of the experiment, the dataset was randomly split into a training set (80%
+of instances) and test set (the remaining 20%). The model architecture and parameters
+were kept constant for all increments of dataset size. The model used was a convolutional neural network, with 8 convolutional layers, each 64 nodes wide and 2 fully
+
+54
+
+CHAPTER 5. PRELIMINARY MACHINE LEARNING EXPERIMENTS
+
+55
+
+connected layers before the output layer. Dataset parameters were similar to those reported in section 6.4.
+Figure 5.1 gives a summary of the results for the experiment. Each pair represents a
+increment of the experiment, with the blue and orange bars representing the average
+training and validation loss at the end of the training process. As can be seen, the training loss after the final epoch is very similar in each increment. The average validation
+result, however, falls with each increase in the size of the dataset.
+Looking more closely at the training process, we can examine the training loss history
+for each increment. Figure 5.2 shows that for a dataset size of 1000 instances, the training loss falls steadily, however, the validation rises steadily for the first 100 epochs and
+then converges. These seems to suggest the model is over-fitting with a dataset of this
+size.
+When the dataset is increased in size to 3000 (Figure 5.3), the training loss steadily
+decreases except for a spike at epoch 150. Similar behaviour can be seen for the validation loss, however, it appears to converge at around 200 epochs. Increasing the
+dataset size to 5000 (Figure 5.4), validation loss convergence occurs at a lower loss
+value. Additionally, the training and validation losses at the end of training are closer
+to one another.
+It’s clear from this experiment that a larger data set yields improved results. This result is as would be expected - a larger dataset yields more training examples for the
+model to learn from and reduces the potential for overfitting [27]. Looking carefully
+at Figure 5.1, we can see performance improves sharply for the first two increments.
+Following this, we have diminishing returns, with the final two incremental increases
+in dataset size yielding only very small improvements in model performance. This
+suggests that at 6000 samples, the training dataset is reaching a point of saturation i.e.
+increasing the size of the dataset much further is unlikely to yield significant model performance. The results of this experiment implies that we should focus computational
+and research efforts into machine learning model refinement rather than generating
+more Parmec data. However, investigations of increasing the dataset by a significant
+amount, say by an order of magnitude, should be investigated at a later date. This may
+be possible through techniques such as data augmentation [55].
+
+CHAPTER 5. PRELIMINARY MACHINE LEARNING EXPERIMENTS
+
+5.2
+
+56
+
+Crack Orientation
+
+Recall from subsection 4.1.2 that our input feature matrix can be represented by X =
+{−1, 1}N×BF , with N being the number of training samples and BF being the number
+of fuel bricks in the Parmec model. Each element in this matrix is either a -1 (representing an uncracked brick), or a 1 representing a cracked brick.
+Note also that in subsection 4.1.2 it was discussed that Parmec can represent a cracked
+fuel brick in one of four orientations (see Figure 2.9). In the format of the input feature
+matrix discussed in the previous paragraph, the orientation of a cracked brick is not
+encoded and this information is discarded.
+If we wish to encode this information for the purposes of developing a machine learning model, how we go about this? We could adapt our input feature matrix to the form
+X = {−1, 4}N×BF so that a cracked brick is denoted by a 1 - 4 inclusive, representing
+one of the crack orientations shown in Figure 2.9. However, a machine learning model
+would treat these as ordinal values i.e. it would see orientation 2 as being double that
+of orientation 1. Effectively there is no ordinal relationship between the orientations
+and so this format would be incorrect.
+Instead, our feature matrix is expanded into an extra dimension. As opposed to a 0 or
+1 for each brick representing an uncracked or cracked brick, each brick is now represented by a vector of length 4. An uncracked brick is represented by a vector of four
+zeros, with each crack orientation (Figure 2.9) represented by a 1 in one of the four
+vector elements (5.1).
+
+Uncracked = {0, 0, 0, 0}
+Orientation 1 = {1, 0, 0, 0}
+
+Orientation 2 = {0, 1, 0, 0}
+
+Orientation 3 = {0, 0, 1, 0}
+
+(5.1)
+
+CHAPTER 5. PRELIMINARY MACHINE LEARNING EXPERIMENTS
+
+57
+
+Orientation 4 = {0, 0, 0, 1}
+This approach is functionally similar to one-hot encoding [54], where categorical values are represented by a binary vector.
+In this experiment, two machine learning models were trained in parallel: the first using our original input feature encoding (X = {−1, 4}N×BF ) and the second with our
+expanded input feature tensor which encodes cracked brick orientation 5.1. In both
+parts of the experiment, the model architecture and all other parameters were kept constant. The training and evaluation process was repeated four times per input encoding
+format, so as to account for the stochastic nature of hyper-parameter initialisation. Output parameters were similar to those reported in section 6.4.
+It was expected that the model trained using the expanded input feature tensor would
+outperform the model trained using binary encoding. After all, it is the same experiment except for the additional information of crack orientations as well as positions.
+However, only a very similar performance was seen, or in some cases, slightly worse.
+It appears that the model training process exhibits overfitting - where the model too
+closely fits the training set, including any noise or irrelevant information. A clear indicator of overfitting is decreasing training loss whilst validation loss increases i.e. the
+model fits to the training set so well that it losses the ability to generalise to data outside
+of it. Looking at the training time history of the model trained using crack orientations,
+this phenomenon can be clearly seen in (Figure 5.5). It can be seen that the training
+loss falls monotonically, with the validation loss rising steadily i.e. the model’s ability
+to generalise is falling.
+There are several explanations for the unexpectedly lower performance of the model
+trained with the input features including orientations. The first possibility is that the
+positions of the cracks is the overriding factor of importance in terms of causing displacements, with the orientations having little physical effect. The other possibility is
+that the results are an artefact of the way they have been encoded or expressed to the
+model. Further study should be made to investigate this at a later time.
+
+CHAPTER 5. PRELIMINARY MACHINE LEARNING EXPERIMENTS
+
+5.3
+
+58
+
+Transfer Learning
+
+As outlined in subsection 3.5, existing models for image classification can be adapted
+to other problems, including the regression problem of this research work. Models
+from the VGG and ResNet families were adapted, including VGG16 & VGG19 and
+ResNet50 & ResNet101. These were trained and tested using the standard datasets
+used previously. It was found that VGG19 performed the best out of all of these methods, with VGG16 also performing better than all ResNet models.
+To suit the purpose of this study, the existing models had to be adapted. Previously,
+these models would receive a image tensor, usually of dimensions 32x32x3 (32 pixels
+width and depth plus 3 colour channels) and output a vector of length 1000 (representing a range of image categories). In place of the image tensor, the 3-dimensional
+tensor represented by Figure 4.1 was flattened into a planar arrangement with an example shown in Figure 5.6. This was then one-hot encoded into three channels: cracked
+bricks (green), uncracked bricks (red) and corners/edges (blue). For each instance, this
+processes creates a input feature tensor of 88x44x3. The model output layer was modified to produce a single regression value similar to those reported in section 6.4.
+This experiment also involved adding layers between the end of the nominal VGG19
+architecture and the output layer. These included dropout layers of varying percentages, dense layers of varying width and batch normalisation layers [[43]]. The summary of results can be seen in Table 5.1. It can be seen that simply adding a dropout
+layer of 30% results in the best model performance uplift, with some adding reducing
+performance. A visualisation of the model performance can be seen in Figure 5.7.
+Additional
+Additional Lowest
+Additional
+Layer 2
+Layer 3
+Loss
+Layer 1
+Dropout 30%
+9.8e-2
+Dropout 40%
+9.9e-2
+(none)
+9.9e-2
+Batch Norm
+Dense (32)
+Dropout 20% 10.0e-2
+Dense (32)
+Dropout 20%
+Dense (16)
+10.1e-2
+Dense (32)
+Dropout 30%
+Dense (32)
+10.2e-2
+Table 5.1: Summary of the Test Results from Preliminary Transfer Learning Experiment
+
+CHAPTER 5. PRELIMINARY MACHINE LEARNING EXPERIMENTS
+
+59
+
+It was also mentioned in subsection 3.5 that the option exists in transfer learning to
+import existing weights optimised for the original purpose of the model, or to start
+with fully randomised starting weights. It was found here that using the ImageNet
+weights as a starting point for the model significantly improved model performance,
+both in terms of time to convergence and overall loss.
+Over all, the transfer learning models produced inferior results to those of an architecture developed from scratch. (The results of which will be seen in Chapter 6).
+However, the transfer learning models still provided comparable results and may have
+superior results in some parts of the data-range, particularly the lower part.
+
+5.4
+
+Whole Core Experiment
+
+As mentioned in subsection 4.1.3, the output of Parmec is multi-dimensional, with 6
+directional/rotational outputs for all 4173 interstitial bricks, with each of these values
+output at all 271 time frames during the earthquake. In this experiment, a single time
+frame was selected (frame 48) and one output metric (displacement in the West-East
+direction). The rationale for selecting these outputs starts by examining and comparing Figures 4.7 & 4.8, as well as Figures reffig:histo1 & reffig:histo1. Displacement in
+the South-North direction was discarded as limited variability can be seen looking at
+individual cases and at the distribution of the dataset as a whole. Looking at individual
+cases of displacement in the West-East direction, it can be seen that there is variability
+between cases (top row of Figure 4.7). Also, there are a reduced number of outliers
+(Cyan in Figure 4.11) compared to outputs for the other time frames.
+With our selection of output data, a machine learning model was trained for 200 epochs
+to predict displacement in the West-East direction at frame 48 for all 4173 interstitial
+bricks. A visualisation of the test set predictions for a single instance can be seen in
+Figures 5.8 & 5.9. These figures visualise the predictions of the model at the half way
+point of training and after the final epoch, comparing each to the ground truth.
+It can be seen that the model makes similar predictions for all three cases i.e. there is
+limited variability between the predictions. This suggests the model has a high level
+of bias and is not able to generalise well. The explanation for this can likely be found
+in the discussion within subsection 4.2.3, where it was revealed that the outputs for
+disparate regions of the core do not correlate well with each other. Therefore, this
+
+CHAPTER 5. PRELIMINARY MACHINE LEARNING EXPERIMENTS
+
+60
+
+result suggests that the development of a machine learning model with the intention
+of predicting the displacement of all 4173 bricks may be highly complex and take
+considerable effort in model optimisation. Therefore, the development of a model with
+a narrower output prediction scope first may be a more reasonable short term goal.
+
+CHAPTER 5. PRELIMINARY MACHINE LEARNING EXPERIMENTS
+
+Figure 5.1: Sensitivity Results Summary
+
+61
+
+CHAPTER 5. PRELIMINARY MACHINE LEARNING EXPERIMENTS
+
+Figure 5.2: Training History of Increment with a Dataset of 1000 Increments
+
+62
+
+CHAPTER 5. PRELIMINARY MACHINE LEARNING EXPERIMENTS
+
+Figure 5.3: Training History of Increment with a Dataset of 3000 Increments
+
+63
+
+CHAPTER 5. PRELIMINARY MACHINE LEARNING EXPERIMENTS
+
+Figure 5.4: Training History of Increment with a Dataset of 5000 Increments
+
+64
+
+CHAPTER 5. PRELIMINARY MACHINE LEARNING EXPERIMENTS
+
+Figure 5.5: Training History for Crack Orientation Model
+
+Figure 5.6: Feature encoding appropriate for use in transfer learning
+This image shows a single Parmec instance encoded in a planar configuration.
+
+65
+
+CHAPTER 5. PRELIMINARY MACHINE LEARNING EXPERIMENTS
+
+66
+
+Figure 5.7: Results Dashboard for VGG19 Model with added Dropout Layer (30%).
+
+CHAPTER 5. PRELIMINARY MACHINE LEARNING EXPERIMENTS
+
+67
+
+Figure 5.8: Direct comparison of model predictions against ground truth labels for core
+level 7
+This comparison is made for predictions on the test dataset and at two points during
+the training process. Each column represents a different example case from the testing
+dataset. The top row represents the ground truth labels with the two subsequent rows
+showing the predictions of the model at epoch 100 and 200 (final epoch).
+
+CHAPTER 5. PRELIMINARY MACHINE LEARNING EXPERIMENTS
+
+68
+
+Figure 5.9: Direct comparison of model predictions against ground truth labels for core
+level 10
+This comparison is made for predictions on the test dataset and at two points during
+the training process. Each column represents a different example case from the testing
+dataset. The top row represents the ground truth labels with the two subsequent rows
+showing the predictions of the model at epoch 100 and 200 (final epoch).
+
+Chapter 6
+A surrogate machine learning model
+for advanced gas-cooled reactor
+graphite core safety analysis
+This chapter is adapted from the academic article A surrogate machine learning model
+for advanced gas-cooled reactor graphite core safety analysis published in the journal
+of Nuclear Engineering and Design [36]. It details the development of a machine
+learning model intended to surrogate the functions of the traditional engineering model
+Parmec [39] used for advanced gas-cooled reactor safety analysis.
+
+6.1
+
+Abstract
+
+A surrogate machine learning model was developed with the aim of predicting seismic
+graphite core displacements from crack configurations for the advanced gas-cooled reactor. The model was trained on a dataset generated by a software package which simulates the behaviour of the graphite core during a severe earthquake. Several machine
+learning techniques, such as the use of convolutional neural networks, were identified as highly applicable to this particular problem. Through the development of the
+model, several observations and insights were garnered which may be of interest from
+a graphite core analysis and safety perspective. The best performing model was capable of making 95% of test set predictions within a 20 percentage point margin of the
+ground truth.
+
+69
+
+CHAPTER 6. SURROGATE ML MODEL DEVELOPMENT
+
+6.2
+
+70
+
+Research Highlights
+
+There were three main highlights to this research article:
+1. A surrogate machine learning model was developed which aims to predict seismic graphite core displacements from crack configurations for the advanced
+gas-cooled reactor. The model was trained on a dataset generated by a software package which simulates the behaviour of the graphite core during a severe
+earthquake. The main motivation behind this research was to increase the computational efficiency of seismic displacement output data generation in order to
+allow a wider search of the vast problem space.
+2. Following the training process of the models, the generation of output values
+takes less than one second. Using the same hardware, the equivalent data generation time would be over 2 hours using the original Parmec software. The best
+performing model was capable of making 95% of test set predictions within a 20
+percentage point margin of the ground truth.
+3. Through a process of feature selection i.e. reducing the expression of certain
+parts of the data space, engineering insights into the underlying nature of the
+dataset and problem can be inferred. For example, optimal model performance
+was observed when including input information from only the top three levels
+of the graphite core. From this, we can conclude that information regarding the
+bottom of the graphite core may be irrelevant to the prediction of displacement
+outputs. The feature selections identified not only are useful in the production
+of machine learning models, but may also be useful in a wider context i.e. engineering safety analysis in this field.
+
+6.3
+
+Introduction and Background
+
+Much of what is contained in the introductory and background sections of the journal
+article discussed here has already been covered in this thesis. Rather than repeat this
+information, the relevant sections shall simply be referred to here.
+1. Information concerning the underlying engineering problem, the advanced gascooled reactor (AGR) and the traditional engineering model Parmec used to perform safety analysis for the AGR is discussed in chapter 2.
+
+CHAPTER 6. SURROGATE ML MODEL DEVELOPMENT
+
+71
+
+2. Regarding background information on the workings of machine learning methods, models and concepts is available in chapter 3.
+3. A discussion and exploration of the dataset is given in chapter 4, with the programmatic framework developed to create datasets and streamline machine learning model production detailed in section 4.1.
+
+6.4
+
+Data Selection and Focus
+
+As explained in subsection 4.1.3, each Parmec case contains approximately 6.8 million
+output parameters. For the purpose of this work, this large data space was narrowed
+down into a usable format. The process of data selection was informed by the preliminary experiments reported in Chapter 5 and the data visualisation process from
+section 4.2 .
+Of the six output metrics, a single displacement metric was chosen (displacement translation along the horizontal axis in the direction of the applied earthquake acceleration)
+at a single time frame (time frame 48 - approximately 3.8 seconds into the simulated
+earthquake). The justification for this selection is made at the start of section 5.4 and
+can be summarised by examining Figure 4.4. It can be seen that the earthquake is well
+underway at this point and the data from later time-steps was found to have a greater
+level of homogeneity and less variation between instances.
+The output space was further narrowed to include data for just a single brick at a time
+i.e. a single label value for each instance. The selection of outputs allows the research
+problem to be expressed as single label regression (as opposed to multi label regression where we would attempt to predict multiple outputs per instance). The decision to
+focus on only a single brick and not outputs for the whole go was again made based on
+the findings of the preliminary experiment detailed in section 5.4 where unsatisfactory
+results were achieved from training a model to predict outputs for all interstitial bricks.
+It was also discussed in subsection 4.2.3 that outputs for interstitial bricks poorly correlate with each other, particularly when the bricks are from geographically remote
+parts of the core.
+The brick chosen was the one located at the upper most level at the centre of the core.
+This position of this brick is shown in the lower part of Figure 6.1. This brick is at a
+
+CHAPTER 6. SURROGATE ML MODEL DEVELOPMENT
+
+72
+
+particularly important position from an engineering perspective. On average, the closer
+a channel is to the centre of the core, the higher its translational displacement relative
+to the surrounding structure (see Figure 4.13 from subsection 4.2.2). The upper level
+may also be considered of greater importance than those lower down, as it is the initial
+point of entry for a control rod. The decision to choose this brick was also informed
+by literature concerning engineering assessments of the AGR (see section 2.3).
+The distribution of horizontal displacement at time frame 48 for all 8300 instances is
+shown as a histogram in the upper part of Figure 6.1. It can be seen that the labels take
+the form of a Gaussian distribution, but with the modal value to the left of the median
+and mode. The data also has a long tail on the right hand side i.e. there are a number
+of outliers on the upper end of the distribution.
+
+6.5
+
+Surrogate Model Development and Design
+
+6.5.1
+
+Traditional Methods
+
+We began with the use of traditional machine learning models, otherwise known as
+shallow methods. The methods used included: linear regression, Huber regression,
+support vector machines [57] and decision tree regression [46]. Each model type was
+optimised using the training set (N) followed by evaluation against the test set (Nt ).
+
+6.5.2
+
+Neural Networks
+
+The remainder of this section discusses the development of experiments involving neural networks. Two types of neural network architecture were employed: dense neural
+networks (also known as fully connected networks) and convolutional neural networks.
+To this end, each experimental configuration of parameters was evaluated by training
+a model using 10-fold cross-validation [51]. To account for the stochastic nature of
+model training caused by the random initialisation of model weights, the training process was repeated 32 for each cross-validation fold. At the start of training, a learning
+rate of 5.00E-04 was employed, with this being programmatically halved each time a
+performance plateau is detected (no validation loss improvement for 50 epochs). Early
+stopping [65] was used when the learning rate drops below 1.00E-05, with training
+terminated and the parameters retained from the point at which lowest validation loss
+
+CHAPTER 6. SURROGATE ML MODEL DEVELOPMENT
+
+73
+
+Figure 6.1: The Position in the core from which the labels are representative of
+(Bottom); Distribution of 8300 values in the label set (Top)
+
+CHAPTER 6. SURROGATE ML MODEL DEVELOPMENT
+
+74
+
+was achieved. Each optimised model was then evaluated against the test set of 2000
+samples. A graphical representation of this process is seen in Figure 6.2.
+The next subsection discusses the general process of hyper-parameter optimisation
+during model design. The subsection after that discusses differing data input encoding
+shapes and the model architectures they require. Finally in this section, we discuss the
+impact of feature selection i.e. reducing the input feature space provided to the model.
+
+Figure 6.2: Example of Model Training and Validation with Early Stopping and Model
+Saving
+As can be seen, the best model performance is produced on epoch 244 where a
+validation loss of 0.97 is obtained. After training for another 50 epochs, training is
+terminated, as in this case minimum training rate has already been achieved. The
+optimal model weights are then retained to evaluate against the test set.
+
+6.5.3
+
+General Hyper-Parameters
+
+As mentioned in subsection 3.2, several hyper-parameters must be chosen for a neural
+network. The optimal selection of hyper-parameters were chosen through an experimental processes.
+The first parameter that was chosen was the optimiser. After evaluating several optimiser algorithms, including the RMSprop, Adagrad, and SGD configurations, the
+Adam optimiser with Nesterov momentum [18] was was chosen as it provided the best
+model performance.
+
+CHAPTER 6. SURROGATE ML MODEL DEVELOPMENT
+
+75
+
+Three model additional model hyper-parameters were also refined: nodal architecture,
+activation functions and regularisation. Starting with the architecture, this was developed through a trial and error method. Beginning with a simple structure of a single
+hidden layer with a width of four nodes, this was then expanded and adjusted experimentally, using the testing loss for each configuration as a measure of its performance.
+Guidance was taken from previous works as to what architectures may be most effective, including [20] which describes four distinct architectures which were used as a
+starting point for the experiments performed here.
+In tandem with the nodal architecture, the use of activation functions were chosen experimentally. At first, the same activation function was applied to each layer (bar the
+output layer). The use of three commonly employed activation functions were tested:
+sigmoid, the rectified linear unit (ReLu) [25] and the hyperbolic tangent function [37].
+Also tested was the less common softplus function [67] which has been used in other
+surrogate model works, including [42]. In addition to a model design that uses the
+same activation function in all layers, alternative configurations were tested . Initially,
+a method employing non-linear activations on every other layer was employed, with
+the alternating layers simply outputting the linear combination of inputs and weights.
+Inspiration for this approach was taken from [2] where non-linear activations were only
+placed on every 4th layer of the neural network architecture. This was further modified
+to an architecture employing two different non-linear activation functions in the same
+model, with the greatest success being observed when alternating softmax and tanh.
+The final model, demonstrating the optimal architecture, is shown in Figure 6.3.
+The regularisation parameter was also optimised experimentally. The most effective
+technique was found to be dropout [58] where the output of randomly selected layers
+are negated. It was determined experimentally that a dropout parameter of 0.4 was
+optimal - the output of 40% of the nodes in each layer were randomly dropped.
+The experimental models were trained using several loss functions. These were mean
+squared error (MSE) mean absolute error (MAE) and the Huber loss [31]. By intercomparing each loss function, it was found that Huber was the optimal loss function
+for training the model.
+
+CHAPTER 6. SURROGATE ML MODEL DEVELOPMENT
+
+76
+
+Figure 6.3: The Final Architecture of the Model
+
+6.5.4
+
+Neural Network Input Encoding
+
+Three alternative configurations of neural network were employed, each requiring a
+differing data encoding format, as outlined in the following subsections. One of these
+configurations employs only dense neural network architecture, with the other two
+employing convolutional neural network architecture. An experiment was designed to
+compare each of these encoding formats in turn.
+In each case, the number of input features is the same: 1988 (the number of fuel
+bricks). Similarly, there is a single output (the displacement for the central interstitial
+brick in the top level). In each case, a similar model architecture is used, with notable
+exceptions such as the use of only dense layers or the inclusion of convolutional layers.
+DNN - 1D
+A dense neural network with 1D encoding is employed. In this configuration, the data
+is encoded in the base format as mentioned in subsection 4.1.2 where each instance
+is input to the model as a vector. In the DNN, the output of each layer is fed into all
+nodes of the subsequent layer.
+
+CHAPTER 6. SURROGATE ML MODEL DEVELOPMENT
+
+77
+
+Figure 6.4: Convolution on a 2-dimensional Input Space Using a 3x3 Filter
+The input space is a top-down cross-sectional slice of a 3-dimensional tensor. This
+represents the distribution of cracks in a single level of the AGR reactor for a single
+example. The corners and edges have been padded with zeros to maintain a regular
+shape. The convolutional operation has been performed at select locations.
+Lower-right: the patch from the input space is the perfect inverse of the filter,
+resulting in the lowest possible output value (-9). Left: the input patch is a perfect
+match of the filter, resulting in the maximum output (9). Top-right: a middling
+example where the input patch has only a slight resemblance to the filter. Outside of
+the image on the top right-right hand corner, the mathematical operation between a
+data patch and filter is seen: both are flattened into a vector followed by a dot product
+calculation.
+
+CHAPTER 6. SURROGATE ML MODEL DEVELOPMENT
+
+78
+
+Figure 6.5: Convolution on a Single Instance Encoded in a 3-dimensional Format Using an Example Multi Channel Filter
+Top: a single instance encoded with each core level represented as a separate channel.
+Left: a single filter from the first layer of a CNN, the planar dimensions are smaller
+than the input space (3x3), but the number of channels are equal to the number in the
+input space (7). The filter performs the mathematical operation shown in Figure 6.4
+on each channel. The sum of all channels operations forms a single value in the output
+feature map for this filter. Right: the feature map for the filter. If the aforementioned
+mathematical operation is performed across the entire input space, we get the feature
+map shown here. If this process is performed for multiple filters, several feature maps
+are produced, which each represent channel inputs for the next convolutional layer.
+Alternatively, the feature map can be flattened as to form the input for a dense layer).
+
+CHAPTER 6. SURROGATE ML MODEL DEVELOPMENT
+Encoding
+Input
+Mode
+Format
+1D
+1988
+2D
+7 x 284
+3D
+7 x 20 x 20
+
+79
+
+Output
+Model
+Shape Architecture
+1
+DNN Only
+1
+CNN & DNN
+1
+CNN & DNN
+
+Table 6.1: Summary of the Input Encoding Experiment
+For each encoding format, the total size of the input is the same; only the shape
+changes. Additionally, the output label in each case is the same shape. Note also that
+the 1D encoding requires a model containing only dense layers, whereas 2D and 3D
+encoding warrants a mix of convolutional and dense layers.
+
+CNN - 2D
+A convolutional neural network architecture with 2D encoding. In this format a 2dimensional filter is applied at select patches on a 2-dimensional input space (Figure 6.4). To facilitate this, the 1988 element long input feature vector is reshaped into
+a matrix. The dimensions of this matrix are 7 by 284: the bricks per fuel channel
+(BFC) by number of fuel channels (NFC), respectively. Hence, in this encoding format, an individual instance has a feature matrix of the form xi = {−1, 1}BFC×NFC .
+This format is analogous to CNNs used for image recognition which use a grey-scale
+bitmap as input [11].
+The architecture produced during the DNN optimisation was kept the same. However,
+the first 5 layers now became CNN layers with the latter two remaining fully connected
+layers. This resulted in an additional parameter to be optimised: the size of the convolutional window shape (or kernel). A window size of 3 by 3 was experimentally found
+to produce the best result.
+CNN - 3D
+A convolutional neural network architecture with 3D encoding. This arrangement reflects the true positional relationship within the actual core. The bricks are stacked in
+7 levels (BFC). At its widest width and breadth, the core is 18 channels across. The
+tensor has been padded at the edges and corners with zeros to make it a regular shape
+and keep the input shape the same size in subsequent layers [19]. Consequently, CW
+& CB both have a value of 22 due to a double layer of zeros on each side. Therefore
+the dimensions of this input tensor are bricks per fuel channel (BFC) by core width
+
+CHAPTER 6. SURROGATE ML MODEL DEVELOPMENT
+
+80
+
+(CW) by core breadth (CB): 7 by 20 by 20 i.e the input features for each instance is in
+the form xi = {−1, 0, 1}BFC×CW ×CB . This input shape can again be used by a CNN
+with a 2-dimensional architecture. However, with a 3-dimensional encoding each core
+level is used as a separate input channel. In this format, the filter has multiple channels,
+one for each of the channels in the input space (see Figure 6.5). This is analogous to
+CNNs used for image recognition where colour data (usually red, green and blue) are
+represented by different input channels [3].
+
+6.5.5
+
+Feature Selection
+
+In section 7.5, it is mentioned that the input to Parmec is a vector 1988 elements long,
+each representing the cracking status on one bricks in the model. So far in this section, we have discussed various dimensional encoding formats available, including a
+3-dimensional encoding which represents the true physical arrangement of the core.
+We have the choice to provide this information to the model in its entirety, or to reduce
+the scope of these inputs in some way. Through a process of feature selection [23],
+we can actively chose only the most relevant features to the predicted output by monitoring the model performance as the scope is adjusted. Beyond model performance
+optimisation, the process of feature selection allows insights into the data, including
+relationships between inputs and outputs, what information is relevant and so on. As
+mentioned in subsection 4.1, the framework developed for this research work allows
+the selection of features programmatically.
+The proposed method for feature selection is to split the core in different ways and then
+perform experiments using only those features. Two differing strategies are discussed
+in the following sections.
+Regional Selection
+The core features are split into concentric sections as shown in Figure 6.6. Recall that
+the value we aim to predict is for the central channel (Figure 6.1). Hence each concentric region is effectively further removed from the position of interest. It can be
+hypothesised that the data for regions closer to the central position are most important
+to model performance, with importance falling as we move further away. Testing this
+hypothesis is the purpose for this experiment.
+
+CHAPTER 6. SURROGATE ML MODEL DEVELOPMENT
+
+81
+
+Starting with the greater core region (i.e. the whole feature set) a model is trained and
+evaluated.The feature set is then reduced by incrementally removing channel regions
+and then training a new model using it. By repeating this process until only the inner
+channel region remains and evaluating the trained model at each stage, we can choose
+the optimal features for inclusion.
+
+Figure 6.6: The Core Separated into Regions for the Purpose of Feature Selection
+The method of this experiment is discussed in Subsection 6.5.5 with the results given
+in Table 6.4.
+
+Level Selection
+In addition to feature selection based on the core regions from, the feature set was also
+varied in size by varying the number of core levels (refer back to Figure 2.1). Recall
+from section 6.4 that the brick for which we are attempting to predict displacement
+values for is in the top layer. Similar to the experiment in the previous subsection, is
+can be conjectured that the lower levels of the core are less important than those near
+the top (closer to the point of interest). This again was determined experimentally.
+Starting with the lowest level (level 1), data for incrementally higher core levels was
+removed from the feature set, training and evaluating the model each time.
+
+CHAPTER 6. SURROGATE ML MODEL DEVELOPMENT
+
+6.6
+
+Results
+
+6.6.1
+
+Traditional Methods
+
+82
+
+As mentioned in subsection 6.5.1, the experimental processes for this work began with
+the use of traditional machine learning methods. The results are summarised in Table 6.2. As can be seen, the linear regression method produces the best test loss and
+therefore best performing model. This is followed by the Huber and support vector regression methods. A decision tree regression model can fit the the training data almost
+perfectly (a training loss of zero). However, the decision tree regression model also
+performs worst on the testing set, suggesting overfitting.
+Training Test
+Inclusive
+Levels
+Loss
+Loss
+Linear Regression
+7.2e-3
+1.2e-2
+Huber Regression
+7.7e-3
+1.3e-2
+Support Vector Regression
+5.8e-3
+1.4e-2
+Decision Tree Regression
+0
+4.7e-2
+Table 6.2: Summary of the Test Results from the Traditional Methods Experiment
+(Subsection 6.5.1)
+Values are in mean squared error (MSE).
+
+6.6.2
+
+Input Encoding
+
+Table 6.3 summarises the results of the experiment outlined in subsection 6.5.4, with
+the best result achieved with each encoding format shown.
+From the results, it can be seen that a CNN employing 3D data encoding produces
+the best performance. In turn, it can also be seen that a CNN employing 2D encoding produces a lower overall loss value than a DNN employing 1D encoding. See
+subsection 6.6.4 for further discussion of these results.
+
+6.6.3
+
+Feature Selection
+
+Recall from subsection 6.5.5 that two strategies are proposed for experimental feature
+selection: regional and level selection.
+
+CHAPTER 6. SURROGATE ML MODEL DEVELOPMENT
+
+83
+
+Encoding Lowest Mean
+Format
+Loss
+Loss
+3D (CNN) 9.9e-3 1.3e-2
+2D (CNN) 1.1e-2 1.6e-2
+1D (DNN) 1.3e-2 1.3e-2
+Table 6.3: Summary of the Test Results from the Input Encoding Experiment (Subsection 6.5.4)
+Values are in mean squared error (MSE). Each part of the experiment was repeated 32
+times for each cross validation fold (320 total) with starting weights initialised
+randomly each time. The weights were stored at the optimal point during training
+(lowest validation loss). Each saved model was then evaluated against the test set of
+2000 samples, with the lowest and mean values reported in this table.
+
+Table 6.4 summarises the results for the regional feature selection experiment (subsection 6.5.5). Each row represents a model trained using the data for channels inclusively
+within the region indicated. For example, Main Core (green in Figure 6.6) includes
+data for itself and the regions internal to it (central and inner) but not the region beyond it (greater core).
+Lowest Mean
+Inclusive
+Regions
+Loss
+Loss
+Greater Core (blue) 9.9e-3 1.3e-2
+Main Core (green) 1.6e-2 1.7e-2
+Central (yellow)
+2.0e-2 2.2e-2
+Inner (red)
+2.1e-2 2.3e-2
+Table 6.4: Summary of the Test Results from the Regional Feature Selection Experiment (Subsection 6.5.5)
+Values are in mean squared error (MSE). Each part of the experiment was repeated 32
+times for each cross validation fold (320 total) with starting weights initialised
+randomly each time. The weights were stored at the optimal point during training
+(lowest validation loss). Each saved model was then evaluated against the test set of
+2000 samples, with the lowest and mean values reported in this table.
+
+Table 6.5 summarises the results for the regional feature selection experiment (subsection 6.5.5). Each row represents a model trained using the data for channels inclusively
+within the levels indicated.
+From Table 6.4, it can be seen that including features from the whole core produces
+
+CHAPTER 6. SURROGATE ML MODEL DEVELOPMENT
+
+84
+
+Inclusive Lowest Mean
+Levels
+Loss
+Loss
+5-7
+9.6e-3 1.1e-2
+3-7
+9.7e-3 1.2e-2
+4-7
+9.8e-3 1.2e-2
+2-7
+9.8e-3 1.2e-2
+1-7
+9.9e-3 1.3e-2
+6-7
+1.1e-2 1.3e-2
+Table 6.5: Summary of the Test Results from the Level Feature Selection Experiment
+Values are in mean squared error (MSE). Each part of the experiment was repeated 32
+times for each cross validation fold (320 total) with starting weights initialised
+randomly each time. The weights were stored at the optimal point during training
+(lowest validation loss). Each saved model was then evaluated against the test set of
+2000 samples, with the lowest and mean values reported in this table
+(Subsection 6.5.5).
+
+the best result. From Table 6.5 it can be seen that the optimal result is achieved when
+including levels 5 - 7. See subsection 6.6.4 for further discussion of these results.
+
+6.6.4
+
+Analysis and Discussion
+
+Looking at the final model architecture (Figure 6.3), it can be seen that considerable
+complexity must be employed in terms of model parameters to produce the optimal
+result. This suggests that relationships between inputs and outputs are complex. This
+is to be expected, as the Parmec model is itself highly complex involving thousands of
+equations and parameters.
+From Table 6.3, it can be seen that CNN architecture produces superior results to
+DNNs. Encoding the input features in a 3-dimensional format produces the best results. In addition, neural network models perform better than traditional methods as
+seen in Table 6.2. This suggests that true physical relationships within the data, i.e.
+local 3-dimensional configurations of cracks, have a causal relationship with displacements.
+During the feature extraction experiment, it is noteworthy that the best result was
+achieved when including features representing all core regions, including the most
+
+CHAPTER 6. SURROGATE ML MODEL DEVELOPMENT
+
+85
+
+distant, outer regions far removed from the location of the central channel. It was conjectured earlier that only the channels most local to the position of interest (the centre)
+would be of importance to predicting displacement. However, from Table 6.4 it can
+be seen that model performance drops sharply when excluding data for the main core
+channels. This suggests that cracking beyond the local region has a causal effect on
+the central channel’s displacement. This phenomena is particularly interesting when
+considered along with the fact that the optimal convolutional window size is 3x3 (a relatively small window size by CNN standards) which suggests small patterns are most
+important.
+Looking more closely at the results of this experiment, Figure 6.7 shows the distribution of predictions made by models trained on the channels within the central core and
+full core. It can be seen that a model that excludes the main and greater core channels
+has difficulty making predictions in the lower part of the prediction spectrum. Perhaps
+the cracking status of bricks beyond the central core has some slackening or tightening
+effect on the centre of the core. The exact reason for this phenomenon will require
+further study.
+Examining the results of the experiment which excludes features by core levels (Table 6.5), it can be seen that the best overall result is achieved when including features
+for the top three levels (5 - 7). Note also that a similar performance is achieved with
+all arrangements except when only the top two levels were included (6 - 7), hence low
+sensitivity. From these results, we can conclude that the at least the top three levels
+have a discernible impact on the displacement of the central core channel.
+Figure 6.8 shows the test predictions for the best performing model (3D CNN trained
+on features for levels 5-7) plotted against the ground truth. It can be seen that 94.8% of
+the test predictions fall within a margin of 20% of the ground truth in absolute terms.
+Of the cases that fall outside this margin, we can see that most of them occur fairly
+close to the boundary. Using the same process as was used to generate this plot, we
+can identify the type of case which is difficult for the model to predict accurate values
+for, and generate cases accordingly. From a cursory examination of the cases outside
+of the 20% margin from Figure 6.8, it was observed that they contained on average 5%
+fewer cracks in the top core level than the wider dataset.
+
+CHAPTER 6. SURROGATE ML MODEL DEVELOPMENT
+
+86
+
+To further evaluate the performance of the model, we can separate the plot shown in
+Figure 6.8 into positive and negative values based on chosen thresholds. Figure 6.9
+shows the predictions and ground truth separated based on three chosen thresholds.
+Taking the mean as the positive/negative separator (top), it can be seen that the model
+performs well at predicting which region a given instance is in. However, the model
+performs less well at predicting values for cases at the very extremes of the data continuum (threshold of 0.2 and 0.6). Nevertheless, the ’false’ examples are predicted as
+close to the boundary in all three graph configurations. In general, it can be seen that
+cases at the lower and upper ends of the data range are predicted as closer to the mean
+than the ground truth. Looking at the distribution of the dataset (bottom), a possible
+explanation is that it is highly ’biased’ towards the region close to the mean i.e. the
+model has many fewer cases to learn from at the ends of the distribution.
+Following the training process of all models discussed in this section, the generation
+of output values takes less than one second per instance. Using the same hardware,
+the equivalent data generation time would be over 2 hours using the original Parmec
+software.
+To summarise the observations made:
+1. Model Complexity: the optimal surrogate model architecture exhibits considerable depth and width as well as requiring considerable refinement and tuning.
+This suggests a complex and non-trivial relationship between inputs and outputs.
+2. Input Encoding: optimal performance was seen when including true physical
+relationships in the input features i.e. a 3-dimensional encoding which represents
+the actual structure of the graphite core.
+3. Feature Selection - Regional: when selecting input features regionally by dividing the graphite core into radial segments, it was observed that optimal model
+performance was achieved when including data for all regions. This suggests
+that the cracking status of even bricks far away from the position of interest are
+important to the prediction of displacements.
+4. Feature Selection - Level: when selecting input features vertically by selecting
+inputs from inclusive ranges of core levels, it was observed that optimal model
+performance was achieved when including data for the top five levels. Further,
+
+CHAPTER 6. SURROGATE ML MODEL DEVELOPMENT
+
+87
+
+little performance sensitivity was observed when reducing the levels included in
+the feature dataset.
+5. Difficult to Predict Cases: cases were identified that are difficult for the model
+to accurately predict. Through examining these cases, some common characteristics were observed. These observations may help to design further machine
+learning experiments or inform engineering analysis.
+6. Dataset Bias: we can note that the model has lower prediction accuracy near the
+extremes of the data range. This can be explained by the fact that the dataset is
+biased towards the central region, meaning the model has fewer examples from
+the extremes to learn from.
+
+6.7
+
+Conclusion
+
+A surrogate machine learning model was developed which aims to predict seismic
+graphite core displacements from crack configurations for the advanced gas-cooled
+reactor. The model was trained on a dataset generated by a software package which
+simulates the behaviour of the graphite core during a severe earthquake.
+The main motivation behind this research was to increase the computational efficiency
+of seismic displacement output data generation in order to allow a wider search of the
+vast problem space. Following the training process of the models, the generation of
+output values takes less than one second. Using the same hardware, the equivalent data
+generation time would be over 2 hours using the original Parmec software.
+The best performing model was capable of making 95% of test set predictions within
+a 20 percentage point margin of the ground truth. Although this result demonstrates
+progress towards the development of an efficient and accurate machine learning surrogate, the high standards within the nuclear safety field mean that it is unlikely to
+be at a stage were it could be commercially deployed. Nevertheless, machine learning techniques were identified as highly applicable to this particular problem. For
+example, Convolutional neural networks were identified as more effective than other
+techniques available. Additionally insights into optimal hyper-parameters and inputs
+were also garnered. These observations may guide and support further development
+and progress in this area.
+
+CHAPTER 6. SURROGATE ML MODEL DEVELOPMENT
+
+88
+
+Figure 6.7: Visual Summary of the Regional Feature Extraction Experiment
+Top: the concentric core regions as described in Figure 6.6 with two inclusive regions
+delineated which represent the features included in the models corresponding to the
+mid and bottom image. Mid: The distribution of predictions made by a model trained
+on features representing the central two regions (red and yellow in the image above).
+It can be seen that the distribution of predictions in the upper end of the histogram is
+similar to that of the ground truth. However, this model makes few predictions in the
+lower region of the distribution, effectively overestimating these results. Bottom:
+When including all regions in the feature set, superior model performance is seen.
+The shape of the distribution for the model predictions closely fits that of the ground
+truth.
+
+CHAPTER 6. SURROGATE ML MODEL DEVELOPMENT
+
+89
+
+Figure 6.8: Model Predictions against Ground Truth for the Test Set
+A ’perfect’ model would produce values on the solid black line i.e. exactly the ground
+truth values. Lines representing an error margin of 10 and 20 absolute percentage
+points of deviation can be seen. Data-points are coloured according to their deviation
+from the ground truth. The testing mean squared error for this model was 9e-3, with
+an mean absolute error of 7.4e-3. The blue line represents a linear fit with the
+equation 0.58x + 0.16. The R2 value is 0.53.
+
+CHAPTER 6. SURROGATE ML MODEL DEVELOPMENT
+
+90
+
+Figure 6.9: Model Predictions against Ground Truth for the Test Set With Values Separated into Positives/Negatives by Three Different Thresholds
+The values are then classified by whether they fall into the same half of the
+distribution as the ground truth. Top: The separator is placed as the dataset mean
+(0.36). Upper Middle: The separator is placed to the lower side of the modal value.
+Lower Middle: The separator is placed just before a region of outlier values.
+Bottom: The dataset distribution for context.
+
+Chapter 7
+Methods to Improve Surrogate
+Machine Learning Model Performance
+7.1
+
+Abstract
+
+We demonstrate the adaption of three established methods to the field of surrogate machine learning model development. These methods are data augmentation, custom loss
+functions and transfer learning. Each of these methods have seen widespread use in
+the field of machine learning, however, here we apply them specifically to surrogate
+machine learning model development. The machine learning model that forms the basis behind this work was intended to surrogate a traditional engineering model used
+in the UK nuclear industry. Previous performance of this model has been hampered
+by poor performance due to limited training data. Here, we demonstrate that through
+a combination of additional techniques, model performance can be significantly improved. We show that each of the aforementioned techniques have utility in their own
+right and in combination with one another. However, we see them best applied as part
+of a transfer learning operation. Five pre-trained surrogate models produced prior to
+this research were further trained with an augmented dataset and with our custom loss
+function. Through the combination of all three techniques, we see an improvement of
+at least 38% in performance across the five models.
+
+7.2
+
+Research Highlights
+
+There were three main highlights to this research article:
+
+91
+
+CHAPTER 7. METHODS TO IMPROVE SURROGATE ML MODELS
+
+92
+
+1. By adapting three existing machine learning techniques, we were able to improve
+model performance by at least 38% over the method described in chapter 6.
+2. This research represents a novel implementation of data augmentation, with mirroring and rotation employed in a very different way to which they are normally.
+3. This research also represents a novel implementation of custom loss functions.
+In previous research, they were used for classification problems and compensated for gaps in the data. By contrast, this research problem uses them in a
+regression model and compensates for a dataset concentrated around a central
+point.
+
+7.3
+
+Introduction
+
+A machine learning surrogate (MLS) is a model which aims to explain natural or mathematical phenomena which can already be explained using an existing model. Using
+data from the original model, machine learning techniques are used to produce an
+optimised MLS model. The advantages of an MLS include increased computational
+efficiency when generating model outputs, with the trade-off being reduced accuracy.
+Once developed and trained, machine learning models (including an MLS) can produce
+new data instances almost instantly using a standard computer, whereas generating the
+same information using the original model and equivalent hardware may require hours
+or days of computational effort. The reduction in accuracy between an MLS and an
+original model must be quantified on a case-by-case basis and assessed on whether it
+is acceptable for practical use.
+Previous research works have dealt with the production of MLS in areas such as material properties prediction [48] and [5], with a recent work focusing on seismic analysis
+for nuclear graphite cores (see chapter 6). It is the MLS model from this latest research
+work that will be focused on in this paper. In the aforementioned works, a strong focus
+on neural networks [23] is seen, including convolutional neural networks (CNNs).
+Despite the motivation for the production of MLS models being to reduce the need for
+expensive production of data, a large amount of this data is required to train such a
+model. A machine learning model trained on an insufficient number of data instances
+may result in overfitting [27]. Some techniques were employed in the aforementioned
+
+CHAPTER 7. METHODS TO IMPROVE SURROGATE ML MODELS
+
+93
+
+paper, including randomised layer dropout [58], to counteract the effects of overfitting .
+A common technique used to improve model performance given a limited dataset is
+to manipulate existing data instances in a process known as data augmentation [50].
+This approach is commonly employed in machine learning applications involving image recognition and analysis [24], with techniques such as mirroring and rotation used
+to increase the number of data instances in a dataset.
+Another commonly encountered problem during machine learning model development
+is dataset bias. In this situation, the dataset used to train the model is weighted towards
+a particular region of the input and/or output space. Alternatively, the dataset may be
+sparse in a particular region of the data space i.e. there may only be few data examples
+for a part of the data input or output continuum. Several methods can be employed to
+counteract the problem of dataset bias, including emphasising underrepresented data
+samples to a greater degree. We may instead use a loss function during model training
+which is designed to correct for dataset bias.
+A third problem encountered when training neural networks is the computational cost
+associated with their development and optimisation. This is particularly problematic
+when the problem space is complex - such as it is in this research. Instead of starting
+from scratch, we may use models produced from previous research works as a starting point during the development of neural networks for our own research. Through
+a process of transfer learning [60] we can adapt the model architecture, as well as the
+optimised weights, generated during previous works. By using transfer learning we
+may be able to make our model development process more efficient by reducing the
+time and computational resource needed to optimise a model for our purposes.
+A research question to be investigated and answered by this paper is whether data augmentation can be applied to problems such as machine learning surrogates. To this
+end, a framework will be developed to apply image manipulation techniques to the
+dataset used in the aforementioned graphite core model. In addition, we will investigate whether the use of custom loss functions and transfer learning can improve model
+performance.
+
+CHAPTER 7. METHODS TO IMPROVE SURROGATE ML MODELS
+
+7.4
+
+Background
+
+7.4.1
+
+Advanced Gas-cooled Reactors and the Parmec Model
+
+94
+
+Information concerning the underlying engineering problem, the advanced gas-cooled
+reactor (AGR) and the traditional engineering model Parmec used to perform safety
+analysis for the AGR is discussed in chapter 2.
+
+7.4.2
+
+Previous Machine Learning Surrogate Model of Parmec
+
+The work that this chapter builds on is discussed in chapter 6.
+
+7.4.3
+
+Data Augmentation
+
+Data augmentation is frequently employed in classification problems within the field
+of machine learning [55], where the model predicts a discrete category for each dataset
+instance. A classic example of classification is in computer vision, where a 2D or 3D
+tensor representing an image is used to predict a category that is depicted. For example, models trained on the ImageNet dataset [14], which contains millions of images
+each representing one of 1000 discrete classifications, attempt to categorise the image
+depicted in an instance it is presented with. Classification is in contrast to regression
+problems, where there is a continuous, rather than discrete, output variable.
+When dealing with problems such as ImageNet classification, performance is constrained by the size of the dataset. Model performance tends to improve with a larger
+number of training examples. A related constraint is dataset bias: regardless of the
+overall number of examples in the entire dataset, if one or more classes exhibits a significantly lesser or greater number of examples than the rest, model performance may
+be inhibited. Should there be a lack of examples for one particular class, not only will
+the model have difficulty identifying examples of this class, but performance for other
+classes will also be impacted.
+Both of the aforementioned constraints tend to cause the phenomenon known as overfitting [27], where the model optimises too closely to the training data, including any
+noise or unrelated variability. There exist several methods to alleviate the effects of
+overfitting, including randomised nodal dropout [58]. A commonly used solution to
+
+CHAPTER 7. METHODS TO IMPROVE SURROGATE ML MODELS
+
+95
+
+overfitting within image classification is data augmentation, where image manipulation techniques are used to generate additional data from existing examples.
+
+Figure 7.1: An Example of Image Manipulation Techniques to Perform Data Augmentation
+The base instance of an image depicting a bird is shown in image (a). The additional
+images show examples of two types of augmentation. Images (b), (c) and (d) show
+image (a) rotated by 90 degrees, 180 degrees and 270 degrees, respectively. Similarly,
+images (e) and (f) show image (a) reflected about the vertical and horizontal axis,
+respectively. Despite being manipulated in this way, each image still effectively
+depicts an example of a bird and can be treated as such in the training of a machine
+learning model. Data augmentation can be used to expand a dataset without labelling
+additional examples, potentially improving model performance and reducing
+overfitting.
+Figure 7.1 shows an example of a data augmentation process on a single image instance. The image on the left of this figure would correctly be classified as a bird. This
+image can be used to generate five additional instances of the same class: three by
+rotation and two by mirroring. By applying this process to all images within a dataset,
+the number of available training instances can be multiplied by a factor of seven.
+From the example, it can be seen that data augmentation techniques are highly suited
+to problems where the data is structured as a 2D or 3D tensor (such as greyscale or
+colour images, respectively). By extension, data augmentation is highly effective for
+
+CHAPTER 7. METHODS TO IMPROVE SURROGATE ML MODELS
+
+96
+
+applications in which localised or spatial patterns are of importance, for example where
+CNNs are employed. It should be noted at this point that the research work that we
+attempt to build on here employs 3D encoding of data as well as CNNs.
+
+7.4.4
+
+Custom Loss Function
+
+One of the most important model metrics to be selected during machine learning model
+development is the loss function. This function is used during training to calculate the
+difference between the ground truth and model prediction (known as the loss rate).
+Further, the derivative of the loss rate is used to iteratively update the model weights
+during the training and optimisation process.
+Typically, one of only a few loss functions will be selected for regression model training. A common selection is the mean squared error [62] or one of its derivatives such
+as root mean squared error. Other options include mean absolute error [12] and Huber
+loss [31] which was found to be optimal in the preceding research work on this topic
+(Chapter 6).
+An issue encountered in the aforementioned preceding research was that the data was
+not evenly distributed throughout the data space. The output data generated by the
+Parmec model tends to be distributed around a central modal value, with increasingly
+fewer examples towards the extremes of the data space. This in turn results in a model
+which tends to over-predict values in the lower part of the data space, and under-predict
+those in the upper part (Figure 7.2).
+This problem can be compared with the issue of class imbalance encountered in the
+field of machine learning classification [33]. Much literature has been written on the
+subject of correcting for data imbalance in classification, with a recent work [53] using
+a weighted loss function.
+Conversely, for regression based problems, research attention has been scarce by comparison. Some recent works [10][64] note the lack of research on imbalanced regression have proposed solutions to problems caused by gaps or rarefactions in the data
+space. The solutions proposed involve the application of smoothing or dataset resampling. We note that the imbalance featured in these research works is not of the
+relatively smooth trend seen at the bottom of Figure 7.2.
+
+CHAPTER 7. METHODS TO IMPROVE SURROGATE ML MODELS
+
+97
+
+Figure 7.2: The results from the best performing model produced via the method described in a previous research work
+This model is M3, the performance of which is listed in Table 7.1. The top and
+middle images both show the model prediction plotted as a function of the ground
+truth values. For comparison, the distribution of the dataset is shown in the bottom
+image. Notice that beyond the delineations shown in the top and middle images (0.2
+& 0.6, respectively) there are fewer dataset examples, hence lower accuracy.
+
+CHAPTER 7. METHODS TO IMPROVE SURROGATE ML MODELS
+
+98
+
+Whereas the data distribution in the aforementioned research papers contain discontinuities and irregular gaps, our dataset follows a regular pattern. This makes the methods explored previously in this area potentially unsuitable for the research problem at
+hand. If we wish to counteract the data imbalance problem in the research at hand, a
+bespoke custom loss function will have to be developed.
+
+7.4.5
+
+Transfer Learning
+
+Transfer learning is a machine learning technique that focuses on using already trained
+models to serve a purpose beyond their original intent. Often in machine learning,
+models are trained from scratch, a process that consumes significant resources in terms
+of time and computation to achieve optimal performance. Transfer learning can serve
+to make the process more efficient and less resource intensive by using the knowledge
+from the pre-trained models in the training process.
+In chapter 6, an optimal model architecture was developed for the purpose of surrogation of a nuclear engineering model. Using this architecture and the training data, the
+parameters of the model were optimised from random starting weights. As training
+started from random weights, the process of model optimisation was repeated multiple times. The best performing models from this study, along with their pre-trained
+weights, can be transferred to this study as a starting point for exploitation of the methods described in subsections 7.4.3 & 7.4.4.
+
+7.5
+
+Preparation
+
+7.5.1
+
+Image Manipulation Techniques
+
+Recall from Figure 4.1 that the input features for this research problem is a 3D tensor
+representing the position of cracked fuel bricks within a given instance. This tensor
+is comparable to that of a colour image such as the one shown in Figure 7.1. Being
+a tensor of a similar encoding to that in the aforementioned figure, the same image
+manipulation techniques can also be applied to the tensor for this research problem.
+Recall also from Figure 6.1 that the output labels for this research problem are continuous values representing displacement in the central brick of the core. Note also from
+
+CHAPTER 7. METHODS TO IMPROVE SURROGATE ML MODELS
+
+99
+
+Figure 7.3: An Example of Image Manipulation Techniques Applied to Parmec Data
+to Facilitate Data Augmentation
+i: a slice from the feature inputs for an example instance: the dark blue spots
+represent intact fuel bricks, with the yellow spots being cracked bricks. This image is
+the equivalent of image (a) from Figure 7.1, i.e. it is an original, unaltered instance.
+ii: the same example instance as shown in (i), but it has been mirrored about the
+vertical centre-line. This image is the equivalent of image (e) from Figure 7.1. iii:
+again, the same example as (i), but this time it has been rotated by 90 degrees - the
+equivalent of image (b) from Figure 7.1. In each case, the output label effectively
+remains the same, as it represents the central brick of the core, about which the
+rotation or mirroring is performed.
+the aforementioned figure that the overall data space from which the output variables
+are extracted is planar and can be expressed as a 2D tensor. For a given instance i.e.
+input/output pair, we can apply any of the rotational or mirroring techniques shown in
+Figure 7.1. Note that if we rotate or mirror about the vertical axis at the centre-point of
+the core, the encoding order of the input features will change, but the output label will
+not (as it represents the top brick in the central channel). Hence, data augmentation for
+the dataset in this study will create new instances with restructured feature tensors, but
+the same output label value - see Figure 7.3.
+If we apply rotation (90 degrees, 180 degrees and 270 degrees) and mirroring (vertical
+and horizontal) to all examples in our dataset, we can multiply the available number of
+instances by a factor of six.
+As mentioned in subsection 7.4.3, the motivation behind using image manipulation
+techniques to create an augmented dataset is based on the conjecture that symmetries
+do exist in the Parmec data space. What is the justification behind the belief that
+
+CHAPTER 7. METHODS TO IMPROVE SURROGATE ML MODELS
+
+100
+
+rotational and symmetric manipulations of Parmec inputs would yield similarly transformed outputs? There are three lines of evidence that can be used to support the
+validity of this process:
+
+1. AGR Design: The design of the AGR (and the Parmec model that is based on
+it) contains four-fold symmetry [47]. This effectively means that each quarter
+of the AGR (and Parmec) model is a rotation or mirror of the others. However,
+this is an incomplete justification as the simulated earthquake always impacts the
+model on one particular point on its periphery i.e. it is not symmetric.
+2. Dataset Observation: Observe Figure 4.13 which shows the average output
+value for each brick in the top layer of the Parmec model. It can be seen that
+there is a symmetry across both the vertical and horizontal centre-lines. This
+pattern is of the same four-fold symmetry as mentioned in the first bullet-point.
+3. Augmented Equivalent Data: Through the Parmec software package, we have
+the benefit of creating ground truth equivalents of augmented data. For a given
+ground truth example, we can manipulate the inputs according to one of the
+transformations shown in Figure 7.3 and then feed them through the Parmec
+model. Then we can compare the outputs generated by Parmec and our nonParmec data augmentation technique.
+We performed the process described in bullet point 3 above for two base instances,
+applying each of the five manipulation techniques on the inputs and then using these
+to generate labelled examples using Parmec. Simultaneously, we apply all five of our
+non-Parmec data augmentation techniques to the inputs and outputs of both examples.
+Comparing the outputs of both techniques, we notice agreement when applying rotation by 180 degrees and when mirroring about the horizontal axis.
+The validity of the augmentation technique discussed here will ultimately be tested
+through an experimental machine learning process. We can train two machine learning
+models of the exact same architecture and parameters: one with a dataset augmented
+with and one with the base dataset. A separate testing set of only non-augmented
+instances will be retained for testing both models which both models can best tested
+against. The performance of each image manipulation method can be evaluated in this
+way.
+
+CHAPTER 7. METHODS TO IMPROVE SURROGATE ML MODELS
+
+7.5.2
+
+101
+
+Weighted Loss Function
+
+In chapter 6, the effectiveness of using three alternative loss functions were compared.
+These were the mean squared error (MSE), mean absolute error (MAE) and the Huber
+loss [31].
+A model trained using the Huber loss function was found to produce the best performance. However, the other two loss functions produced a similar, albeit poorer, performance. Each of the three loss functions (Figure 7.4) each have their own strengths
+and weaknesses, with MSE heavily weighting outlying values, MAE proportionately
+weighting outliers and Huber being somewhere in between. As mentioned in subsection 7.4.4, our base dataset is highly centred around a central value with a double
+tailed distribution. Regardless of the loss function used, the resulting model is biased
+towards the central region, resulting in difficulty predicting at the upper and lower extremes (Figure 7.2).
+We propose a loss function tailored to this dataset which applies an adjustment factor
+that is a function of model prediction distance from a central value.
+
+Loss =
+
+α2 n 2
+∑ Zi (yi − ỹi)2.
+nβ2 i=1
+
+(7.1)
+
+
+1
+Zi = √ exp − (ỹi − µ)2 /2σ2 .
+σ 2π
+
+(7.2)
+
+β := max{Zi : i = 1, 2, . . . , n}.
+
+(7.3)
+
+As can be seen from (7.1), the regular loss, which takes the mean of the square difference between the ground truth yi and the model prediction ỹi . This is then adjusted by
+the factor Zi , as given by (7.2) and is calculated for each instance i. This term is based
+on the probability density function which in this case describes a Gaussian distribution.
+This Gaussian distribution is fit to that of our data distribution (Figure 7.5) by use of
+the mode µ and standard deviation σ. This summation is scaled through division by
+the square of β, which denotes the maximum such Zi . Also included is the magnitude
+coefficient α which will be optimised experimentally.
+
+CHAPTER 7. METHODS TO IMPROVE SURROGATE ML MODELS
+
+102
+
+This function results in a strong adjustment for predictions made near the mode, quickly
+dropping off to one as we move away in either direction. This adjusted loss function
+penalises predictions made near the region where there is a large concentration of training data and instead pushes it towards the extremes. This equation is designed with the
+intention of counteracting the bias in the data distribution.
+
+Figure 7.4: Loss Functions: Visual Comparison
+Three loss functions are compared graphically. Blue: mean squared error, as values
+become more extreme, the loss value increases geometrically meaning that outliers
+heavily influence the calculated value. Red: mean absolute error, the loss value
+increases linearly as the input increases, reducing the effect of outliers. Green: Huber
+loss, a balance between the previous two loss functions mentioned previously. The
+loss function has a linear outer region and a central non-linear region.
+
+7.5.3
+
+Pre-Trained Model Transfer
+
+In chapter 6, multiple machine learning models were developed and trained on the
+dataset. In the best performing case, a convolutional neural network was utilised with
+a refined architecture. Optimal performance was achieved when including inputs representing the cracking status of the top 3 levels of the AGR core. The model was used
+to predict displacements in a single brick on the top level of the core at a single time
+point during an earthquake - the distribution of these outputs for the dataset can be seen
+in Figure 7.5.
+Out of all of the models produced in the aforementioned paper, the best performing
+five models were obtained as well as their optimised weights. We evaluated each of
+
+CHAPTER 7. METHODS TO IMPROVE SURROGATE ML MODELS
+
+103
+
+Figure 7.5: Adjustment Factor as is Utilised by (7.1)
+The normal distribution (Z) is centred on the mode (µ) and scaled by the standard
+deviation (σ) of the data distribution. This factor can be adjusted as per the right hand
+side of (7.1).
+these models, numbered M1 to M5, against a testing dataset with the results shown in
+Table 7.1.
+Model Test Performance (MSE)
+M1
+M2
+M3
+M4
+M5
+
+9.28e-3
+9.25e-3
+9.22e-3
+9.68e-3
+9.48e-3
+
+Table 7.1: Performance of the Five Best Performing Models Produced Using the
+Method of chapter 6
+Each model was evaluated using a dedicated testing set sequestered for this research
+work. The mean squared error (MSE) metric was used to evaluate each model against
+this testing set.
+
+These models will form the basis of transfer learning experiments through refinement using the methods described in subsections 7.5.1 & 7.5.2. As mentioned in
+subsection 7.4.5, transfer learning can reduce the time and computational resources
+required compared to starting from randomised weights. Transferring models and
+
+CHAPTER 7. METHODS TO IMPROVE SURROGATE ML MODELS
+
+104
+
+weights in this case will not only reduce resource requirements but also be interesting from a research perspective.
+
+7.6
+
+Experimental Evaluation Process
+
+7.6.1
+
+Augmentation
+
+We began by evaluating the effectiveness of each image manipulation technique mentioned in subsection 7.4.3. To do this, we augmented the base dataset using each of
+the five image manipulation techniques. This resulted in six available data sets: three
+using rotation, two using mirroring and the original unaugmented set. A summary of
+the datasets is shown in Table 7.2.
+Dataset No.
+
+Description
+
+D0
+D1
+D2
+D3
+D4
+D5
+
+Original
+Rotation 90 degrees
+Rotation 180 degrees
+Rotation 270 degrees
+Mirror Vertical
+Mirror Horizontal
+
+Table 7.2: Summary of the Datasets Used in Experiments 1 & 2 as described in subsection 7.6.1
+The base dataset (D0) is used to generate each subsequent dataset (D1 - D5) using the
+image manipulation techniques detailed in subsection 7.5.1. Each dataset is 6136
+instances in size.
+
+For the purposes of comparison, a model design was selected which is highly simplified compared to that utilised in the method of chapter 6. This simplification was
+made in order to reduce computational demands and to allow obtainment of results
+quickly. As our intention at this point is to compare the effectiveness of using different
+datasets and not overall optimisation, a simplified model is acceptable for this purpose.
+The neural network architecture that was selected for this part of the research can be
+seen in Figure 7.6. Between the input and output layers, there is one convolutional
+layer followed by two dense layers. Activation functions and the use of dropout was
+utilised based on previous experience. The Huber loss function was used for back
+
+CHAPTER 7. METHODS TO IMPROVE SURROGATE ML MODELS
+
+105
+
+propagation and optimisation during training.
+
+Experiment No. Included Datasets
+E1.0
+E1.1
+E1.2
+E1.3
+E1.4
+E1.5
+
+D0
+D0 & D1
+D0 & D2
+D0 & D3
+D0 & D4
+D0 & D5
+
+Table 7.3: Summary of Experiment 1
+Experiment 1.0 includes only the unaugmented dataset. Experiments 1.1 to 1.5
+combine datasets D0 and one of the augmented datasets (D1 to D5). A description of
+each dataset is given in Table 7.2.
+
+Six experiments were performed which involved training the model shown in Figure 7.6 individually with the datasets listed in Table 7.3. A 10% sample of the unagumented dataset (D0) was retained for validation and the model was trained until
+reaching convergence in terms of validation loss. For each experiment, the training
+process was repeated 32 times, each time initialising with randomised starting weights
+and dropout nodes. Each model was then evaluated using a separate testing dataset
+with the results given in subsection 7.7.1.
+The datasets from the first phase were combined incrementally in the order of effectiveness as per Table 7.4. Again, each experiment is repeated 32 times. The results of
+this experiment are given in subsection 7.7.1.
+Experiment No.
+
+Included Datasets
+
+E2.1
+E2.2
+E2.3
+E2.4
+
+D0, D2 & D4
+D0, D2, D4 & D1
+D0, D2, D4, D1 & D3
+All
+
+Table 7.4: Summary of Experiment 2
+The training set is expanded by combining datasets incrementally. The increments are
+performed in ranked order of effectiveness as per experiment 1.
+
+CHAPTER 7. METHODS TO IMPROVE SURROGATE ML MODELS
+
+106
+
+Figure 7.6: Simplified Model Architecture Used to Compare Augmentation Approaches
+The input layer requires a 3-dimensional tensor representing the bricks of the top
+three layers of the AGR core. This is followed by a convolutional layer of 16 nodes,
+each with a 3x3 window size. Two fully connected layers then follow, the first with 32
+nodes, the second with 64 nodes. These three layers have tanh, sofplus [67] and then
+tanh again, respectively. Each of these layers utilised a 20% dropout rate [58] during
+training. The output layer represents only a single value - displacement in the single
+brick during the earthquake. This model is highly simplified compared to that of
+chapter 6.
+
+7.6.2
+
+Custom Loss Function
+
+The purpose of this experiment is to evaluate the bespoke loss function defined in
+subsection 7.5.2 and shown in (7.1) & (7.2). The simplified architecture used in the
+previous section and shown in Figure 7.6 was again used in the experiments in this
+section. Initially, the unaugmented dataset (D0 from Table 7.2 was used for training
+and the same testing set as used in subsection 7.6.1 for evaluation.
+In addition, we will make adjustments to the (7.1) & (7.2) and train models using the
+same parameters. This will not only allow us to refine the function but also understand
+the impact of each component of it. In this part of the experiment, the alpha coefficient
+(α) is set to unity.
+The next phase of research involved the use of our custom loss function in combination
+with the augmented datasets as detailed in subsection 7.6.1. All experiments outlined
+in Table 7.6 use a training set which includes all augmented datasets as per E2.4. Further, we adjust the alpha coefficient in the remaining parts of this experiment, with α
+having a value of unity in E4.0 (as it was in experiment 3). E4.1, E4.2 & E4.3 each
+increment α by unity in turn.
+
+CHAPTER 7. METHODS TO IMPROVE SURROGATE ML MODELS
+Experiment No.
+
+Loss Function
+
+E3.1
+
+As per (7.1) & (7.2)
+
+E3.2
+
+Removing power of 2
+from α, β and Zi of (7.1)
+
+E3.3
+
+Removing mean term ( 1n ) from
+from (7.1)
+
+E3.4
+
+Combining E3.2 & E3.3
+
+107
+
+Table 7.5: Summary of the Experiment 3
+We begin by using the function detailed by (7.1) & (7.2) as the loss function (E3.1).
+We then remove the power of 2 term (E3.2). Next, we remove the mean term and
+instead take the full sum of the loss (E3.3). Finally, E3.4 combines both of the
+aforementioned term removals. In all four experiments, α is set to one.
+
+As per experiments 1 & 2, we will repeat each experiment 32 times to account for the
+stochastic nature of weight initialisation. A summary of the experiments performed in
+this section is given in Table 7.5. The results are reported in subsection 7.7.2.
+Experiment No.
+
+Loss Function
+
+E4.0
+
+Dataset from E2.4 & loss function
+from E3.1
+
+E4.1
+
+As per E4.0 with α of 2
+
+E4.2
+
+As per E4.0 with α of 3
+
+E4.3
+
+As per E4.0 with α of 4
+
+Table 7.6: Summary of the Experiment 4
+We again use our custom loss function as defined by (7.1) & (7.2) and evaluated in
+E3.1. However, this time we train on the full augmented training set as used in E2.4.
+In E4.0, we set α to unity, as it was in all parts of Experiment 3. In subsequent
+experiments (E4.1 to E4.3) we increase α by unity each time.
+
+CHAPTER 7. METHODS TO IMPROVE SURROGATE ML MODELS
+
+7.6.3
+
+108
+
+Transfer Learning
+
+Subsection 7.5.3 discusses five pre-trained models obtained using the methodology of
+a previous research work in this field (see chapter 6). The performance of these models
+against a testing dataset is summarised in Table 7.1.
+The intention of this experiment is to further train these models using the methods detailed in the previous two subsections (7.6.1 & 7.6.2). We begin by further training
+models M1 to M5 using our dataset enlarged by all augmentation methods as per E2.4.
+We then combine both augmentation and the use of our custom loss function as defined
+in Equations7.1 & 7.2. Finally, we perform the same further training of the transferred
+models using the conditions of the previous experiment but with an α coefficient of
+two.
+This experiment is summarised in Table 7.7. We repeat the training process six times
+for each part of the experiment as opposed to the 32 times performed in earlier experiments. This is as only the dropout nodes are randomly selected and we are not
+initialising he weights. The results of this experiment will be presented in subsection 7.7.3.
+Experiment
+No.
+
+Description
+
+E5.1
+
+Transfer learning with all
+augmentation datasets added
+to training set as per E2.4
+
+E5.2
+
+As per E5.1 but with the custom loss
+function defined by (7.1)
+
+E5.3
+
+As per E5.2 but with
+α coefficient of 2
+
+Table 7.7: Summary of the Experiment 5
+For each of our pre-trained models (M1 to M5 in Table 7.1), we perform further
+training. We begin by enlarging the training set with all augmented datasets. We then
+combine this approach with the use of our custom loss function. Finally, we modify
+the loss function to use and α of 2. Each part of the experiment is repeated six times
+to account for randomness in the way dropout nodes are assigned.
+
+CHAPTER 7. METHODS TO IMPROVE SURROGATE ML MODELS
+
+7.7
+
+109
+
+Results
+
+This section outlines several experiments used to test the hypotheses described in previous sections as well as a summary of the results.
+
+7.7.1
+
+Augmentation
+
+As mentioned in subsection 7.6.1, two augmentation experimental approaches are attempted. The first tests each image manipulation technique individually, the second
+exploits combinations of these techniques. The following two subsections report the
+results of these approaches, respectively.
+Individual Augmentation
+The results of this experiment are summarised in Table 7.8. The experiment which
+produced the optimal performance (i.e. lowest test loss) out of 32 repeats was E1.4 with
+7.10E-3. This experiment also had the lowest mean loss (8.10E-3). All experiments
+which used an augmented dataset (E1.1 to E1.5) had a lower optimal performance
+than when using the unaugmented set only (E1.0). The mean values for all augmented
+experiments excluding E1.5 are below that of E1.0.
+Mean Test
+Experiment Optimal Test
+No.
+Performance Performance
+E1.0
+E1.1
+E1.2
+E1.3
+E1.4
+E1.5
+
+1.06E-2
+7.70E-3
+7.20E-3
+7.90E-3
+7.10E-3
+1.02E-2
+
+1.11E-2
+8.60E-3
+8.20E-3
+9.00E-3
+8.10E-3
+1.12E-2
+
+Table 7.8: Results Summary of Experiment 1
+Experiment 1.0 includes only the unaugmented dataset (D0). Experiments 1.1 to 1.5
+combine datasets D0 and one of the augmented datasets (D1 to D5). The models
+produced during each experiment were tested against the testing set with the results
+reported in mean squared error (MSE). Out of the 32 models trained for each
+experiment, the optimal result (i.e. the lowest) is reported as well as the overall mean.
+
+CHAPTER 7. METHODS TO IMPROVE SURROGATE ML MODELS
+
+110
+
+Figure 7.7: Visual Summary and Comparison of the Performance of the Optimal
+Model Produced During E1.0 (Left) & E2.4 (Right)
+The simplified model architecture shown in Figure 7.6 is trained on the original,
+unaugmented dataset. This process is repeated 32 times and evaluated against the test
+set. The predictions of the model with the lowest test loss are plotted against ground
+truth values and presented in four ways. In the top image, bounding lines are placed
+parallel to perfect prediction/ground truth agreement line (black), demarcating a 10 &
+20 percentage point margin. The lower three images split the data space into segments
+and quantify the proportion of samples which are correctly placed.
+
+CHAPTER 7. METHODS TO IMPROVE SURROGATE ML MODELS
+
+111
+
+Multiple Augmentation
+The results of this experiment are summarised in Table 7.9. All experiments which
+combine augmented datasets (E2.1 to E2.4) have improved optimal and mean test performances over that of the unagumented experiment (E1.0). As datasets are are incrementally added, both the optimal and mean test performances see improvement.
+In Figure 7.7 we see a visualisation and comparison of the test performance of the
+optimal model from E1.0 & E2.4.
+Mean Test
+Experiment Optimal Test
+No.
+Performance Performance
+E1.0
+E2.1
+E2.2
+E2.3
+E2.4
+
+1.06E-2
+7.30E-3
+6.60E-3
+6.60E-3
+6.50E-3
+
+1.11E-2
+8.40E-3
+7.70E-3
+7.70E-3
+7.50E-3
+
+Table 7.9: Results Summary of Experiment 2
+Each experiment combines the base unaugmented dataset (D0) with two or more
+augmented datasets as shown in Table 7.4. Experiment E.10 is included for
+comparison and context. The models produced during each experiment were tested
+against the testing set with the results reported in mean squared error (MSE). Out of
+the 32 models trained for each experiment, the optimal result (i.e. the lowest) is
+reported as well as the overall mean.
+
+7.7.2
+
+Custom Loss Function
+
+An experimental approach to the development of a loss function customised to the
+needs of the data problem at hand was discussed in subsection 7.6.2 with a summary
+of proposed experiments shown in Tables 7.5 & 7.6. The results are summarised in
+Tables 7.10 & 7.11 with a visual summary of E4.1 shown in Figure 7.8. All parts of
+experiment 3 show similar mean squared error to that of the baseline case (E1.0) with
+little variation. The addition of all augmented datasets to the training set (E4.0) yields
+similar model performance to that of experiment E2.4 which uses the baseline loss
+function. Increasing the α coefficient above unity appears to increase mean squared
+error.
+
+CHAPTER 7. METHODS TO IMPROVE SURROGATE ML MODELS
+
+112
+
+Figure 7.8: Visual Summary of the Performance of the Optimal Model Produced During E4.1
+The simplified model architecture shown in Figure 7.6 is trained on an expanded
+dataset which includes augmentation as described in subsection 7.5.1. The custom
+loss function as per (7.1) & (7.2) is used during training with an α of value of 2. This
+process is repeated 32 times and evaluated against the test set. The predictions of the
+model with the lowest test loss are plotted against ground truth values and presented
+in four ways. In the top image, bounding lines are placed parallel to perfect
+prediction/ground truth agreement line (black), demarcating a 10 & 20 percentage
+point margin. The lower three images split the data space into segments and quantify
+the proportion of samples which are correctly placed.
+
+CHAPTER 7. METHODS TO IMPROVE SURROGATE ML MODELS
+
+113
+
+Experiment Optimal Test
+Mean Test
+No.
+Performance Performance
+E1.0
+E3.1
+E3.2
+E3.3
+E3.4
+
+1.06E-2
+1.08E-2
+1.06E-2
+1.08E-2
+1.07E-2
+
+1.11E-2
+1.11E-2
+1.11E-2
+1.11E-2
+1.11E-2
+
+Table 7.10: Results Summary of Experiment 3
+Each experiment was trained on the base unaugmented dataset (D0) only. The results
+of E1.0, which involved training with a standard Huber loss function, are shown for
+context. Each part of the experiment involved a variation on the loss function shown
+in (7.1) & (7.2). The models produced during each experiment were tested against the
+testing set with the results reported in mean squared error (MSE). Out of the 32
+models trained for each experiment, the optimal result (i.e. the lowest) is reported as
+well as the overall mean.
+Mean Test
+Experiment Optimal Test
+No.
+Performance Performance
+E4.0
+E4.1
+E4.2
+E4.3
+
+6.54E-3
+7.31E-3
+8.14E-3
+4.17E-2
+
+7.50E-3
+7.88E-3
+9.65E-3
+4.41E-2
+
+Table 7.11: Results Summary of Experiment 4
+Each part of this experiment involved training on the full augmented dataset as per
+E2.4 and the loss function from E3.1. We then increment the value of alpha. The
+models produced during each experiment were tested against the testing set with the
+results reported in mean squared error (MSE). Out of the 32 models trained for each
+experiment, the optimal result (i.e. the lowest) is reported as well as the overall mean.
+
+7.7.3
+
+Transfer Learning
+
+We discussed in subsection 7.6.3 that our five existing models with their pre-trained
+weights (M1 to M5) were further trained using methods developed in this research
+work. The performance of these models further trained on our augmented training set
+is shown in Table 7.12. Comparing these results with the original model performance
+(Table 7.1) it can be seen that a significant improvement has been achieved.
+
+CHAPTER 7. METHODS TO IMPROVE SURROGATE ML MODELS
+
+114
+
+Looking next at transfer models trained with the aforementioned augmented dataset
+and also using our custom loss function, very similar performance results are seen (Table 7.13).
+Finally, performing the same process as the aforementioned experiment but with the
+α set to two, we see the performance of the models summarised in Table 7.14 with a
+visual comparison with the original M3 model seen in Figure 7.9 . Comparing E5.1
+& E5.2 with E5.3, it initially appears to perform slightly worse in terms of MSE test
+loss. From the comparison figure, multiple improvements over the original model
+performance can be seen, including a closer fit with fewer examples falling outside of
+both the 10 and 20 point margins. Also, the model from E5.3 performs considerably
+better than its original counterpart at the upper and lower bounds of the data space.
+Model Optimal Test
+Mean Test
+Performance Performance
+M1
+M2
+M3
+M4
+M5
+
+5.70E-3
+5.70E-3
+5.70E-3
+5.70E-3
+5.80E-3
+
+6.20E-3
+6.20E-3
+6.10E-3
+6.20E-3
+6.20E-3
+
+Table 7.12: Results Summary of Experiment 5.1
+This experiment involves the further training of the pre-trained models transferred
+from a previous study with an training set enlarged by data augmentation. The model
+performance detailed here should be compared with the original performance shown
+in Table 7.1.
+
+7.7.4
+
+Analysis and Discussion
+
+Looking first at the augmentation experiments (see subsection 7.7.1), we can see that
+all dataset augmentation has a positive effect on model performance. The results of experiment 1 (Table 7.8) show that the addition of some augmented datasets have more
+of an effect than others. For example, experiments E1.4 & E1.2 (rotation by 180 degrees and vertical mirroring) both see about a one third reduction in mean squared
+error in comparison to the baseline (E1.0). It is interesting that the two best performing augmentations both make adjustments about the vertical axis. Conversely, the least
+performing augmented dataset (D5, included in E1.5) makes its adjustment about the
+
+CHAPTER 7. METHODS TO IMPROVE SURROGATE ML MODELS
+
+115
+
+Figure 7.9: Visual Summary and Comparison of the Performance of the Original
+Model M3 (Left) & M3 After E5.3 (Right)
+The model obtained from during the work of chapter 6 is trained using our custom
+loss function (7.1), with an α value of 2. This process is repeated six times and
+evaluated against the test set. The predictions of the model with the lowest test loss
+are plotted against ground truth values and presented in four ways. In the top image,
+bounding lines are placed parallel to perfect prediction/ground truth agreement line
+(black), demarcating a 10 & 20 percentage point margin. The lower three images split
+the data space into segments and quantify the proportion of samples which are
+correctly placed.
+
+CHAPTER 7. METHODS TO IMPROVE SURROGATE ML MODELS
+
+116
+
+Model Optimal Test Previous Test Reduction
+Performance Performance
+%
+M1
+M2
+M3
+M4
+M5
+
+5.70E-3
+5.70E-3
+5.70E-3
+5.70E-3
+5.80E-3
+
+9.28e-3
+9.25e-3
+9.22e-3
+9.68e-3
+9.48e-3
+
+38.5
+38.0
+38.0
+41.0
+39.0
+
+Table 7.13: Results Summary of Experiment 5.2
+This experiment involves the further training of the pre-trained models transferred
+from a previous study with an training set enlarged by data augmentation and also the
+use of a custom loss function. The model performance from this experiment is
+compared with that obtained previously in chapter 6.
+Model Optimal Test Previous Test Reduction
+Performance Performance
+%
+M1
+M2
+M3
+M4
+M5
+
+6.00E-3
+6.20E-3
+6.40E-3
+6.40E-3
+6.40E-3
+
+9.28e-3
+9.25e-3
+9.22e-3
+9.68e-3
+9.48e-3
+
+35.0
+33.0
+30.5
+34.0
+32.5
+
+Table 7.14: Results Summary of Experiment 5.3
+Like E5.2, this experiment involves the further training of the pre-trained models
+transferred from a previous study with an training set enlarged by data augmentation.
+However, this time we the use a custom loss function with an α of two. The model
+performance from this experiment is compared with that obtained previously in
+chapter 6.
+
+horizontal axis.
+It is clear from experiment 2 (Table 7.9) that the combination of all augmented datasets
+to the training set yields the best result (E2.4). A deeper analysis of the performance
+of the model produced in experiment E2.4 can be made by comparing the left and
+right parts of Figure 7.7. It can be seen that a model trained on all augmented datasets
+produces an overall better fit than when using no augmentation at all. Key indicators
+include the percentage of data within 20 points of the ground truth - 98% for the best
+performing model from E2.4 compared with 94% for a similar model from E1.0. The
+
+CHAPTER 7. METHODS TO IMPROVE SURROGATE ML MODELS
+
+117
+
+inclusion of all augmented datasets also appears to improve model prediction in the
+upper part of the data space - compare the second section from the top in Figure 7.7.
+However, the best model from E2.4 also performs worse on predictions in the lower
+part of the data space (compare bottom parts of the aforementioned figure).
+Recall that the model architecture used in these experiments is highly simplified compared to previous works in this field. We should note at this point that the results
+of experiment 2 are an improvement even over those of highly complex models from
+chapter 6 - compare with the performance of M1 to M5, for example (Table 7.1). This
+suggests that dataset size is far more important in this problem space than model complexity and refinement.
+From an initial assessment of experiment 3 (Table 7.10), it appears that the use a custom loss function as defined in Equations 7.1 & 7.2 has no advantage compared to the
+baseline (E1.0). All of the reported mean squared error test values are within a few
+percent of one another.
+Experiment 4 combined our custom loss function with all augmented dataset from
+experiment 2. A model trained with the combined custom loss function and full augmented data set (E4.0) has a similar performance to that of a model when using the
+augmented set alone (E2.4). Increasing the value of the coefficient α produces an increasing optimal and mean test performance.
+So is there any value in the method evaluated in experiments 3 & 4? To answer this
+question, we must return to the motivation behind this method as detailed in subsections 7.4.4. We discuss the fact that our data space is concentrated in a central region with increasing rarefaction as we move away from it. Consequently, our models
+trained on this data performs poorly near the extremes as can be seen from the left part
+of Figure 7.7. Comparing the aforementioned figure with a visualisation of the optimal
+model from experiment E4.1 (α = 2), we can see significant improvements in model
+performance at the upper and lower extremes of the data space (Figure 7.8). This advantage comes at the expense of minor reductions in overall performance metrics, for
+example percentage of examples that are predicted outside of 20 percentage points of
+the ground truth (rising from 2.0% in E2.4 to 2.6% in E4.1). Whether or not this tradeoff is of value will dependent on any practical application of the model. Nonetheless,
+
+CHAPTER 7. METHODS TO IMPROVE SURROGATE ML MODELS
+
+118
+
+it is likely that analysis using any such model would value good performance near the
+extremes as events in these regions are are most likely to impact safety. Therefore, we
+highlight the potential of this method and carry it forward into experiment 5.
+We can see from the results of experiment 5.1 (Table 7.12) that further training our
+pre-trained models with an augmented dataset results in a significant performance uplift. For example, M1 sees its test mean squared error drop from 9.28e-3 to a minimum
+of 5.70e-3 - a performance improvement of about 38.5%. Combining the augmented
+dataset with our custom loss function and further training our base models appears
+to have little effect beyond what we saw in E5.1 (Table 7.13). Repeating E5.3 with
+an alpha coefficient of 2 initially appears to worsen performance, with test MSE rising from 5.70E-3 to between 6E-3 and 6.40E-3. However, on inspection of the visual
+results of E5.3 and comparison with those of E5.1 & E5.2, we see significantly improved performance at the upper and lower boundaries (above 0.6 and below 0.2 on
+the normalised scale of ground truth). Hence, we present the optimal results from E5.3
+in Figure 7.9. Some notable improvements include a halving in the number of predictions that fall outside of the 20 percentage point margin (4.0% in the original M3
+against 1.8% post E5.3), an increasing percentage of samples correctly placed over the
+0.6 boundary (40.9% in the original M3 against 54.8% post E5.3) and finally a similar
+improvement below the 0.2 boundary (16.1% against 35.1%). As touched on earlier,
+in the field of machine learning for nuclear energy, this represents noteworthy progress
+as safety decisions are likely to concern events at the extremes i.e. very high or very
+low values.
+
+7.8
+
+Conclusion
+
+In this research work, we demonstrate the adaption of three established approaches
+to the field of surrogate machine learning model development. The methods are data
+augmentation, custom loss functions and transfer learning. Each of these approaches
+have seen widespread use in the field of machine learning, however, here we apply
+them specifically to surrogate machine learning model development.
+The machine learning model that forms the basis behind this work was intended to
+surrogate a traditional engineering model used in the UK nuclear industry. This model
+was built with the intention of increasing computational efficiency over the original
+
+CHAPTER 7. METHODS TO IMPROVE SURROGATE ML MODELS
+
+119
+
+model it surrogated. The performance of this model was hampered by poor performance due to limited training data. Here, we demonstrate that through a combination
+of additional techniques, model performance can be significantly improved.
+Through exploitation of symmetry in the data and use of image manipulation techniques, we find that data augmentation techniques that make adjustments about the
+vertical axis are most effective, when applied individually. The combined use of all
+proposed augmentation methods in tandem produces the best performance uplift, suggesting that each of the methods provides at least some utility.
+The second approach details an experimental refinement of a custom loss function
+specifically tailored to the training data distribution. We show that our custom loss
+function can improve performance at the extreme upper and lower parts of the data
+distribution - areas where previous models had performance difficulties.
+We show that each of the aforementioned techniques have utility in their own right
+and in combination with one another. However, we see them best applied as part of
+a transfer learning operation. Five pre-trained surrogate models produced prior to this
+research were further trained with the augmented dataset and with our custom loss
+function. Through the combination of all three techniques, we see an improvement of
+at least 38% in performance across the five models.
+
+Chapter 8
+Discussion and Conclusions
+8.1
+
+Summary of Findings
+
+The key outcomes of this research project are as follows.
+1. Identification of Effective ML techniques Through development and optimisation of SMLMs for the research problem discussed in this thesis, we identified
+several techniques that were highly effective in terms of model performance.
+Early in the development process, convolutional neural networks (CNNs) were
+identified as performing better than fully dense neural networks (DNNs). An unconventional alternating arrangement of activation functions was found to produce optimal model performance. Many other model parameters were optimised
+during the model development process which are detailed throughout this thesis.
+2. Data Insights Through Visualisation Through visualisation and analysis of the
+dataset we were able to better guide the direction of the research. This included
+selection of model inputs, outputs and the type of machine learning model to
+use.
+3. SML Development Framework To aid in the development, optimisation and
+evaluation of SMLMs, a programmatic framework was developed. This framework streamlined the production of training data, data engineering, model parameter selection, training, optimisation and evaluation. The framework was
+produced using the programming language Python and using the Keras library.
+It is provided in an open source online repository with the intention that other
+researchers can adapt it to their own SMLM development work.
+120
+
+CHAPTER 8. DISCUSSION AND CONCLUSIONS
+
+121
+
+4. Data Insights Through ML Model Optimisation The process of SMLM optimisation not only enhanced model performance, but helped identify relationships and insights about the data itself. For example, the process of feature selection (identifying selected inputs which provide the best model performance), it
+was discovered that only including inputs representing the top three levels of the
+AGR core was optimal in output accuracy. This suggests that inputs concerning
+the lower levels of the core are irrelevant to the prediction of the output.
+5. Adaption of Existing ML techniques to SMLMs To improve model performance and compensate for a lack of training data, several existing machine
+learning techniques were adapted from other research to serve the purpose of
+this project. For example, data augmentation, a technique widely used in image
+classification, was adapted to the regression problem discussed here. A bespoke
+machine learning loss function was also developed to better fit the data distribution.
+
+8.2
+
+Discussion
+
+In this thesis we have looked at the development of a machine learning model to surrogate a traditional engineering model used within the UK nuclear industry. A range of
+techniques and approaches have been employed to this end, including data engineering, visualisation, feature selection, convolutional neural networks, regularisation, data
+augmentation, use of custom loss functions and transfer learning.
+We began by looking at the technical details of the advanced gas-cooled reactor and its
+safety issues. It was noted how the UK’s nuclear reactor design is unique from an international perspective meaning that research concerning its safety must be performed
+domestically and there is no international research to benefit from or collaborate. With
+an ageing fleet of UK reactors, this means that there is pressure on researchers in this
+field to make the process more efficient.
+The technical details of the advanced gas-cooled reactor are outlined. This includes the
+two types of graphite brick within the core: the large bore fuel bricks and the smaller
+interstitial bricks which allow the insertion of control rods.
+
+CHAPTER 8. DISCUSSION AND CONCLUSIONS
+
+122
+
+We discussed that the main safety concern with the advanced gas-cooled reactor is the
+cracking of the graphite fuel bricks within the core structure. The pathways in which
+this cracking could cause safety problems are discussed, namely, the obstruction of
+control entry during a severe earthquake.
+The use of traditional engineering models such as Parmec was detailed. Models such
+as these allow the response of the reactor internals to be modelled during a severe
+earthquake. These responses include the movements of bricks within the core, which
+in turn can be used to calculate margins of safety.
+We discussed the implications of uncertainly regarding the locations of cracked bricks
+within the advanced gas-reactor core. These uncertainies mean that we must treat the
+problem stochastically, repeating the process multiple times to build up a statistical
+picture of possible outcomes.
+Next, we looked at the advantages and disadvantages of models such as Parmec. The
+advantages include accuracy and certainty owing to the deterministic nature of individual calculations using engineering models. The disadvantages include high cost in
+terms of computational effort required to perform these calculations. Coupled with
+the intensity and urgency of these calculations for safety reasons, this disadvantage is
+considerable, hence the motivation to use machine learning.
+A discussion of publications in the field of seismic analysis of the AGR reactor is
+provided, detailing computational and physical models used to produce safety related
+data. The analysis of these publications allowed familiarity with the research field and
+guided further research. For example, several research publications highlighted how
+the central regions of the core carried the highest significance in terms of severity of
+earthquake response.
+The background and theoretical basis of several machine learning techniques used
+throughout this thesis is explored. This includes the fundamental foundation of the
+training of a machine learning model through stochastic gradient descent, as well as
+the workings of dense neural networks, convolutional neural networks and transfer
+learning. We also look at the motivation and theory behind surrogate machine learning models such as the one we wish to produce in this thesis. whilst the development
+
+CHAPTER 8. DISCUSSION AND CONCLUSIONS
+
+123
+
+and optimisation of machine learning models is resource intensive in terms of human
+effort, expertise and computation required, once trained they are very cheap and fast
+to use. Inference of results, which might have taken hours or days with a traditional
+engineering model may take seconds using a machine learning model. We also discuss
+several previous studies in the field of surrogate machine learning model development.
+Although few of them discuss models produced for nuclear safety or seismic analysis, with even fewer of them discussing nuclear graphite, several usefule insights were
+gathered. These include machine learning model architectures and other parameters
+which may prove effective.
+A dataset totalling around 8300 instances of Parmec inputs and outputs was generated. A programmatic framework was developed to streamline the production of this
+data. The framework was also expanded to make data engineering an efficient and user
+friendly experience. This includes the extraction of relevant inputs and outputs from
+the Parmec model instances and the creation of training and testing data for machine
+learning model development. The framework was designed to be modular with the
+intention that future researchers can adapt it to their own surrogate machine learning
+work. To this end the framework was provided free and open source.
+We then explored this dataset using the aforementioned framework in a number of different ways. This included a mathematical analysis of the dimensionality of the inputs
+and outputs and how they could be expressed in different ways. Several visualisations
+are also provided which look at the data in various ways and make statistical comparisons. Through the visual exploration of the dataset using the framework, we gather
+several insights into its fundamental nature, including relationships and correlations
+between various inputs & outputs. These insights guided further analysis and the direction of machine learning experiments.
+Following the generation, description and exploration of the dataset, several preliminary machine learning experiments. These include the testing of many ideas generated
+during the dataset exploration. Many of these experiments include negative results,
+however, they can be used to discount avenues of research which are not worth exploring or focusing on at this time.
+
+CHAPTER 8. DISCUSSION AND CONCLUSIONS
+
+124
+
+An early concern during the PhD project was over the size of the dataset and the ability to generate a sufficiently large dataset. As the main motivation behind this PhD
+thesis was to compensate for the huge scope of the data space. With the generation of
+data being computationally expensive, a reasonable concern was that we did not have
+enough data. An experiment was designed to test the sensitivity of surrogate model effectiveness to dataset size. It was found that diminishing returns were achieved when
+a training set of around 5000 samples were used to train the model. With a training set
+of about 6000 samples in size, it was considered that the dataset was sufficient in size
+to continue with further research.
+It was mentioned above that the main safety concern with the advanced gas-cooled reactor concerns the cracking of the bricks. The traditional engineering software Parmec
+models these cracks as being in one of four directional orientations. An early query
+was whether or not these orientations had any relevance to the earthquake response
+of the reactor. This query was tested through experiment that involved training two
+machine learning models in parallel: one including the encoding of the orientations
+and one model excluding this information. A surprising result was that both models
+performed largely the same, suggesting that orientation of cracked bricks is irrelevant
+and allowing us to discard this information in further research.
+It was observed that some studies performed in the field of surrogate machine learning
+had exploited the concept of transfer learning. This is where a model produced for a
+specific purpose is adapted to a parallel function. A common example is models developed for image classification and trained on large image datasets being adapted to
+the classification of other objects. Two well established image classification models
+were adapted through the addition of extra layers to make them suitable for our research purposes. Although the results were ultimately found to be a model designed
+specifically for this tasks, reasonably good results were achieved. This is in itself an
+interesting result, as the transfer performed in this case was very ambitious - from an
+image classification problem to a nuclear reactor safety analysis.
+We observed during the data analysis phase of the project that the outputs from the
+Parmec are highly multidimensional and contain a huge number of variables. It was
+also noted that the outputs poorly correlate with each other and hence the development
+of a single machine learning model which can surrogate them all would be ambitious.
+
+CHAPTER 8. DISCUSSION AND CONCLUSIONS
+
+125
+
+It was decided to test the limits of this ambition experimentally through the training
+of a machine learning model. A surrogate machine learning model was designed to
+predict the displacement in one direction of all 4173 interstitial bricks within the core
+at a single time frame out of 271. Note that this model, whilst ambitious, represents
+only a small fraction of the total outputs of the Parmec model. The results of this experiment were fairly poor, with the optimised being biased and unable to generalise
+well. This is largely to be expected given the challenges mentioned above and meant
+that we focused our research on a smaller section of the model outputs.
+With the aforementioned preliminary studies complete, a picture was starting to develop of how a satisfactory surrogate machine learning model may be developed. It
+was decided to focus on producing a surrogate machine learning model that predicts
+outputs for a single brick at a single time frame. The brick selected was a brick at the
+centre of the core on the top level. This decision was informed by research publications, preliminary experimentation and data analysis/visualisation.
+An experimental process of refining the architecture and parameters of a surrogate machine learning model was performed. This again was informed by research study and
+previous preliminary experiments.
+The first phase of experimental investigation was into the use of traditional or so called
+’shallow’ machine learning methods. This included the use of simple linear regression, support vector machines and decision tree regression. Each of these methods was
+found to provide underwhelming performance. This is perhaps owing to the simplicity
+of these methods, the complexity of the data space and the inability of these models to
+represent deep relationships within the data. Nevertheless, it was important to discount
+these methods experimentally.
+It was thereon decided to investigate the use of neural networks as these models can
+capture non-linear complexities within the data. We started with dense of ’fully connected’ neural networks as these had been heavily used in past research in the field of
+surrogate machine learning model development.
+A key area of investigation at this stage was into the effectiveness of various arrangements and encodings of the input features to the machine learning model. This included
+
+CHAPTER 8. DISCUSSION AND CONCLUSIONS
+
+126
+
+encoding the inputs in one, two or three dimensional arrangements. It was found that
+a three dimensional encoding provided the highest model performance. In this format,
+the true physical relationship of the inputs is retained i.e. the inputs for the bricks reflect their actual locations within the core.
+An advantage of the three dimensional encoding of input features is that it allowed
+the use of convolutional neural networks. This type of neural network allows the
+identification and exploitation of localised patterns within the data. With the theoretical understanding that localised cracking patterns within the core of the advanced
+gas-cooled reactor are likely to be correlated with particularly onerous responses, this
+result is perhaps to be expected. Outside of the effort to optimise a surrogate machine
+learning model for practical purposes, this finding reveals information about the underlying nature of the dataset itself.
+Another key finding from this phase of the research was the effectiveness of feature
+selection. This is a process of reducing the scope of the input features provided to the
+model during training. The theory behind this process is that excluding irrelevant inputs from the training dataset of a machine learning model will enhance performance
+by allowing it to focus on the more relevant areas of the data.
+The first phase of the feature selection experiment saw the inputs separated by core
+level and then incrementally excluded, starting with the lowest. An interesting finding was that including inputs for only the top three levels of the advanced gas-cooled
+reactor (hence discarding inputs for the lower four levels) produced the most optimal
+model performance. This result was largely expected as these three levels are closely
+located to the brick we were predicting outputs for.
+A second phase of the feature selection experiment saw the inputs radially segregated
+from a top down perspective. An unexpected outcome from this experiment was that
+peak performance was seen when including results for all radial regions of the core i.e.
+not excluding any of the radial geographic regions. It was expected that including data
+for only the central most regions would yield the optimal results as these are closest to
+the interstitial brick we are making predictions for.
+
+CHAPTER 8. DISCUSSION AND CONCLUSIONS
+
+127
+
+The results of the feature selection experiments not only allowed enhanced optimisation of surrogate machine learning models going forward, they also again exposed
+insights into the underlying nature of the data space that may be interesting from a
+wider safety analysis perspective. For example, inspections or further research may be
+guided by this finding to focus their attention to certain regions of the core.
+At this stage in the research considerable progress had been made in the development of a machine learning model for the original object of this research. Several key
+techniques and effective methods highly suited to this problem had been identified.
+However, the results and accuracy of the machine learning model were found to not
+be of a high enough level to be suitable for practical use. It was noted during the discussion of surrogate machine learning model theory that there is a trade-off between
+accuracy and computational efficiency when it comes to the production of these models. The model produced certainly required less computational cost than its traditional
+engineering counterpart, but it was not yet clear if the trade-off in terms of accuracy
+was comparable. Therefore, a number of methods were investigated with the intension
+of improving the accuracy of the model.
+Going back to the preliminary phase of experimental research, it was noted that although diminishing returns were seen with increasing data size, performance does
+improve still improve as the dataset increases in size. It was judged at the time that
+perhaps an order of magnitude scale increase in the size of the training dataset may
+yield a significant improvement in model performance. Using Parmec to generate this
+much data however was impractical as it would likely take longer than the remaining
+duration of the project.
+Instead of using Parmec to expensively generate large amounts of model outputs, we
+investigated alternative ways to increase the size of the dataset. During research into
+the design of the advanced gas-cooled reactor, it was noted that the reactor exhibits
+symmetry around its vertical and horizontal axis, as observed from above. Through
+data visualisation of the dataset, we also observed that the Parmec outputs also exhibited similar symmetry. This was noted to be practically similar to how images used in
+image classification also exhibit symmetry.
+In image classification, the symmetry of images is often exploited in a process known
+
+CHAPTER 8. DISCUSSION AND CONCLUSIONS
+
+128
+
+as data augmentation. This method was adapted to allow the augmentation of Parmec
+data training examples by mirroring and rotating inputs and outputs and outputs. By
+using this method, the size of the dataset was effectively increased by a factor of 8. The
+veracity of this approach was demonstrated through machine learning model experimentation. It was shown that even a relatively simple machine learning model trained
+on the augmented dataset outputs a far more complex machine learning model training
+on the unaugmented set.
+It was noticed through visualisation of the performance of the model produced thus
+far that prediction was less accurate at the extremes i.e. at the higher and lower ends
+of the data spectrum. In particular, outputs at the higher end of the dataset are under
+predicted, and outputs at the lower end of the dataset are over predicted. Going back
+to our visualisation of the dataset, we can see an explanation. It was observed that the
+outputs values are highly concentrated around a central value, effectively meaning that
+the dataset is biased. This is turn causes model bias in the way it makes predictions:
+lower values are pulled up towards this central median value and similarly higher values are pulled down towards it.
+How best to compensate for the bias in the output data? A process of data augmentation
+similar to that which was discussed above was considered, where rarefactions in the
+data space could be more heavily represented in the training set
+
+8.3
+
+Limitations
+
+8.4
+
+Further Work
+
+
