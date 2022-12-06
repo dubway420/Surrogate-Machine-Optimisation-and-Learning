@@ -121,9 +121,23 @@ It was noticed through visualisation of the performance of the model produced th
 How best to compensate for the bias in the output data? A process of data augmentation similar to that which was discussed above was considered, where rarefactions in the data space could be more heavily represented in the training set. After reviewing literature on the subject, it was noted that a more efficient solution might be to develop a custom loss function specially designed to suit the data for this research problem. Specifically, this loss function would penalise predictions made near the centre of of the data continuum, making the model more likely to make optimise for predictions at the extremes where training data is scarce. \\
 
 \noindent
-It was noted during the data analysis and visualisation phase that the output data is distributed in a fairly symmetric bell curve   
+It was noted during the data analysis and visualisation phase that the output data is distributed in a fairly symmetric bell curve. It was found that an adjusted Gaussian distribution could be fit to the distribution of the output data. Using the equation of this distribution, the mean squared error loss function was modified to penalise model predictions made near the peak frequency of our distribution. \\
+
+\noindent
+By performing experiments using permutations of this modified mean squared error loss function, we were able to demonstrate a reduction in model bias near the extremes out the output space. We were also able to demonstrate a novel use of custom loss function, as many previous applications had involved classification problems, or compensated for periodic rarefactions in the data, rather than a central concentration. \\
+
+\noindent
+The aforementioned data augmentation and custom loss function methods were further applied as part of a transfer learning experiment. Five of the best trained models from previous experimental work were further trained using our refined methods. Through doing this, we were able to demonstrate a significant uplift in model performance. \\
+
+\noindent
+Although not as ambitious as the earlier transfer learning experiment involving the adaption of image classification models, it still nevertheless demonstrates the exploitation of transfer learning in this particular problem space. 
  
  \section{Limitations}
+ 
+ As has been discussed several times throughout this thesis, the input \& output parameters of the Parmec engineering model are highly complex and multidimensional. We have seen in preliminary experiments the difficulty of optimising a machine learning model to predict even a small fraction of the output space. Therefore, a key limitation of this research at this time is the small area of the output space that has been successfully surrogated using a machine learning model. \\
+ 
+ \noindent
+ It was also mentioned in this thesis that a programmatic framework was developed to aid in the creation \& manipulation of data, as well as the design, training and evaluation of surrogate machine learning models. It was mentioned that this framework was developed in a modular and open-source  format with the intension that other researchers can adapt it to their own needs. However , this ambition has not yet been realised.
 
 \section{Further Work}
 
@@ -134,3 +148,5 @@ It was noted during the data analysis and visualisation phase that the output da
 % Reinvestigate transfer learning from VGG
 
 % Active learning - both instance generation and model development
+
+% Machine learning framework - other uses

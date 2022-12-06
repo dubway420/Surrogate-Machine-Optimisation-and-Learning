@@ -134,6 +134,105 @@ Both of the engineering modelling methods mentioned in this subsection are expen
 	\label{fig:statistical_analysis}
 \end{figure}
 
+\section{Parmec Model Description}
+
+The computational model Parmec \cite{wiki:xxx} will serve as the traditional engineering model as the basis of this surrogate model to be developed for this PhD thesis. This section outlines the Parmec model, including how data is generated and the dimensionality of the inputs \& outputs. The full list of inputs and outputs to the Parmec model are summarised in Table~\ref{tab:parmecIO}.
+
+\subsection{Data Generation} \label{parmec:data}
+
+An individual Parmec case represents a simplified AGR graphite core with a cracked fuel bricks randomly distributed throughout. The Parmec software can simulate  a core with cracked bricks representing anywhere between 0\%  (intact core) and 100\% (fully cracked). Fuel bricks in the Parmec model can be modelled as having a single crack, or be double cracked as shown in Figure~\ref{fig:cracked}.  \\
+
+\noindent
+The configuration files for individual Parmec cases are generated using an industry standard tool which uses a pseudo-random number generated based on the time of day to distribute cracked bricks randomly throughout the core model. These configuration files contain the model inputs (discussed in the following subsection) and everything else required to execute Parmec. Following execution of the Parmec model using the configuration files, a set of output files are generated, the contents of which are discussed in subsection~\ref{parmec:output}. 
+
+\subsection{Model Inputs} \label{parmec:input}
+
+Fuel bricks are stacked in a multi-level structure as mentioned in section~\ref{AGR}. There are 7 levels (l~=~7), each with 284 bricks (f~=~284), hence there are 1988 fuel bricks in the reactor in total (r~=~1988). The input configuration files for a single Parmec case contain a integer representation of the cracking status of each brick in the core as visualised in Figure~\ref{fig:cascade}. In the aforementioned figure, an uncracked brick is represented by a -1, with cracked bricks represented by an integer 1 - 4, with this number giving the orientation (see Figure~\ref{fig:orientations}). Note that each core level has 18 rows and columns (d~=~18) but not every element represents a fuel brick - corner positions are padded with zeros.
+\\
+
+\begin{figure}[t]
+	\centering
+	\includegraphics[scale=0.45]{Figures/InputCascade.png}
+	\caption{Multi-channel Cascade}
+	\label{fig:cascade}
+\end{figure}
+
+\subsection{Model Outputs} \label{parmec:output}
+
+Recall from section~\ref{Engineering} that the Parmec model is used to simulate an earthquake (Figure~\ref{fig:earthquake}). This includes a settle down period before and after the earthquake proper. For 271 regular time intervals (TI) throughout the earthquake simulation, the model outputs a data-file. This file contains translation and rotation data for all bricks within the reactor core. 
+\\
+
+\noindent
+There are 4173 interstitial bricks (henceforth referred to by the notation BI), the behaviour of which we are interested in during the earthquake time history. Like the fuel bricks discussed in the previous subsection, the interstitial bricks are stacked into channels. As the interstitials are shorter than their fuel equivalent, an interstitial channel is made of a stack of 13 bricks. Similar to the encoding process for fuel bricks, interstitials are encoded in order of their level and then by the order as given in Figure~\ref{fig:inter_order}.
+\\
+
+\noindent
+For each interstitial brick, Parmec calculates 6 output metrics (OM) representing displacement in and rotation about all three Cartesian directions. With the 271 time intervals mentioned above, this results in nearly 6.8 million outputs per Parmec case. Therefore, each Parmec case has an output as can be represented by (\ref{instance_result_matrix}) with each value being normalised element-wise across the entire dataset.  
+\\
+
+\begin{figure}[t]
+	\centering
+	\includegraphics[scale=0.35]{Figures/inter_channel_numbers.png}
+	\caption{Interstitial Brick Encoding Order}
+	\label{fig:inter_order}
+\end{figure}
+
+\noindent
+
+
+\begin{equation} \label{instance_result_matrix}
+	Y_i = \{0, 1\}^{BI \ \times \ TI \ \times \ OM}
+\end{equation}
+
+\begin{table}[h!]
+	\begin{center}
+		
+		\begin{tabular}{c|c|c|r|c} % <-- Alignments: 1st column left, 2nd middle and 3rd right, with vertical lines in between
+			\textbf{Inputs} & \textbf{Outputs}  \\
+			
+			\hline
+			& \\
+			\textbf{Cracking Status}   &  \textbf{ Brick Displacement} \\
+			1988 Fuel Bricks:         & 4173 Interstitial Bricks: \\ 
+			7 levels    & 13 levels       \\
+			284 fuel bricks per level &  321 bricks per level  \\
+			&    \\
+			& \textbf{Output Metrics}  \\
+			& 6 per interstitial brick: \\ 
+			
+			&  3 translational \\
+			&  3 rotational \\
+			
+			& \\
+			
+			\textbf{Earthquake Acceleration} & \textbf{Output Frequency} \\
+			1400 time points: &              271 output points:     \\
+			14 seconds &  once per 0.05 seconds    \\
+			100 time points per second &     \\
+			
+			& \\
+			
+			Fuel brick cracking & Output for all \\
+			status is constant & 4173 interstitial bricks \\
+			throughout earthquake & and 6 output metrics \\
+			& per time point \\
+			
+			
+		\end{tabular}
+		\caption{Summary of the Inputs and Outputs of the Parmec Engineering Model for AGR Graphite Core Seismic Analysis.}
+		\label{tab:parmecIO}
+	\end{center}
+\end{table}
+
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[scale=0.85]{Figures/earthquake_time_points}
+	\caption{History of Acceleration During a Severe Earthquake} {Note the settling period before and after the earthquake proper. The true earthquake history includes an acceleration value every 100th of a second. This plot shows a sample every 10th of a second, which is the interval that the Parmec model outputs displacement data. Note that four time frames are highlighted - these frames are made reference to in the analysis in chapter~\ref{cha:dataset}.}
+	\label{fig:earthquake}
+\end{figure}
+
+
 
 
 \section{Relevant Literature} \label{engineering:literature}

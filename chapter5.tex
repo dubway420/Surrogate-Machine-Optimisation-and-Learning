@@ -9,7 +9,7 @@ This chapter covers work which was completed as part of research for this PhD pr
 
 \noindent From the larger dataset, 6000 cases  were randomly chosen. This set was split into 6 segments of equal size. The experimental procedure involved incrementally adding the segments to dataset used to train the model. After the adding of of each increment to the training dataset, the model was reinitialised with random starting weights so training could begin afresh. This process was repeated four times to account for the stochastic nature of the model initialisation process. \\
 
-\noindent At each stage of the experiment, the dataset was randomly split into a training set (80\% of instances) and test set (the remaining 20\%). The model architecture and parameters were kept constant for all increments of dataset size. The model used was a convolutional neural network, with 8 convolutional layers, each 64 nodes wide and 2 fully connected layers before the output layer.  Dataset parameters were similar to those reported in section~\ref{data_selection}.
+\noindent At each stage of the experiment, the dataset was randomly split into a training set (80\% of instances) and test set (the remaining 20\%). The model architecture and parameters were kept constant for all increments of dataset size. 
 \\
 
 \noindent 
@@ -58,7 +58,7 @@ Recall from subsection~\ref{data:inputs} that our input feature matrix can be re
 \\
 
 \noindent
-Note also that in subsection~\ref{data:inputs} it was discussed that Parmec can represent a cracked fuel brick in one of four orientations (see Figure~\ref{fig:orientations}). In the format of the input feature matrix discussed in the previous paragraph, the orientation of a cracked brick is not encoded and this information is discarded. 
+Note also that in subsection~\ref{parmec:inputs} it was discussed that Parmec can represent a cracked fuel brick in one of four orientations (see Figure~\ref{fig:orientations}). In the format of the input feature matrix discussed in the previous paragraph, the orientation of a cracked brick is not encoded and this information is discarded. 
 \\
 
 \noindent
@@ -87,7 +87,7 @@ Instead, our feature matrix is expanded into an extra dimension. As opposed to a
 \noindent This approach is functionally similar to one-hot encoding \cite{seger2018investigation}, where categorical values are represented by a binary vector. \\
 
 \noindent
-In this experiment, two machine learning models were trained in parallel: the first using our original input feature encoding ($\textbf{X} = \{-1, 4\}^{N \times BF}$) and the second with our expanded input feature tensor which encodes cracked brick orientation \ref{one_hot}. In both parts of the experiment, the model architecture and all other parameters were kept constant.  The training and evaluation process was repeated four times per input encoding format, so as to account for the stochastic nature of hyper-parameter initialisation. Output parameters were similar to those reported in section~\ref{data_selection}.
+In this experiment, two machine learning models were trained in parallel: the first using our original input feature encoding ($\textbf{X} = \{-1, 4\}^{N \times BF}$) and the second with our expanded input feature tensor which encodes cracked brick orientation \ref{one_hot}. In both parts of the experiment, the model architecture and all other parameters were kept constant.  The training and evaluation process was repeated four times per input encoding format, so as to account for the stochastic nature of hyper-parameter initialisation. 
 \\
 
 \noindent It was expected that the model trained using the expanded input feature tensor would outperform  the model trained using binary encoding.  After all, it is the same experiment except for the additional information of crack orientations as well as positions. However, only a very similar performance was seen, or in some cases, slightly worse. It appears that the model training process exhibits overfitting - where the model too closely fits the training set, including any noise or irrelevant information.  A clear indicator of overfitting is decreasing training loss whilst validation loss increases i.e. the model fits to the training set so well that it losses the ability to generalise to data outside of it. Looking at the training time history of the model trained using crack orientations, this phenomenon can be clearly seen in (Figure~\ref{fig:history_ori}). It can be seen that the training loss falls monotonically, with the validation loss rising steadily i.e. the model's ability to generalise is falling. \\
@@ -108,7 +108,7 @@ As outlined in subsection~\ref{transfer}, existing models for image classificati
 \\
 
 \noindent
-To suit the purpose of this study, the existing models had to be adapted. Previously, these models would receive a image tensor, usually of dimensions 32x32x3 (32 pixels width and depth plus 3 colour channels) and output a vector of length 1000 (representing a range of image categories). In place of the image tensor, the 3-dimensional tensor represented by Figure~\ref{fig:cascade} was flattened into a planar arrangement with an example shown in Figure~\ref{fig:transfer_encoding}. This was then one-hot encoded into three channels: cracked bricks (green), uncracked bricks (red) and corners/edges (blue). For each instance, this processes creates a input feature tensor of 88x44x3. The model output layer was modified to produce a single regression value similar to those reported in section~\ref{data_selection}.
+To suit the purpose of this study, the existing models had to be adapted. Previously, these models would receive a image tensor, usually of dimensions 32x32x3 (32 pixels width and depth plus 3 colour channels) and output a vector of length 1000 (representing a range of image categories). In place of the image tensor, the 3-dimensional tensor represented by Figure~\ref{fig:cascade} was flattened into a planar arrangement with an example shown in Figure~\ref{fig:transfer_encoding}. This was then one-hot encoded into three channels: cracked bricks (green), uncracked bricks (red) and corners/edges (blue). For each instance, this processes creates a input feature tensor of 88x44x3. The model output layer was modified to produce a single regression value which corresponds to a single output metric from the Parmec model.
 \\
 
 \begin{figure}[h]
@@ -156,7 +156,7 @@ Over all, the transfer learning models produced inferior results to those of an 
 
 \section{Whole Core Experiment} \label{prelim:whole}
 
-As mentioned in subsection~\ref{data:outputs}, the output of Parmec is multi-dimensional, with 6 directional/rotational outputs for all 4173 interstitial bricks, with each of these values output at all 271 time frames during the earthquake. In this experiment, a single time frame was selected (frame 48) and one output metric (displacement in the West-East direction). The rationale for selecting these outputs starts by examining and comparing Figures~\ref{fig:results1} \& \ref{fig:results2}, as well as Figures~ref{fig:histo1} \& ref{fig:histo1}. Displacement in the South-North direction was discarded as limited variability can be seen looking at individual cases and at the distribution of the dataset as a whole. Looking at individual cases of displacement in the West-East direction, it can be seen that there is variability between cases (top row of Figure~\ref{fig:results1}). Also, there are a reduced number of outliers (Cyan in Figure~\ref{fig:histo1}) compared to outputs for the other time frames. 
+As mentioned in subsection~\ref{data:outputs}, the output of Parmec is multidimensional, with 6 directional/rotational outputs for all 4173 interstitial bricks, with each of these values output at all 271 time frames during the earthquake. In this experiment, a single time frame was selected (frame 48) and one output metric (displacement in the West-East direction). The rationale for selecting these outputs starts by examining and comparing Figures~\ref{fig:results1} \& \ref{fig:results2}, as well as Figures~\ref{fig:histo1} \& \ref{fig:histo1}. Displacement in the South-North direction was discarded as limited variability can be seen looking at individual cases and at the distribution of the dataset as a whole. Looking at individual cases of displacement in the West-East direction, it can be seen that there is variability between cases (top row of Figure~\ref{fig:results1}). Also, there are a reduced number of outliers (Cyan in Figure~\ref{fig:histo1}) compared to outputs for the other time frames. 
 \\
 
 \noindent

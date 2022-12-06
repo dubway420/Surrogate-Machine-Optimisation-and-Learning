@@ -1,165 +1,11 @@
 \chapter{Dataset, Framework, Exploration and Analysis}
 \label{cha:dataset}
 
-This chapter has two purposes. Firstly, we detail a programmatic framework developed in order to generate data and to engineer it for machine learning model purposes. We also discuss the nature of the data itself, including the dimensionality of the inputs \& outputs. Secondly, we explore the data space using visualisation and statistical techniques.
-
-\section{Framework and Dataset} \label{framework}
-
-This section details the programmatic framework \cite{Jones2018} developed during this PhD. This framework was produced in order to streamline the development and optimisation of surrogate machine learning model for this project. The framework is provided free and open source with the intention that other researchers will adapt and use it for their own surrogate machine learning purposes. Using this repository, the accompanying dataset \cite{huw_rhys_jones_2022_6967536} and the attached guide, the method and results presented in this thesis can be reproduced by anyone.
-\\
-
-\noindent
-The framework is developed so as to be useable on a portable batch system (PBS) as is commonly implemented on university cluster computing systems. These systems allow job queuing and parallel processing of experiments \cite{henderson1995job}. If a PBS system is not available, the framework is functional on any other standard computer.
-\\
-
-\noindent
-Through exploring the function of this framework, we shall also discuss the nature of the dataset. This includes the input features and the output labels.
-
-\noindent
-The framework has three principal functions:
-
-\begin{enumerate}
-	\item The creation of Parmec data 
-	\item The extraction of relevant data from Parmec data cases
-	\item The translation and engineering of the aforementioned data in datasets useable as machine learning training data 
-\end{enumerate}
-
-\subsection{Parmec Data Generation}
-
-The Parmec case generation tool allows batch generation of instances, each traceable to a pseudo-random number seed \cite{blum1982simple}. This allows a creation of a large and reproducible dataset. Should the dataset be lost/corrupted or need to be temporarily deleted, it can be exactly reproduced using the original seeds.
-\\
-
-\noindent
-This tool was developed by adapting an industry standard Microsoft Excel sheet with extensive changes using the Visual Basic .NET framework \cite{grundgeiger2018programming}. Using this tool, the user can batch generate Parmec configuration files. 
-\\
-
-\noindent
-For ease of use and interaction by the user, the framework converts each Parmec case into a data object, making use the object oriented programming (OOP) paradigm \cite{meyer1997object} with the Python language \cite{deitel2002python}. The Parmec class has interface methods which allow simple access and parsing of the information about that case. An additional layer of abstraction is provided by the creation of additional classes which aggregate all of the Parmec case objects in a batch of cases. This allows then generation of datasets for use in visual analysis or machine learning.
-\\
-
-\noindent
-Using the aforementioned tool, 8300 Parmec examples were generated to form the base dataset. Approximately 75\% of the dataset was randomly partitioned to become the training set (N) with around 6300 instances, with the remaining 25\% (2000 samples) forming the test set ($N_t$). The full list of inputs and outputs to the Parmec model are summarised in Table~\ref{tab:parmecIO}.
-
-
-\subsection{Model Inputs (Features)} \label{data:inputs}
-
-Fuel bricks are stacked in a multi-level structure as mentioned in section~\ref{AGR}. There are 7 levels (l~=~7), each with 284 bricks (f~=~284), hence there are 1988 fuel bricks in the reactor in total (r~=~1988). The input configuration files for a single Parmec case contain a integer representation of the cracking status of each brick in the core as visualised in Figure~\ref{fig:cascade}. In the aforementioned figure, an uncracked brick is represented by a -1, with cracked bricks represented by an integer 1 - 4, with this number giving the orientation (see Figure~\ref{fig:orientations}). Note that each core level has 18 rows and columns (d~=~18) but not every element represents a fuel brick - corner positions are padded with zeros.
-\\
-
-\begin{figure}[t]
-	\centering
-	\includegraphics[scale=0.45]{Figures/InputCascade.png}
-	\caption{Multi-channel Cascade}
-	\label{fig:cascade}
-\end{figure}
-
-\begin{figure}[t]
-	\centering
-	\includegraphics[scale=0.35]{Figures/fuel_channel_numbers.png}
-	\caption{Fuel Brick Encoding Order}
-	\label{fig:order}
-\end{figure}
-
-
-\noindent
-The inputs for the Parmec model also serve as the input features to a machine learning model. The 3-dimensional input structure from Figure~\ref{fig:cascade} is unraveled into a 1-dimensional vector of length 1988. The cracking status of all fuel bricks are encoded according to their level (bottom to top) then by their position as shown in Figure~\ref{fig:order}. Note that at this point we are discarding the empty positions (zeros used to pad the corners). We are also discarding the orientation of the crack and only encoding a fuel brick as uncracked (-1) or cracked (1).
-\\
-
-\noindent
-With 6300 training samples and 1988 input elements (cracked or uncracked AGR fuel bricks) this gives a matrix of dimensions N by BF (6300 x 1988), hence our feature matrix is defined as $\textbf{X} = \{-1, 1\}^{N \times BF}$. This matrix serves as the base input features to the machine learning models described in the following sections. 
-\\
-
-\noindent
-The aforementioned data framework which includes the Parmec case class allows the user to access input information about a particular case.  For example, should the user want to get the number of cracks in a particular level of the core. Used in aggregate across all cases within the dataset, the above input feature matrix as described in the previous paragraph can be efficiently obtained. 
-
-
-\subsection{Model Outputs (Labels)} \label{data:outputs}
-
-
-Recall from subsection~\ref{Engineering} that the Parmec model is used to simulate an earthquake (Figure~\ref{fig:earthquake}). This includes a settle down period before and after the earthquake proper. For 271 regular time intervals (TI) throughout the earthquake simulation, the model outputs a data-file. This file contains translation and rotation data for all bricks within the reactor core. 
-\\
-
-\noindent
-There are 4173 interstitial bricks (henceforth referred to by the notation BI), the behaviour of which we are interested in during the earthquake time history. Like the fuel bricks discussed in the previous subsection, the interstitial bricks are stacked into channels. As the interstitials are shorter than their fuel equivalent, an interstitial channel is made of a stack of 13 bricks. Similar to the encoding process for fuel bricks, interstitials are encoded in order of their level and then by the order as given in Figure~\ref{fig:inter_order}.
-\\
-
-\noindent
-For each interstitial brick, Parmec calculates 6 output metrics (OM) representing displacement in and rotation about all three Cartesian directions. With the 271 time intervals mentioned above, this results in nearly 6.8 million outputs per Parmec case. Therefore, each Parmec case has an output as can be represented by (\ref{instance_result_matrix}) with each value being normalised element-wise across the entire dataset.  
-\\
-
-\begin{figure}[t]
-	\centering
-	\includegraphics[scale=0.35]{Figures/inter_channel_numbers.png}
-	\caption{Interstitial Brick Encoding Order}
-	\label{fig:inter_order}
-\end{figure}
-
-\noindent
-
-
-\begin{equation} \label{instance_result_matrix}
-	Y_i = \{0, 1\}^{BI \ \times \ TI \ \times \ OM}
-\end{equation}
-
-\begin{table}[h!]
-	\begin{center}
-		
-		\begin{tabular}{c|c|c|r|c} % <-- Alignments: 1st column left, 2nd middle and 3rd right, with vertical lines in between
-			\textbf{Inputs} & \textbf{Outputs}  \\
-			
-			\hline
-			& \\
-			\textbf{Cracking Status}   &  \textbf{ Brick Displacement} \\
-			1988 Fuel Bricks:         & 4173 Interstitial Bricks: \\ 
-			7 levels    & 13 levels       \\
-			284 fuel bricks per level &  321 bricks per level  \\
-			&    \\
-			& \textbf{Output Metrics}  \\
-			& 6 per interstitial brick: \\ 
-			
-			&  3 translational \\
-			&  3 rotational \\
-			
-			& \\
-			
-			\textbf{Earthquake Acceleration} & \textbf{Output Frequency} \\
-			1400 time points: &              271 output points:     \\
-			14 seconds &  once per 0.05 seconds    \\
-			100 time points per second &     \\
-			
-			& \\
-			
-			Fuel brick cracking & Output for all \\
-			status is constant & 4173 interstitial bricks \\
-			throughout earthquake & and 6 output metrics \\
-			& per time point \\
-			
-			
-		\end{tabular}
-		\caption{Summary of the Inputs and Outputs of the Parmec Engineering Model for AGR Graphite Core Seismic Analysis.}
-		\label{tab:parmecIO}
-	\end{center}
-\end{table}
-
-
-\begin{figure}[ht]
-	\centering
-	\includegraphics[scale=0.85]{Figures/earthquake_time_points}
-	\caption{History of Acceleration During a Severe Earthquake} {Note the settling period before and after the earthquake proper. The true earthquake history includes an acceleration value every 100th of a second. This plot shows a sample every 10th of a second, which is the interval that the Parmec model outputs displacement data. Note that four time frames are highlighted - these frames are made reference to in the analysis in this chapter.}
-	\label{fig:earthquake}
-\end{figure}
-
-\noindent
-The large amount of output data generated by Parmec is not in a format readily accessible or interpretable by human users or by other computer analysis. Therefore, the Parmec class object was extended to analyse this data and produce useable outputs. Again, this data is accessible via interactive Parmec object method calls and can be used in aggregate across the entire dataset.
-\\
-
-\noindent
-It is expected that part of the output tensor from Parmec will become the output labels of surrogate machine learning model i.e. a SMLM will be developed to predict part of the Parmec output tensor. It is unlikely that a single SMLM will be able to accurately predict all of the ouputs from \ref{instance_result_matrix}. Therefore, we will have to narrow the output scope of the model, at least in the short term. We can do this in several ways: 1) We have already explored some research work published in the field of AGR seismic safety analysis (see section~\ref{engineering:literature}), 2) By making a visual and statistical analysis of the data (see section~\ref{data:visualisation})  and 3) through machine learning experimentation such as in section~\ref{prelim:whole}.
-
+This chapter has three purposes. Firstly, we explore  the data space using visualisation and statistical techniques. Next, we discuss the machine learning dataset generated using this data. Finally, we discuss the programmatic framework used to generate and manipulate the dataset.
 
 \section{Dataset Exploration and Analysis} \label{data:visualisation}
 
-To help choose a direction for research, a visual inspection of the dataset has been made. As mentioned in the previous section, the data produced by the Parmec model is multidimensional. Therefore, visual analysis will be made from multiple perspectives. The visualisations have been made possible through the framework that was detailed in the previous section. 
+To help choose a direction for research, a visual inspection of the dataset has been made. As mentioned in subsection~\ref{parmec:output}, the data produced by the Parmec model is multidimensional. Therefore, visual analysis will be made from multiple perspectives. The visualisations have been made possible through the framework that will detailed in the section~\ref{framework}. 
 
 \subsection{Time History: Example Cases}
 
@@ -279,3 +125,96 @@ For a single time frame (48) Figure~\ref{fig:composite} shows a channel by chann
 
 \noindent
 Looking closely at only the correlations between results for the central interstitial channel (number 161 - see Figure~\ref{fig:inter_order}), we can again see a stronger correlation the closer two bricks are physically located (Figure~\ref{fig:central_correlations}).
+
+\section{Machine Learning Dataset} \label{dataset}
+
+8300 Parmec instances were generated to form the base dataset. Approximately 75\% of the dataset was randomly partitioned to become the training set (N) with around 6300 instances, with the remaining 25\% (2000 samples) forming the test set ($N_t$).  \\
+
+\noindent
+In subsection~\ref{parmec:data}, it was mentioned that the Parmec software can simulate  a core with cracked bricks representing anywhere between 0\%  (intact core) to 100\% (fully cracked) and that fuel bricks in the Parmec model can be modelled as having a single crack, or be double cracked. For the sake of this research, we shall choose a cracking percentage of 40\% and we shall model all cracked bricks as being double cracked. 
+
+\subsection{Model Inputs (Features)} \label{data:inputs}
+
+
+
+\begin{figure}[t]
+	\centering
+	\includegraphics[scale=0.35]{Figures/fuel_channel_numbers.png}
+	\caption{Fuel Brick Encoding Order}
+	\label{fig:order}
+\end{figure}
+
+
+\noindent
+The inputs for the Parmec model also serve as the input features to a machine learning model. The 3-dimensional input structure from Figure~\ref{fig:cascade} is unraveled into a 1-dimensional vector of length 1988. The cracking status of all fuel bricks are encoded according to their level (bottom to top) then by their position as shown in Figure~\ref{fig:order}. Note that at this point we are discarding the empty positions (zeros used to pad the corners). We are also discarding the orientation of the crack and only encoding a fuel brick as uncracked (-1) or cracked (1).
+\\
+
+\noindent
+With 6300 training samples and 1988 input elements (cracked or uncracked AGR fuel bricks) this gives a matrix of dimensions N by BF (6300 x 1988), hence our feature matrix is defined as $\textbf{X} = \{-1, 1\}^{N \times BF}$. This matrix serves as the base input features to the machine learning models described in the following sections. 
+
+
+\subsection{Model Outputs (Labels)} \label{data:outputs}
+
+It is expected that part of the output tensor from Parmec (see subsection~\ref{parmec:output}) will become the output labels of surrogate machine learning model i.e. a SMLM will be developed to predict part of the Parmec output tensor. It is unlikely that a single SMLM will be able to accurately predict all of the ouputs from \ref{instance_result_matrix} due to its significant size. Therefore, we will have to narrow the output scope of the model, at least in the short term. We can do this in several ways: 1) We have already explored some research work published in the field of AGR seismic safety analysis (see section~\ref{engineering:literature}), 2) By making a visual and statistical analysis of the data (see section~\ref{data:visualisation})  and 3) through machine learning experimentation such as in section~\ref{prelim:whole}.
+
+
+\section{Framework} \label{framework}
+
+This section details the programmatic framework \cite{Jones2018} developed during this PhD. This framework was produced in order to streamline the development and optimisation of surrogate machine learning model for this project. The framework is provided free and open source with the intention that other researchers will adapt and use it for their own surrogate machine learning purposes. Using this repository, the accompanying dataset \cite{huw_rhys_jones_2022_6967536} and the attached guide, the method and results presented in this thesis can be reproduced by anyone.
+\\
+
+\noindent
+The framework is developed so as to be useable on a portable batch system (PBS) as is commonly implemented on university cluster computing systems. These systems allow job queuing and parallel processing of experiments \cite{henderson1995job}. If a PBS system is not available, the framework is functional on any other standard computer.
+\\
+
+\noindent
+The framework has six principal functions:
+
+\begin{enumerate}
+	\item The efficient and reproduceable creation of Parmec data 
+	\item The extraction of relevant data from Parmec data cases
+	\item The translation and engineering of the aforementioned data into datasets useable for machine learning training or testing 
+	\item Machine Learning model design and parameter selection
+	\item Model training \& evaluation
+	\item Data visualisation and analysis including model performance 
+\end{enumerate}
+
+\subsection{Parmec Data Generation}
+
+As mentioned in subsection~\ref{parmec:data}, the industry standard Parmec configuration file generator can only make single instances at a time and to non-reproduceable. As part of the machine learning framework developed for this PhD project, a Parmec case generation tool was developed which allows batch generation of instances, each traceable to a pseudo-random number seed \cite{blum1982simple}. This allows a creation of a large and reproducible dataset. Should the dataset be lost/corrupted or need to be temporarily deleted, it can be exactly reproduced using the original seeds.
+\\
+
+\noindent
+The tool was developed by adapting an industry standard Microsoft Excel sheet with extensive changes using the Visual Basic .NET framework \cite{grundgeiger2018programming}. Using this tool, the user can batch generate Parmec configuration files by proving a comma seperated file of selected random numbers. 
+\\
+
+\subsection{Inputs and Outputs}
+
+\noindent
+For ease of use and interaction by the user, the framework converts each Parmec case into a data object, making use the object oriented programming (OOP) paradigm \cite{meyer1997object} with the Python language \cite{deitel2002python}. The Parmec class has interface methods which allow simple access and parsing of the information about that case. An additional layer of abstraction is provided by the creation of additional classes which aggregate all of the Parmec case objects in a batch of cases. This allows then generation of datasets for use in visual analysis or machine learning.
+\\
+
+\noindent
+The Parmec case class allows the user to access input information about a particular case.  For example, should the user want to get the number of cracks in a particular level of the core. Used in aggregate across all cases within the dataset, the above input feature matrix as described in the previous paragraph can be efficiently obtained. 
+\\
+
+
+
+\noindent
+The large amount of output data generated by Parmec is not in a format readily accessible or interpretable by human users or by other computer analysis. Therefore, the Parmec class object was extended to analyse this data and produce useable outputs. Again, this data is accessible via interactive Parmec object method calls and can be used in aggregate across the entire dataset.
+\\
+
+\subsection{Machine Learning Model Design}
+
+The framework allows rapid design of the machine learning model architecture and the selection of parameters. This part of the framework is built upon the existing machine learning frameworks Keras \cite{ketkar2017introduction} and Scikit-learn \cite{pedregosa2011scikit} and also uses the matrix manipulation library Numpy \cite{harris2020array}. A machine learning model can be programmatically generated in a single line of code using the Model class from the framework, which contains arguments for number and types of layers, nodes, activation functions, loss function and learning rate.
+
+\subsection{Machine Learning Model Training and Evaluation}
+
+Once a dataset and base model have been obtained using the framework, it can then be used to train the model and evaluate it.  The model can be automatically retrained a set number of times from randomised starting weights in order to account for the stochastic nature of model training. \\
+
+\noindent 
+As part of a single experiment, a batch of differing model architectures or parameters can be selected and the performance of each compared. For instance, we could vary the number of layers of a particular type, then the framework will automatically generate, evaluate  and compare each one, allowing the user to select the optimal arrangement.  \\
+
+\noindent
+The framework aids the user in evaluating and comparing trained models through custom callbacks which execute and update the user throughout training using both numerical measures and visual representations of model performance. These include training \& validation loss histories, correlation plots of model prediction against ground truth values and prediction histograms. At the end of training, the framework presents the user with a summary of the experiment  including such values as minimum \& mean model loss, so that the user can make a high level judgement on the performance of parameter selections.
+

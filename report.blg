@@ -1,71 +1,61 @@
-This is BibTeX, Version 0.99d
+This is BibTeX, Version 0.99d (TeX Live 2022/Arch Linux)
 Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: report.aux
-Reallocating 'name_of_file' (item size: 1) to 13 items.
 A level-1 auxiliary file: chapter1.aux
-Reallocating 'name_of_file' (item size: 1) to 13 items.
 A level-1 auxiliary file: chapter2.aux
-Reallocating 'name_of_file' (item size: 1) to 13 items.
 A level-1 auxiliary file: chapter3.aux
-Reallocating 'name_of_file' (item size: 1) to 13 items.
 A level-1 auxiliary file: chapter4.aux
-Reallocating 'name_of_file' (item size: 1) to 13 items.
 A level-1 auxiliary file: chapter5.aux
-Reallocating 'name_of_file' (item size: 1) to 13 items.
 A level-1 auxiliary file: chapter6.aux
-Reallocating 'name_of_file' (item size: 1) to 13 items.
 A level-1 auxiliary file: chapter7.aux
-Reallocating 'name_of_file' (item size: 1) to 13 items.
 A level-1 auxiliary file: chapter8.aux
-Reallocating 'name_of_file' (item size: 1) to 5 items.
-Reallocating 'name_of_file' (item size: 1) to 6 items.
 The style file: abbrv.bst
 Database file #1: refs.bib
 Warning--entry type for "huw_rhys_jones_2022_6967536" isn't style-file defined
---line 471 of file refs.bib
+--line 236 of file refs.bib
 Warning--empty institution in allen1990seismic
 Warning--empty journal in dozat2016incorporating
 Warning--empty journal in harrison1978hedonic
 Warning--empty journal in huber1964robust
-You've used 68 entries,
+You've used 71 entries,
             2118 wiz_defined-function locations,
-            871 strings with 16264 characters,
-and the built_in function-call counts, 25100 in all, are:
-= -- 2461
-> -- 1316
-< -- 22
-+ -- 532
-- -- 452
-* -- 1725
-:= -- 4129
-add.period$ -- 219
-call.type$ -- 68
-change.case$ -- 424
+            889 strings with 16967 characters,
+and the built_in function-call counts, 26732 in all, are:
+= -- 2614
+> -- 1439
+< -- 23
++ -- 581
+- -- 498
+* -- 1868
+:= -- 4406
+add.period$ -- 229
+call.type$ -- 71
+change.case$ -- 454
 chr.to.int$ -- 0
-cite$ -- 72
-duplicate$ -- 941
-empty$ -- 1880
-format.name$ -- 452
-if$ -- 5282
+cite$ -- 75
+duplicate$ -- 985
+empty$ -- 1974
+format.name$ -- 498
+if$ -- 5607
 int.to.chr$ -- 0
-int.to.str$ -- 68
-missing$ -- 68
-newline$ -- 340
-num.names$ -- 136
-pop$ -- 501
+int.to.str$ -- 71
+missing$ -- 71
+newline$ -- 355
+num.names$ -- 142
+pop$ -- 530
 preamble$ -- 1
-purify$ -- 361
+purify$ -- 388
 quote$ -- 0
-skip$ -- 670
+skip$ -- 701
 stack$ -- 0
-substring$ -- 1413
-swap$ -- 237
-text.length$ -- 22
+substring$ -- 1511
+swap$ -- 247
+text.length$ -- 23
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 258
+type$ -- 270
 warning$ -- 4
-while$ -- 238
-width$ -- 70
-write$ -- 738
+while$ -- 251
+width$ -- 73
+write$ -- 772
 (There were 5 warnings)
