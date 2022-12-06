@@ -63,7 +63,7 @@
 \contentsline {figure}{\numberline {7.2}{\ignorespaces The results from the best performing model produced via the method described in a previous research work}}{100}{}%
 \contentsline {figure}{\numberline {7.3}{\ignorespaces An Example of Image Manipulation Techniques Applied to Parmec Data to Facilitate Data Augmentation}}{102}{}%
 \contentsline {figure}{\numberline {7.4}{\ignorespaces Loss Functions: Visual Comparison}}{105}{}%
-\contentsline {figure}{\numberline {7.5}{\ignorespaces Adjustment Factor as is Utilised by (7.1\hbox {})}}{106}{}%
+\contentsline {figure}{\numberline {7.5}{\ignorespaces Adjustment Factor as is Utilised by (\ref {AdjustedLoss})}}{106}{}%
 \contentsline {figure}{\numberline {7.6}{\ignorespaces Simplified Model Architecture Used to Compare Augmentation Approaches}}{109}{}%
 \contentsline {figure}{\numberline {7.7}{\ignorespaces Visual Summary and Comparison of the Performance of the Optimal Model Produced During E1.0 (\textbf {Left}) \& E2.4 (\textbf {Right})}}{113}{}%
 \contentsline {figure}{\numberline {7.8}{\ignorespaces Visual Summary of the Performance of the Optimal Model Produced During E4.1}}{115}{}%

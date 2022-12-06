@@ -113,6 +113,11 @@ M.~Dwarampudi and N.~Reddy.
 \newblock Effects of padding on lstms and cnns.
 \newblock {\em arXiv preprint arXiv:1903.07288}, 2019.
 
+\bibitem{elsworth2020time}
+S.~Elsworth and S.~G{\"u}ttel.
+\newblock Time series forecasting using lstm networks: A symbolic approach.
+\newblock {\em arXiv preprint arXiv:2003.05672}, 2020.
+
 \bibitem{fernandez2017nuclear}
 M.~G. Fernandez, A.~Tokuhiro, K.~Welter, and Q.~Wu.
 \newblock Nuclear energy system’s behavior and decision making using machine
@@ -206,7 +211,8 @@ H.~R. Jones.
 \bibitem{huw_rhys_jones_2022_6967536}
 H.~R. Jones.
 \newblock {Surrogate Machine Learning for Parmec Advanced Gas-cooled Reactor
-  (AGR) Analysis}, Aug. 2022.
+  (AGR) Analysis}.
+\newblock \url{https://doi.org/10.5281/zenodo.6967536}, Aug. 2022.
 
 \bibitem{jones2022surrogate}
 H.~R. Jones, T.~Mu, D.~Kudawoo, G.~Brown, P.~Martinuzzi, and N.~McLachlan.
@@ -331,6 +337,12 @@ A.~Sarullo and T.~Mu.
 C.~Seger.
 \newblock An investigation of categorical variable encoding techniques in
   machine learning: binary versus one-hot and feature hashing, 2018.
+
+\bibitem{sherstinsky2020fundamentals}
+A.~Sherstinsky.
+\newblock Fundamentals of recurrent neural network (rnn) and long short-term
+  memory (lstm) network.
+\newblock {\em Physica D: Nonlinear Phenomena}, 404:132306, 2020.
 
 \bibitem{shorten2019survey}
 C.~Shorten and T.~M. Khoshgoftaar.
