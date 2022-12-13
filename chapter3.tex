@@ -10,66 +10,21 @@ For a more detailed explanation of the theory and workings of machine learning, 
 
 \section{Supervised Learning} \label{supervised}
 
-What defines supervised learning is the use of a data-set which has two parts: inputs (features) and outputs (labels, also known as ground truth or targets). The objective of supervised learning is to develop a model which can predict the labels using features which it has not seen before.
-\\
+% Models - inputs and outputs
 
-\noindent
-Supervised learning can be split into regression and classification. This section will focus on regression as it is more relevant to the work discussed in this thesis. Regression concerns the prediction of a continuous variables through a mathematical combination of input variables. This contrasts with classification, which attempts to predict which of a predefined set of categories a given sample belongs to.
-\\
+% Hard computing - hard coded relationships between inputs (x) and outputs (y)
 
-\noindent
-Consider Figure~\ref{fig:boston} which shows 10 instances of the Boston house price data-set \cite{harrison1978hedonic} each representing houses in a metropolitan area. This table shows three features (highlighted in blue): RM (average number of rooms per dwelling), LSTAT (percentage of lower status residents) and PTRATIO (ratio of the pupils to teachers). In the final column, we see our target variable (green), which in this case represents median house price. 
-\\
+	% Power = f{x}
 
-\noindent
-In supervised learning practice, a model is trained to predict the target variable from values of the features: so in this case, the model would predict house prices based on the number of rooms, percentage of lower status residents and pupil-teacher ratio. 
-\\
+% Example: predicting reactor power from core configuration
 
-\begin{figure}[ht]
-	\centering
-	\includegraphics[scale=0.75]{Figures/boston.png}
-	\caption{The Boston House Price Data-set (sample).}
-	\label{fig:boston}
-\end{figure}
-
-\begin{equation} \label{feature_matrix}
-	X \subseteq \mathbb{R}^{n \times f}
-\end{equation}
-
-\noindent
-The features can be seen as a matrix X of real numbers with dimensions n by f: number of instances by number of features - (\ref{feature_matrix}). To generate a vector containing predicted target values ($\hat{y}$) from a feature matrix, the model performs the matrix operation as shown in (\ref{supervised_model}). The weights vector, w, as well as the bias value, b, are optimised through a process of training known as gradient descent. 
-\\
-
-\begin{equation} \label{supervised_model}
-	X \times w + b = \hat{y}
-\end{equation}
-
-\noindent
-To perform gradient descent, a difference metric is calculated between the predicted values, $\hat{y}$ and the true target values, y (e.g. the final column of Figure~\ref{fig:boston}). There are many loss functions that can be  used to calculate this metric, with a common one being the mean squared error (MSE) equation as shown in (\ref{mse}).
-\\
-
-\begin{equation} \label{mse}
-	MSE = \frac{1}{n}\sum_{i=1}^n [(x_i \times w + b) - y_i]^2
-\end{equation}
-
-\noindent
-In (\ref{mse}), we see the square difference calculated on an instance-by-instance basis (i) between the prediction (left) and true label (right). The mean value is then used to update the weights by taking its derivative of the MSE with respect to each weight. Theoretically, there is a minimum value of MSE for each weight (j), though this value cannot be calculated explicitly. Instead, the loss is minimised through a process of iteratively adjusting the weights by the derivative of the MSE (Figure~\ref{fig:GRA}). This process is repeated for the entire data-set multiple times, with each iteration being called an epoch. The training process will be continued for a user defined number of epochs, until a specified loss is reached, or until model convergence has been reached i.e there is no further improvement in model performance.
-\\
-
-\noindent
-Various loss functions are available, with common examples being the mean squared error (MSE) already mentioned, as well as mean absolute error (MAE) and the Huber loss \cite{huber1964robust}. At the end of training, another loss value can be calculated using the test set to evaluate the overall general performance of a given model and compare different approaches.   
-\\
-
-\noindent
-The regression method described here is linear regression optimised through stochastic gradient descent. Alternative ML approaches to regression include Support Vector Regression (SVR) \cite{awad2015support} and Decision Tree Regression \cite{loh2014classification}.
-
-
-\begin{figure}[ht]
-	\centering
-	\includegraphics[scale=0.4]{Figures/gradient_descent.png}
-	\caption{Gradient Descent}
-	\label{fig:GRA}
-\end{figure}
+	% Configuration factors:
+	
+		% Average control rod insertion depth - negative correlation with power - non linear
+		% Fuel enrichment - positive correlation with power - linear
+		% Flow rate of coolant - positive, drop off with high power
+		% Age of core - lightly positive, mostly neutral
+		% 
 
 \section{Neural Networks} \label{NN}
 
