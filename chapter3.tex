@@ -10,21 +10,119 @@ For a more detailed explanation of the theory and workings of machine learning, 
 
 \section{Supervised Learning} \label{supervised}
 
-% Models - inputs and outputs
+In the fields of engineering and science, models are frequently produced in order to simulate mathematical or natural phenomena. In these areas, accurate information regarding the phenomena they study. Such information allows the testing of scientific hypothesis and forecasting of future events. But what defines a model? \\
 
-% Hard computing - hard coded relationships between inputs (x) and outputs (y)
+\noindent 
+What is common to almost all models is the presence on input variables  and outputs . The model will use a set of input values (which we'll refer to as x) to calculate an outputs values (which we'll refer to as y) that are of interest to those using them. We can approach the development of such models from a hard computing angle: that is, we can hardcode relationships between inputs and outputs based on known relationships. \\
 
-	% Power = f{x}
+\noindent
+Lets look at an example from the domain we are studying in this PhD thesis. In the  field of nuclear engineering, it is important to be able to calculate the power output of a nuclear reactor (which we'll measure in kilowatts) as a function of conditions within the core (\ref{hard_power}).
 
-% Example: predicting reactor power from core configuration
+\begin{equation} \label{hard_power}
+	Power(kW)  \rightarrow f\{x\}
+\end{equation}
 
-	% Configuration factors:
+\noindent
+In this example, an output value (power) is calculated as a function of input variables (x). There are of course a multitude of other factors that affect core power, however, the point of this example can be made with these four:
+
+\begin{enumerate}
 	
-		% Average control rod insertion depth - negative correlation with power - non linear
-		% Fuel enrichment - positive correlation with power - linear
-		% Flow rate of coolant - positive, drop off with high power
-		% Age of core - lightly positive, mostly neutral
-		% 
+	\item \textbf{Fuel Enrichment:} The useable content of the nuclear fuel at the time fuel is inserted into the core. Power level would increase linearly as enrichment rises. This value is measured as a percent of the total mass of the fuel and is usually between 1\% and 5\%.
+	 
+	\item \textbf{Time Since Refuelling:} The length of time since the core was refuelled. As this time increases, the power level would tend to drop as the useable content of the fuel is used up. This power fall would be linear at first, but the rate would accelerate  after a certain point due to the build up of fission poisons within the core. This value is measured in hours.
+	
+	\item  \textbf{Flowrate of Coolant:} The rate at which coolant is pumped into the core. This has a positive correlation with core power at lower rates, as the coolant (usually water) helps to sustain the nuclear chain reaction. However, this relationship breaks down after a certain flowrate, as certain concentrations of water act to block the fission sustaining neutrons. The flowrate would  is measured in $m^3$ per second.
+	
+	\item \textbf{Insertion Depth of Control Rods:} The control rods are inserted in order to slow or halt the nuclear chain reaction. Therefore, there is a negative correlation between insertion depth and power level. Lowering the power through control rod insertion has knock on effects, so the relationship is closer to the reciprocal of the square of the insertion depth.
+\end{enumerate}
+
+\noindent
+Using the relationships between these inputs at the output we wish to calculate, it would be possible to formulate a model to calculate reactor power output as a function of core configuration. However, from the complex relationships we discuss above, this would not be a trivial undertaking. The production of an effective model through hard computing techniques would require a strong understanding of the physical phenomena underpinning each factor. It would also be intensive in terms of effort from human domain experts. \\
+
+\noindent
+Alternatively, a model of this phenomena can be produced using soft computing techniques \cite{ibrahim2016overview} such as machine learning. Rather than hard coding relationships, a stochastic model is produced and optimised using a dataset containing examples of outputs and corresponding inputs. \\
+
+\noindent
+In machine learning terms, the output of the model discussed above can be calculated in the form of (\ref{soft_power}) .
+
+\begin{equation} \label{soft_power}
+	Power(kW)  \rightarrow f\{x, w, b\}
+\end{equation}
+
+\noindent
+In this form, the output value of reactor power is calculated as a function of of our core configuration inputs (x) and a weight vector and a scalar bias factor. In machine learning practice, the input variables are referred to as features and the outputs are referred to as predictions. In our above example, there are four features (M = 4). \\
+
+\noindent
+The predictions of the model are generated on an instance by instance basis i.e. there is one predicted output per core configuration. The predicted output, which we will refer to as $\hat{y}$, is calculated for a for a given instance, i, in the form of (\ref{instance_prediction}).
+
+\begin{equation} \label{instance_prediction}
+	\hat{y}_i = x_i \space \cdot \space w + b
+\end{equation}
+
+\noindent 
+In (\ref{instance_prediction}), the instance feature vector, defined as $x_i$, is simply the input values for the instance. The dot product between the instance feature vector and the weights vector, w, is calculated and then summed with the bias scalar.  For simplicity, we generally include the bias term when discussing the weights and to that end we shall define an extended weights vector which includes w and b (\ref{expanded_w}).
+
+\begin{equation} \label{expanded_w}
+	wb^T = [w_1, w_2 ... w_M, b]
+\end{equation}
+
+\noindent
+At the start of machine learning model development, the expanded weights vector is initialised with random starting values. The values are then optimised through a model training process. To do this, we need a dataset including multiple instances of reactor power at various configurations of the core. For each instance in our dataset, there will be an input value for each of our features ($x_i$) as well as a corresponding output value that we refer to as the label (y). We refer to these input/output pairs as ground truth values - they are the base data that the model learns and evaluates its optimisation against.
+\\
+
+\noindent
+The ultimate goal is to optimise the values of wb so that (\ref{instance_prediction}) can be used to make predictions ($\hat{y}_i$) that accurately reflect the ground truth labels ($y_i$). To make this optimisation, we must use a process known as gradient descent \cite{ruder2016overview} where values of wb are updated iteratively based on the derivative of difference between the predictions and ground truth. \\
+
+\noindent
+In order to perform the gradient descent operation and to evaluate the performance of our machine learning model, we require a loss function \cite{wang2022comprehensive}. This is a metric used to calculate the difference between the predictions of the model and the ground truth labels. Various ways exist to calculate the loss function, each having their own advantages and applications. Perhaps the simplest form the loss function can take is the mean absolute error \cite{willmott2005advantages}.\\
+
+\begin{equation} \label{mae}
+	\lambda_{mae} = \frac{1}{n}\sum_{i=1}^n | y_i - \hat{y_i} | 
+\end{equation}
+
+\noindent
+Using (\ref{mae}), we can calculate a direct measure of the performance of the model against the ground truth, with the lower the value of $\lambda$, the better the model is performing.  We can also calculate the derivative of the loss function with regards to each element of the vector wb i.e. we can determine how much the loss function changes with a change in each weight. \\
+
+\begin{equation} \label{derivative}
+	{\Delta_{wb}}^T = [\frac{\delta\lambda}{\delta w_1}, \frac{\delta\lambda}{\delta w_2} ... \frac{\delta\lambda}{\delta w_M}, \frac{\delta\lambda}{\delta b}]
+\end{equation}
+
+\noindent
+This derivative (\ref{derivative}) can be used to adjust the extended weights vector, wb, to a set of more more optimal values. This is done by multiplying the derivative, $\Delta_{wb}$, by the user defined scalar value $\alpha$, which is referred to as the learning rate. The values of this vector is then subtracted element-wise from the expanded weights vector to produce a new vector which can then be used again to make instance predictions as per (\ref{instance_prediction}). \\
+ 
+ \begin{equation} \label{gradient_descent}
+ 	wb_{updated} = wb - (\alpha \cdot \Delta_{wb})
+ \end{equation}
+ 
+ \noindent
+As can be seen from (\ref{mae}) the loss function (and its derivative) is an average over a set number of instances, n. Lets say the training process has access to a dataset of size N. We can perform the calculation from (\ref{gradient_descent})  using the entire dataset (n = N), a sample batch of the dataset (n $\subset N$), or a single instance (n = 1). If using a single instance or batch to update the weights (known as stochastic gradient descent \cite{ketkar2017stochastic}), the rest of the training set will be iteratively used to perform the same updating calculation. After updating using all instances in the dataset, it is unlikely that the expanded weights vector will be of the most optimal values.  Therefore, this process will be repeated a number of cycles known as epochs.
+
+
+ 	
+ 	
+ 	
+	% Simplest is MAE
+		% define
+		% advantages/disadvantages
+		% constant derivative 
+		
+% Mean Square error		
+		% non linear 
+		% variable 
+		% proportional derivative 
+		
+% Huber loss		
+		
+% Training set, testing set
+% At the end of training, we use testing set to evaluate.		
+		
+% Local minima - how to overcome? 
+		% Repeating experiments
+		% Loss rate - too high, too low, dynamic
+		% optimiser
+		
+% Another problem is that a machine learning model in this format can only model linear relationships between input variables and outputs. Therefore, this method may not be optimal for modelling the example scenario above as there is a complex relationship between some inputs and the output value. For example, increasing the flowrate acts to increase and then decrease the power at different levels. To produce a machine learning model capable of accounting for these non-linear complexities, we must look to neural networks.		
+ 		
 
 \section{Neural Networks} \label{NN}
 

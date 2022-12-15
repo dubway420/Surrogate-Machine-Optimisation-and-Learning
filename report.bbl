@@ -29,11 +29,6 @@ P.~G. Asteris, A.~D. Skentou, A.~Bardhan, P.~Samui, and K.~Pilakoutas.
   surrogate machine learning models.
 \newblock {\em Cement and Concrete Research}, 145:106449, 2021.
 
-\bibitem{awad2015support}
-M.~Awad and R.~Khanna.
-\newblock Support vector regression.
-\newblock In {\em Efficient learning machines}, pages 67--80. Springer, 2015.
-
 \bibitem{babu2016deep}
 G.~S. Babu, P.~Zhao, and X.-L. Li.
 \newblock Deep convolutional neural network based regression approach for
@@ -157,11 +152,6 @@ C.~R. Harris, K.~J. Millman, S.~J. Van Der~Walt, R.~Gommers, P.~Virtanen,
 \newblock Array programming with numpy.
 \newblock {\em Nature}, 585(7825):357--362, 2020.
 
-\bibitem{harrison1978hedonic}
-D.~Harrison~Jr and D.~L. Rubinfeld.
-\newblock Hedonic housing prices and the demand for clean air.
-\newblock 1978.
-
 \bibitem{hawkins2004problem}
 D.~M. Hawkins.
 \newblock The problem of overfitting.
@@ -190,6 +180,11 @@ P.~J. Huber.
 \newblock Robust estimation of a location parameter: Annals mathematics
   statistics, 35.
 \newblock 1964.
+
+\bibitem{ibrahim2016overview}
+D.~Ibrahim.
+\newblock An overview of soft computing.
+\newblock {\em Procedia Computer Science}, 102:34--38, 2016.
 
 \bibitem{javadi2003neural}
 A.~Javadi, T.~Tan, and M.~Zhang.
@@ -231,6 +226,11 @@ N.~Ketkar.
 \newblock Introduction to keras.
 \newblock In {\em Deep learning with Python}, pages 97--111. Springer, 2017.
 
+\bibitem{ketkar2017stochastic}
+N.~Ketkar.
+\newblock Stochastic gradient descent.
+\newblock In {\em Deep learning with Python}, pages 113--132. Springer, 2017.
+
 \bibitem{kim2019machine}
 S.~H. Kim and F.~Boukouvala.
 \newblock Machine learning-based surrogate modeling for data-driven
@@ -266,11 +266,6 @@ Z.~Liao and G.~Carneiro.
   piecewise linear activation units.
 \newblock In {\em 2016 IEEE Winter Conference on Applications of Computer
   Vision (WACV)}, pages 1--8. IEEE, 2016.
-
-\bibitem{loh2014classification}
-W.-Y. Loh.
-\newblock Classification and regression tree methods.
-\newblock {\em Wiley StatsRef: Statistics Reference Online}, 2014.
 
 \bibitem{meyer1997object}
 B.~Meyer.
@@ -318,6 +313,11 @@ L.~Perez and J.~Wang.
 P.~Refaeilzadeh, L.~Tang, and H.~Liu.
 \newblock Cross-validation.
 \newblock {\em Encyclopedia of database systems}, 5:532--538, 2009.
+
+\bibitem{ruder2016overview}
+S.~Ruder.
+\newblock An overview of gradient descent optimization algorithms.
+\newblock {\em arXiv preprint arXiv:1609.04747}, 2016.
 
 \bibitem{russakovsky2015imagenet}
 O.~Russakovsky, J.~Deng, H.~Su, J.~Krause, S.~Satheesh, S.~Ma, Z.~Huang,
@@ -391,6 +391,17 @@ D.~Wallach and B.~Goffinet.
 \newblock Mean squared error of prediction as a criterion for evaluating and
   comparing system models.
 \newblock {\em Ecological modelling}, 44(3-4):299--306, 1989.
+
+\bibitem{wang2022comprehensive}
+Q.~Wang, Y.~Ma, K.~Zhao, and Y.~Tian.
+\newblock A comprehensive survey of loss functions in machine learning.
+\newblock {\em Annals of Data Science}, 9(2):187--212, 2022.
+
+\bibitem{willmott2005advantages}
+C.~J. Willmott and K.~Matsuura.
+\newblock Advantages of the mean absolute error (mae) over the root mean square
+  error (rmse) in assessing average model performance.
+\newblock {\em Climate research}, 30(1):79--82, 2005.
 
 \bibitem{xie2015beyond}
 Y.~Xie, F.~Xing, X.~Kong, H.~Su, and L.~Yang.
