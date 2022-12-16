@@ -97,6 +97,22 @@ This derivative (\ref{derivative}) can be used to adjust the extended weights ve
  \noindent
 As can be seen from (\ref{mae}) the loss function (and its derivative) is an average over a set number of instances, n. Lets say the training process has access to a dataset of size N. We can perform the calculation from (\ref{gradient_descent})  using the entire dataset (n = N), a sample batch of the dataset (n $\subset N$), or a single instance (n = 1). If using a single instance or batch to update the weights (known as stochastic gradient descent \cite{ketkar2017stochastic}), the rest of the training set will be iteratively used to perform the same updating calculation. After updating using all instances in the dataset, it is unlikely that the expanded weights vector will be of the most optimal values.  Therefore, this process will be repeated a number of cycles known as epochs.
 
+\begin{figure*}[h]
+	\centering
+	\includegraphics[scale=0.42]{Figures/gradientDescent_mae_bigLR.jpg}
+	\caption{Machine Learning Model Training Process (Example 1)} {In this example, a machine learning model is trained over a period of four epochs. The mean absolute error (MAE) loss function is used as well as a relatively large learning rate. \textbf{Left}: Loss history against the value of a single model weight.  \textbf{Right}: Loss history against epoch number.}
+	\label{fig:GD_maeBigLR}
+\end{figure*}
+
+\noindent
+In Figure~\ref{fig:GD_maeBigLR}, we see a representation of the training of a machine learning model. We see the progressive loss function calculated over a four epoch interval. This is expressed in two ways: (1) against the value of one of the model weights and (2) against the epoch number.  In this training example, gradient descent is performed using the MAE loss function and a relatively high loss function. \\
+
+\noindent 
+As mentioned previously, in most machine learning models, there will be multiple weights to optimise (one for each input feature). However, for this illustrative example, we will just focus on the optimisation of one weight.\\
+
+\noindent 
+In the aforementioned example, we can see that at the start of training (epoch 0), the weight is initialised at a value of around 3.2 which results in a MAE of about 40. From the gradient of the dark blue line at this point, it can be seen that increasing the weight of the value will tend to reduce the MAE. Feeding this negative gradient and the high learning rate into the subtractive term of (\ref{gradient_descent}) , we get an increased value of our example weight. As can be seen from the the loss 
+
 
  	
  	

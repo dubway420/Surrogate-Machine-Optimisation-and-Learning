@@ -1,11 +1,12 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {2.1}{\ignorespaces Neural Network: An example of a feed-forward network.}}{24}{}%
-\contentsline {figure}{\numberline {2.2}{\ignorespaces Convolutional Neural Network: Feature Extraction.}}{24}{}%
-\contentsline {figure}{\numberline {2.3}{\ignorespaces Convolutional Neural Network: Architecture.}}{26}{}%
-\contentsline {figure}{\numberline {2.4}{\ignorespaces Modelling of Natural Phenomena}}{26}{}%
-\contentsline {figure}{\numberline {2.5}{\ignorespaces The Trade-off Between a Machine Learning Surrogate Model and the Original Model}}{27}{}%
-\contentsline {figure}{\numberline {2.6}{\ignorespaces Four Possible Neural Network Architectures}}{30}{}%
+\contentsline {figure}{\numberline {2.1}{\ignorespaces Machine Learning Model Training Process (Example 1)}}{22}{}%
+\contentsline {figure}{\numberline {2.2}{\ignorespaces Neural Network: An example of a feed-forward network.}}{25}{}%
+\contentsline {figure}{\numberline {2.3}{\ignorespaces Convolutional Neural Network: Feature Extraction.}}{25}{}%
+\contentsline {figure}{\numberline {2.4}{\ignorespaces Convolutional Neural Network: Architecture.}}{27}{}%
+\contentsline {figure}{\numberline {2.5}{\ignorespaces Modelling of Natural Phenomena}}{27}{}%
+\contentsline {figure}{\numberline {2.6}{\ignorespaces The Trade-off Between a Machine Learning Surrogate Model and the Original Model}}{28}{}%
+\contentsline {figure}{\numberline {2.7}{\ignorespaces Four Possible Neural Network Architectures}}{30}{}%
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {3.1}{\ignorespaces AGR Core Plan View}}{31}{}%
 \contentsline {figure}{\numberline {3.2}{\ignorespaces AGR Core Side View}}{32}{}%
