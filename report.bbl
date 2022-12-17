@@ -247,6 +247,11 @@ B.~Kralj, S.~Humphreys, and B.~Duncan.
 \newblock Seismic modelling of an agr nuclear reactor core.
 \newblock {\em SPECIAL PUBLICATION-ROYAL SOCIETY OF CHEMISTRY}, 309:193, 2007.
 
+\bibitem{lewkowycz2021decay}
+A.~Lewkowycz.
+\newblock How to decay your learning rate.
+\newblock {\em arXiv preprint arXiv:2103.12682}, 2021.
+
 \bibitem{li2015depth}
 B.~Li, C.~Shen, Y.~Dai, A.~Van Den~Hengel, and M.~He.
 \newblock Depth and surface normal estimation from monocular images using

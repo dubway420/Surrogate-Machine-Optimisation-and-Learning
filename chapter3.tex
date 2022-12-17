@@ -99,35 +99,73 @@ As can be seen from (\ref{mae}) the loss function (and its derivative) is an ave
 
 \begin{figure*}[h]
 	\centering
-	\includegraphics[scale=0.42]{Figures/gradientDescent_mae_bigLR.jpg}
-	\caption{Machine Learning Model Training Process (Example 1)} {In this example, a machine learning model is trained over a period of four epochs. The mean absolute error (MAE) loss function is used as well as a relatively large learning rate. \textbf{Left}: Loss history against the value of a single model weight.  \textbf{Right}: Loss history against epoch number.}
+	\includegraphics[scale=0.35]{Figures/gradientDescent_mae_bigLR.jpg}
+	\caption{Machine Learning Model Training Process (Example 1)} {In this example, a machine learning model is trained over a period of four epochs. The mean absolute error (MAE) loss function is used as well as a relatively large learning rate which reduces each epoch (decay). \textbf{Left}: Loss history against the value of a single model weight.  \textbf{Right}: Loss history against epoch number.}
 	\label{fig:GD_maeBigLR}
 \end{figure*}
 
 \noindent
-In Figure~\ref{fig:GD_maeBigLR}, we see a representation of the training of a machine learning model. We see the progressive loss function calculated over a four epoch interval. This is expressed in two ways: (1) against the value of one of the model weights and (2) against the epoch number.  In this training example, gradient descent is performed using the MAE loss function and a relatively high loss function. \\
+In Figure~\ref{fig:GD_maeBigLR}, we see a representation of the training of a machine learning model. We see the progressive loss function calculated over a four epoch interval. This is expressed in two ways: (1) against the value of one of the model weights and (2) against the epoch number.  In this training example, gradient descent is performed using the MAE loss function and a relatively high loss function. This example also shows learning rate decay \cite{lewkowycz2021decay}, where the learning rate is reduced by 10\% successively after each epoch. \\
 
 \noindent 
 As mentioned previously, in most machine learning models, there will be multiple weights to optimise (one for each input feature). However, for this illustrative example, we will just focus on the optimisation of one weight.\\
 
+\noindent
+The chart on the left of Figure~\ref{fig:GD_maeBigLR} shows a theoretical topology of loss as a function of the example weight (dark blue lines at approximately 45 degrees from one another). At the start of training, we don't know the shape or nature of this topology, it is revealed through the training process. The target for any machine learning training operation is optimise all weight values to produce a model capable of achieving the lowest possible loss value - in the case of Figure~\ref{fig:GD_maeBigLR}, that is the hinge-point between the two dark blue lines. \\
+
 \noindent 
-In the aforementioned example, we can see that at the start of training (epoch 0), the weight is initialised at a value of around 3.2 which results in a MAE of about 40. From the gradient of the dark blue line at this point, it can be seen that increasing the weight of the value will tend to reduce the MAE. Feeding this negative gradient and the high learning rate into the subtractive term of (\ref{gradient_descent}) , we get an increased value of our example weight. As can be seen from the the loss 
+In the aforementioned example, we can see that at the start of training (epoch 0), the weight is initialised at a value of around 3.2 which results in a MAE of about 40. From the gradient of the dark blue line at this point, it can be seen that increasing the weight of the value will tend to reduce the MAE. Feeding this negative gradient and the high learning rate into the subtractive term of (\ref{gradient_descent}) , we get an increased value of our example weight. As can be seen from the the loss time history, this operation actually results in an overshoot leading to a MAE that's actually higher than it was at the start of training (it now has a value of 50). This undesirable outcome is associated with a learning rate which is too high. \\
 
+\noindent
+For epoch 2, this time we are at a point in the loss-weight value topology where MAE is tending to increase as the weight value increases: a positive  . Recall that in this example, a learning rate decay is applied, meaning that the learning rate is 10\% lower than it was in the first epoch. This in turn means that the magnitude of the subtractive right-hand-side term of (\ref{gradient_descent}) is 10\% lower than it was in epoch 1. This reduction means that the updated weight is updated to a slightly higher point than the initialisation value. \\
 
- 	
- 	
- 	
-	% Simplest is MAE
-		% define
-		% advantages/disadvantages
-		% constant derivative 
-		
-% Mean Square error		
-		% non linear 
-		% variable 
-		% proportional derivative 
-		
-% Huber loss		
+\noindent
+The following two epochs follow the same trend, however, the decaying loss rate means that progress towards the MAE minima slows. Further training would eventually see convergence with the weight and corresponding MAE value oscillating around a central value. At this point, further training is off little practical benefit. The practitioner may be able to manually apply early stopping \cite{yao2007early} or experimentally increase the number of epochs until this convergence point is reached. \\ 
+
+\noindent
+If we did not apply learning rate decay with the model training configuration of the aforementioned example , we may see a situation where a training process where the model fails to make any progress and repeatedly oscillates between the same two points. \\
+
+\noindent
+Lets now look at another example of gradient descent with alternative parameters. In our first example, we used the mean absolute error (MAE) loss function, now we will use instead the mean squared error (MSE) loss function (\ref{mse}). \\
+
+\begin{equation} \label{mse}
+	\lambda_{mse} = \frac{1}{n}\sum_{i=1}^n (y_i - \hat{y_i})^2
+\end{equation}
+
+\noindent
+The mathematical difference between the MAE and MSE loss functions is that the inner term (the difference between the model prediction and ground truth label) is squared rather than simply the absolute. This alternative loss function has two practical differences in model training: 
+
+\begin{enumerate}
+	\item  Ground truth labels which are particularly large impact the loss calculation more severely. This can be beneficial when accurate prediction of outliers is of high importance.
+	
+	\item The loss-weight value topology is a curved U-shaped bend, rather than straight lines at a sharp angle (dark blue in the left of Figure~\ref{fig:GD_mseSmallLR}). This is because the derivative of this function with regards to the residual ($y_i - \hat{y_i}$) is variable rather than constant.
+\end{enumerate}
+
+\noindent
+The other change is that we will assume a smaller initial learning rate than in the previous example.  In addition, we will not be decaying the learning rate. We begin with the same weight initialisation as the first example and loss starting point\footnote{In practice, the same residual ($y_i - \hat{y_i}$) would result is a different loss value for MAE and MSE (after all, they are different functions), but for these examples we assume equivalent values are calculated for each.}. \\
+
+\begin{figure*}[h]
+	\centering
+	\includegraphics[scale=0.35]{Figures/gradientDescent_mse_smallLR.jpg}
+	\caption{Machine Learning Model Training Process (Example 2)} {In this example, a machine learning model is trained over a period of four epochs. The mean squared error (MSE) loss function is used as well as a relatively small learning rate. \textbf{Left}: Loss history against the value of a single model weight.  \textbf{Right}: Loss history against epoch number.}
+	\label{fig:GD_mseSmallLR}
+\end{figure*}
+
+\noindent
+From Figure~\ref{fig:GD_mseSmallLR}, it can be seen that after one epoch of training, the weight value is updated only a small amount on account of the smaller learning rate. At this new point, the gradient of loss with regards to weight value is still negative, albeit to a smaller magnitude. On account of the subtractive term of (\ref{gradient_descent}) being smaller, the weight value update for the second epoch is somewhat smaller than the first. This trend can be seen to continue towards the base of the base of the curve. \\
+
+\noindent
+Comparing the performance of the two model training processes, it is possible to see the apparent advantages of the second configuration.  However, in practice different parameters have application in varying circumstances and conditions. The exact combination of parameters that are optimal for each problem must be determined through precedent (techniques found to be effective in previous works) and through experimentation.  \\
+
+\noindent
+In the previous examples, we saw the gradient descent method used to minimise loss towards the nadir of a loss topology. However, the topology for the full problem space might contain multiple minima regions. 
+
+\begin{figure*}[h]
+	\centering
+	\includegraphics[scale=0.45]{Figures/loss_minima_maxima.jpg}
+	\caption{Global Topology of Loss as a Function of Weight Value} {When looking at the full topology for the entire problem space, we see that there are there may be more than a single minima. }
+	\label{fig:minima_maxima}
+\end{figure*}
 		
 % Training set, testing set
 % At the end of training, we use testing set to evaluate.		

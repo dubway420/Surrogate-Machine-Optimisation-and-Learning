@@ -14,45 +14,45 @@ Database file #1: refs.bib
 Warning--empty institution in allen1990seismic
 Warning--empty journal in dozat2016incorporating
 Warning--empty journal in huber1964robust
-You've used 75 entries,
+You've used 76 entries,
             2118 wiz_defined-function locations,
-            912 strings with 17630 characters,
-and the built_in function-call counts, 28006 in all, are:
-= -- 2749
-> -- 1483
+            916 strings with 17726 characters,
+and the built_in function-call counts, 28210 in all, are:
+= -- 2769
+> -- 1490
 < -- 23
-+ -- 602
-- -- 512
-* -- 1959
-:= -- 4621
-add.period$ -- 242
-call.type$ -- 75
-change.case$ -- 473
++ -- 605
+- -- 514
+* -- 1967
+:= -- 4660
+add.period$ -- 245
+call.type$ -- 76
+change.case$ -- 477
 chr.to.int$ -- 0
-cite$ -- 78
-duplicate$ -- 1031
-empty$ -- 2078
-format.name$ -- 512
-if$ -- 5868
+cite$ -- 79
+duplicate$ -- 1041
+empty$ -- 2095
+format.name$ -- 514
+if$ -- 5909
 int.to.chr$ -- 0
-int.to.str$ -- 75
-missing$ -- 75
-newline$ -- 376
-num.names$ -- 150
-pop$ -- 538
+int.to.str$ -- 76
+missing$ -- 76
+newline$ -- 381
+num.names$ -- 152
+pop$ -- 542
 preamble$ -- 1
-purify$ -- 403
+purify$ -- 406
 quote$ -- 0
-skip$ -- 731
+skip$ -- 738
 stack$ -- 0
-substring$ -- 1623
-swap$ -- 254
+substring$ -- 1628
+swap$ -- 255
 text.length$ -- 23
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 286
+type$ -- 290
 warning$ -- 3
-while$ -- 266
-width$ -- 77
-write$ -- 819
+while$ -- 268
+width$ -- 78
+write$ -- 829
 (There were 3 warnings)
