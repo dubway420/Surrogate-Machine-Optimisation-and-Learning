@@ -25,6 +25,8 @@ Lets look at an example from the domain we are studying in this PhD thesis. In t
 \noindent
 In this example, an output value (power) is calculated as a function of input variables (x). There are of course a multitude of other factors that affect core power, however, the point of this example can be made with these four:
 
+% PUT AN x AT THE START OF EACH ITEM
+
 \begin{enumerate}
 	
 	\item \textbf{Fuel Enrichment:} The useable content of the nuclear fuel at the time fuel is inserted into the core. Power level would increase linearly as enrichment rises. This value is measured as a percent of the total mass of the fuel and is usually between 1\% and 5\%.
@@ -38,6 +40,13 @@ In this example, an output value (power) is calculated as a function of input va
 
 \noindent
 Using the relationships between these inputs at the output we wish to calculate, it would be possible to formulate a model to calculate reactor power output as a function of core configuration. However, from the complex relationships we discuss above, this would not be a trivial undertaking. The production of an effective model through hard computing techniques would require a strong understanding of the physical phenomena underpinning each factor. It would also be intensive in terms of effort from human domain experts. \\
+
+
+% HAVE A LINEAR COMBINATION EQUATION
+
+% P = f{x1} + f{x2} + f{x3} + f{x4} 
+
+% Say that individual functions may not be linear and may also rely on the vaue of each other in some complicated way
 
 \noindent
 Alternatively, a model of this phenomena can be produced using soft computing techniques \cite{ibrahim2016overview} such as machine learning. Rather than hard coding relationships, a stochastic model is produced and optimised using a dataset containing examples of outputs and corresponding inputs. \\
@@ -158,7 +167,7 @@ From Figure~\ref{fig:GD_mseSmallLR}, it can be seen that after one epoch of trai
 Comparing the performance of the two model training processes, it is possible to see the apparent advantages of the second configuration.  However, in practice different parameters have application in varying circumstances and conditions. The exact combination of parameters that are optimal for each problem must be determined through precedent (techniques found to be effective in previous works) and through experimentation.  \\
 
 \noindent
-In the previous examples, we saw the gradient descent method used to minimise loss towards the nadir of a loss topology. However, the topology for the full problem space might contain multiple minima regions. 
+In the previous examples, we saw the gradient descent method used to minimise loss towards the nadir of a loss topology. However, the topology for the full problem space might contain multiple minima regions. Figure~\ref{fig:minima_maxima} shows what such a topology with two minima regions: a local and global minima. If we wish to optimise the weights of our model, then we wish our gradient descent process to end within the global minima. However, depending on where our random initialisation of the weight begins, the convergence of our gradient descent process may end up in either region. \\
 
 \begin{figure*}[h]
 	\centering
@@ -166,19 +175,64 @@ In the previous examples, we saw the gradient descent method used to minimise lo
 	\caption{Global Topology of Loss as a Function of Weight Value} {When looking at the full topology for the entire problem space, we see that there are there may be more than a single minima. }
 	\label{fig:minima_maxima}
 \end{figure*}
+
+\noindent
+How can we ensure that we obtain global optimisation and prevent the training process converging in a local minima? There are several techniques at our disposal:
+
+\begin{enumerate}
+    \item \textbf{Repeated Training}: If we are performing and experiment to evaluate a certain configuration of model parameters, it is prudent to repeat the training process several times. On each repeat, the weight initialisations will be randomised, giving a new starting points. By performing this experiment enough times, all of the global minima points should be achieved.
+    
+    \item \textbf{Learning Rate Schedules}: We saw in examples of gradient descent how a small learning rate can make our training process optimise closer to the nadir of a minima region. Similarly, a low learning rate can cause the training process to become trapped in a local minima. Having a large learning rate can allow the training process to cover a larger area of the loss-weight space and find a globally low region. We also saw earlier how learning rates can be changed during training, such as through decay \cite{you2019does}. To gain the benefits of both approaches, we can use a schedule of learning rates \cite{xu2019learning} to begin with a relatively high learning rate at the start of training, then have this fall when the model starts to converge of a minima region.
+    
+\end{enumerate}
+
+\noindent
+Once we have reached convergence with our gradient descent process, we may reach a point where our model is capable of making predictions very similar to the ground truth labels and hence produce a loss function calculation close to zero. We may be tempted at this point to think that the model exhibits a strong practical performance, but is this true? \\
+
+\noindent
+Consider that the dataset sample we use for training may represent only a small proportion of the entire problem space. It may in theory be possible to produce many thousands or millions of input feature/output label combinations than we have available for training. How can we be sure that our model is capable of making general predictions for the overall problem space and not just recalling training examples it has already seen? \\
+
+\noindent
+To answer this question, it is good machine learning practice to sequester a portion of our dataset at the start of the training process. We will call this portion the testing set and it will not be included as part of the data used to perform gradient descent i.e. the model will not have seen this data during training. \\
+
+\noindent
+At the end of training, we can evaluate our model against the testing set using our loss function. Hence, we are able to produce two loss calculations: a training loss and a testing loss. The earlier value gives a measure of the model's ability to fit to the training set, the later gives a more general measure of the ability of the model to actual make practical predictions for the problem space. \\
+
+\noindent
+A low or diverging training loss calculated during training suggests a model that is incapable of capturing the relationships within the training data. The training data may be invalid, or a value for a parameter such as the learning rate may have been inappropriately chosen (see the overshooting weight adjustment in Figure~\ref{fig:GD_maeBigLR}). A model which produces a low training loss and a high test loss is likely to have optimised too closely to the training set and has captured even irrelevant relationships between input features and output labels, such as noise or data errors. This model would be an example of one which is exhibiting overfitting \cite{ying2019overview} as shown in Figure~\ref{fig:overfitting}. \\
+
+\begin{figure*}[h]
+	\centering
+	\includegraphics[scale=0.45]{Figures/overfitting.jpg}
+	\caption{Example of a Linear Model Overfitting} {In this example, there are outliers at the lowest and highest points of the continuum.  It is possible that this data truly represents the underlying phenomena i.e. values at the lower end of the spectrum are indeed very low and values at the upper end are indeed very high. However, it is also possible that these outliers are due to recording inaccuracy and the true trend exhibited by the central data region (orange) should continue into the upper and lower regions. If this is the case then the linear model fit represented in dark blue is overfitting to the training data and may perform poorly on the testing set which may exclude these data inaccuracies. The linear model fit represented by the central orange line may be more representative of the true dataset trend.}
+	\label{fig:overfitting}
+\end{figure*}
 		
-% Training set, testing set
-% At the end of training, we use testing set to evaluate.		
-		
-% Local minima - how to overcome? 
-		% Repeating experiments
-		% Loss rate - too high, too low, dynamic
-		% optimiser
-		
-% Another problem is that a machine learning model in this format can only model linear relationships between input variables and outputs. Therefore, this method may not be optimal for modelling the example scenario above as there is a complex relationship between some inputs and the output value. For example, increasing the flowrate acts to increase and then decrease the power at different levels. To produce a machine learning model capable of accounting for these non-linear complexities, we must look to neural networks.		
+\noindent
+Another problem is that a machine learning model in this format can only model linear relationships between input features and outputs labels. Therefore, the gradient descent method described here may not be optimal for modelling the example scenario we discussed at the start of this section as there is a complex relationship between some inputs and the output value. For example, increasing the flowrate acts to increase and then decrease the power at different levels. To produce a machine learning model capable of accounting for these non-linear complexities, we must look to neural networks, discussed in the next section. \\		
+
+\begin{figure*}[h]
+	\centering
+	\includegraphics[scale=0.45]{Figures/LinearFit.jpg}
+	\caption{Example of a Linear Model Fitting to a Non-Linear Data Trend} {In this example...}
+	\label{fig:linearFit}
+\end{figure*}
+
+% TALK ABOUT DECISION TREES AND DO ANOTHE VERSION OF fig:linearFit with decison delineations
  		
 
 \section{Neural Networks} \label{NN}
+
+% validatio  set as well as training and testing
+% Exploding gradients
+% input layer 
+% output layer
+% hidden layers
+% nodal operation
+% activaton function operaion
+% non linearity
+
+
 
 Neural networks can be seen as a multi-layer stacking of the type of operation described in section~\ref{supervised}. The point at which each of these operations occurs is usually referred to as a neuron or node. Neurons are placed in parallel or sequence (Figure~\ref{fig:neural_network}) to form the model architecture. Various arrangements of these nodes may be employed, with varying depth and width of the network. 
 \\

@@ -415,6 +415,11 @@ Y.~Xie, F.~Xing, X.~Kong, H.~Su, and L.~Yang.
 \newblock In {\em International conference on medical image computing and
   computer-assisted intervention}, pages 358--365. Springer, 2015.
 
+\bibitem{xu2019learning}
+Z.~Xu, A.~M. Dai, J.~Kemp, and L.~Metz.
+\newblock Learning an adaptive learning rate schedule.
+\newblock {\em arXiv preprint arXiv:1909.09712}, 2019.
+
 \bibitem{yang2021delving}
 Y.~Yang, K.~Zha, Y.~Chen, H.~Wang, and D.~Katabi.
 \newblock Delving into deep imbalanced regression.
@@ -425,6 +430,17 @@ Y.~Yang, K.~Zha, Y.~Chen, H.~Wang, and D.~Katabi.
 Y.~Yao, L.~Rosasco, and A.~Caponnetto.
 \newblock On early stopping in gradient descent learning.
 \newblock {\em Constructive Approximation}, 26(2):289--315, 2007.
+
+\bibitem{ying2019overview}
+X.~Ying.
+\newblock An overview of overfitting and its solutions.
+\newblock In {\em Journal of physics: Conference series}, volume 1168, page
+  022022. IOP Publishing, 2019.
+
+\bibitem{you2019does}
+K.~You, M.~Long, J.~Wang, and M.~I. Jordan.
+\newblock How does learning rate decay help modern neural networks?
+\newblock {\em arXiv preprint arXiv:1908.01878}, 2019.
 
 \bibitem{zeng2018machine}
 Y.~Zeng, J.~Liu, K.~Sun, and L.-w. Hu.
