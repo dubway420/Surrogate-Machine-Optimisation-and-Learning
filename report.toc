@@ -9,10 +9,10 @@
 \contentsline {chapter}{\numberline {2}Machine Learning Background}{18}{}%
 \contentsline {section}{\numberline {2.1}Supervised Learning}{18}{}%
 \contentsline {section}{\numberline {2.2}Neural Networks}{28}{}%
-\contentsline {section}{\numberline {2.3}Convolutional Neural Networks (CNN)}{30}{}%
-\contentsline {section}{\numberline {2.4}Surrogate Machine Learning Models}{32}{}%
-\contentsline {section}{\numberline {2.5}Transfer Learning and Existing ML Models}{34}{}%
-\contentsline {section}{\numberline {2.6}Relevant Literature}{34}{}%
+\contentsline {section}{\numberline {2.3}Convolutional Neural Networks (CNN)}{29}{}%
+\contentsline {section}{\numberline {2.4}Surrogate Machine Learning Models}{29}{}%
+\contentsline {section}{\numberline {2.5}Transfer Learning and Existing ML Models}{33}{}%
+\contentsline {section}{\numberline {2.6}Relevant Literature}{33}{}%
 \contentsline {chapter}{\numberline {3}Nuclear Engineering Background}{38}{}%
 \contentsline {section}{\numberline {3.1}Advanced Gas-cooled Reactors (AGRs)}{38}{}%
 \contentsline {section}{\numberline {3.2}Traditional Engineering Safety Assessments}{39}{}%

@@ -204,7 +204,7 @@ Once we have reached convergence with our gradient descent process, we may reach
 Consider that the dataset sample we use for training may represent only a small proportion of the entire problem space. It may in theory be possible to produce many thousands or millions of input feature/output label combinations than we have available for training. How can we be sure that our model is capable of making general predictions for the overall problem space and not just recalling training examples it has already seen? \\
 
 \noindent
-To answer this question, it is good machine learning practice to sequester a portion of our dataset at the start of the training process. We will call this portion the testing set and it will not be included as part of the data used to perform gradient descent i.e. the model will not have seen this data during training. \\
+To answer this question, it is good machine learning practice to sequester a portion of our dataset at the start of the training process. We will call this portion the testing set and it will not be included as part of the data used to perform gradient descent i.e. the model will not have seen this data during training. Usually, we sequester around 70 or 80 percent of the dataset for training and retain the rest for testing \cite{gholamy201870}.\\
 
 \noindent
 At the end of training, we can evaluate our model against the testing set using our loss function. Hence, we are able to produce two loss calculations: a training loss and a testing loss. The earlier value gives a measure of the model's ability to fit to the training set, the later gives a more general measure of the ability of the model to actual make practical predictions for the problem space. \\
@@ -233,7 +233,8 @@ Another problem is that a machine learning model in this format can only model l
 
 % TALK ABOUT DECISION TREES AND DO ANOTHE VERSION OF fig:linearFit with decison delineations
  
- To produce a machine learning model capable of accounting for these non-linear complexities, we must either look to neural networks, discussed in the next section, or to another type of machine learning model such as decision trees \cite{de2013decision}. 
+ \noindent
+ To produce a machine learning model capable of accounting for these non-linear complexities, we must either look to neural networks, discussed in the next section, or to another type of machine learning model such as decision trees \cite{de2013decision} as shown in Figure~\ref{fig:DecisionTree}. This model has the added example of having a fully explainable decision making process that can be traced by a human observer. However, with added layers of branches for increased prediction resolution, the complexity of the model may no longer be easily comprehensible.
  
  \begin{figure*}[h]
  	\centering
@@ -242,7 +243,22 @@ Another problem is that a machine learning model in this format can only model l
  	\label{fig:DecisionTree}
  \end{figure*}
 
+
 \section{Neural Networks} \label{NN}
+
+The machine learning methods that we have explored so far in this chapter are commonly referred to as traditional or shallow methods.  The methods described in this chapter represent a stacking of machine learning operations in both parallel and series.  
+
+\begin{figure*}[p]
+	\centering
+	\includegraphics[scale=0.65]{Figures/NeuralNetwork.jpg}
+	\caption{Neural Network Representation} {A neural network with an an input layer of four units, two hidden layers and an output layer of 3 units. At each yellow circle (node), a linear combination of the inputs leading to it is made. The calculated value is then fed into an activation function which transforms it in a non linear way. The exception to this the output layer (O1 - O3) where no activation function is applied.}
+	\label{fig:neural}
+\end{figure*}
+
+\noindent
+Figure~\ref{fig:neural} shows a representation of a neural network. There are four input features, comparable to the four inputs described in the example at the start of the section~\ref{supervised}. After  the input layer, we have two hidden layers. 
+
+% activation functions as yes/no/maybe 
 
 % validatio  set as well as training and testing
 % Exploding gradients
@@ -255,34 +271,10 @@ Another problem is that a machine learning model in this format can only model l
 
 
 
-Neural networks can be seen as a multi-layer stacking of the type of operation described in section~\ref{supervised}. The point at which each of these operations occurs is usually referred to as a neuron or node. Neurons are placed in parallel or sequence (Figure~\ref{fig:neural_network}) to form the model architecture. Various arrangements of these nodes may be employed, with varying depth and width of the network. 
-\\
 
-\noindent
-Differing neural network architectures with varying hyper-parameters \cite{gurney1997introduction} can be employed in the design of a machine learning model. The architecture of a neural network consists of nodes at which a mathematical operation is performed. The nodal output is passed through an activation function which transforms it in a non-linear manner. Commonly employed activation functions include the rectified linear unit (ReLu) \cite{hara2015analysis} and the Softplus function \cite{zheng2015improving}. 
-\\
 
-\noindent
-The design of a neural network usually features multiple cascading layers, with the output of the previous layer feeding through as input to the subsequent layer. The network is trained through application of the back-propagation algorithm \cite{hecht1992theory} which uses the loss function to adjust the weights throughout the network. The back-propagation algorithm utilises a learning rate, a user defined value that determines how quickly the model weights are adjusted. A learning rate value must be chosen so as not be too high or low: either extreme will prevent an optimal solution from being attained. The learning rate may be adjusted during training. 
-\\
 
-\noindent
-At the start of neural network training - prior to the back-propagation process - the trainable parameters of the model are initialised with random values. Repeating the initialisation and training process several times, a different set of optimised weights will be produced each time, despite using the same training data. To account for this stochastic nature of the training process, machine learning experiments are normally repeated several times.
-\\
-
-\noindent
-A common problem encountered during the training of neural networks is that of overfitting \cite{hawkins2004problem}. This phenomenon is encountered when a model fits so closely to a training dataset that it does not perform well on new data that it has not encountered during training i.e. the model does not generalise well. A significantly lower training loss relative to the test loss indicates overfitting, whereas a similar value for the two loss values indicates good general performance of the model. To avoid overfitting, several regularisation techniques are employed. These include adding a term to loss function that penalises large weights and randomised dropout of model layers \cite{srivastava2014dropout}. 
-\\
-
-\noindent
-Several configurations of neural networks are available. A common choice is the fully connected or dense neural network (DNN): i.e. the output of every node in a layer feeds into every node in the subsequent layer, leading to a 'dense' architecture. An alternative configuration is the convolutional neural network (CNN) discussed in the following chapter. 
-
-\begin{figure*}[p]
-	\centering
-	\includegraphics[scale=0.6]{Figures/nn.png}
-	\caption{Neural Network: An example of a feed-forward network.} {From left to right: input layer accepting 8 features; first 'hidden' layer with 10 nodes, each fully connected to every node in the previous layer; second 'hidden' layer this time with only 8 nodes, again is fully connected to accept the output of each node from the previous layer; a single output node which is fully connected to each node from the previous layer.}
-	\label{fig:neural_network}
-\end{figure*}
+\section{Convolutional Neural Networks (CNN)} \label{convolution}
 
 \begin{figure*}[p]
 	\centering
@@ -290,8 +282,6 @@ Several configurations of neural networks are available. A common choice is the 
 	\caption{Convolutional Neural Network: Feature Extraction.}
 	\label{fig:cnn_feature}
 \end{figure*}
-
-\section{Convolutional Neural Networks (CNN)} \label{convolution}
 
 Convolutional neural networks (CNNs) attempt to capture local signals in data by use of a sliding window which passes over the input space. CNNs have been utilised in several areas of image analysis, including cell detection in medicine \cite{xie2015beyond} and depth estimation in photographs \cite{li2015depth}. Within the engineering field, they have been employed to predict remaining useful life of components \cite{babu2016deep}. The application of CNNs may be effective in the research problem discussed in this thesis as there are similarities between the data format for AGR graphite core analysis and image recognition, with the presence and identification of local arrangements important in both areas.
 \\

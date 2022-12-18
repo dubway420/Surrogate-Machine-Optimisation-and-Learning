@@ -125,6 +125,12 @@ M.~G. Fernandez, A.~Tokuhiro, K.~Welter, and Q.~Wu.
   learning.
 \newblock {\em Nuclear Engineering and Design}, 324:27--34, 2017.
 
+\bibitem{gholamy201870}
+A.~Gholamy, V.~Kreinovich, and O.~Kosheleva.
+\newblock Why 70/30 or 80/20 relation between training and testing sets: a
+  pedagogical explanation.
+\newblock 2018.
+
 \bibitem{gomez2020status}
 M.~Gomez-Fernandez, K.~Higley, A.~Tokuhiro, K.~Welter, W.-K. Wong, and H.~Yang.
 \newblock Status of research and development of learning-based approaches in
@@ -168,12 +174,6 @@ D.~M. Hawkins.
 K.~He, X.~Zhang, S.~Ren, and J.~Sun.
 \newblock Deep residual learning for image recognition. corr abs/1512.03385
   (2015), 2015.
-
-\bibitem{hecht1992theory}
-R.~Hecht-Nielsen.
-\newblock Theory of the backpropagation neural network.
-\newblock In {\em Neural networks for perception}, pages 65--93. Elsevier,
-  1992.
 
 \bibitem{henderson1995job}
 R.~L. Henderson.

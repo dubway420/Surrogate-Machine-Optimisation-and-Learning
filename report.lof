@@ -6,11 +6,11 @@
 \contentsline {figure}{\numberline {2.4}{\ignorespaces Example of a Linear Model Overfitting}}{28}{}%
 \contentsline {figure}{\numberline {2.5}{\ignorespaces Example of a Linear Model Fitting to a Non-Linear Data Trend}}{29}{}%
 \contentsline {figure}{\numberline {2.6}{\ignorespaces Example of a Decision Tree}}{30}{}%
-\contentsline {figure}{\numberline {2.7}{\ignorespaces Neural Network: An example of a feed-forward network.}}{31}{}%
-\contentsline {figure}{\numberline {2.8}{\ignorespaces Convolutional Neural Network: Feature Extraction.}}{31}{}%
-\contentsline {figure}{\numberline {2.9}{\ignorespaces Convolutional Neural Network: Architecture.}}{33}{}%
-\contentsline {figure}{\numberline {2.10}{\ignorespaces Modelling of Natural Phenomena}}{33}{}%
-\contentsline {figure}{\numberline {2.11}{\ignorespaces The Trade-off Between a Machine Learning Surrogate Model and the Original Model}}{34}{}%
+\contentsline {figure}{\numberline {2.7}{\ignorespaces Neural Network Representation}}{31}{}%
+\contentsline {figure}{\numberline {2.8}{\ignorespaces Convolutional Neural Network: Feature Extraction.}}{32}{}%
+\contentsline {figure}{\numberline {2.9}{\ignorespaces Convolutional Neural Network: Architecture.}}{32}{}%
+\contentsline {figure}{\numberline {2.10}{\ignorespaces Modelling of Natural Phenomena}}{34}{}%
+\contentsline {figure}{\numberline {2.11}{\ignorespaces The Trade-off Between a Machine Learning Surrogate Model and the Original Model}}{35}{}%
 \contentsline {figure}{\numberline {2.12}{\ignorespaces Four Possible Neural Network Architectures}}{37}{}%
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {3.1}{\ignorespaces AGR Core Plan View}}{38}{}%
