@@ -15,45 +15,45 @@ Warning--empty institution in allen1990seismic
 Warning--empty journal in dozat2016incorporating
 Warning--empty journal in huber1964robust
 Warning--can't use both volume and number fields in ying2019overview
-You've used 79 entries,
+You've used 80 entries,
             2118 wiz_defined-function locations,
-            931 strings with 18172 characters,
-and the built_in function-call counts, 29222 in all, are:
-= -- 2868
-> -- 1543
+            937 strings with 18284 characters,
+and the built_in function-call counts, 29519 in all, are:
+= -- 2900
+> -- 1550
 < -- 25
-+ -- 627
-- -- 532
-* -- 2028
-:= -- 4826
-add.period$ -- 255
-call.type$ -- 79
-change.case$ -- 495
++ -- 630
+- -- 534
+* -- 2050
+:= -- 4875
+add.period$ -- 258
+call.type$ -- 80
+change.case$ -- 499
 chr.to.int$ -- 0
-cite$ -- 83
-duplicate$ -- 1088
-empty$ -- 2164
-format.name$ -- 532
-if$ -- 6126
+cite$ -- 84
+duplicate$ -- 1099
+empty$ -- 2191
+format.name$ -- 534
+if$ -- 6187
 int.to.chr$ -- 0
-int.to.str$ -- 79
-missing$ -- 79
-newline$ -- 396
-num.names$ -- 158
-pop$ -- 562
+int.to.str$ -- 80
+missing$ -- 80
+newline$ -- 401
+num.names$ -- 160
+pop$ -- 564
 preamble$ -- 1
-purify$ -- 421
+purify$ -- 424
 quote$ -- 0
-skip$ -- 776
+skip$ -- 783
 stack$ -- 0
-substring$ -- 1656
-swap$ -- 274
+substring$ -- 1686
+swap$ -- 275
 text.length$ -- 25
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 302
+type$ -- 306
 warning$ -- 4
-while$ -- 275
-width$ -- 81
-write$ -- 862
+while$ -- 279
+width$ -- 82
+write$ -- 873
 (There were 4 warnings)

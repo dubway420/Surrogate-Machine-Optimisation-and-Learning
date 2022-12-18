@@ -27,26 +27,37 @@ In this example, an output value (power) is calculated as a function of input va
 
 % PUT AN x AT THE START OF EACH ITEM
 
-\begin{enumerate}
+\begin{enumerate} [label=$x_1$]
 	
 	\item \textbf{Fuel Enrichment:} The useable content of the nuclear fuel at the time fuel is inserted into the core. Power level would increase linearly as enrichment rises. This value is measured as a percent of the total mass of the fuel and is usually between 1\% and 5\%.
 	 
-	\item \textbf{Time Since Refuelling:} The length of time since the core was refuelled. As this time increases, the power level would tend to drop as the useable content of the fuel is used up. This power fall would be linear at first, but the rate would accelerate  after a certain point due to the build up of fission poisons within the core. This value is measured in hours.
-	
-	\item  \textbf{Flowrate of Coolant:} The rate at which coolant is pumped into the core. This has a positive correlation with core power at lower rates, as the coolant (usually water) helps to sustain the nuclear chain reaction. However, this relationship breaks down after a certain flowrate, as certain concentrations of water act to block the fission sustaining neutrons. The flowrate would  is measured in $m^3$ per second.
-	
-	\item \textbf{Insertion Depth of Control Rods:} The control rods are inserted in order to slow or halt the nuclear chain reaction. Therefore, there is a negative correlation between insertion depth and power level. Lowering the power through control rod insertion has knock on effects, so the relationship is closer to the reciprocal of the square of the insertion depth.
+
 \end{enumerate}
 
+\begin{enumerate} [label=$x_2$]
+	
+		\item \textbf{Time Since Refuelling:} The length of time since the core was refuelled. As this time increases, the power level would tend to drop as the useable content of the fuel is used up. This power fall would be linear at first, but the rate would accelerate  after a certain point due to the build up of fission poisons within the core. This value is measured in hours.
+
+\end{enumerate}
+
+\begin{enumerate} [label=$x_3$]
+		
+	\item  \textbf{Flowrate of Coolant:} The rate at which coolant is pumped into the core. This has a positive correlation with core power at lower rates, as the coolant (usually water) helps to sustain the nuclear chain reaction. However, this relationship breaks down after a certain flowrate, as certain concentrations of water act to block the fission sustaining neutrons. The flowrate would  is measured in $m^3$ per second.
+
+\end{enumerate}
+
+\begin{enumerate} [label=$x_4$]
+	
+	\item \textbf{Insertion Depth of Control Rods:} The control rods are inserted in order to slow or halt the nuclear chain reaction. Therefore, there is a negative correlation between insertion depth and power level. Lowering the power through control rod insertion has knock on effects, so the relationship is closer to the reciprocal of the square of the insertion depth.
+	
+\end{enumerate}
 \noindent
-Using the relationships between these inputs at the output we wish to calculate, it would be possible to formulate a model to calculate reactor power output as a function of core configuration. However, from the complex relationships we discuss above, this would not be a trivial undertaking. The production of an effective model through hard computing techniques would require a strong understanding of the physical phenomena underpinning each factor. It would also be intensive in terms of effort from human domain experts. \\
+Using the relationships between these inputs at the output we wish to calculate, it would be possible to formulate a model to calculate reactor power output as a function of core configuration. However, from the complex relationships we discuss above, this would not be a trivial undertaking. The production of an effective model through hard computing techniques would require a strong understanding of the physical phenomena underpinning each factor. It would also be intensive in terms of effort from human domain experts. However, we may be able to formulate a model for this phenomena roughly in the form of (\ref{linear_model}). \\
 
+\begin{equation} \label{linear_model}
+	Power (kW) = f\{x_1\} + f\{x_2\} + f\{x_3\} + f\{x_4\} 
+\end{equation}
 
-% HAVE A LINEAR COMBINATION EQUATION
-
-% P = f{x1} + f{x2} + f{x3} + f{x4} 
-
-% Say that individual functions may not be linear and may also rely on the vaue of each other in some complicated way
 
 \noindent
 Alternatively, a model of this phenomena can be produced using soft computing techniques \cite{ibrahim2016overview} such as machine learning. Rather than hard coding relationships, a stochastic model is produced and optimised using a dataset containing examples of outputs and corresponding inputs. \\
@@ -209,17 +220,27 @@ A low or diverging training loss calculated during training suggests a model tha
 \end{figure*}
 		
 \noindent
-Another problem is that a machine learning model in this format can only model linear relationships between input features and outputs labels. Therefore, the gradient descent method described here may not be optimal for modelling the example scenario we discussed at the start of this section as there is a complex relationship between some inputs and the output value. For example, increasing the flowrate acts to increase and then decrease the power at different levels. To produce a machine learning model capable of accounting for these non-linear complexities, we must look to neural networks, discussed in the next section. \\		
+Another problem is that a machine learning model in this format can only model linear relationships between input features and outputs labels. Therefore, the gradient descent method described here may not be optimal for modelling the example scenario we discussed at the start of this section as there is a complex relationship between some inputs and the output value. For example, increasing the flowrate acts to increase and then decrease the power at different levels. \\		
+
+% UNDERFITTING
 
 \begin{figure*}[h]
 	\centering
 	\includegraphics[scale=0.45]{Figures/LinearFit.jpg}
-	\caption{Example of a Linear Model Fitting to a Non-Linear Data Trend} {In this example...}
+	\caption{Example of a Linear Model Fitting to a Non-Linear Data Trend} {In this example a linear model of the type described in this section is fit to a non-linear data relationship}
 	\label{fig:linearFit}
 \end{figure*}
 
 % TALK ABOUT DECISION TREES AND DO ANOTHE VERSION OF fig:linearFit with decison delineations
- 		
+ 
+ To produce a machine learning model capable of accounting for these non-linear complexities, we must either look to neural networks, discussed in the next section, or to another type of machine learning model such as decision trees \cite{de2013decision}. 
+ 
+ \begin{figure*}[h]
+ 	\centering
+ 	\includegraphics[scale=0.4]{Figures/DecisionTree.jpg}
+ 	\caption{Example of a Decision Tree} {}
+ 	\label{fig:DecisionTree}
+ \end{figure*}
 
 \section{Neural Networks} \label{NN}
 
