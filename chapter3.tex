@@ -25,7 +25,6 @@ Lets look at an example from the domain we are studying in this PhD thesis. In t
 \noindent
 In this example, an output value (power) is calculated as a function of input variables (x). There are of course a multitude of other factors that affect core power, however, the point of this example can be made with these four:
 
-% PUT AN x AT THE START OF EACH ITEM
 
 \begin{enumerate} [label=$x_1$]
 	
@@ -48,7 +47,7 @@ In this example, an output value (power) is calculated as a function of input va
 
 \begin{enumerate} [label=$x_4$]
 	
-	\item \textbf{Insertion Depth of Control Rods:} The control rods are inserted in order to slow or halt the nuclear chain reaction. Therefore, there is a negative correlation between insertion depth and power level. Lowering the power through control rod insertion has knock on effects, so the relationship is closer to the reciprocal of the square of the insertion depth.
+	\item \textbf{Insertion Depth of Control Rods:} The control rods are inserted in order to slow or halt the nuclear chain reaction. Therefore, there is a negative correlation between insertion depth and power level. Lowering the power through control rod insertion has knock on effects, so the relationship is closer to the reciprocal of the square of the insertion depth. The unit is centimetres (cm). 
 	
 \end{enumerate}
 \noindent
@@ -234,7 +233,7 @@ Another problem is that a machine learning model in this format can only model l
 % TALK ABOUT DECISION TREES AND DO ANOTHE VERSION OF fig:linearFit with decison delineations
  
  \noindent
- To produce a machine learning model capable of accounting for these non-linear complexities, we must either look to neural networks, discussed in the next section, or to another type of machine learning model such as decision trees \cite{de2013decision} as shown in Figure~\ref{fig:DecisionTree}. This model has the added example of having a fully explainable decision making process that can be traced by a human observer. However, with added layers of branches for increased prediction resolution, the complexity of the model may no longer be easily comprehensible.
+ To produce a machine learning model capable of accounting for these non-linear complexities, we must either look to neural networks, discussed in the next section, or to another type of machine learning model such as decision trees \cite{de2013decision} as shown in Figure~\ref{fig:DecisionTree}. This model has the added advantage of having a fully explainable decision making process that can be traced by a human observer. However, with added layers of branches for increased prediction resolution, the complexity of the model may no longer be easily comprehensible. Another advantage of decision trees is their ability to use categorical as well as continuous numerical inputs. An example would be branches representing high, medium and low rather than forks in a continuos values.
  
  \begin{figure*}[h]
  	\centering
@@ -256,7 +255,35 @@ The machine learning methods that we have explored so far in this chapter are co
 \end{figure*}
 
 \noindent
-Figure~\ref{fig:neural} shows a representation of a neural network. There are four input features, comparable to the four inputs described in the example at the start of the section~\ref{supervised}. After  the input layer, we have two hidden layers. 
+Figure~\ref{fig:neural} shows a representation of a neural network. A neural network has three main parts:
+
+\begin{enumerate}
+	
+	\item \textbf{Input Layer}: Where inputs are fed into the network. This layer is akin to the model inputs described in section~\ref{supervised}.
+	
+	\item \textbf{Hidden Layer(s)}: This is where the neural network performs most of its calculations. This part may consist of a single layer or multiple. Each layer has one or more nodes, a point at which a linear calculation made similar to (\ref{instance_prediction}) is made in addition to the application of a non-linear activation function.
+	
+	\item \textbf{Output Layer}: This is the layer where outputs are fed out of the network. This is akin to the model outputs described in section~\ref{supervised} though there may be one or more output nodes i.e. the model may have more than a single model output. At each output node, the model makes a linear combination of the outputs from the previous layer, but does not apply an activation function as they do in the hidden layer(s).
+	
+\end{enumerate}
+
+\noindent
+The input layer from Figure~\ref{fig:neural} has four inputs. These can be continuous numerical variables (as per traditional machine learning models) or representations of categorical data (an integer representing one of several categories).  For this example, they are the four model inputs discussed at the start of section~\ref{supervised} which are used to calculate reactor core power. However, we will modify x3 so as to be represented by a categorical value: 0 for low, 1 for medium, 2 for high flowrate. \
+
+\noindent
+For each dataset instance, the values from the input layer nodes are fed into each node in the first hidden layer. As each node performs the calculation shown in (\ref{instance_prediction}, each node also has as many unique weights as the number of nodes in the previous layer plus one bias term.
+
+activation function - non trainable parameter
+
+%Multiple outputs - the ability 
+%
+%Fully connected - both ways
+%
+%Advantage of neural networks - can model complex phenomena with non linear relationships in the data.
+%
+%Weights for each node
+%
+%There are four input features, comparable to the four inputs described in the example at the start of the  After the input layer, we have two hidden layers, the first with 3 nodes, the second with two nodes. Following the second hidden 
 
 % activation functions as yes/no/maybe 
 
@@ -268,6 +295,8 @@ Figure~\ref{fig:neural} shows a representation of a neural network. There are fo
 % nodal operation
 % activaton function operaion
 % non linearity
+% drop out
+% Regularisation
 
 
 
