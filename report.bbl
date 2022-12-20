@@ -23,6 +23,12 @@ C.~Allen.
   power station.
 \newblock Technical report, 1990.
 
+\bibitem{anastassiou2011multivariate}
+G.~A. Anastassiou.
+\newblock Multivariate hyperbolic tangent neural network approximation.
+\newblock {\em Computers \& Mathematics with Applications}, 61(4):809--821,
+  2011.
+
 \bibitem{asteris2021predicting}
 P.~G. Asteris, A.~D. Skentou, A.~Bardhan, P.~Samui, and K.~Pilakoutas.
 \newblock Predicting concrete compressive strength using hybrid ensembling of
@@ -243,6 +249,11 @@ S.~H. Kim and F.~Boukouvala.
   optimization: a comparison of subset selection for regression techniques.
 \newblock {\em Optimization Letters}, pages 1--22, 2019.
 
+\bibitem{koehrsen2018overfitting}
+W.~Koehrsen.
+\newblock Overfitting vs. underfitting: A complete example.
+\newblock {\em Towards Data Science}, 2018.
+
 \bibitem{wiki:xxx}
 T.~Koziara.
 \newblock Parmec documentation, 2019.
@@ -319,6 +330,14 @@ L.~Perez and J.~Wang.
 \newblock The effectiveness of data augmentation in image classification using
   deep learning.
 \newblock {\em arXiv preprint arXiv:1712.04621}, 2017.
+
+\bibitem{pratiwi2020sigmoid}
+H.~Pratiwi, A.~P. Windarto, S.~Susliansyah, R.~R. Aria, S.~Susilowati, L.~K.
+  Rahayu, Y.~Fitriani, A.~Merdekawati, and I.~R. Rahadjeng.
+\newblock Sigmoid activation function in selecting the best model of artificial
+  neural networks.
+\newblock In {\em Journal of Physics: Conference Series}, volume 1471, page
+  012010. IOP Publishing, 2020.
 
 \bibitem{refaeilzadeh2009cross}
 P.~Refaeilzadeh, L.~Tang, and H.~Liu.

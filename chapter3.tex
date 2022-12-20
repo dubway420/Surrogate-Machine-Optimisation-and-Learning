@@ -219,7 +219,7 @@ A low or diverging training loss calculated during training suggests a model tha
 \end{figure*}
 		
 \noindent
-Another problem is that a machine learning model in this format can only model linear relationships between input features and outputs labels. Therefore, the gradient descent method described here may not be optimal for modelling the example scenario we discussed at the start of this section as there is a complex relationship between some inputs and the output value. For example, increasing the flowrate acts to increase and then decrease the power at different levels. \\		
+Another problem is that a machine learning model in this format can only model linear relationships between input features and outputs labels. Therefore, the gradient descent method described here may not be optimal for modelling the example scenario we discussed at the start of this section as there is a complex relationship between some inputs and the output value. For example, increasing the flowrate acts to increase and then decrease the power at different levels. This means that a linear model fit to this variable would incur inaccuracies as shown in Figure~\ref{fig:linearFit}. This is an example of underfitting \cite{koehrsen2018overfitting} where the complexity of a model is insufficient to capture the complexity of relationships within the data. \\		
 
 % UNDERFITTING
 
@@ -249,8 +249,8 @@ The machine learning methods that we have explored so far in this chapter are co
 
 \begin{figure*}[p]
 	\centering
-	\includegraphics[scale=0.65]{Figures/NeuralNetwork.jpg}
-	\caption{Neural Network Representation} {A neural network with an an input layer of four units, two hidden layers and an output layer of 3 units. At each yellow circle (node), a linear combination of the inputs leading to it is made. The calculated value is then fed into an activation function which transforms it in a non linear way. The exception to this the output layer (O1 - O3) where no activation function is applied.}
+	\includegraphics[scale=0.5]{Figures/NeuralNetwork.jpg}
+	\caption{Neural Network Representation} {A neural network with an an input layer of four units, two hidden layers and an output layer of 3 units. At each yellow circle (node), a linear combination of the inputs leading to it is made. The calculated value is then fed into an activation function (green) which transforms it in a non linear way. The exception to this the output layer (red) where no activation function is applied.}
 	\label{fig:neural}
 \end{figure*}
 
@@ -268,39 +268,74 @@ Figure~\ref{fig:neural} shows a representation of a neural network. A neural net
 \end{enumerate}
 
 \noindent
-The input layer from Figure~\ref{fig:neural} has four inputs. These can be continuous numerical variables (as per traditional machine learning models) or representations of categorical data (an integer representing one of several categories).  For this example, they are the four model inputs discussed at the start of section~\ref{supervised} which are used to calculate reactor core power. However, we will modify x3 so as to be represented by a categorical value: 0 for low, 1 for medium, 2 for high flowrate. \
+The input layer from the example in Figure~\ref{fig:neural} has four inputs. These can be continuous numerical variables (as per traditional machine learning models) or representations of categorical data (an integer representing one of several categories).  For this example, they are the four model inputs discussed at the start of section~\ref{supervised} which are used to calculate reactor core power. However, we will modify x3 so as to be represented by a categorical value: 0 for low, 1 for medium, 2 for high flowrate. \
 
 \noindent
-For each dataset instance, the values from the input layer nodes are fed into each node in the first hidden layer. As each node performs the calculation shown in (\ref{instance_prediction}, each node also has as many unique weights as the number of nodes in the previous layer plus one bias term.
+For each dataset instance, the values from the input layer nodes are fed into each node in the first hidden layer. As each node performs the calculation shown in (\ref{instance_prediction}, each node also has as many unique weights as the number of nodes in the previous layer plus one bias term. \\
 
-activation function - non trainable parameter
+\noindent
+As mentioned above, the output of each node in the hidden layers section of the network is normally passed through a non-linear activation function. The activation function can take one of several  forms and is a non trainable parameter - the user must select the activation function to be used by each node. The optimal configuration of activation functions used in the network can be determined through a process of experimental trial and error, through inspiration from previous machine learning works in the field, or some combination. \\
 
-%Multiple outputs - the ability 
-%
-%Fully connected - both ways
-%
-%Advantage of neural networks - can model complex phenomena with non linear relationships in the data.
-%
-%Weights for each node
-%
-%There are four input features, comparable to the four inputs described in the example at the start of the  After the input layer, we have two hidden layers, the first with 3 nodes, the second with two nodes. Following the second hidden 
+\noindent
+Lets begin with an example starting at node L1N1 - i.e. \textbf{L}ayer 1, \textbf{N}ode 1. A linear combination of the four input features (x) is made with five trainable parameters equivalent to (\ref{instance_prediction}). The output of this calculation is then passed into adjunct node A1N1 (\textbf{A}ctivation 1, \textbf{N}ode 1) \footnote{The combined linear and activation function calculations are usually referred to as a single 'nodal' operation. However, for the sake of this example they shall we discussed as two operations.}. For this example, we will assume it to be the sigmoid function \cite{pratiwi2020sigmoid} that is applied. It is common to use the same activation function in all nodes within the same layer, and so we will assume A1N2 and A1N3 also uses the sigmoid function.\\
 
-% activation functions as yes/no/maybe 
+\noindent
+Equation (\ref{sigmoid_activation}) shows the the sigmoid activation operation performed at A1N1 which is a function of the linear output of L1N1, $\hat{y}_{L1N1}$.  Figure~\ref{fig:sigmoid} shows the output of the sigmoid activation function. As can be seen, for strongly negative values of $\hat{y}$, the sigmoid function outputs values that tend towards zero. Between negative and positive four, the output value switches between zero and one, with the derivative of the function peaking around zero. \\ 
 
-% validatio  set as well as training and testing
+\begin{equation} \label{sigmoid_activation}
+	\sigma_{A1N1} = \frac{1}{1 + \exp(-\hat{y}_{L1N1})}
+\end{equation}
+
+\begin{figure*}[p]
+	\centering
+	\includegraphics[scale=0.5]{Figures/Sigmoid.jpg}
+	\caption{Sigmoid Activation Function} {A graphical representation of the output of (\ref{sigmoid_activation}) is given by the dark blue line. The derivative of this function is represented in light grey. As can be seen, the output rapidly switches between 0 and 1 between inputs of negative and positive four. This sigmoid activation function can be applied at activation nodes such as A1N1 in Figure~\ref{fig:neural}. }
+	\label{fig:sigmoid}
+\end{figure*}
+
+\noindent
+In this example and in most other activation functions, there is a notable threshold above which the output quickly switches between two values. In this example, the output is switching between 0 and 1 and can be thought of being equivalent to an electrical switch being on and off when a mathematical pattern is identified. \\
+
+
+\noindent
+Following the first hidden layer shown in Figure~\ref{fig:neural}, it can be seen that the activated outputs of A1N1, A1N2 and A1N3 are fed into each of nodes in hidden layer 2.  As they each receive three inputs, nodes L2N1 and L2N2 each have four unique trainable parameters (one weight for each of the nodes in the previous layer plus a bias term). Let us assume that A2N1, A2N2 use a softplus activation function \cite{zheng2015improving} which is similar to the rectified linear unit (relu) \cite{hara2015analysis}. \\
+
+\begin{figure*}[p]
+	\centering
+	\includegraphics[scale=0.5]{Figures/softplus_relu.jpg}
+	\caption{The Softplus and ReLu Activation Functions} { }
+	\label{fig:soft_relu}
+\end{figure*}
+
+\noindent
+Note that each of the activation functions represented in Figure~\ref{fig:soft_relu} contain a linear section and a threshold. This is in contrast to the symmetric sigmoid function we saw earlier and the hyperbolic tangent function \cite{anastassiou2011multivariate}. \\
+
+\noindent
+The final part of a neural network is the output layer, shown as red circles in Figure~\ref{fig:neural}. Each output node (y1 - y3) is a terminus for the aggregate nodal calculation performed throughout the network. Whereas the traditional machine learning methods described in section~\ref{supervised} can only generate a single output prediction, neural networks can generate multiple outputs.  In our example, these outputs might represent core temperature (y1)\footnote{Measured in degrees Kelvin}, core pressure (y2)\footnote{Measured in Pascals} and reactor power (as was predicted by the example models from the previous section). The ability to generate multiple predicted variables as part of a single machine learning model operation has advantages when users are likely to be interested in several variables at the same time. 
+\\
+
+\noindent
+Each of the three red output nodes perform a linear combination of the outputs of the final hidden layer (A2N1 and A2N2) and its own unique weights and bias. Once again, each node in the output layer has one weight value for each node in the previous layer, plus a bias term. However, unlike hidden layer nodes, an output node representing a continuous variable isn't usually transformed by an activation function.
+\\
+
+% EXPLANATION OF BACKPROPAGATION
+
+\noindent
+In the neural network arrangement we have discussed in this section, all nodes are connected to each other, hence it is often referred to as a dense or fully connected neural networks. We have seen one example of a neural network architecture in Figure~\ref{fig:neural}, but in practice this architecture could take a range of forms, with any number of hidden layers and nodes. The optimal arrangement can be determined by the user through experimentation, although there are a few common configurations which have proven effective for a range of problems. \\
+
+\noindent
+Apart from the ability of generate multiple outputs, a key advantage of neural networks over traditional machine learning models is their ability to model complex phenomena which may have non-linear relationships within the data. For example, in Figure~\ref{fig:linearFit} we saw the difficulty of fitting a predictive linear model to a variable which has a  non-monotonic relationship with the output variable. A fully connected neural network with an appropriately chosen architecture and choice of activation functions may be capable of modelling this relationship. \\ 
+
+\noindent
+As well as having advantages, 
+
+% Large dataset needed
+% overfitting
+    % validation set monitoring 
+    % Regularisation
+    % dropout
 % Exploding gradients
-% input layer 
-% output layer
-% hidden layers
-% nodal operation
-% activaton function operaion
-% non linearity
-% drop out
-% Regularisation
-
-
-
-
+%vanishing gradients
 
 
 \section{Convolutional Neural Networks (CNN)} \label{convolution}
