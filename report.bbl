@@ -181,6 +181,12 @@ K.~He, X.~Zhang, S.~Ren, and J.~Sun.
 \newblock Deep residual learning for image recognition. corr abs/1512.03385
   (2015), 2015.
 
+\bibitem{hecht1992theory}
+R.~Hecht-Nielsen.
+\newblock Theory of the backpropagation neural network.
+\newblock In {\em Neural networks for perception}, pages 65--93. Elsevier,
+  1992.
+
 \bibitem{henderson1995job}
 R.~L. Henderson.
 \newblock Job scheduling under the portable batch system.

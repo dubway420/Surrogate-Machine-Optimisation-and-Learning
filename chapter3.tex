@@ -318,7 +318,33 @@ The final part of a neural network is the output layer, shown as red circles in 
 Each of the three red output nodes perform a linear combination of the outputs of the final hidden layer (A2N1 and A2N2) and its own unique weights and bias. Once again, each node in the output layer has one weight value for each node in the previous layer, plus a bias term. However, unlike hidden layer nodes, an output node representing a continuous variable isn't usually transformed by an activation function.
 \\
 
-% EXPLANATION OF BACKPROPAGATION
+\noindent
+So far in this section, we have looked at how a neural network makes predictions by feeding inputs forward through several stages of nodal calculation. As we have discussed, each nodal operation involves several weights and a bias term. As they in the traditional methods discussed in section~\ref{supervised}, these weights and biases are initialised to a random variable at the start of training. In contrast to traditional methods, a neural network has a significantly greater number of trainable parameters. The training of these parameters again requires the use of gradient descent but using a more complex method known as backpropagation \cite{hecht1992theory}. \\
+
+%\noindent
+%Backpropagation again requires the use of a loss function that calculates a measure of difference between the predictions of the model and the ground truth labels. In this example we will again use the mean squared error (MSE) loss function as defined in (\ref{mse}), however, this time it must be adapted to calculate the loss for multiple model outputs. \\
+%
+%\begin{equation} \label{mse_multi}
+%	\lambda_{multi\_mse} = \frac{1}{nk}\sum_{i=1}^n \sum_{k=1}^o (y_{ik} - \hat{y_{ik}})^2
+%\end{equation}
+%
+%\noindent
+%Equation~\ref{mse_multi} shows version of the MSE equation adapted for machine learning models with multiple outputs. The inner term calculates the square residual between output k of instance i. This is then calculated for all terms and summed over all n samples each having o number of model predictions in the output layer. \\  
+
+%\noindent
+%The gradient descent process is then performed at each node in the network. Like with traditional machine learning models, the trainable model parameters are updated by calculating the gradient of the loss function with regards to each weight and bias value. For the output layer nodes, the process  is similar to that for traditional methods as the prediction is the linear combination of the outputs from the previous layer and the weights \& bias term. For nodes in the hidden layers, an extra mathematical step is required due to the activation functions applied. \\
+%
+%\noindent
+%Lets take the combined output of L1N1 \& A1N1 which was given by (\ref{sigmoid_activation}) , representing the sigmoid activation of the linear combination of model inputs and the weights \& bias term (\ref{L1N1}). \\
+%
+%  \begin{equation} \label{L1N1}
+%  	\hat{y}_{L1N1} = x_1  w_1 + x_2 w_2 + x_3 w_3 + x_4 w_4 + b
+%  \end{equation}
+%
+%\noindent
+%The derivative of the sigmoid output (\ref{sigmoid_activation}) of node A1N1, $\sigma_{A1N1}$, with regards to weight $w_1$ of L1N1 is given by \\
+
+
 
 \noindent
 In the neural network arrangement we have discussed in this section, all nodes are connected to each other, hence it is often referred to as a dense or fully connected neural networks. We have seen one example of a neural network architecture in Figure~\ref{fig:neural}, but in practice this architecture could take a range of forms, with any number of hidden layers and nodes. The optimal arrangement can be determined by the user through experimentation, although there are a few common configurations which have proven effective for a range of problems. \\

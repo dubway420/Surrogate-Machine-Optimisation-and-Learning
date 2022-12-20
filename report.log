@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022/Arch Linux) (preloaded format=pdflatex 2022.11.28)  20 DEC 2022 00:23
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022/Arch Linux) (preloaded format=pdflatex 2022.11.28)  20 DEC 2022 22:29
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -671,90 +671,93 @@ Underfull \hbox (badness 10000) in paragraph at lines 317--320
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 323--325
+Underfull \hbox (badness 10000) in paragraph at lines 321--323
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 326--328
+Underfull \hbox (badness 10000) in paragraph at lines 349--351
 
  []
 
-<Figures/cnn_feature.png, id=125, 475.7775pt x 310.15875pt>
+
+Underfull \hbox (badness 10000) in paragraph at lines 352--354
+
+ []
+
+[34]
+<Figures/cnn_feature.png, id=128, 475.7775pt x 310.15875pt>
 File: Figures/cnn_feature.png Graphic file (type png)
 <use Figures/cnn_feature.png>
-Package pdftex.def Info: Figures/cnn_feature.png  used on input line 345.
+Package pdftex.def Info: Figures/cnn_feature.png  used on input line 371.
 (pdftex.def)             Requested size: 356.83223pt x 232.61848pt.
-[34]
-Underfull \hbox (badness 10000) in paragraph at lines 350--352
+
+Underfull \hbox (badness 10000) in paragraph at lines 376--378
 
  []
 
 <Figures/cnn_arch.png, id=129, 911.405pt x 326.821pt>
 File: Figures/cnn_arch.png Graphic file (type png)
 <use Figures/cnn_arch.png>
-Package pdftex.def Info: Figures/cnn_arch.png  used on input line 355.
+Package pdftex.def Info: Figures/cnn_arch.png  used on input line 381.
 (pdftex.def)             Requested size: 410.12846pt x 147.06808pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 362--364
+Underfull \hbox (badness 10000) in paragraph at lines 388--390
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 365--368
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 369--372
+Underfull \hbox (badness 10000) in paragraph at lines 391--394
 
  []
 
 [35] [36 <./Figures/cnn_feature.png> <./Figures/cnn_arch.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 395--398
+
+ []
+
 <Figures/surrogate_model.png, id=138, 572.89032pt x 382.42876pt>
 File: Figures/surrogate_model.png Graphic file (type png)
 <use Figures/surrogate_model.png>
-Package pdftex.def Info: Figures/surrogate_model.png  used on input line 375.
+Package pdftex.def Info: Figures/surrogate_model.png  used on input line 401.
 (pdftex.def)             Requested size: 372.3743pt x 248.57573pt.
 <Figures/MLS_vs_OM.png, id=139, 429.85594pt x 347.79938pt>
 File: Figures/MLS_vs_OM.png Graphic file (type png)
 <use Figures/MLS_vs_OM.png>
-Package pdftex.def Info: Figures/MLS_vs_OM.png  used on input line 382.
+Package pdftex.def Info: Figures/MLS_vs_OM.png  used on input line 408.
 (pdftex.def)             Requested size: 279.40305pt x 226.06691pt.
-
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 395--397
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 398--401
-
- []
-
-<Figures/architecture.png, id=140, 734.745pt x 271.0125pt>
-File: Figures/architecture.png Graphic file (type png)
-<use Figures/architecture.png>
-Package pdftex.def Info: Figures/architecture.png  used on input line 404.
-(pdftex.def)             Requested size: 367.3716pt x 135.5059pt.
-
-Underfull \hbox (badness 10000) in paragraph at lines 409--412
+Underfull \hbox (badness 10000) in paragraph at lines 421--423
 
  []
 
 [37] [38 <./Figures/surrogate_model.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 424--427
 
-LaTeX Warning: Reference `fig:neural_network' on page 39 undefined on input lin
-e 414.
+ []
 
-) [39 <./Figures/MLS_vs_OM.png>] [40] [41 <./Figures/architecture.png>]
+<Figures/architecture.png, id=147, 734.745pt x 271.0125pt>
+File: Figures/architecture.png Graphic file (type png)
+<use Figures/architecture.png>
+Package pdftex.def Info: Figures/architecture.png  used on input line 430.
+(pdftex.def)             Requested size: 367.3716pt x 135.5059pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 435--438
+
+ []
+
+[39 <./Figures/MLS_vs_OM.png>]
+
+LaTeX Warning: Reference `fig:neural_network' on page 40 undefined on input lin
+e 440.
+
+) [40] [41 <./Figures/architecture.png>]
 \openout2 = `chapter2.aux'.
 
-
-(./chapter2.tex
+ (./chapter2.tex
 Chapter 3.
 <Figures/AGR_plan.png, id=158, 224.33812pt x 232.61906pt>
 File: Figures/AGR_plan.png Graphic file (type png)
@@ -2144,7 +2147,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 137--138
 
 
 ] [148] [149] [150]
-Underfull \hbox (badness 3158) in paragraph at lines 268--271
+Underfull \hbox (badness 3158) in paragraph at lines 274--277
 []\OT1/ptm/m/n/12 A. Lewkowycz.  How to de-cay your learn-ing rate.  \OT1/ptm/m
 /it/12 arXiv preprint
  []
@@ -2157,10 +2160,10 @@ LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 6479 strings out of 478238
- 110470 string characters out of 5850455
- 391548 words of memory out of 5000000
- 24486 multiletter control sequences out of 15000+600000
+ 6480 strings out of 478238
+ 110487 string characters out of 5850455
+ 391552 words of memory out of 5000000
+ 24487 multiletter control sequences out of 15000+600000
  518804 words of font info for 124 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  55i,10n,62p,1658b,304s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -2173,7 +2176,7 @@ nts/type1/urw/symbol/usyr.pfb></usr/share/texmf-dist/fonts/type1/urw/times/utmb
 8a.pfb></usr/share/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texm
 f-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texmf-dist/fonts/type1/urw/
 times/utmri8a.pfb>
-Output written on report.pdf (154 pages, 8459651 bytes).
+Output written on report.pdf (154 pages, 8460320 bytes).
 PDF statistics:
  660 PDF objects out of 1000 (max. 8388607)
  373 compressed objects within 4 object streams
