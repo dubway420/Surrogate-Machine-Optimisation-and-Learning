@@ -9,87 +9,87 @@
 \contentsline {chapter}{\numberline {2}Machine Learning Background}{18}{}%
 \contentsline {section}{\numberline {2.1}Supervised Learning}{18}{}%
 \contentsline {section}{\numberline {2.2}Neural Networks}{29}{}%
-\contentsline {section}{\numberline {2.3}Convolutional Neural Networks (CNN)}{35}{}%
-\contentsline {section}{\numberline {2.4}Surrogate Machine Learning Models}{35}{}%
-\contentsline {section}{\numberline {2.5}Transfer Learning and Existing ML Models}{37}{}%
-\contentsline {section}{\numberline {2.6}Relevant Literature}{37}{}%
-\contentsline {chapter}{\numberline {3}Nuclear Engineering Background}{42}{}%
-\contentsline {section}{\numberline {3.1}Advanced Gas-cooled Reactors (AGRs)}{42}{}%
-\contentsline {section}{\numberline {3.2}Traditional Engineering Safety Assessments}{43}{}%
-\contentsline {section}{\numberline {3.3}Parmec Model Description}{48}{}%
-\contentsline {subsection}{\numberline {3.3.1}Data Generation}{48}{}%
-\contentsline {subsection}{\numberline {3.3.2}Model Inputs}{49}{}%
-\contentsline {subsection}{\numberline {3.3.3}Model Outputs}{50}{}%
-\contentsline {section}{\numberline {3.4}Relevant Literature}{51}{}%
-\contentsline {chapter}{\numberline {4}Dataset, Framework, Exploration and Analysis}{54}{}%
-\contentsline {section}{\numberline {4.1}Dataset Exploration and Analysis}{54}{}%
-\contentsline {subsection}{\numberline {4.1.1}Time History: Example Cases}{54}{}%
-\contentsline {subsection}{\numberline {4.1.2}Entire Dataset}{55}{}%
-\contentsline {subsection}{\numberline {4.1.3}Output Correlation Analysis}{62}{}%
-\contentsline {section}{\numberline {4.2}Machine Learning Dataset}{62}{}%
-\contentsline {subsection}{\numberline {4.2.1}Model Inputs (Features)}{64}{}%
-\contentsline {subsection}{\numberline {4.2.2}Model Outputs (Labels)}{64}{}%
-\contentsline {section}{\numberline {4.3}Framework}{65}{}%
-\contentsline {subsection}{\numberline {4.3.1}Parmec Data Generation}{67}{}%
-\contentsline {subsection}{\numberline {4.3.2}Inputs and Outputs}{68}{}%
-\contentsline {subsection}{\numberline {4.3.3}Machine Learning Model Design}{68}{}%
-\contentsline {subsection}{\numberline {4.3.4}Machine Learning Model Training and Evaluation}{69}{}%
-\contentsline {chapter}{\numberline {5}Preliminary Machine Learning Experiments}{70}{}%
-\contentsline {section}{\numberline {5.1}Dataset Size Sensitivity}{70}{}%
-\contentsline {section}{\numberline {5.2}Crack Orientation}{72}{}%
-\contentsline {section}{\numberline {5.3}Transfer Learning}{74}{}%
-\contentsline {section}{\numberline {5.4}Whole Core Experiment}{75}{}%
-\contentsline {chapter}{\numberline {6}Surrogate ML Model Development}{85}{}%
-\contentsline {section}{\numberline {6.1}Abstract}{85}{}%
-\contentsline {section}{\numberline {6.2}Research Highlights}{86}{}%
-\contentsline {section}{\numberline {6.3}Introduction and Background}{86}{}%
-\contentsline {section}{\numberline {6.4}Data Selection and Focus}{87}{}%
-\contentsline {section}{\numberline {6.5}Surrogate Model Development and Design}{88}{}%
-\contentsline {subsection}{\numberline {6.5.1}Traditional Methods}{88}{}%
-\contentsline {subsection}{\numberline {6.5.2}Neural Networks}{88}{}%
-\contentsline {subsection}{\numberline {6.5.3}General Hyper-Parameters}{90}{}%
-\contentsline {subsection}{\numberline {6.5.4}Neural Network Input Encoding}{92}{}%
-\contentsline {subsubsection}{DNN - 1D}{92}{}%
-\contentsline {subsubsection}{CNN - 2D}{95}{}%
-\contentsline {subsubsection}{CNN - 3D}{95}{}%
-\contentsline {subsection}{\numberline {6.5.5}Feature Selection}{96}{}%
-\contentsline {subsubsection}{Regional Selection}{96}{}%
-\contentsline {subsubsection}{Level Selection}{97}{}%
-\contentsline {section}{\numberline {6.6}Results}{98}{}%
-\contentsline {subsection}{\numberline {6.6.1}Traditional Methods}{98}{}%
-\contentsline {subsection}{\numberline {6.6.2}Input Encoding}{98}{}%
-\contentsline {subsection}{\numberline {6.6.3}Feature Selection}{98}{}%
-\contentsline {subsection}{\numberline {6.6.4}Analysis and Discussion}{100}{}%
-\contentsline {section}{\numberline {6.7}Conclusion}{103}{}%
-\contentsline {chapter}{\numberline {7}Methods to Improve Surrogate ML Models}{107}{}%
-\contentsline {section}{\numberline {7.1}Abstract}{107}{}%
-\contentsline {section}{\numberline {7.2}Research Highlights}{107}{}%
-\contentsline {section}{\numberline {7.3}Introduction}{108}{}%
-\contentsline {section}{\numberline {7.4}Background}{110}{}%
-\contentsline {subsection}{\numberline {7.4.1}Advanced Gas-cooled Reactors and the Parmec Model}{110}{}%
-\contentsline {subsection}{\numberline {7.4.2}Previous Machine Learning Surrogate Model of Parmec}{110}{}%
-\contentsline {subsection}{\numberline {7.4.3}Data Augmentation}{110}{}%
-\contentsline {subsection}{\numberline {7.4.4}Custom Loss Function}{112}{}%
-\contentsline {subsection}{\numberline {7.4.5}Transfer Learning}{114}{}%
-\contentsline {section}{\numberline {7.5}Preparation}{114}{}%
-\contentsline {subsection}{\numberline {7.5.1}Image Manipulation Techniques}{114}{}%
-\contentsline {subsection}{\numberline {7.5.2}Weighted Loss Function}{117}{}%
-\contentsline {subsection}{\numberline {7.5.3}Pre-Trained Model Transfer}{118}{}%
-\contentsline {section}{\numberline {7.6}Experimental Evaluation Process}{120}{}%
-\contentsline {subsection}{\numberline {7.6.1}Augmentation}{120}{}%
-\contentsline {subsection}{\numberline {7.6.2}Custom Loss Function}{122}{}%
-\contentsline {subsection}{\numberline {7.6.3}Transfer Learning}{124}{}%
-\contentsline {section}{\numberline {7.7}Results}{125}{}%
-\contentsline {subsection}{\numberline {7.7.1}Augmentation}{125}{}%
-\contentsline {subsubsection}{Individual Augmentation}{125}{}%
-\contentsline {subsubsection}{Multiple Augmentation}{127}{}%
-\contentsline {subsection}{\numberline {7.7.2}Custom Loss Function}{127}{}%
-\contentsline {subsection}{\numberline {7.7.3}Transfer Learning}{129}{}%
-\contentsline {subsection}{\numberline {7.7.4}Analysis and Discussion}{130}{}%
-\contentsline {section}{\numberline {7.8}Conclusion}{134}{}%
-\contentsline {chapter}{\numberline {8}Discussion and Conclusions}{136}{}%
-\contentsline {section}{\numberline {8.1}Summary of Findings}{136}{}%
-\contentsline {section}{\numberline {8.2}Discussion}{137}{}%
-\contentsline {section}{\numberline {8.3}Limitations}{145}{}%
-\contentsline {section}{\numberline {8.4}Further Work}{146}{}%
-\contentsline {chapter}{Bibliography}{147}{}%
+\contentsline {section}{\numberline {2.3}Convolutional Neural Networks (CNN)}{36}{}%
+\contentsline {section}{\numberline {2.4}Surrogate Machine Learning Models}{38}{}%
+\contentsline {section}{\numberline {2.5}Transfer Learning and Existing ML Models}{40}{}%
+\contentsline {section}{\numberline {2.6}Relevant Literature}{40}{}%
+\contentsline {chapter}{\numberline {3}Nuclear Engineering Background}{44}{}%
+\contentsline {section}{\numberline {3.1}Advanced Gas-cooled Reactors (AGRs)}{44}{}%
+\contentsline {section}{\numberline {3.2}Traditional Engineering Safety Assessments}{45}{}%
+\contentsline {section}{\numberline {3.3}Parmec Model Description}{50}{}%
+\contentsline {subsection}{\numberline {3.3.1}Data Generation}{50}{}%
+\contentsline {subsection}{\numberline {3.3.2}Model Inputs}{51}{}%
+\contentsline {subsection}{\numberline {3.3.3}Model Outputs}{52}{}%
+\contentsline {section}{\numberline {3.4}Relevant Literature}{53}{}%
+\contentsline {chapter}{\numberline {4}Dataset, Framework, Exploration and Analysis}{56}{}%
+\contentsline {section}{\numberline {4.1}Dataset Exploration and Analysis}{56}{}%
+\contentsline {subsection}{\numberline {4.1.1}Time History: Example Cases}{56}{}%
+\contentsline {subsection}{\numberline {4.1.2}Entire Dataset}{57}{}%
+\contentsline {subsection}{\numberline {4.1.3}Output Correlation Analysis}{64}{}%
+\contentsline {section}{\numberline {4.2}Machine Learning Dataset}{64}{}%
+\contentsline {subsection}{\numberline {4.2.1}Model Inputs (Features)}{66}{}%
+\contentsline {subsection}{\numberline {4.2.2}Model Outputs (Labels)}{66}{}%
+\contentsline {section}{\numberline {4.3}Framework}{67}{}%
+\contentsline {subsection}{\numberline {4.3.1}Parmec Data Generation}{69}{}%
+\contentsline {subsection}{\numberline {4.3.2}Inputs and Outputs}{70}{}%
+\contentsline {subsection}{\numberline {4.3.3}Machine Learning Model Design}{70}{}%
+\contentsline {subsection}{\numberline {4.3.4}Machine Learning Model Training and Evaluation}{71}{}%
+\contentsline {chapter}{\numberline {5}Preliminary Machine Learning Experiments}{72}{}%
+\contentsline {section}{\numberline {5.1}Dataset Size Sensitivity}{72}{}%
+\contentsline {section}{\numberline {5.2}Crack Orientation}{74}{}%
+\contentsline {section}{\numberline {5.3}Transfer Learning}{76}{}%
+\contentsline {section}{\numberline {5.4}Whole Core Experiment}{77}{}%
+\contentsline {chapter}{\numberline {6}Surrogate ML Model Development}{87}{}%
+\contentsline {section}{\numberline {6.1}Abstract}{87}{}%
+\contentsline {section}{\numberline {6.2}Research Highlights}{88}{}%
+\contentsline {section}{\numberline {6.3}Introduction and Background}{88}{}%
+\contentsline {section}{\numberline {6.4}Data Selection and Focus}{89}{}%
+\contentsline {section}{\numberline {6.5}Surrogate Model Development and Design}{90}{}%
+\contentsline {subsection}{\numberline {6.5.1}Traditional Methods}{90}{}%
+\contentsline {subsection}{\numberline {6.5.2}Neural Networks}{90}{}%
+\contentsline {subsection}{\numberline {6.5.3}General Hyper-Parameters}{92}{}%
+\contentsline {subsection}{\numberline {6.5.4}Neural Network Input Encoding}{94}{}%
+\contentsline {subsubsection}{DNN - 1D}{94}{}%
+\contentsline {subsubsection}{CNN - 2D}{97}{}%
+\contentsline {subsubsection}{CNN - 3D}{97}{}%
+\contentsline {subsection}{\numberline {6.5.5}Feature Selection}{98}{}%
+\contentsline {subsubsection}{Regional Selection}{98}{}%
+\contentsline {subsubsection}{Level Selection}{99}{}%
+\contentsline {section}{\numberline {6.6}Results}{100}{}%
+\contentsline {subsection}{\numberline {6.6.1}Traditional Methods}{100}{}%
+\contentsline {subsection}{\numberline {6.6.2}Input Encoding}{100}{}%
+\contentsline {subsection}{\numberline {6.6.3}Feature Selection}{100}{}%
+\contentsline {subsection}{\numberline {6.6.4}Analysis and Discussion}{102}{}%
+\contentsline {section}{\numberline {6.7}Conclusion}{105}{}%
+\contentsline {chapter}{\numberline {7}Methods to Improve Surrogate ML Models}{109}{}%
+\contentsline {section}{\numberline {7.1}Abstract}{109}{}%
+\contentsline {section}{\numberline {7.2}Research Highlights}{109}{}%
+\contentsline {section}{\numberline {7.3}Introduction}{110}{}%
+\contentsline {section}{\numberline {7.4}Background}{112}{}%
+\contentsline {subsection}{\numberline {7.4.1}Advanced Gas-cooled Reactors and the Parmec Model}{112}{}%
+\contentsline {subsection}{\numberline {7.4.2}Previous Machine Learning Surrogate Model of Parmec}{112}{}%
+\contentsline {subsection}{\numberline {7.4.3}Data Augmentation}{112}{}%
+\contentsline {subsection}{\numberline {7.4.4}Custom Loss Function}{114}{}%
+\contentsline {subsection}{\numberline {7.4.5}Transfer Learning}{116}{}%
+\contentsline {section}{\numberline {7.5}Preparation}{116}{}%
+\contentsline {subsection}{\numberline {7.5.1}Image Manipulation Techniques}{116}{}%
+\contentsline {subsection}{\numberline {7.5.2}Weighted Loss Function}{119}{}%
+\contentsline {subsection}{\numberline {7.5.3}Pre-Trained Model Transfer}{120}{}%
+\contentsline {section}{\numberline {7.6}Experimental Evaluation Process}{122}{}%
+\contentsline {subsection}{\numberline {7.6.1}Augmentation}{122}{}%
+\contentsline {subsection}{\numberline {7.6.2}Custom Loss Function}{124}{}%
+\contentsline {subsection}{\numberline {7.6.3}Transfer Learning}{126}{}%
+\contentsline {section}{\numberline {7.7}Results}{127}{}%
+\contentsline {subsection}{\numberline {7.7.1}Augmentation}{127}{}%
+\contentsline {subsubsection}{Individual Augmentation}{127}{}%
+\contentsline {subsubsection}{Multiple Augmentation}{129}{}%
+\contentsline {subsection}{\numberline {7.7.2}Custom Loss Function}{129}{}%
+\contentsline {subsection}{\numberline {7.7.3}Transfer Learning}{131}{}%
+\contentsline {subsection}{\numberline {7.7.4}Analysis and Discussion}{132}{}%
+\contentsline {section}{\numberline {7.8}Conclusion}{136}{}%
+\contentsline {chapter}{\numberline {8}Discussion and Conclusions}{138}{}%
+\contentsline {section}{\numberline {8.1}Summary of Findings}{138}{}%
+\contentsline {section}{\numberline {8.2}Discussion}{139}{}%
+\contentsline {section}{\numberline {8.3}Limitations}{147}{}%
+\contentsline {section}{\numberline {8.4}Further Work}{148}{}%
+\contentsline {chapter}{Bibliography}{149}{}%
