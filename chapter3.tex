@@ -2,21 +2,21 @@
 \label{cha:ML}
 
 This chapter gives an introduction and explanation of several machine learning techniques and the theory behind them. The areas to be explored include: supervised learning, neural networks, convolutional neural networks, surrogate machine learning models and transfer learning. 
-\\
 
-\noindent
-For a more detailed explanation of the theory and workings of machine learning, see \cite{bishop2006pattern}.
+
+%\noindent
+%For a more detailed explanation of the theory and workings of machine learning, see \cite{bishop2006pattern}.
 
 
 \section{Supervised Learning} \label{supervised}
 
-In the fields of engineering and science, models are frequently produced in order to simulate mathematical or natural phenomena. In these areas, accurate information regarding the phenomena they study. Such information allows the testing of scientific hypothesis and forecasting of future events. But what defines a model? \\
+In the fields of engineering and science, models are frequently produced in order to simulate mathematical or natural phenomena. In these areas, accurate information regarding the phenomena they study is of high importance. Such information allows the testing of scientific hypothesis and forecasting of future events. But what defines a model? \\
 
 \noindent 
-What is common to almost all models is the presence on input variables  and outputs . The model will use a set of input values (which we'll refer to as x) to calculate an outputs values (which we'll refer to as y) that are of interest to those using them. We can approach the development of such models from a hard computing angle: that is, we can hardcode relationships between inputs and outputs based on known relationships. \\
+What is common to almost all models is the presence of input variables and outputs. The model will use a set of input values (referred to as x) to calculate an outputs values (referred to as y) that are of interest to those using them. It is possible to approach the development of such models from a hard computing angle: that is, the relationships between inputs and outputs can be hardcoded based on known relationships. \\
 
 \noindent
-Lets look at an example from the domain we are studying in this PhD thesis. In the  field of nuclear engineering, it is important to be able to calculate the power output of a nuclear reactor (which we'll measure in kilowatts) as a function of conditions within the core (\ref{hard_power}).
+This section will begin with a look at an example from the domain studied in this PhD thesis. In the field of nuclear engineering, it is important to be able to calculate the power output of a nuclear reactor (measured in kilowatts) as a function of conditions within the core as given by Equation (\ref{hard_power}).
 
 \begin{equation} \label{hard_power}
 	Power(kW)  \rightarrow f\{x\}
@@ -35,14 +35,14 @@ In this example, an output value (power) is calculated as a function of input va
 
 \begin{enumerate} [label=$x_2$]
 	
-		\item \textbf{Time Since Refuelling:} The length of time since the core was refuelled. As this time increases, the power level would tend to drop as the useable content of the fuel is used up. This power fall would be linear at first, but the rate would accelerate  after a certain point due to the build up of fission poisons within the core. This value is measured in hours.
+		\item \textbf{Time Since Refuelling:} The length of time since the core was refuelled. As this time increases, the power level would tend to drop as the useable content of the fuel is exhausted. This fall in power is initially linear, but the rate would accelerate after a certain point due to the build up of fission poisons within the core. This value is measured in hours.
 
 \end{enumerate}
 
 \begin{enumerate} [label=$x_3$]
 		
-	\item  \textbf{Flowrate of Coolant:} The rate at which coolant is pumped into the core. This has a positive correlation with core power at lower rates, as the coolant (usually water) helps to sustain the nuclear chain reaction. However, this relationship breaks down after a certain flowrate, as certain concentrations of water act to block the fission sustaining neutrons. The flowrate would  is measured in $m^3$ per second.
-
+	\item  \textbf{Flowrate of Coolant:} The rate at which coolant is pumped into the core. This has a positive correlation with core power at lower rates, as the coolant (usually water) helps to sustain the nuclear chain reaction. However, this relationship breaks down after a certain flowrate, as certain concentrations of water act to block the fission sustaining neutrons. The flowrate is measured in cubic meters per second ($m^3s$).
+	
 \end{enumerate}
 
 \begin{enumerate} [label=$x_4$]
@@ -51,7 +51,7 @@ In this example, an output value (power) is calculated as a function of input va
 	
 \end{enumerate}
 \noindent
-Using the relationships between these inputs at the output we wish to calculate, it would be possible to formulate a model to calculate reactor power output as a function of core configuration. However, from the complex relationships we discuss above, this would not be a trivial undertaking. The production of an effective model through hard computing techniques would require a strong understanding of the physical phenomena underpinning each factor. It would also be intensive in terms of effort from human domain experts. However, we may be able to formulate a model for this phenomena roughly in the form of (\ref{linear_model}). \\
+Using the relationships between these inputs at the outputs, it would be possible to formulate a model to calculate reactor power output as a function of core configuration. However, from the complex relationships was discussed above, this would not be a trivial undertaking. The production of an effective model through hard computing techniques would require a strong understanding of the physical phenomena underpinning each factor. It would also be intensive in terms of effort from human domain experts. However, it may be able to formulate a model for this phenomena roughly in the form of Equation (\ref{linear_model}). \\
 
 \begin{equation} \label{linear_model}
 	Power (kW) = f\{x_1\} + f\{x_2\} + f\{x_3\} + f\{x_4\} 
@@ -62,59 +62,59 @@ Using the relationships between these inputs at the output we wish to calculate,
 Alternatively, a model of this phenomena can be produced using soft computing techniques \cite{ibrahim2016overview} such as machine learning. Rather than hard coding relationships, a stochastic model is produced and optimised using a dataset containing examples of outputs and corresponding inputs. \\
 
 \noindent
-In machine learning terms, the output of the model discussed above can be calculated in the form of (\ref{soft_power}) .
+In machine learning terms, the output of the model discussed above can be calculated in the form of Equation (\ref{soft_power}) .
 
 \begin{equation} \label{soft_power}
 	Power(kW)  \rightarrow f\{x, w, b\}
 \end{equation}
 
 \noindent
-In this form, the output value of reactor power is calculated as a function of of our core configuration inputs (x) and a weight vector and a scalar bias factor. In machine learning practice, the input variables are referred to as features and the outputs are referred to as predictions. In our above example, there are four features (M = 4). \\
+In this form, the output value of reactor power is calculated as a function of of the core configuration inputs (x) and a weight vector and a scalar bias factor. In machine learning practice, the input variables are referred to as features and the outputs are referred to as predictions. In the above example, there are four features (M = 4). \\
 
 \noindent
-The predictions of the model are generated on an instance by instance basis i.e. there is one predicted output per core configuration. The predicted output, which we will refer to as $\hat{y}$, is calculated for a for a given instance, i, in the form of (\ref{instance_prediction}).
+The predictions of the model are generated on an instance by instance basis i.e. there is one predicted output per core configuration. The predicted output, which will be referred to as $\hat{y}$, is calculated for a for a given instance, i, in the form of Equation (\ref{instance_prediction}).
 
 \begin{equation} \label{instance_prediction}
 	\hat{y}_i = x_i \space \cdot \space w + b
 \end{equation}
 
 \noindent 
-In (\ref{instance_prediction}), the instance feature vector, defined as $x_i$, is simply the input values for the instance. The dot product between the instance feature vector and the weights vector, w, is calculated and then summed with the bias scalar.  For simplicity, we generally include the bias term when discussing the weights and to that end we shall define an extended weights vector which includes w and b (\ref{expanded_w}).
+In Equation (\ref{instance_prediction}), the instance feature vector, defined as $x_i$, is simply the input values for the instance. The dot product between the instance feature vector and the weights vector, w, is calculated and then summed with the bias scalar. For simplicity, it is common practice to include the bias term when discussing the weights. Therefore, an extended weights vector which includes w and b is defined in Equation (\ref{expanded_w}).
 
 \begin{equation} \label{expanded_w}
 	wb^T = [w_1, w_2 ... w_M, b]
 \end{equation}
 
 \noindent
-At the start of machine learning model development, the expanded weights vector is initialised with random starting values. The values are then optimised through a model training process. To do this, we need a dataset including multiple instances of reactor power at various configurations of the core. For each instance in our dataset, there will be an input value for each of our features ($x_i$) as well as a corresponding output value that we refer to as the label (y). We refer to these input/output pairs as ground truth values - they are the base data that the model learns and evaluates its optimisation against.
+At the start of machine learning model development, the expanded weights vector is initialised with random starting values. The values are then optimised through a model training process. To do this, a dataset including multiple instances of reactor power at various configurations of the core is needed. For each instance in the dataset, there will be an input value for each of the features ($x_i$) as well as a corresponding output value that will be referred to as the label (y). These input/output pairs are referred to as ground truth values - they are the base data that the model learns and evaluates its optimisation against.
 \\
 
 \noindent
-The ultimate goal is to optimise the values of wb so that (\ref{instance_prediction}) can be used to make predictions ($\hat{y}_i$) that accurately reflect the ground truth labels ($y_i$). To make this optimisation, we must use a process known as gradient descent \cite{ruder2016overview} where values of wb are updated iteratively based on the derivative of difference between the predictions and ground truth. \\
+The ultimate goal is to optimise the values of wb so that Equation (\ref{instance_prediction}) can be used to make predictions ($\hat{y}_i$) that accurately reflect the ground truth labels ($y_i$). To make this optimisation, a process known as gradient descent \cite{ruder2016overview} must be used. In this process, the values of wb are updated iteratively based on the derivative of difference between the predictions and ground truth. \\
 
 \noindent
-In order to perform the gradient descent operation and to evaluate the performance of our machine learning model, we require a loss function \cite{wang2022comprehensive}. This is a metric used to calculate the difference between the predictions of the model and the ground truth labels. Various ways exist to calculate the loss function, each having their own advantages and applications. Perhaps the simplest form the loss function can take is the mean absolute error \cite{willmott2005advantages}.\\
+In order to perform the gradient descent operation and to evaluate the performance of the machine learning model, a loss function is required \cite{wang2022comprehensive}. This is a metric used to calculate the difference between the predictions of the model and the ground truth labels. Various ways exist to calculate the loss function, each having their own advantages and applications. Perhaps the simplest form the loss function can take is the mean absolute error \cite{willmott2005advantages}.\\
 
 \begin{equation} \label{mae}
 	\lambda_{mae} = \frac{1}{n}\sum_{i=1}^n | y_i - \hat{y_i} | 
 \end{equation}
 
 \noindent
-Using (\ref{mae}), we can calculate a direct measure of the performance of the model against the ground truth, with the lower the value of $\lambda$, the better the model is performing.  We can also calculate the derivative of the loss function with regards to each element of the vector wb i.e. we can determine how much the loss function changes with a change in each weight. \\
+Using Equation (\ref{mae}), it is possible to calculate a direct measure of the performance of the model against the ground truth, where the lower the value of $\lambda$, the better the model is performing.  It is also possible to calculate the derivative of the loss function with regards to each element of the vector wb i.e. it can can determined how much the loss function changes with a change in each weight. \\
 
 \begin{equation} \label{derivative}
-	{\Delta_{wb}}^T = [\frac{\delta\lambda}{\delta w_1}, \frac{\delta\lambda}{\delta w_2} ... \frac{\delta\lambda}{\delta w_M}, \frac{\delta\lambda}{\delta b}]
+	{\Delta\lambda_{wb}}^T = [\frac{\delta\lambda}{\delta w_1}, \frac{\delta\lambda}{\delta w_2} ... \frac{\delta\lambda}{\delta w_M}, \frac{\delta\lambda}{\delta b}]
 \end{equation}
 
 \noindent
-This derivative (\ref{derivative}) can be used to adjust the extended weights vector, wb, to a set of more more optimal values. This is done by multiplying the derivative, $\Delta_{wb}$, by the user defined scalar value $\alpha$, which is referred to as the learning rate. The values of this vector is then subtracted element-wise from the expanded weights vector to produce a new vector which can then be used again to make instance predictions as per (\ref{instance_prediction}). \\
+This derivative as seen in Equation (\ref{derivative}) can be used to adjust the extended weights vector, wb, to a set of more optimal values. This is done by multiplying the derivative, $\Delta\lambda_{wb}$, by the user defined scalar value, $\alpha$, which is referred to as the learning rate. The values of this vector is then subtracted element-wise from the expanded weights vector to produce a new vector which can then be used again to make instance predictions as per Equation (\ref{instance_prediction}). \\
  
  \begin{equation} \label{gradient_descent}
- 	wb_{updated} = wb - (\alpha \cdot \Delta_{wb})
+ 	wb_{updated} = wb - (\alpha \cdot \Delta\lambda_{wb})
  \end{equation}
  
  \noindent
-As can be seen from (\ref{mae}) the loss function (and its derivative) is an average over a set number of instances, n. Lets say the training process has access to a dataset of size N. We can perform the calculation from (\ref{gradient_descent})  using the entire dataset (n = N), a sample batch of the dataset (n $\subset N$), or a single instance (n = 1). If using a single instance or batch to update the weights (known as stochastic gradient descent \cite{ketkar2017stochastic}), the rest of the training set will be iteratively used to perform the same updating calculation. After updating using all instances in the dataset, it is unlikely that the expanded weights vector will be of the most optimal values.  Therefore, this process will be repeated a number of cycles known as epochs.
+As can be seen from Equation (\ref{mae}) the loss function (and its derivative) is an average over a set number of instances, n. It can be assumed that the training process has access to a dataset of size N.  The calculation from Equation (\ref{gradient_descent}) is then performed using the entire dataset (n = N), a sample batch of the dataset (n $\subset N$), or a single instance (n = 1). If using a single instance or batch to update the weights (known as stochastic gradient descent \cite{ketkar2017stochastic}), the rest of the training set will be iteratively used to perform the same updating calculation. After updating using all instances in the dataset, it is unlikely that the expanded weights vector will be of the most optimal values.  Therefore, this process will be repeated a number of cycles known as epochs.
 
 \begin{figure*}[h]
 	\centering
@@ -124,28 +124,28 @@ As can be seen from (\ref{mae}) the loss function (and its derivative) is an ave
 \end{figure*}
 
 \noindent
-In Figure~\ref{fig:GD_maeBigLR}, we see a representation of the training of a machine learning model. We see the progressive loss function calculated over a four epoch interval. This is expressed in two ways: (1) against the value of one of the model weights and (2) against the epoch number.  In this training example, gradient descent is performed using the MAE loss function and a relatively high loss function. This example also shows learning rate decay \cite{lewkowycz2021decay}, where the learning rate is reduced by 10\% successively after each epoch. \\
+In Figure~\ref{fig:GD_maeBigLR}, a representation of the training of a machine learning model can be seen. The progressive loss function is then calculated over a four epoch interval. This is expressed in two ways: (1) against the value of one of the model weights and (2) against the epoch number.  In this training example, gradient descent is performed using the MAE loss function and a relatively high loss function. This example also shows learning rate decay \cite{lewkowycz2021decay}, where the learning rate is reduced by 10\% successively after each epoch. \\
 
 \noindent 
-As mentioned previously, in most machine learning models, there will be multiple weights to optimise (one for each input feature). However, for this illustrative example, we will just focus on the optimisation of one weight.\\
+As mentioned previously, in most machine learning models, there will be multiple weights to optimise (one for each input feature). However, for this illustrative example, the focus will just be on the optimisation of one weight.\\
 
 \noindent
-The chart on the left of Figure~\ref{fig:GD_maeBigLR} shows a theoretical topology of loss as a function of the example weight (dark blue lines at approximately 45 degrees from one another). At the start of training, we don't know the shape or nature of this topology, it is revealed through the training process. The target for any machine learning training operation is optimise all weight values to produce a model capable of achieving the lowest possible loss value - in the case of Figure~\ref{fig:GD_maeBigLR}, that is the hinge-point between the two dark blue lines. \\
+The chart on the left of Figure~\ref{fig:GD_maeBigLR} shows a theoretical topology of loss as a function of the example weight (dark blue lines at approximately 45 degrees from one another). At the start of training, the shape or nature of this topology is unknown, with it being revealed through the training process. The target for any machine learning training operation is to optimise all weight values to produce a model capable of achieving the lowest possible loss value. In the case of Figure~\ref{fig:GD_maeBigLR} it is the hinge-point between the two dark blue lines. \\
 
 \noindent 
-In the aforementioned example, we can see that at the start of training (epoch 0), the weight is initialised at a value of around 3.2 which results in a MAE of about 40. From the gradient of the dark blue line at this point, it can be seen that increasing the weight of the value will tend to reduce the MAE. Feeding this negative gradient and the high learning rate into the subtractive term of (\ref{gradient_descent}) , we get an increased value of our example weight. As can be seen from the the loss time history, this operation actually results in an overshoot leading to a MAE that's actually higher than it was at the start of training (it now has a value of 50). This undesirable outcome is associated with a learning rate which is too high. \\
+In the aforementioned example, it can be seen that at the start of training (epoch 0), the weight is initialised at a value of around 3.2 which results in a MAE of about 40. From the gradient of the dark blue line at this point, it can be seen that increasing the weight of the value will tend to reduce the MAE. Feeding this negative gradient and the high learning rate into the subtractive term of Equation (\ref{gradient_descent}), an increased value of the example weight is obtained. As can be seen from the the loss time history, this operation actually results in an overshoot leading to a MAE that is actually higher than it was at the start of training (it now has a value of 50). This undesirable outcome is associated with a learning rate which is too high. \\
 
 \noindent
-For epoch 2, this time we are at a point in the loss-weight value topology where MAE is tending to increase as the weight value increases: a positive  . Recall that in this example, a learning rate decay is applied, meaning that the learning rate is 10\% lower than it was in the first epoch. This in turn means that the magnitude of the subtractive right-hand-side term of (\ref{gradient_descent}) is 10\% lower than it was in epoch 1. This reduction means that the updated weight is updated to a slightly higher point than the initialisation value. \\
+For epoch 2, this time the training process is at a point in the loss-weight value topology where MAE is tending to increase as the weight value increases: a positive gradient. Recall that in this example, a learning rate decay is applied, meaning that the learning rate is 10\% lower than it was in the first epoch. This in turn means that the magnitude of the subtractive right-hand-side term of Equation (\ref{gradient_descent}) is 10\% lower than it was in epoch 1. This reduction means that the updated weight is updated to a slightly higher point than the initialisation value. \\
 
 \noindent
-The following two epochs follow the same trend, however, the decaying loss rate means that progress towards the MAE minima slows. Further training would eventually see convergence with the weight and corresponding MAE value oscillating around a central value. At this point, further training is off little practical benefit. The practitioner may be able to manually apply early stopping \cite{yao2007early} or experimentally increase the number of epochs until this convergence point is reached. \\ 
+The following two epochs follow the same trend, however, the decaying loss rate means that progress towards the MAE minima slows. Further training would eventually see convergence with the weight and corresponding MAE value oscillating around a central value. At this point, further training is of little practical benefit. The practitioner may be able to manually apply early stopping \cite{yao2007early} or experimentally increase the number of epochs until this convergence point is reached. \\ 
 
 \noindent
-If we did not apply learning rate decay with the model training configuration of the aforementioned example , we may see a situation where a training process where the model fails to make any progress and repeatedly oscillates between the same two points. \\
+If learning rate decay was not applied in the model training configuration of the aforementioned example,  a situation may have occurred where the model fails to make any progress and repeatedly oscillates between the same two points. \\
 
 \noindent
-Lets now look at another example of gradient descent with alternative parameters. In our first example, we used the mean absolute error (MAE) loss function, now we will use instead the mean squared error (MSE) loss function (\ref{mse}). \\
+The next example will look at the application of the gradient descent algorithm with alternative parameters. In the first example, the mean absolute error (MAE) loss function was used, with the current example instead using the mean squared error (MSE) loss function as seen in Equation (\ref{mse}). \\
 
 \begin{equation} \label{mse}
 	\lambda_{mse} = \frac{1}{n}\sum_{i=1}^n (y_i - \hat{y_i})^2
@@ -155,13 +155,13 @@ Lets now look at another example of gradient descent with alternative parameters
 The mathematical difference between the MAE and MSE loss functions is that the inner term (the difference between the model prediction and ground truth label) is squared rather than simply the absolute. This alternative loss function has two practical differences in model training: 
 
 \begin{enumerate}
-	\item  Ground truth labels which are particularly large impact the loss calculation more severely. This can be beneficial when accurate prediction of outliers is of high importance.
+	\item Ground truth labels which are particularly large impact the loss calculation more severely. This can be beneficial when accurate prediction of outliers is of high importance.
 	
 	\item The loss-weight value topology is a curved U-shaped bend, rather than straight lines at a sharp angle (dark blue in the left of Figure~\ref{fig:GD_mseSmallLR}). This is because the derivative of this function with regards to the residual ($y_i - \hat{y_i}$) is variable rather than constant.
 \end{enumerate}
 
 \noindent
-The other change is that we will assume a smaller initial learning rate than in the previous example.  In addition, we will not be decaying the learning rate. We begin with the same weight initialisation as the first example and loss starting point\footnote{In practice, the same residual ($y_i - \hat{y_i}$) would result is a different loss value for MAE and MSE (after all, they are different functions), but for these examples we assume equivalent values are calculated for each.}. \\
+The other change is the use of a smaller initial learning rate than in the previous example.  In addition, the learning rate will not be subject to decay. This example begins with the same weight initialisation as the first example and loss starting point\footnote{In practice, the same residual ($y_i - \hat{y_i}$) would result in a different loss value for MAE and MSE (after all, they are different functions), but for these examples it is assumed equivalent values are calculated for each.}. \\
 
 \begin{figure*}[h]
 	\centering
@@ -171,42 +171,42 @@ The other change is that we will assume a smaller initial learning rate than in 
 \end{figure*}
 
 \noindent
-From Figure~\ref{fig:GD_mseSmallLR}, it can be seen that after one epoch of training, the weight value is updated only a small amount on account of the smaller learning rate. At this new point, the gradient of loss with regards to weight value is still negative, albeit to a smaller magnitude. On account of the subtractive term of (\ref{gradient_descent}) being smaller, the weight value update for the second epoch is somewhat smaller than the first. This trend can be seen to continue towards the base of the base of the curve. \\
+From Figure~\ref{fig:GD_mseSmallLR}, it can be seen that after one epoch of training, the weight value is updated only a small amount on account of the smaller learning rate. At this new point, the gradient of loss with regards to weight value is still negative, albeit to a smaller magnitude. On account of the subtractive term of Equation (\ref{gradient_descent}) being smaller, the weight value update for the second epoch is somewhat smaller than the first. This trend can be seen to continue towards the base of the curve. \\
 
 \noindent
 Comparing the performance of the two model training processes, it is possible to see the apparent advantages of the second configuration.  However, in practice different parameters have application in varying circumstances and conditions. The exact combination of parameters that are optimal for each problem must be determined through precedent (techniques found to be effective in previous works) and through experimentation.  \\
 
 \noindent
-In the previous examples, we saw the gradient descent method used to minimise loss towards the nadir of a loss topology. However, the topology for the full problem space might contain multiple minima regions. Figure~\ref{fig:minima_maxima} shows what such a topology with two minima regions: a local and global minima. If we wish to optimise the weights of our model, then we wish our gradient descent process to end within the global minima. However, depending on where our random initialisation of the weight begins, the convergence of our gradient descent process may end up in either region. \\
+In the previous examples, the gradient descent method was used to minimise loss towards the nadir of a loss topology. However, the topology for the full problem space might contain multiple minima regions. Figure~\ref{fig:minima_maxima} shows such a topology with two minima regions: a local and global minima. If the intension is to optimise the weights of the model, then the objective should be to end the gradient descent process within the global minima. However, depending on where the random initialisation of the weight begins, the convergence of the gradient descent process may end up in either region. \\
 
 \begin{figure*}[h]
 	\centering
 	\includegraphics[scale=0.45]{Figures/loss_minima_maxima.jpg}
-	\caption{Global Topology of Loss as a Function of Weight Value} {When looking at the full topology for the entire problem space, we see that there are there may be more than a single minima. }
+	\caption{Global Topology of Loss as a Function of Weight Value} {When looking at the full topology for the entire problem space, it can be seen that there may be more than a single minima. }
 	\label{fig:minima_maxima}
 \end{figure*}
 
 \noindent
-How can we ensure that we obtain global optimisation and prevent the training process converging in a local minima? There are several techniques at our disposal:
+How can it be ensured that the gradient descent process results in global optimisation? How can convergence in a local minima be avoided? There are several techniques available:
 
 \begin{enumerate}
-    \item \textbf{Repeated Training}: If we are performing and experiment to evaluate a certain configuration of model parameters, it is prudent to repeat the training process several times. On each repeat, the weight initialisations will be randomised, giving a new starting points. By performing this experiment enough times, all of the global minima points should be achieved.
+    \item \textbf{Repeated Training}: when performing an experiment to evaluate a certain configuration of model parameters, it is prudent to repeat the training process several times. On each repeat, the weight initialisations will be randomised, giving new starting points. By performing this experiment enough times, all of the global minima points should be achieved.
     
-    \item \textbf{Learning Rate Schedules}: We saw in examples of gradient descent how a small learning rate can make our training process optimise closer to the nadir of a minima region. Similarly, a low learning rate can cause the training process to become trapped in a local minima. Having a large learning rate can allow the training process to cover a larger area of the loss-weight space and find a globally low region. We also saw earlier how learning rates can be changed during training, such as through decay \cite{you2019does}. To gain the benefits of both approaches, we can use a schedule of learning rates \cite{xu2019learning} to begin with a relatively high learning rate at the start of training, then have this fall when the model starts to converge of a minima region.
+    \item \textbf{Learning Rate Schedules}: It was seen in examples of gradient descent how a small learning rate can make the training process optimise closer to the nadir of a minima region. Similarly, a low learning rate can cause the training process to become trapped in a local minima. Having a large learning rate can allow the training process to cover a larger area of the loss-weight space and find a globally low region. It was also seen earlier how learning rates can be changed during training, such as through decay \cite{you2019does}. To gain the benefits of both approaches, a schedule of learning rates can be used \cite{xu2019learning} to begin with a relatively high learning rate at the start of training, then have this fall when the model starts to converge on a minima region.
     
 \end{enumerate}
 
 \noindent
-Once we have reached convergence with our gradient descent process, we may reach a point where our model is capable of making predictions very similar to the ground truth labels and hence produce a loss function calculation close to zero. We may be tempted at this point to think that the model exhibits a strong practical performance, but is this true? \\
+Once convergence has been reached with the gradient descent process, the model may be capable of making predictions very similar to the ground truth labels and hence produce a loss function calculation close to zero. A temptation at this point is to think that the model exhibits a strong practical performance, but is this true? \\
 
 \noindent
-Consider that the dataset sample we use for training may represent only a small proportion of the entire problem space. It may in theory be possible to produce many thousands or millions of input feature/output label combinations than we have available for training. How can we be sure that our model is capable of making general predictions for the overall problem space and not just recalling training examples it has already seen? \\
+Consider that the dataset sample used for training may represent only a small proportion of the entire problem space. It may in theory be possible to produce many thousands or millions of input feature/output label combinations than were available for training. How can it be ensured that the model is capable of making general predictions for the overall problem space and not just recalling training examples it has already seen? \\
 
 \noindent
-To answer this question, it is good machine learning practice to sequester a portion of our dataset at the start of the training process. We will call this portion the testing set and it will not be included as part of the data used to perform gradient descent i.e. the model will not have seen this data during training. Usually, we sequester around 70 or 80 percent of the dataset for training and retain the rest for testing \cite{gholamy201870}.\\
+To answer this question, it is good machine learning practice to sequester a portion of the dataset at the start of the training process. This portion will be called the testing set and it will not be included as part of the data used to perform gradient descent i.e. the model will not have seen this data during training. Usually, around 70 or 80 percent of the dataset is sequestered for training and retain the rest for testing \cite{gholamy201870}.\\
 
 \noindent
-At the end of training, we can evaluate our model against the testing set using our loss function. Hence, we are able to produce two loss calculations: a training loss and a testing loss. The earlier value gives a measure of the model's ability to fit to the training set, the later gives a more general measure of the ability of the model to actual make practical predictions for the problem space. \\
+At the end of training, it is prudent to evaluate the model against the testing set using the loss function. Hence, two loss calculations are performed: a training loss and a testing loss. The earlier value gives a measure of the model's ability to fit to the training set, the latter gives a more general measure of the ability of the model to actually make practical predictions for the problem space. \\
 
 \noindent
 A low or diverging training loss calculated during training suggests a model that is incapable of capturing the relationships within the training data. The training data may be invalid, or a value for a parameter such as the learning rate may have been inappropriately chosen (see the overshooting weight adjustment in Figure~\ref{fig:GD_maeBigLR}). A model which produces a low training loss and a high test loss is likely to have optimised too closely to the training set and has captured even irrelevant relationships between input features and output labels, such as noise or data errors. This model would be an example of one which is exhibiting overfitting \cite{ying2019overview} as shown in Figure~\ref{fig:overfitting}. \\
@@ -219,7 +219,7 @@ A low or diverging training loss calculated during training suggests a model tha
 \end{figure*}
 		
 \noindent
-Another problem is that a machine learning model in this format can only model linear relationships between input features and outputs labels. Therefore, the gradient descent method described here may not be optimal for modelling the example scenario we discussed at the start of this section as there is a complex relationship between some inputs and the output value. For example, increasing the flowrate acts to increase and then decrease the power at different levels. This means that a linear model fit to this variable would incur inaccuracies as shown in Figure~\ref{fig:linearFit}. This is an example of underfitting \cite{koehrsen2018overfitting} where the complexity of a model is insufficient to capture the complexity of relationships within the data. \\		
+Another problem is that a machine learning model in this format can only model linear relationships between input features and outputs labels. Therefore, the gradient descent method described here may not be optimal for modelling the example scenario discussed at the start of this section as there is a complex relationship between some inputs and the output value. For example, increasing the flowrate acts to increase and then decrease the power at different levels. This means that a linear model fit to this variable would incur inaccuracies as shown in Figure~\ref{fig:linearFit}. This is an example of underfitting \cite{koehrsen2018overfitting} where the complexity of a model is insufficient to capture the complexity of relationships within the data. \\		
 
 % UNDERFITTING
 
@@ -233,7 +233,7 @@ Another problem is that a machine learning model in this format can only model l
 % TALK ABOUT DECISION TREES AND DO ANOTHE VERSION OF fig:linearFit with decison delineations
  
  \noindent
- To produce a machine learning model capable of accounting for these non-linear complexities, we must either look to neural networks, discussed in the next section, or to another type of machine learning model such as decision trees \cite{de2013decision} as shown in Figure~\ref{fig:DecisionTree}. This model has the added advantage of having a fully explainable decision making process that can be traced by a human observer. However, with added layers of branches for increased prediction resolution, the complexity of the model may no longer be easily comprehensible. Another advantage of decision trees is their ability to use categorical as well as continuous numerical inputs. An example would be branches representing high, medium and low rather than forks in a continuos values.
+ To produce a machine learning model capable of accounting for these non-linear complexities, users must either look to neural networks, discussed in the next section, or to another type of machine learning model such as decision trees \cite{de2013decision} as shown in Figure~\ref{fig:DecisionTree}. This model has the added advantage of having a fully explainable decision making process that can be traced by a human observer. However, with added layers of branches for increased prediction resolution, the complexity of the model may no longer be easily comprehensible. Another advantage of decision trees is their ability to use categorical as well as continuous numerical inputs. An example would be branches representing high, medium and low rather than forks in a continuous values \footnote{Assuming the feature space 0 to 1, this could be represented using continuous branch points such as 0.4 and 0.8. Alternatively, they could be represented by three branches representing low, medium and high in a decision tree. }.
  
  \begin{figure*}[h]
  	\centering
@@ -245,12 +245,12 @@ Another problem is that a machine learning model in this format can only model l
 
 \section{Neural Networks} \label{NN}
 
-The machine learning methods that we have explored so far in this chapter are commonly referred to as traditional or shallow methods.  The methods described in this chapter represent a stacking of machine learning operations in both parallel and series.  
+The machine learning methods explored so far in this chapter are commonly referred to as traditional or shallow methods.  The methods described in this section represent a stacking of machine learning operations in both parallel and series.  
 
 \begin{figure*}[p]
 	\centering
 	\includegraphics[scale=0.5]{Figures/NeuralNetwork.jpg}
-	\caption{Neural Network Representation} {A neural network with an an input layer of four units, two hidden layers and an output layer of 3 units. At each yellow circle (node), a linear combination of the inputs leading to it is made. The calculated value is then fed into an activation function (green) which transforms it in a non linear way. The exception to this the output layer (red) where no activation function is applied.}
+	\caption{Neural Network Representation} {A neural network with an an input layer of four units, two hidden layers and an output layer of 3 units. At each yellow circle (node), a linear combination of the inputs leading to it is made. The calculated value is then fed into an activation function (green) which transforms it in a non linear way. The exception to this is the output layer (red) where no activation function is applied.}
 	\label{fig:neural}
 \end{figure*}
 
@@ -259,25 +259,25 @@ Figure~\ref{fig:neural} shows a representation of a neural network. A neural net
 
 \begin{enumerate}
 	
-	\item \textbf{Input Layer}: Where inputs are fed into the network. This layer is akin to the model inputs described in section~\ref{supervised}.
+	\item \textbf{Input Layer}: This is where inputs are fed into the network. This layer is akin to the model inputs described in section~\ref{supervised}.
 	
-	\item \textbf{Hidden Layer(s)}: This is where the neural network performs most of its calculations. This part may consist of a single layer or multiple. Each layer has one or more nodes, a point at which a linear calculation made similar to (\ref{instance_prediction}) is made in addition to the application of a non-linear activation function.
+	\item \textbf{Hidden Layer(s)}: This is where the neural network performs most of its calculations. This part may consist of a single layer or multiple. Each layer has one or more nodes, a point at which a linear calculation similar to Equation (\ref{instance_prediction}) is made in addition to the application of a non-linear activation function.
 	
 	\item \textbf{Output Layer}: This is the layer where outputs are fed out of the network. This is akin to the model outputs described in section~\ref{supervised} though there may be one or more output nodes i.e. the model may have more than a single model output. At each output node, the model makes a linear combination of the outputs from the previous layer, but does not apply an activation function as they do in the hidden layer(s).
 	
 \end{enumerate}
 
 \noindent
-The input layer from the example in Figure~\ref{fig:neural} has four inputs. These can be continuous numerical variables (as per traditional machine learning models) or representations of categorical data (an integer representing one of several categories).  For this example, they are the four model inputs discussed at the start of section~\ref{supervised} which are used to calculate reactor core power. However, we will modify x3 so as to be represented by a categorical value: 0 for low, 1 for medium, 2 for high flowrate. \
+The input layer from the example in Figure~\ref{fig:neural} has four inputs. These can be continuous numerical variables (as per traditional machine learning models) or representations of categorical data (an integer representing one of several categories).  For this example, they are the four model inputs discussed at the start of section~\ref{supervised} which are used to calculate reactor core power. However, x3 will be modified so as to be represented by a categorical value: 0 for low, 1 for medium, 2 for high flowrate. \\
 
 \noindent
-For each dataset instance, the values from the input layer nodes are fed into each node in the first hidden layer. As each node performs the calculation shown in (\ref{instance_prediction}, each node also has as many unique weights as the number of nodes in the previous layer plus one bias term. \\
+For each dataset instance, the values from the input layer nodes are fed into each node in the first hidden layer. As each node performs the calculation shown in Equation (\ref{instance_prediction}), each node also has as many unique weights as the number of nodes in the previous layer plus one bias term. \\
 
 \noindent
-As mentioned above, the output of each node in the hidden layers section of the network is normally passed through a non-linear activation function. The activation function can take one of several  forms and is a non trainable parameter - the user must select the activation function to be used by each node. The optimal configuration of activation functions used in the network can be determined through a process of experimental trial and error, through inspiration from previous machine learning works in the field, or some combination. \\
+As mentioned above, the output of each node in the hidden layers section of the network is normally passed through a non-linear activation function. The activation function can take one of several forms and is a non trainable parameter - the user must select the activation function to be used by each node. The optimal configuration of activation functions used in the network can be determined through a process of experimental trial and error, through inspiration from previous machine learning works in the field, or some combination. \\
 
 \noindent
-Lets begin with an example starting at node L1N1 - i.e. \textbf{L}ayer 1, \textbf{N}ode 1. A linear combination of the four input features (x) is made with five trainable parameters equivalent to (\ref{instance_prediction}). The output of this calculation is then passed into adjunct node A1N1 (\textbf{A}ctivation 1, \textbf{N}ode 1) \footnote{The combined linear and activation function calculations are usually referred to as a single 'nodal' operation. However, for the sake of this example they shall we discussed as two operations.}. For this example, we will assume it to be the sigmoid function \cite{pratiwi2020sigmoid} that is applied. It is common to use the same activation function in all nodes within the same layer, and so we will assume A1N2 and A1N3 also uses the sigmoid function.\\
+Starting with an example beginning at node L1N1 - i.e. \textbf{L}ayer 1, \textbf{N}ode 1 - a linear combination of the four input features (x) is made with five trainable parameters equivalent to Equation (\ref{instance_prediction}). The output of this calculation is then passed into adjunct node A1N1 (\textbf{A}ctivation 1, \textbf{N}ode 1) \footnote{The combined linear and activation function calculations are usually referred to as a single 'nodal' operation. However, for the sake of this example they shall be discussed as two operations.}. Also it will be assumed to be the sigmoid function \cite{pratiwi2020sigmoid} that is applied. It is common to use the same activation function in all nodes within the same layer, and so it will be assume A1N2 and A1N3 also uses the sigmoid function.\\
 
 \noindent
 Equation (\ref{sigmoid_activation}) shows the the sigmoid activation operation performed at A1N1 which is a function of the linear output of L1N1, $\hat{y}_{L1N1}$.  Figure~\ref{fig:sigmoid} shows the output of the sigmoid activation function. As can be seen, for strongly negative values of $\hat{y}$, the sigmoid function outputs values that tend towards zero. Between negative and positive four, the output value switches between zero and one, with the derivative of the function peaking around zero. \\ 
@@ -289,7 +289,7 @@ Equation (\ref{sigmoid_activation}) shows the the sigmoid activation operation p
 \begin{figure*}[p]
 	\centering
 	\includegraphics[scale=0.5]{Figures/Sigmoid.jpg}
-	\caption{Sigmoid Activation Function} {A graphical representation of the output of (\ref{sigmoid_activation}) is given by the dark blue line. The derivative of this function is represented in light grey. As can be seen, the output rapidly switches between 0 and 1 between inputs of negative and positive four. This sigmoid activation function can be applied at activation nodes such as A1N1 in Figure~\ref{fig:neural}. }
+	\caption{Sigmoid Activation Function} {A graphical representation of the output of Equation (\ref{sigmoid_activation}) is given by the dark blue line. The derivative of this function is represented in light grey. As can be seen, the output rapidly switches from 0 to 1 between inputs of negative and positive four. This sigmoid activation function can be applied at activation nodes such as A1N1 in Figure~\ref{fig:neural}. }
 	\label{fig:sigmoid}
 \end{figure*}
 
@@ -298,20 +298,20 @@ In this example and in most other activation functions, there is a notable thres
 
 
 \noindent
-Following the first hidden layer shown in Figure~\ref{fig:neural}, it can be seen that the activated outputs of A1N1, A1N2 and A1N3 are fed into each of nodes in hidden layer 2.  As they each receive three inputs, nodes L2N1 and L2N2 each have four unique trainable parameters (one weight for each of the nodes in the previous layer plus a bias term). Let us assume that A2N1, A2N2 use a softplus activation function \cite{zheng2015improving} which is similar to the rectified linear unit (relu) \cite{hara2015analysis}. \\
+Following the first hidden layer shown in Figure~\ref{fig:neural}, it can be seen that the activated outputs of A1N1, A1N2 and A1N3 are fed into each of the nodes in hidden layer 2.  As they each receive three inputs, nodes L2N1 and L2N2 each have four unique trainable parameters (one weight for each of the nodes in the previous layer plus a bias term). In this example, it is assumed that A2N1 \& A2N2 use a softplus activation function \cite{zheng2015improving} which is similar to the rectified linear unit (relu) \cite{hara2015analysis}. \\
 
 \begin{figure*}[p]
 	\centering
 	\includegraphics[scale=0.5]{Figures/softplus_relu.jpg}
-	\caption{The Softplus and ReLu Activation Functions} { }
+	\caption{The Softplus and ReLu Activation Functions} {The ReLu (red) and Softplus (blue) functions can be used to transform the nodal output at any of the activation nodes in shown in Figure~\ref{fig:neural} (green). Looking first at the ReLu function, for all values of $\hat{y}_i$ below the threshold (in this case it is zero), the output is also zero. Beyond the threshold, the output of the activation function increases linearly. Looking next at the Softplus function, it can be seen to be similar to the output of the ReLu with difference between -2 and 2. In this region, the nodal output increases in a non-linear way.}
 	\label{fig:soft_relu}
 \end{figure*}
 
 \noindent
-Note that each of the activation functions represented in Figure~\ref{fig:soft_relu} contain a linear section and a threshold. This is in contrast to the symmetric sigmoid function we saw earlier and the hyperbolic tangent function \cite{anastassiou2011multivariate}. \\
+Note that each of the activation functions represented in Figure~\ref{fig:soft_relu} contain a linear section and a threshold. This is in contrast to the symmetric sigmoid function that was seen earlier and the hyperbolic tangent function \cite{anastassiou2011multivariate}. \\
 
 \noindent
-The final part of a neural network is the output layer, shown as red circles in Figure~\ref{fig:neural}. Each output node (y1 - y3) is a terminus for the aggregate nodal calculation performed throughout the network. Whereas the traditional machine learning methods described in section~\ref{supervised} can only generate a single output prediction, neural networks can generate multiple outputs.  In our example, these outputs might represent core temperature (y1)\footnote{Measured in degrees Kelvin}, core pressure (y2)\footnote{Measured in Pascals} and reactor power (as was predicted by the example models from the previous section). The ability to generate multiple predicted variables as part of a single machine learning model operation has advantages when users are likely to be interested in several variables at the same time. 
+The final part of a neural network is the output layer, shown as red circles in Figure~\ref{fig:neural}. Each output node (y1 - y3) is a terminus for the aggregate nodal calculation performed throughout the network. Whereas the traditional machine learning methods described in section~\ref{supervised} can only generate a single output prediction, neural networks can generate multiple outputs.  In the example, these outputs might represent core temperature (y1)\footnote{Measured in degrees Kelvin (K)}, core pressure (y2)\footnote{Measured in Pascals (Pa)} and reactor power (as was predicted by the example models from the previous section). The ability to generate multiple predicted variables as part of a single machine learning model operation has advantages when users are likely to be interested in several variables at the same time. 
 \\
 
 \noindent
@@ -319,17 +319,17 @@ Each of the three red output nodes perform a linear combination of the outputs o
 \\
 
 \noindent 
-The output of any layer in the network can be summarised as a vector and matrix operation given by (\ref{layer_output}). \\ 
+The output of any layer in the network can be summarised as a vector and matrix operation given by Equation (\ref{layer_output}). \\ 
 
 \begin{equation} \label{layer_output}
 	o_{(L)} = af(W_{(L)} \cdot o_{(L-1)}^T + b_{(L)})
 \end{equation}
 
 \noindent
-Equation~\ref{layer_output} calculates a vector representing the output of all nodes for layer (L). The inner term is calculated as a function of the weight matrix ($W_{L}$), the bias vector($b_{L}$) and the output of the preceding layer ($o_{L}$). This vector is then passed through an activation function ($af$) which may be excluded in the output layer. In the first hidden layer, the $o_{L}$ vector is replaced by the feature input vector ($x_i$). \\
+Equation~\ref{layer_output} calculates a vector representing the output of all nodes for layer (L). The inner term is calculated as a function of the weight matrix ($W_{L}$), the bias vector ($b_{L}$) and the output of the preceding layer ($o_{L}$). This vector is then passed through an activation function ($af$) which may be excluded in the output layer. In the first hidden layer, the $o_{L}$ vector is replaced by the feature input vector ($x_i$). \\
 
 \noindent
-The weight matrix ($W_{L}$) for layer {L} is of real numbers and has $K_{(L)}$ columns (the number of nodes in layer (L)) and has $(P)$ rows (the number of outputs from the previous layer, (L-1)) - see (\ref{WL}).
+The weight matrix ($W_{L}$) for layer {L} is of real numbers and has $K_{(L)}$ columns (the number of nodes in layer (L)) and has $(P)$ rows (the number of outputs from the previous layer, (L-1)) - see Equation (\ref{WL}).
 \\ 
 
 \begin{equation} \label{WL}
@@ -337,23 +337,23 @@ The weight matrix ($W_{L}$) for layer {L} is of real numbers and has $K_{(L)}$ c
 \end{equation}
 
 \noindent
-As the output vector of each layer is dependent on the output of the previous layer, the  calculations must be executed in layer order. Hence, this model is an example of a feed forward and fully connected neural network, in that all nodes in a given layer and dependent on all of the nodes preceding it. \\
+As the output vector of each layer is dependent on the output of the previous layer, the calculations must be executed in layer order. Hence, this model is an example of a feed forward and fully connected neural network, in that all nodes in a given layer are dependent on all of the nodes preceding it. \\
 
 \noindent
 The weights and biases of neural networks are initialised to a random value at the start of training. The trainable parameters must then be optimised through the use of the gradient descent method described in section~\ref{supervised}. However, as there are a much greater number of parameters in a neural network than traditional methods a more complex method known as backpropagation \cite{hecht1992theory} must be used. \\
 
 \noindent
-Backpropagation again requires the use of a loss function that calculates a measure of difference between the predictions of the model and the ground truth labels. In this example we will again use the mean squared error (MSE) loss function as defined in (\ref{mse}), however, in this example $y_i$ \& $\hat{y}_i$ represent vectors. \\
+Backpropagation again requires the use of a loss function that calculates a measure of difference between the predictions of the model and the ground truth labels. In this example the mean squared error (MSE) loss function will be used as defined by Equation (\ref{mse}). However, in this example $y_i$ \& $\hat{y}_i$ represent vectors. \\
 
 \begin{equation} \label{mse_multi}
 	\lambda_{multi\_mse} = \frac{1}{nk}\sum_{i=1}^n \sum_{k=1}^o (y_{ik} - \hat{y_{ik}})^2
 \end{equation}
 %
 \noindent
-Equation~\ref{mse_multi} shows the element wise subtraction and summation of terms in the $y_i$ \& $\hat{y}_i$ vectors. The inner term calculates the square residual between output (k) of instance (i). This is then calculated for all terms and summed over all n samples each having o number of model predictions in the output layer. \\  
+Equation~\ref{mse_multi} shows the element wise subtraction and summation of terms in the $y_i$ \& $\hat{y}_i$ vectors. The inner term calculates the square residual between output (k) of instance (i). This is then calculated for all terms and summed over all (n) samples each having (o) number of model predictions in the output layer. \\  
 
 \noindent
-Like with traditional machine learning models, the trainable model parameters are updated by calculating the gradient of the loss function with regards to each weight and bias value as seen in (\ref{W_GD}) \& (\ref{b_GD}). \\
+Like with traditional machine learning models, the trainable model parameters are updated by calculating the gradient of the loss function with regards to each weight and bias value as seen in Equations (\ref{W_GD}) \& (\ref{b_GD}). \\
 
  \begin{equation} \label{W_GD}
 	W_{L\_updated} = W_L - (\alpha \cdot \Delta_{W_L})
@@ -367,28 +367,59 @@ Like with traditional machine learning models, the trainable model parameters ar
 This process must be done on a layer by layer basis, starting with the output layer and working back to the first hidden layer. \\
 
 \noindent
-We can use (\ref{layer_output})  to calculate the output ($\hat{y}_i$) of the final layer of the example network (Figure~\ref{fig:neural}). Recall that the output layer does not use an activation function, so $af$ is set to 1. Substituting the output calculation into the loss function (\ref{mse_multi}) we can differentiate using the chain rule to get the $\Delta_{W_L}$ term.\\
+ Equation (\ref{layer_output}) can be used to calculate the output ($\hat{y}_i$) of the final layer of the example network (Figure~\ref{fig:neural}). Recall that the output layer does not use an activation function, so $af$ is set to 1. Substituting the output calculation into the loss function (given by Equation (\ref{mse_multi})) it is possible to differentiate using the chain rule to get the $\Delta_{W_L}$ term.\\
 
 \begin{equation} \label{delta_W}
 	\Delta_{W_L} = 2(W_{(L)} \cdot o_{(L-1)}^T + b_{(L)}) \cdot o_{(L-1)}^T
 \end{equation}
 
 \noindent
-We have seen one example of a neural network architecture in Figure~\ref{fig:neural}, but in practice this architecture could take a range of forms, with any number of hidden layers and nodes. The optimal arrangement can be determined by the user through experimentation, although there are a few common configurations which have proven effective for a range of problems. \\
+One example of a neural network architecture was seen in Figure~\ref{fig:neural}, but in practice this architecture could take a range of forms, with any number of hidden layers and nodes. The optimal arrangement can be determined by the user through experimentation, although there are a few common configurations which have proven effective for a range of problems. These will be explored later in the discussion of relevant literature (see subsection~\ref{MLlit}). \\
+
 
 \noindent
-Apart from the ability of generate multiple outputs, a key advantage of neural networks over traditional machine learning models is their ability to model complex phenomena which may have non-linear relationships within the data. For example, in Figure~\ref{fig:linearFit} we saw the difficulty of fitting a predictive linear model to a variable which has a  non-monotonic relationship with the output variable. A fully connected neural network with an appropriately chosen architecture and choice of activation functions may be capable of modelling this relationship. \\ 
+Apart from the ability to generate multiple outputs, a key advantage of neural networks over traditional machine learning models is their ability to model complex phenomena which may have non-linear relationships within the data. For example, in Figure~\ref{fig:linearFit} the difficulty of fitting a predictive linear model to a variable which has a non-monotonic relationship with the output variable was seen. A fully connected neural network with an appropriately chosen architecture and choice of activation functions may be capable of modelling this relationship. \\ 
 
-%\noindent
-%As well as having advantages, 
+\noindent
+As well as having advantages, there are several obstacles and difficulties commonly faced when developing neural networks. Compared to the traditional methods outlined in subsection~\ref{supervised}, neural networks require considerably larger datasets to achieve satisfactory performance. This difficultly relates to the relative complexity of neural networks, requiring a large number of examples to optimise all of the many model parameters successfully.\\
 
-% Large dataset needed
-% overfitting
-    % validation set monitoring 
-    % Regularisation
-    % dropout
-% Exploding gradients
-%vanishing gradients
+\noindent
+The aforementioned difficulty is related to the problem of overfitting which we discussed in subsection~\ref{supervised}. With a large and complex neural network architecture combined with a small training dataset, there is the danger of producing a model that fits all of the variance in the training data. Figure~\ref{fig:overfittingNN} shows an example of a neural network which has overfit to a training dataset. In this case, the model has captured all of the variance between instances. When comparing this to the wider nature of the dataset, it can be seen that this model does not represent the general trend of the relationship between input feature value and the output labels.
+
+\begin{figure*}[h]
+	\centering
+	\includegraphics[scale=0.3]{Figures/overfittingNN.png}
+	\caption{Example of a Neural Network Model Overfitting} {In this example, two sets of data are represented: a training set (orange) and a wider dataset (dark blue). If a complex machine learning model is trained only on the training set, a model of high variability may be produced as represented by the orange line. This model is an example of a neural network which is exhibiting overfitting i.e. it has very closely fit to the training set at the cost of an ability to generalise to the wider nature of the data space. The overfitting of this model could be alleviated by either expanding the training set (providing more of the wider dataset to the model at training) or by reducing the complexity of the model. }
+	\label{fig:overfittingNN}
+\end{figure*}
+
+How can overfitting be avoided in neural networks? There are a few approaches that are commonly used \cite{brownlee2018avoid} which can generally be considered to improve overall model performance:
+
+\begin{enumerate}
+	
+	\item \label{bp_dataset_size} \textbf{Dataset Size}: as alluded to above, the main cause of overfitting is a lack of training data. Given a model of a certain complexity (number of hidden layers, number of nodes per layer), the training process will tend to tune the parameters of the model to closely give a fit the data. With a small training, the model will be able to fit all of the variance present, including any that is due to recording errors or noise. Conversely, there may be situations in which increasing the size of dataset causes overfitting and reduces the performance of the model. Examples may include data which contains too much noise or was collected inaccurately, or data which causes the dataset to be highly biased towards a region of the data space.   
+	
+	\item \textbf{Reduce Model Complexity}: Given a training set of a certain size (number of training instances) a model that is overfitting (such as is represented by the orange line in Figure~\ref{fig:overfittingNN}) may be overly complex. By reducing the complexity of the neural network i.e. reducing the number of hidden layers, or reducing the number of nodes in some hidden layers, the ability of a model to produce variance is effectively reduced. In turn, a reduction in the complexity of a model is likely to reduce overfitting.
+	
+	\item \textbf{Regularisation}: The term regularisation is an umbrella term that covers a range of techniques including adjustments to the loss function based on generalisation of the model and magnitude of the weights \cite{mc2001improving}. Equation (\ref{mse_l2}) shows a modification of the MSE function that penalises large weights, known as l2 regularisation \cite{van2017l2}. Another approach, referred to as dropout \cite{srivastava2014dropout}, involves randomised negation of the nodal output during training with the intension of strengthening the representation of adjacent nodes. For example, Figure~\ref{fig:neuralDO} shows the example neural network dropping out one node in each layer.
+	
+	
+	\item \textbf{Feature Selection}: it was discussed in point~\ref{bp_dataset_size} that the number of instances in a dataset can impact the propensity of the model to overfit. In a similar manner, increasing or decreasing the number of available input features available during training may increase or decrease the ability of the model to generalise to the wider problem without overfitting. In the example from Figure~\ref{fig:neural}, adding additional features may improve the ability of the model to make predictions of the target outputs. Conversely, improved ability of the model to generalise when selecting only a subset of the input features available.  For example, some features may be overly noisy, inaccurate or irrelevant to be able to improve prediction ability. Nevertheless, the model will fit to them, increasing the propensity for overfitting. Note that the dropout operation in Figure~\ref{fig:neuralDO} also represents the elimination of a subset of the input layer.
+	
+	\item \textbf{Early Stopping}: validation set
+	
+\end{enumerate} 
+
+\begin{equation} \label{mse_l2}
+	\lambda_{mse\_l2} = \frac{1}{n}\sum_{i=1}^n (y_i -  x_i \space \cdot \space w + b)^2 + \beta {}\sum_{j=M}w^2
+\end{equation}
+
+\begin{figure*}[p]
+	\centering
+	\includegraphics[scale=0.3]{Figures/neural_dropout.jpeg}
+	\caption{Neural Network Dropout Representation} {The neural network from Figure~\ref{fig:neural} with dropout applied. For the input layer, hidden layer 1 and hidden layer 2, the dropout percentage is 0.25. 0.3$\dot{3}$} and 0.5. In each layer, these factors results in the operation performed at one node removed, as represented by the greyed out nodes in this example. The selection of nodes in each layer is random and is reselected in the next epoch.
+	\label{fig:neuralDO}
+\end{figure*}
 
 
 \section{Convolutional Neural Networks (CNN)} \label{convolution}
@@ -416,7 +447,7 @@ For any given natural phenomena, it is possible to develop a physical model that
 \\
 
 \noindent
-From  data generated by such mathematical models, it is possible to train machine learning models to produce equivalent outputs from the same inputs. This will effectively be an additional layer of approximation on top of an already approximate model.
+From data generated by such mathematical models, it is possible to train machine learning models to produce equivalent outputs from the same inputs. This will effectively be an additional layer of approximation on top of an already approximate model.
 \\
 
 \noindent
@@ -443,7 +474,7 @@ What is the motivation for doing this? Given a mathematical model of a phenomena
 
 Many organisations have produced highly optimised neural networks, often demonstrating their capabilities in public competitions such as ImageNet \cite{russakovsky2015imagenet}. The successful competitors often publish their model architectures along with the best performing weights. Models produced and published through this competition include VGG \cite{simonyan2014very} and ResNet \cite{he2015deep}. Although these models are optimised to perform image classification tasks, many researchers have found that the aforementioned models can be adapted to other areas of study in a process known as transfer learning \cite{tan2018survey}.
 
-\section{Relevant Literature}
+\section{Relevant Literature} \label{MLlit}
 
 An overview of machine learning techniques and their application to nuclear engineering is given in a recent paper \cite{gomez2020status}. This review details a range of machine learning approaches, including decision trees, nearest-neighbour, support vector machines, naive bayes, as well as Convolutional and recurrent neural networks. It then goes on to outline how these techniques have been applied in nuclear engineering fields such as plant health, radiation protection and optimisation. Although this paper does not reference the AGR or graphite, it does provide a useful introduction to the field. 
 \\
@@ -464,4 +495,4 @@ Academic works which apply machine learning to the production of engineering sur
 \\
 
 \noindent
-A particularly relevant existing work to the PhD project discussed in this thesis is \cite{dihoru2018neural} which concerns both AGR graphite and machine learning. These researchers use data from a physical model of an AGR reactor which simulates an earthquake to train a feed-forward neural network (see Figure~\ref{fig:neural_network}) with 3 layers. The data generated by five configurations of the physical model (one intact, four with random distributions of cracks) are used to generate values for displacement in the top layer of the core. A neural network is then trained on this data, with displacements in the central channel being used to predict displacements in a select number of surrounding channels. The researchers achieve reasonably good agreement between model prediction and the ground truth data from their physical model, although there is some breakdown at the extremes. The scope of this model is somewhat limited, however, in that the model can only predict displacements from displacements at other locations. Superior model performance may also be achieved with a more complex neural network.  
+A particularly relevant existing work to the PhD project discussed in this thesis is \cite{dihoru2018neural} which concerns both AGR graphite and machine learning. These researchers use data from a physical model of an AGR reactor which simulates an earthquake to train a feed-forward neural network (see Figure~\ref{fig:neural}) with 3 layers. The data generated by five configurations of the physical model (one intact, four with random distributions of cracks) are used to generate values for displacement in the top layer of the core. A neural network is then trained on this data, with displacements in the central channel being used to predict displacements in a select number of surrounding channels. The researchers achieve reasonably good agreement between model prediction and the ground truth data from their physical model, although there is some breakdown at the extremes. The scope of this model is somewhat limited, however, in that the model can only predict displacements from displacements at other locations. Superior model performance may also be achieved with a more complex neural network.  

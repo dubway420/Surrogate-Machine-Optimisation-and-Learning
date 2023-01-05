@@ -17,45 +17,45 @@ Warning--empty journal in gholamy201870
 Warning--empty journal in huber1964robust
 Warning--can't use both volume and number fields in pratiwi2020sigmoid
 Warning--can't use both volume and number fields in ying2019overview
-You've used 84 entries,
+You've used 86 entries,
             2118 wiz_defined-function locations,
-            956 strings with 19057 characters,
-and the built_in function-call counts, 30949 in all, are:
-= -- 3038
-> -- 1630
+            968 strings with 19340 characters,
+and the built_in function-call counts, 31487 in all, are:
+= -- 3095
+> -- 1650
 < -- 27
-+ -- 662
-- -- 562
-* -- 2149
-:= -- 5113
-add.period$ -- 271
-call.type$ -- 84
-change.case$ -- 525
++ -- 670
+- -- 568
+* -- 2186
+:= -- 5210
+add.period$ -- 277
+call.type$ -- 86
+change.case$ -- 535
 chr.to.int$ -- 0
-cite$ -- 90
-duplicate$ -- 1157
-empty$ -- 2287
-format.name$ -- 562
-if$ -- 6484
+cite$ -- 92
+duplicate$ -- 1177
+empty$ -- 2328
+format.name$ -- 568
+if$ -- 6591
 int.to.chr$ -- 0
-int.to.str$ -- 84
-missing$ -- 84
-newline$ -- 421
-num.names$ -- 168
-pop$ -- 592
+int.to.str$ -- 86
+missing$ -- 85
+newline$ -- 431
+num.names$ -- 172
+pop$ -- 593
 preamble$ -- 1
-purify$ -- 446
+purify$ -- 453
 quote$ -- 0
-skip$ -- 828
+skip$ -- 844
 stack$ -- 0
-substring$ -- 1743
-swap$ -- 294
+substring$ -- 1778
+swap$ -- 296
 text.length$ -- 27
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 322
+type$ -- 332
 warning$ -- 6
-while$ -- 290
-width$ -- 86
-write$ -- 916
+while$ -- 297
+width$ -- 88
+write$ -- 938
 (There were 6 warnings)

@@ -42,11 +42,6 @@ G.~S. Babu, P.~Zhao, and X.-L. Li.
 \newblock In {\em International conference on database systems for advanced
   applications}, pages 214--228. Springer, 2016.
 
-\bibitem{bishop2006pattern}
-C.~M. Bishop.
-\newblock {\em Pattern recognition and machine learning}.
-\newblock springer, 2006.
-
 \bibitem{blum1982simple}
 L.~Blum, M.~Blum, and M.~Shub.
 \newblock {\em A simple secure pseudo-random number generator}.
@@ -58,6 +53,11 @@ P.~Branco, L.~Torgo, and R.~P. Ribeiro.
 \newblock Smogn: a pre-processing approach for imbalanced regression.
 \newblock In {\em First international workshop on learning with imbalanced
   domains: Theory and applications}, pages 36--50. PMLR, 2017.
+
+\bibitem{brownlee2018avoid}
+J.~Brownlee.
+\newblock How to avoid overfitting in deep learning neural networks.
+\newblock {\em Machine Learning Mastery}, 17:12, 2018.
 
 \bibitem{bui2016using}
 H.~M. Bui, M.~Lech, E.~Cheng, K.~Neville, and I.~S. Burnett.
@@ -295,6 +295,11 @@ Z.~Liao and G.~Carneiro.
 \newblock In {\em 2016 IEEE Winter Conference on Applications of Computer
   Vision (WACV)}, pages 1--8. IEEE, 2016.
 
+\bibitem{mc2001improving}
+S.~Mc~Loone and G.~Irwin.
+\newblock Improving neural network training solutions using regularisation.
+\newblock {\em Neurocomputing}, 37(1-4):71--90, 2001.
+
 \bibitem{meyer1997object}
 B.~Meyer.
 \newblock {\em Object-oriented software construction}, volume~2.
@@ -413,6 +418,11 @@ L.~Torrey and J.~Shavlik.
 \newblock In {\em Handbook of research on machine learning applications and
   trends: algorithms, methods, and techniques}, pages 242--264. IGI global,
   2010.
+
+\bibitem{van2017l2}
+T.~Van~Laarhoven.
+\newblock L2 regularization versus batch and weight normalization.
+\newblock {\em arXiv preprint arXiv:1706.05350}, 2017.
 
 \bibitem{voyagaki2018earthquake}
 E.~Voyagaki, P.~Kloukinas, M.~Dietz, L.~Dihoru, T.~Horseman, O.~Oddbjornsson,
